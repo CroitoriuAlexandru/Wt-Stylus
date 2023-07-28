@@ -13,6 +13,7 @@ struct StylusState {
     tinyxml2::XMLNode* selectedTemplate;
     tinyxml2::XMLNode* selectedElement;
     bool templateSelected = false;
+    std::string filePath;
 };
 
 class TreeNode : public Wt::WTreeNode
@@ -57,7 +58,7 @@ public:
     std::unique_ptr<TreeNode> createNodeTree(tinyxml2::XMLElement* element);
     std::unique_ptr<TreeNode> createTemplateNode(tinyxml2::XMLNode* textNode);
 
-    std::regex template_regexp = std::regex("\\$\\{[\\w\\-\\.]+[ ]?(class=\"[^\"]*\")?\\}");
+    std::regex template_regexp = std::regex("\\$\\{[\\w\\-\\.]+[ ]?(class=\"[^\"]*\")?\\}?[ ]?(fileName=\"[^\"]*\")?\\}?[ ]?(messageId=\"[^\"]*\")?\\}");
 private:
     std::shared_ptr<StylusState> stylusState_;
 

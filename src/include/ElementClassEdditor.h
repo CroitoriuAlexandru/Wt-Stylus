@@ -9,7 +9,7 @@
 class ElementClassEdditor : public Wt::WTemplate
 {
 public:
-    ElementClassEdditor(std::string templateName = "stylus2.element.edditor");
+    ElementClassEdditor(std::string templateName = "stylus.element.edditor");
 
     void setStyleClasses(std::string classes);
     Wt::Signal<std::string> &styleChanged() { return styleChanged_; }

@@ -1,5 +1,5 @@
 #include "include/App.h"
-#include "include/StylusEdditor2.h"
+#include "include/StylusEdditor.h"
 #include "include/StylusTemplatesWidget.h"
 #include <Wt/WPushButton.h>
 #include <Wt/WTemplate.h>
@@ -43,6 +43,7 @@ App::App(const Wt::WEnvironment &env)
 	// useStyleSheet(tailwindCss);
 
 	// add mesage resource bundle from templates
+	messageResourceBundle().use(appRoot() + "resources/xml/Application");
 	messageResourceBundle().use(appRoot() + "resources/xml/Elements");
 	messageResourceBundle().use(appRoot() + "resources/xml/General");
 	messageResourceBundle().use(appRoot() + "resources/xml/Stylus");
@@ -58,20 +59,14 @@ App::App(const Wt::WEnvironment &env)
 	instance()->setInternalPath("/");
 	
 
-	auto btn =  root()->addWidget(std::make_unique<Wt::WPushButton>("test"));
 
 	auto temp = root()->addWidget(std::make_unique<Wt::WTemplate>(Wt::WString::tr("test")));
-	auto stylus_templates = root()->addWidget(std::make_unique<StylusTemplatesWidget>());
 	auto temp1 = temp->bindWidget("test.test", std::make_unique<Wt::WTemplate>(Wt::WString::tr("test.test")));
-	auto stylus_edditor = root()->addChild(std::make_unique<StylusEdditor2>("test.xml", "test", temp));
+	auto stylus_edditor = root()->addChild(std::make_unique<StylusEdditor>());
 	// (Wt::WString::tr("button"));
 
 
-	btn->clicked().connect(this, [=](){
-		temp->refresh();
-		// std::cout << "\n\n test.test: <" << test << ">\n\n";
-		// temp->applyArguments(temp1, );
-	});
+
 	
 	// btn->setStyleClass(Wt::WString::tr("button"));
 

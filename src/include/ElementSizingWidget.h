@@ -38,7 +38,7 @@ struct SizingData
 class ElementSizingWidget : public Wt::WTemplate
 {
 public:
-	ElementSizingWidget(std::string templateName = "stylus2.sizing.template");
+	ElementSizingWidget(std::string templateName = "stylus.sizing.template");
 	// margin and padding at the moment
 
 	void setClasses(SizingData sizing);

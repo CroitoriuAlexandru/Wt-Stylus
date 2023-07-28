@@ -1,4 +1,4 @@
-#include "include/StylusEdditor2.h"
+#include "include/StylusEdditor.h"
 #include <Wt/WTree.h>
 #include <Wt/WApplication.h>
 #include <Wt/WTemplate.h>
@@ -7,58 +7,23 @@
 #include <Wt/WCheckBox.h>
 #include <Wt/WPushButton.h>
 
-void removeTextBetweenElements(tinyxml2::XMLNode* node) {
-    if (node == nullptr) {
-        return;
-    }
 
-    tinyxml2::XMLNode* child = node->FirstChild();
-    while (child != nullptr) {
-        if (child->ToElement() != nullptr) {
-            // Recursively process child elements
-            removeTextBetweenElements(child);
-
-            // Add class and text value if they don't exist
-            tinyxml2::XMLElement* element = child->ToElement();
-            if (element->Attribute("class") == nullptr) {
-                element->SetAttribute("class", "");
-            }
-            if (element->GetText() == nullptr) {
-                element->SetText("");
-            }
-
-            // Add content if the element is not self-closing
-            if (!element->NoChildren()) {
-                tinyxml2::XMLNode* content = element->FirstChild();
-                if (content == nullptr) {
-                    element->InsertFirstChild(element->GetDocument()->NewText(""));
-                }
-            }
-        } else if (child->ToText() != nullptr) {
-            // Remove the text node if it's not inside an element
-            tinyxml2::XMLNode* parent = child->Parent();
-            if (parent != nullptr && parent->ToElement() == nullptr) {
-                parent->DeleteChild(child);
-            }
-        }
-        child = child->NextSibling();
-    }
-}
-
-StylusEdditor2::StylusEdditor2(std::string fileName, std::string templateName, Wt::WTemplate* parent_template)
+StylusEdditor::StylusEdditor()
 {
-	applicationWidthClass = 250;
-	setStyleClass("min-w-fit w-[240px] bg-neutral-700");
+	applicationWidthClass = 320;
+	setStyleClass("min-w-fit w-[300px] bg-neutral-700");
 	setMinimumSize(300, Wt::WLength(100, Wt::LengthUnit::ViewportHeight));
 	setMaximumSize(Wt::WLength(500, Wt::LengthUnit::Pixel), Wt::WLength(100,Wt::LengthUnit::ViewportHeight));
 	setThemeStyleEnabled(false);
 	setOffsets(0, Wt::Side::Top | Wt::Side::Right | Wt::Side::Bottom);
 	setOffsets(Wt::WLength::Auto, Wt::Side::Left);
 	Wt::WApplication::instance()->root()->toggleStyleClass("mr-[" + std::to_string(applicationWidthClass) + "px]", true, true);
-	// resized().connect(this, &StylusEdditor2::dialogResized);
+	stylusState_ = std::make_shared<StylusState>();
 
-    sourcePath_ += fileName;
-    templateName_ = templateName;
+	// resized().connect(this, &StylusEdditor::dialogResized);
+
+    // sourcePath_ += fileName;
+    // templateName_ = templateName;
 
 	// rejectWhenEscapePressed();
 	setModal(false);
@@ -67,9 +32,35 @@ StylusEdditor2::StylusEdditor2(std::string fileName, std::string templateName, W
 	setTitleBarEnabled(false);
 
 	// titleBar()->clear();
-	treeview_temp_ = contents()->addWidget(std::make_unique<Wt::WTemplate>(tr("stylus2.edditor")));
-	elementClassEdditor_ = treeview_temp_->bindWidget("stylus2.element.edditor", std::make_unique<ElementClassEdditor>());
-	element_content_textarea_ = treeview_temp_->bindWidget("stylus2.element.content", std::make_unique<Wt::WTextArea>());
+	edditor_temp_ = contents()->addWidget(std::make_unique<Wt::WTemplate>(tr("stylus.edditor")));
+
+	stylus_templates_ = edditor_temp_->bindWidget("templates.widget", std::make_unique<StylusTemplatesWidget>(stylusState_));
+	stylus_templates_->templateSelected().connect(this, &StylusEdditor::setTemplate);
+
+	// parseMessageAndDoc();
+	createTitleBarControls();
+    // createDialogContent();
+	// createDialogTreeView();	
+
+	setHidden(false, Wt::WAnimation(Wt::AnimationEffect::SlideInFromRight, Wt::TimingFunction::Linear, 350));
+}	
+
+void StylusEdditor::setTemplate(std::string fileName, std::string messageId)
+{
+	if(!stylus_templates_->parseMessageAndDoc(fileName, messageId)){
+		std::cout << "\n\n StylusEdditor::setTemplate --- template already exists \n\n";
+		auto not_found_text = edditor_temp_->bindWidget("tree-view", std::make_unique<Wt::WText>("arguments fileName or messageId are not found"));
+		not_found_text->setStyleClass("text-red-400 font-bold");
+		return;
+	}
+
+
+	toggleOutline(false);
+	// updateFile();
+	// updateView();
+	
+	elementClassEdditor_ = edditor_temp_->bindWidget("stylus.element.edditor", std::make_unique<ElementClassEdditor>());
+	element_content_textarea_ = edditor_temp_->bindWidget("stylus.element.content", std::make_unique<Wt::WTextArea>());
 	element_content_textarea_->setStyleClass("bg-neutral-900 text-neutral-100 rounded-md");
 	titleBar()->setStyleClass("!p-0");
 	element_content_textarea_->enterPressed().connect(this, [=](){
@@ -77,31 +68,14 @@ StylusEdditor2::StylusEdditor2(std::string fileName, std::string templateName, W
 		updateFile();
 		updateView();
 	});
-	
-	parseMessageAndDoc();
-	createTitleBarControls();
-    createDialogContent();
+
 	createDialogTreeView();
-	
-	updateFile();
-	updateView();
-	
-	setHidden(false, Wt::WAnimation(Wt::AnimationEffect::SlideInFromRight, Wt::TimingFunction::Linear, 350));
-
-
-}
-
-void StylusEdditor2::setTemplate(std::string fileName, std::string templateName)
-{
-	sourcePath_ = "resources/xml/" + fileName;
-	templateName_ = templateName;
-	parseMessageAndDoc();
-	createDialogTreeView();
+	elementClassEdditor_->styleChanged().connect(this, &StylusEdditor::saveStyles);
 	updateFile();
 	updateView();
 }
 
-void StylusEdditor2::dialogResized(int width, int height)
+void StylusEdditor::dialogResized(int width, int height)
 {
 	Wt::WApplication::instance()->root()->removeStyleClass("ml-[" + std::to_string(applicationWidthClass) + "px]");
 	if(width > 500) width = 500;
@@ -110,40 +84,18 @@ void StylusEdditor2::dialogResized(int width, int height)
 }
 
 
-// get the correct message from the xml file and template id (message id)
-void StylusEdditor2::parseMessageAndDoc()
-{
-	// std::cout << "\n StylusEdditor2::parseMessageAndDoc with path " << sourcePath_ << "\n";
-	stylusState_ = std::make_shared<StylusState>();
-	auto result = stylusState_->doc.LoadFile(sourcePath_.toUTF8().c_str());
-	if(result != tinyxml2::XML_SUCCESS){
-		std::cout << "\n StylusEdditor2::parseMessageAndDoc error opening xml file --- ";
-		std::cout << " file path: " << sourcePath_.toUTF8() << "\n";
-		return;
-	}
-	tinyxml2::XMLElement* root = stylusState_->doc.RootElement();
-	if(!root) {
-		std::cout << "\n\n StylusEdditor2::parseMessageAndDoc error getting <messages> element \n\n";
-		return;
-	}
-	stylusState_->selectedTemplate = root->FirstChildElement("message");
-	while(stylusState_->selectedTemplate->ToElement()->Attribute("id") != templateName_.toUTF8()){
-		stylusState_->selectedTemplate = stylusState_->selectedTemplate->NextSiblingElement("message");
-	}
-	removeTextBetweenElements(stylusState_->selectedTemplate);
-}
-
-StylusEdditor2::~StylusEdditor2()
+StylusEdditor::~StylusEdditor()
 {
 	toggleOutline(false);
+	updateFile();
 }
 
-void StylusEdditor2::createTitleBarControls()
+void StylusEdditor::createTitleBarControls()
 {
-	auto move_left_btn = treeview_temp_->bindWidget("move-left-btn", std::make_unique<Wt::WPushButton>());
-	auto move_right_btn = treeview_temp_->bindWidget("move-right-btn", std::make_unique<Wt::WPushButton>());
-	auto theme_switcher_btn = treeview_temp_->bindWidget("theme-switcher-btn", createThemeSwitcher());
-	auto refresh_btn = treeview_temp_->bindWidget("refresh-btn", std::make_unique<Wt::WPushButton>());
+	auto move_left_btn = edditor_temp_->bindWidget("move-left-btn", std::make_unique<Wt::WPushButton>());
+	auto move_right_btn = edditor_temp_->bindWidget("move-right-btn", std::make_unique<Wt::WPushButton>());
+	auto toggle_outline_checkbox = edditor_temp_->bindWidget("toggle-outline-checkbox", std::make_unique<Wt::WCheckBox>());
+	auto theme_switcher_btn = edditor_temp_->bindWidget("theme-switcher-btn", createThemeSwitcher());
 
 	move_left_btn->setDisabled(true);
 
@@ -166,43 +118,56 @@ void StylusEdditor2::createTitleBarControls()
 		Wt::WApplication::instance()->root()->toggleStyleClass("ml-[" + std::to_string(applicationWidthClass) + "px]", false, true);
 	});
 
-	refresh_btn->clicked().connect(this, [=](){
+	toggle_outline_checkbox->setChecked(true);
+	toggle_outline_checkbox->changed().connect(this, [=](){
+		// toggle checkbox ? style
+		if(toggle_outline_checkbox->isChecked()){
+			outline_selected_on = true;
+			toggle_outline_checkbox->toggleStyleClass("?", true, true);
+		}else {
+			outline_selected_on = false;
+			toggle_outline_checkbox->toggleStyleClass("?", false, true);
+		}
+		// toggle element outline if present
+		if(!stylusState_->selectedElement){
+			std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
+			return;
+		}
+		if(toggle_outline_checkbox->isChecked()){
+			toggleOutline();
+		}else {
+			toggleOutline(false);
+		}
 		updateFile();
 		updateView();
 	});
-
 }
 
-void StylusEdditor2::createDialogTreeView()
+void StylusEdditor::createDialogTreeView()
 {
-	// std::cout << "\nStylusEdditor2 --- createDialogTreeView got called \n";
-	auto treeView = treeview_temp_->bindWidget("tree-view", std::make_unique<StylusTreeView>(stylusState_));
+	// std::cout << "\nStylusEdditor --- createDialogTreeView got called \n";
+	auto treeView = edditor_temp_->bindWidget("tree-view", std::make_unique<StylusTreeView>(stylusState_));
 	treeView->templateModified().connect(this, [=](){
 		updateFile();
 		updateView();
 		// treeView->createTree();
 		createDialogTreeView();
 	});
-	treeView->selectionChanged().connect(this, &StylusEdditor2::nodeSelected);
-	treeView->templateNodeSelected().connect(this, &StylusEdditor2::tempNodeSelected);
-	treeView->openTemplate().connect(this, &StylusEdditor2::setTemplate);
+	treeView->selectionChanged().connect(this, &StylusEdditor::nodeSelected);
+	treeView->templateNodeSelected().connect(this, &StylusEdditor::tempNodeSelected);
+	treeView->openTemplate().connect(this, &StylusEdditor::setTemplate);
 	treeView->createTree();
 }
 
-void StylusEdditor2::createDialogContent()
-{
-	 elementClassEdditor_->styleChanged().connect(this, &StylusEdditor2::saveStyles);
 
-}
-
-void StylusEdditor2::nodeSelected(tinyxml2::XMLNode* node)
+void StylusEdditor::nodeSelected(tinyxml2::XMLNode* node)
 {
 	if(stylusState_->templateSelected)
 	{
-		std::cout << "\nStylusEdditor2::nodeSelected --- templateSelected = FALSE \n";
+		std::cout << "\nStylusEdditor::nodeSelected --- templateSelected = FALSE \n";
 		return;
 	}
-	// std::cout << "\nStylusEdditor2::nodeSelected ";
+	// std::cout << "\nStylusEdditor::nodeSelected ";
 	if(outline_selected_on){
 		toggleOutline(false);
 		stylusState_->selectedElement = node->ToElement();
@@ -218,14 +183,14 @@ void StylusEdditor2::nodeSelected(tinyxml2::XMLNode* node)
 	updateDisplayElement(elem_classes, elem_content);
 }
 
-void StylusEdditor2::tempNodeSelected(tinyxml2::XMLNode* node)
+void StylusEdditor::tempNodeSelected(tinyxml2::XMLNode* node)
 {
 	if(!stylusState_->templateSelected)
 	{
-		std::cout << "\nStylusEdditor2::tempNodeSelected --- templateSelected = TRUE \n";
+		std::cout << "\nStylusEdditor::tempNodeSelected --- templateSelected = TRUE \n";
 		return;
 	}
-	// std::cout << "\nStylusEdditor2::tempNodeSelected ";
+	// std::cout << "\nStylusEdditor::tempNodeSelected ";
 	std::string tempString = node->Value();
 	auto startString = "${";
 	toggleOutline(false);
@@ -235,9 +200,6 @@ void StylusEdditor2::tempNodeSelected(tinyxml2::XMLNode* node)
 	// remove "} from end of string
 	classes = classes.substr(0, classes.size()-2);
 
-	auto tempUpdated = startString + variableName + " class=\"? " + classes + "\"}";
-	std::cout << "\n\n tempUpdated: " << tempUpdated << "\n\n";
-	node->SetValue(tempUpdated.c_str());
 	// std::cout << "\n\n tempNodeSelected: " << tempString << "\n\n";
 	// std::cout << "\n\n variableName: " << variableName << "\n\n";
 	// std::cout << "\n\n styleClasses: " << classes << "\n\n";
@@ -252,11 +214,11 @@ void StylusEdditor2::tempNodeSelected(tinyxml2::XMLNode* node)
 }
 
 
-void StylusEdditor2::toggleOutline(bool on)
+void StylusEdditor::toggleOutline(bool on)
 {
-	// std::cout << "\nStylusEdditor2 --- toggleOutline got called \n";
+	// std::cout << "\nStylusEdditor --- toggleOutline got called \n";
 	if(!stylusState_->selectedElement){
-		std::cout << "\n\n StylusEdditor2::toggleOutline --- error getting selected element \n\n";
+		std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
 		return;
 	}
 	std::string currentStyles = cleanStringStartEnd(stylusState_->selectedElement->ToElement()->Attribute("class"));
@@ -272,7 +234,7 @@ void StylusEdditor2::toggleOutline(bool on)
 }
 
 
-void StylusEdditor2::saveStyles(std::string newStyles)
+void StylusEdditor::saveStyles(std::string newStyles)
 {
 	
 	// std::cout << "\n\n newStyles: " << newStyles << "\n\n";
@@ -284,28 +246,32 @@ void StylusEdditor2::saveStyles(std::string newStyles)
 
 
 // set element display from element xml
-void StylusEdditor2::updateDisplayElement(std::string classes, std::string content)
+void StylusEdditor::updateDisplayElement(std::string classes, std::string content)
 {
 	element_content_textarea_->setText(content);
 	elementClassEdditor_->setStyleClasses(classes);
 }
 
 // update file and view
-void StylusEdditor2::updateFile()
+void StylusEdditor::updateFile()
 {
-	// std::cout << "\nStylusEdditor2::updateFile";
-	stylusState_->doc.SaveFile(sourcePath_.toUTF8().c_str());
+	// check if doc exists
+	if(stylusState_->doc.Error()){
+		std::cout << "\n\n StylusEdditor::updateFile --- error getting <messages> element \n\n";
+		return;
+	}
+	stylusState_->doc.SaveFile(stylusState_->filePath.c_str());
 }
 
-void StylusEdditor2::updateView()
+void StylusEdditor::updateView()
 {
-	// std::cout << "\nStylusEdditor2::updateView";
+	// std::cout << "\nStylusEdditor::updateView";
 	auto app  = Wt::WApplication::instance();
 	app->messageResourceBundle().keys("");
 	app->refresh();
 }
 
-std::string StylusEdditor2::cleanStringStartEnd(const std::string& input)
+std::string StylusEdditor::cleanStringStartEnd(const std::string& input)
 {
 	std::string newString = input;
 	auto found = newString.find("?");
@@ -333,7 +299,7 @@ std::string StylusEdditor2::cleanStringStartEnd(const std::string& input)
 }
 
 // create theme switcher light/dark mode
-std::unique_ptr<Wt::WPushButton> StylusEdditor2::createThemeSwitcher(){
+std::unique_ptr<Wt::WPushButton> StylusEdditor::createThemeSwitcher(){
     bool darkMode = false;
     auto theme_switcher = std::make_unique<Wt::WPushButton>("");
 

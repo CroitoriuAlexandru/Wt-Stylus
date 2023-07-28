@@ -1,114 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <messages>
-    <message id="stylus.edditor.titlebar">
-        <div class="flex items-center px-2 space-x-2 "> ${remove class="m-0 btn
-            btn-danger"} <div class="border-l-2 border-solid ps-2 space-y-2">
-                ${add-child-before class="m-0 btn btn-success
-                bg-[resources/icons/url(right-arrow-square.svg)]"}
-                ${add-child-after class="m-0 btn
-                bg-[resources/icons/url(right-arrow-square.svg)]"}
-            </div>
-            <div class="border-l-2 border-solid ps-2 space-y-2">
-                ${add-sibling-before class="m-0 me-2 btn btn-dark
-                bg-[resources/icons/url(right-arrow-square.svg)]"}
-                ${add-sibling-after class="m-0 me-4 btn 
-                bg-[resources/icons/url(right-arrow-square.svg)]"}
-            </div>
-            <div class="self-stretch border border-solid ms-0 " />
-            <div class="relative inline-flex flex-col self-start ">
-                <div class="font-bold tracking-widest text-center ">Outline</div> ${<parent>}
-                    ${outline-parent-checkbox class=""}
-                    ${</parent>} ${outline-selected-checkbox class=""} </div>
-            <div class="self-stretch border border-solid" />
-            <div class="relative self-start flex flex-col">
-                <div class="font-bold tracking-widest text-center ">togglers</div>
-                <div class="flex">
-                    <div class="flex flex-col ">
-                        ${display-default-checkbox class="text-xs "}
-                        ${display-default-hover-checkbox class="text-xs "}
-                    </div>
-                    <div
-                        class="self-stretch border border-solid mx-2" />
-                    <div class="flex flex-col justify-stretch">
-                        ${display-dark-checkbox class="text-xs "}
-                        ${display-dark-hover-checkbox class="text-xs "}
-                    </div>
-                    <div
-                        class="self-stretch border border-solid mx-2" />
-                    ${display-text-content-checkbox class="text-xs "} </div>
-            </div>
-        </div>
-    </message>
-    <message id="stylus.edditor.content">
-        <div class="flex max-w-[100vw] min-w-[200px] pe-3"> ${tree-view class="max-w-[150px]
-            min-w-[150px]"} <div class="flex min-h-[400px] items-stretch w-full"><div>
-            ${default-styles-display class="h-1/2 mb-6"}
-                    ${default-hover-styles-display class="h-1/2"}
-                </div>
-                <div>
-            ${dark-styles-display class="h-1/2 mb-6 "}
-                    ${dark-hover-styles-display class="h-1/2 "}
-                </div>
-            ${text-content-display class="relative w-full"} </div>
-        </div>
-    </message>
-    <message id="stylus.edditor.content.display">
-        <div class="text-center">${title}</div> ${text-display class="h-full"} 
-    </message>
-    <message id="stylus.sidebar.titlebar">
-        <div class="relative">${stylus}</div>
-        <div class="">${svg.plus class="btn p-1 m-1"}</div>
-    </message>
-    <message id="stylus.sidebar.content">
-        <div class="relative">${stylus}</div>
-        <div class="" />
-        <div class="">${container.wt class="p-0"}</div>
-    </message>
-    <!-- <message id="stylus.sidebar.folder.item">
-        <div class="-mx-2">
-            <div class="flex items-center">${svg.trash class="btn btn-danmger p-1 m-1"}
-            ${title}
-            ${svg.pencil class="btn p-1 m-1 ms-auto"}</div>
-        </div>
-    </message> -->
-    <message id="stylus.edditor.class.view">
-        <div class="">${stylus}</div>
-        <div class="p-3">${stylus.class.padding}</div>
-    </message>
-    <message id="stylus2.edditor">
+
+    <message id="stylus.edditor">
         <div class="relative h-screen flex flex-col items-stretch">
-            <div class="flex items-center justify-between border-b border-solid border-neutral-900">
-                ${move-left-btn class="bg-[url(resources/icons/left-arrow-square.svg)] !p-3 rounded-none
-                !m-0 bg-cover"}
-                ${refresh-btn class="!p-2.5 bg-url(resources/icons/refresh.svg) rounded-full !my-0 !ms-2 bg-cover"}
-                ${theme-switcher-btn class="!p-2.5 rounded-full !my-0 !ms-auto !mr-2 bg-cover"}
-                ${move-right-btn class="bg-[url(resources/icons/right-arrow-square.svg)] !p-3
-                rounded-none !m-0 bg-cover"}
-            </div>
-            <div class="min-h-[200px] overflow-auto border-b border-solid resize-y">
-                ${tree-view class="h-fit"}
-            </div>
-            <div class="mb-auto">
-                ${stylus2.element.edditor class="px-4"}
-            </div>
-            <div class="absolute bottom-0 w-full px-2">
-                ${stylus2.element.content class="px-2 w-full"}
+            <div x-data="{ isChecked: false }">
+
+                <div class="flex h-[25px] items-start border-b border-solid border-neutral-900">
+                    <div class="-mt-1.5">
+                        ${move-left-btn class="bg-[url(resources/icons/left-arrow-square.svg)] !p-3
+                        rounded-none !m-0 bg-cover"}
+                    </div>
+                    <div class="mr-auto">
+                        <label for="toggleMenu" :class="{ 'bg-neutral-600': isChecked }"
+                            x-text="isChecked ? 'Template' : 'Files'"
+                            class="text-sm font-bold text-neutral-400 bg-neutral-800 p-0.5 px-1.5 ml-1.5 border border-solid border-neutral-900 rounded-md"></label>
+                        <input type="checkbox" x-model="isChecked" class="hidden" id="toggleMenu" />
+                    </div>
+                    <div class="mr-2 mt-0.5 ">
+                        ${toggle-outline-checkbox class="? !p-2.5 rounded-full !m-0"}
+                    </div>
+                    <div class="-mt-[5px]">
+                        ${theme-switcher-btn class="!p-2.5 rounded-full !m-0 bg-cover"}
+                    </div>
+                    <div class="-mt-1.5">
+                        ${move-right-btn class="bg-[url(resources/icons/right-arrow-square.svg)] !p-3 rounded-none !m-0 bg-cover"}
+                    </div>
+                </div>
+
+                <div x-show="!isChecked" class="">
+                    <div class="min-h-[200px] overflow-auto border-b border-solid resize-y">
+                        ${tree-view class="h-fit"}
+                    </div>
+                    <div class="mb-auto">
+                        ${stylus.element.edditor class="px-4"}
+                    </div>
+                    <div class="absolute bottom-0 w-full px-2">
+                        ${stylus.element.content class="px-2 w-full"}
+                    </div>
+                </div>
+                <div x-show="isChecked" class="">
+                    ${templates.widget}
+                </div>
+
             </div>
         </div>
     </message>
 
     <message id="stylus.templates.widget">
-        <div class="m-2 p-2 bg-green-400">${titlebar}</div>
-        <div class="m-2 p-2 bg-green-400">${contents}</div>    
+        <div class="">${add-xml-file-btn class=""}</div>
+        <div class="container mx-auto">
+            <div class="w-full overflow-y-auto h-screen">${contents class=""}</div>    
+        </div>
     </message>
 
-    <message id="stylus2.element.edditor">
-        ${stylus2.sizing.template class="w-full text-xs flex flex-col items-stretch text-neutral-400"}
+    <message id="stylus.templates.folder.item">
+        <div class="-mx-2">
+            <div class="flex items-center">${svg.trash class="btn btn-danmger p-1 m-1"}
+                ${title}
+                ${svg.pencil class="btn p-1 m-1 ms-auto"}
+            </div>
+        </div>
+    </message>
+
+    <message id="stylus.element.edditor">
+        ${stylus.sizing.template class="w-full text-xs flex flex-col items-stretch text-neutral-400"}
         <div class="border-b border-solid border-neutral-900"></div>
-        ${stylus2.spacing.template class="w-full text-xs flex flex-col items-stretch text-neutral-400"}
+        ${stylus.spacing.template class="w-full text-xs flex flex-col items-stretch text-neutral-400"}
     </message>
 
-    <message id="stylus2.sizing.template">
+    <message id="stylus.sizing.template">
         <div class="flex justify-between space-x-2 -mx-2">
 
             <div class="flex flex-col justify-start items-stretch w-1/2">
@@ -139,7 +99,7 @@
         </div>
     </message>
 
-    <message id="stylus2.spacing.template">
+    <message id="stylus.spacing.template">
         <div class="flex justify-between space-x-4">
 
             <div class="flex flex-col justify-start items-stretch w-1/2">
@@ -220,11 +180,4 @@
         </div>
     </message>
 
-    <message id="stylus.sidebar.folder.item">
-        <div class="-mx-2">
-            <div class="flex items-center">${svg.trash class="btn btn-danmger p-1 m-1"}
-                ${title}
-                ${svg.pencil class="btn p-1 m-1 ms-auto"}</div>
-        </div>
-    </message>
 </messages>

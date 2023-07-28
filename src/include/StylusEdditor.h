@@ -1,6 +1,7 @@
 #pragma once
 #include "StylusTreeView.h"
 #include "ElementClassEdditor.h"
+#include "StylusTemplatesWidget.h"
 
 #include <Wt/WTextArea.h>
 #include <Wt/WLineEdit.h>
@@ -12,28 +13,26 @@
 #include <fstream>
 #include <iostream>
 
-class StylusEdditor2 : public Wt::WDialog
+class StylusEdditor : public Wt::WDialog
 {
 public:
-    StylusEdditor2(std::string fileName, std::string templateName, Wt::WTemplate* parent_template = nullptr);
-    ~StylusEdditor2();
+    StylusEdditor();
+    ~StylusEdditor();
     std::string cleanStringStartEnd(const std::string& input);
-    void setTemplate(std::string fileName, std::string templateName);
+    void setTemplate(std::string fileName, std::string messageId);
 private:
-    void parseMessageAndDoc();
-
     std::shared_ptr<StylusState> stylusState_;
     ElementClassEdditor* elementClassEdditor_;
+    StylusTemplatesWidget* stylus_templates_;
     Wt::WTextArea* element_content_textarea_;
 
-    Wt::WString sourcePath_ = "resources/xml/";
+    // Wt::WString sourcePath_ = "resources/xml/";
 
-    Wt::WString templateName_ = "";
-    Wt::WTemplate* treeview_temp_;
+    // Wt::WString templateName_ = "";
+    Wt::WTemplate* edditor_temp_;
 
     void createTitleBarControls();
     void createDialogTreeView();
-    void createDialogContent();
     
     void nodeSelected(tinyxml2::XMLNode* node);
     void tempNodeSelected(tinyxml2::XMLNode* node);

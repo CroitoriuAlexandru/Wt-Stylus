@@ -266,9 +266,9 @@ span.Wt-disabled, fieldset.Wt-disabled legend {
   font-size: 110%; */
 }
 
-.Wt-dialog .body, .Wt-dialog .footer {
+/* .Wt-dialog .body, .Wt-dialog .footer {
   padding: 4px 6px 4px;
-}
+} */
 
 .Wt-dialog .footer {
   text-align: right;
@@ -365,7 +365,7 @@ span.Wt-disabled, fieldset.Wt-disabled legend {
 
 .Wt-panel .body {
   background: #FFFFFF;
-  padding: 4px 6px 4px;
+  /* padding: 4px 6px 4px; */
   -webkit-backface-visibility: hidden; /* !flicker on Chrome */
   clear: left;
 }

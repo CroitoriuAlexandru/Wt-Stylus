@@ -38,7 +38,7 @@ struct SpacingData
 class ElementSpacingWidget : public Wt::WTemplate
 {
 public:
-	ElementSpacingWidget(std::string templateName = "stylus2.spacing.template");
+	ElementSpacingWidget(std::string templateName = "stylus.spacing.template");
 	// margin and padding at the moment
 
 	void setClasses(SpacingData spacing);

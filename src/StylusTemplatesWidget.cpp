@@ -10,38 +10,20 @@
 
 #include <boost/filesystem.hpp>
 
-std::unique_ptr<Wt::WPushButton> createEdditor(Wt::WTemplate *parent_template, std::string fileName, std::string templateName)
-{
-    auto stylus_btn = std::make_unique<Wt::WPushButton>(Wt::WString::tr("svg.pencil"));
-    stylus_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
-    stylus_btn->setStyleClass("absolute top-0 right-0 opacity-30 hover:opacity-60");
-    // auto edditor_dialog = std::make_unique<StylusEdditor>(fileName, templateName);
-    // stylus_btn->clicked().connect([=](){
-        // auto dialog = Wt::WApplication::instance()->addChild(std::make_unique<StylusEdditor>(fileName, templateName, parent_template));
-    // });
-    return stylus_btn;
-}
 
-StylusTemplatesWidget::StylusTemplatesWidget()
-    : Wt::WTemplate(Wt::WString::tr("stylus.templates.widget"))
+StylusTemplatesWidget::StylusTemplatesWidget(std::shared_ptr<StylusState> stylusState)
+    : Wt::WTemplate(Wt::WString::tr("stylus.templates.widget")),
+    stylusState_(stylusState)
 {
     
-    setStyleClass("max-w-[275px] !p-0 overflow-y-scroll");
+    setStyleClass("overflow-y-scroll");
 
-    temp_titlebar_ = bindWidget("titlebar", std::make_unique<Wt::WTemplate>(tr("stylus.sidebar.titlebar")));
-    temp_content_ = bindWidget("contents", std::make_unique<Wt::WTemplate>(tr("stylus.sidebar.content")));
-
-    temp_titlebar_->setStyleClass("!p-0");
-
-    temp_titlebar_->bindWidget("stylus", createEdditor(temp_titlebar_, "Stylus.xml", "stylus.sidebar.titlebar"));
-    temp_content_->bindWidget("stylus", createEdditor(temp_content_, "Stylus.xml", "stylus.sidebar.content"));
-    temp_content_->setStyleClass("overflow-scroll");
 
     // add file btn
-    auto btn_add_file = temp_titlebar_->bindWidget("svg.plus", std::make_unique<Wt::WPushButton>(tr("svg.plus")));
-    btn_add_file->setTextFormat(Wt::TextFormat::UnsafeXHTML);
-    btn_add_file->clicked().connect(this, &StylusTemplatesWidget::createFile);
-    
+    auto add_xml_file_btn = bindWidget("add-xml-file-btn", std::make_unique<Wt::WPushButton>(tr("svg.plus") + " Add File"));
+    add_xml_file_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+    add_xml_file_btn->clicked().connect(this, &StylusTemplatesWidget::createFile);
+    add_xml_file_btn->setStyleClass(Wt::WString::tr("button-dark") + "flex items-center justify-center bg-neutral-700 hover:bg-heutral-800");
 
     
 
@@ -95,7 +77,7 @@ std::vector<std::string> StylusTemplatesWidget::getXmlFileMessages(const std::st
 void StylusTemplatesWidget::createMenu()
 {
     xml_files_data_ = getXmlFilesData(xml_folder_path);
-    auto menu_content = temp_content_->bindWidget("container.wt", std::make_unique<Wt::WContainerWidget>());
+    auto menu_content = bindWidget("contents", std::make_unique<Wt::WContainerWidget>());
     // iterate overvector xml_files_data_
     for(const auto fileData : xml_files_data_)
     {
@@ -104,7 +86,7 @@ void StylusTemplatesWidget::createMenu()
         panel->addStyleClass("border border-solid border-gray-100 rounded-md m-1");
         panel->setCollapsible(true);
         panel->setCollapsed(true);
-        panel->titleBarWidget()->setStyleClass("flex items-center");
+        panel->titleBarWidget()->setStyleClass(tr("stylus-panel-titlebar"));
         auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(tr("svg.trash")));
         delete_file_btn->setStyleClass("btn p-1 m-1 ms-auto");
         delete_file_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
@@ -123,9 +105,10 @@ void StylusTemplatesWidget::createMenu()
         panel->setAnimation(animation);
         
         auto messages_display = panel->setCentralWidget(std::make_unique<Wt::WContainerWidget>());
+        messages_display->setStyleClass(tr("stylus-panel-content"));
         for(const auto message : fileData.messages)
         {
-            auto file_item = messages_display->addWidget(std::make_unique<Wt::WTemplate>(tr("stylus.sidebar.folder.item")));
+            auto file_item = messages_display->addWidget(std::make_unique<Wt::WTemplate>(tr("stylus.templates.folder.item")));
             file_item->bindWidget("title", std::make_unique<Wt::WText>(message));
             
             auto del_message_btn = file_item->bindWidget("svg.trash", std::make_unique<Wt::WPushButton>(tr("svg.trash")));
@@ -137,16 +120,73 @@ void StylusTemplatesWidget::createMenu()
             auto open_edditor_btn = file_item->bindWidget("svg.pencil", std::make_unique<Wt::WPushButton>(tr("svg.pencil")));
             open_edditor_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
             open_edditor_btn->doubleClicked().connect([=](){
-                // auto dialog = Wt::WApplication::instance()->root()->addChild(std::make_unique<StylusEdditor>(fileData.fileName, message));
-                // dialog->animateShow(Wt::WAnimation(Wt::AnimationEffect::Fade, Wt::TimingFunction::EaseInOut, 200));
+
+            auto fileName = fileData.fileName;
+            auto messageId = message;
+            templateSelected_.emit(fileName, messageId);
+
             });
 
         }
     }
 }
 
+bool StylusTemplatesWidget::checkIfTemplateExists(std::string fileName, std::string templateName)
+{
+    bool exists = false;
+    std::cout << "\n\n" << fileName << "\n\n";
+    std::cout << "\n\n" << templateName << "\n\n";
+    for(const auto fileData : xml_files_data_)
+    {
+        if(fileData.fileName == fileName){
+            for(const auto message : fileData.messages)
+            {
+                if(message == templateName){
+                    return true;
+                }
+            }
+        }
+    }
 
 
+    return exists;
+}
+
+// get the correct message from the xml file and template id (message id)
+bool StylusTemplatesWidget::parseMessageAndDoc(std::string fileName, std::string tempMessageId)
+{
+    bool response = false;
+    if(checkIfTemplateExists(fileName, tempMessageId) == false){
+        std::cout << "\n\n StylusTemplatesWidget::parseMessageAndDoc error template does not exist \n\n";
+        return false;
+    }
+    try{
+
+        std::string path = xml_folder_path + fileName;
+        std::cout << "\n StylusTemplatesWidget::parseMessageAndDoc with path " << path << "\n";
+        auto result = stylusState_->doc.LoadFile(path.c_str());
+        stylusState_->filePath = path;
+        if(result != tinyxml2::XML_SUCCESS){
+            std::cout << "\n StylusTemplatesWidget::parseMessageAndDoc error opening xml file --- ";
+            return false;
+        }
+        tinyxml2::XMLElement* root = stylusState_->doc.RootElement();
+        if(!root) {
+            std::cout << "\n\n StylusTemplatesWidget::parseMessageAndDoc error getting <messages> element \n\n";
+            return false;
+        }
+        stylusState_->selectedTemplate = root->FirstChildElement("message");
+        while(stylusState_->selectedTemplate->ToElement()->Attribute("id") != tempMessageId){
+            stylusState_->selectedTemplate = stylusState_->selectedTemplate->NextSiblingElement("message");
+        }
+        removeTextBetweenElements(stylusState_->selectedTemplate);
+        response = true;
+    }catch(...){
+        std::cout << "\n\n StylusTemplatesWidget::parseMessageAndDoc error \n\n";
+        response = false;
+    }
+    return response;
+}
 
 void StylusTemplatesWidget::createFile()
 {
@@ -198,7 +238,7 @@ void StylusTemplatesWidget::deleteFile(std::string fileName)
     dialog->rejectWhenEscapePressed();
     dialog->contents()->addWidget(std::make_unique<Wt::WText>(fileName));
     auto delete_btn = dialog->contents()->addWidget(std::make_unique<Wt::WPushButton>("Delete"));
-    delete_btn->setStyleClass("btn");
+    delete_btn->setStyleClass(Wt::WString::tr("button"));
     delete_btn->clicked().connect([=](){
         dialog->accept();
     });
@@ -306,4 +346,40 @@ void StylusTemplatesWidget::addMessageTemplate(std::string fileName)
         }
     });
     dialog->animateShow(Wt::WAnimation(Wt::AnimationEffect::Fade, Wt::TimingFunction::EaseInOut, 200));
+}
+
+
+void StylusTemplatesWidget::removeTextBetweenElements(tinyxml2::XMLNode* node) {
+    if (node == nullptr) {
+        return;
+    }
+
+    tinyxml2::XMLNode* child = node->FirstChild();
+    while (child != nullptr) {
+        if (child->ToElement() != nullptr) {
+            // Recursively process child elements
+            removeTextBetweenElements(child);
+
+            // Add class and text value if they don't exist
+            tinyxml2::XMLElement* element = child->ToElement();
+            if (element->Attribute("class") == nullptr) {
+                element->SetAttribute("class", "");
+           }
+
+            // Add content if the element is not self-closing
+            // if (!element->NoChildren()) {
+            //     tinyxml2::XMLNode* content = element->FirstChild();
+            //     if (content == nullptr) {
+            //         element->InsertFirstChild(element->GetDocument()->NewText(""));
+            //     }
+            // }
+        } else if (child->ToText() != nullptr) {
+            // Remove the text node if it's not inside an element
+            tinyxml2::XMLNode* parent = child->Parent();
+            if (parent != nullptr && parent->ToElement() == nullptr) {
+                parent->DeleteChild(child);
+            }
+        }
+        child = child->NextSibling();
+    }
 }

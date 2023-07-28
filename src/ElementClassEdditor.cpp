@@ -47,8 +47,8 @@ std::string findAndRemoveMatche(std::regex regex, std::string& str) {
 ElementClassEdditor::ElementClassEdditor(std::string templateName)
     : WTemplate(tr(templateName))
 {
-    spacingWidget_ = bindWidget("stylus2.spacing.template", std::make_unique<ElementSpacingWidget>());
-    sizingWidget_ = bindWidget("stylus2.sizing.template", std::make_unique<ElementSizingWidget>());
+    spacingWidget_ = bindWidget("stylus.spacing.template", std::make_unique<ElementSpacingWidget>());
+    sizingWidget_ = bindWidget("stylus.sizing.template", std::make_unique<ElementSizingWidget>());
     
     spacingWidget_->styleChanged().connect(this, [=](){ styleChanged_.emit(getStyles()); });
     sizingWidget_->styleChanged().connect(this, [=](){ styleChanged_.emit(getStyles()); });
