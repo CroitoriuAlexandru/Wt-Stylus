@@ -229,7 +229,40 @@ std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* 
 		templateNodeSelected_.emit(textNode);
 	});
 	node->open_template_btn->doubleClicked().connect(this, [=](){
-		openTemplate_.emit("test.xml", "test.test");
+		
+		std::size_t lastPos = 0;
+		std::string variableName;
+		std::string fileName;
+		std::string messageId;
+		// ${test.test class="text-center p-2 m-2" fileName="fileName.xml" messageId="templateId"}
+		// get  variableName + test.test
+		std::size_t pos = std::string(textNode->Value()).find("${");
+		variableName = std::string(textNode->Value()).substr(pos + 2, std::string(textNode->Value()).find(" ", pos) - pos - 2);
+		// remove variableName from text
+		std::string text = std::string(textNode->Value()).substr(pos + 2 + variableName.length() + 1);
+		// remove class="" argument
+		pos = text.find("class=\"");
+		if(pos != std::string::npos){
+			text = text.substr(0, pos) + text.substr(text.find("\"", pos + 7) + 2);
+		}
+		// remove fileName="" argument and place the value between "" in fileName
+		pos = text.find("fileName=\"");
+		if(pos != std::string::npos){
+			fileName = text.substr(pos + 10, text.find("\"", pos + 10) - pos - 10);
+			text = text.substr(0, pos) + text.substr(text.find("\"", pos + 10) + 2);
+		}
+		// remove messageId="" argument and place the value between "" in messageId
+		pos = text.find("messageId=\"");
+		if(pos != std::string::npos){
+			messageId = text.substr(pos + 11, text.find("\"", pos + 11) - pos - 11);
+			text = text.substr(0, pos) + text.substr(text.find("\"", pos + 11) + 2);
+		}
+		std::cout << "\n\ntext :<" << textNode->Value() << ">\n\n";
+		std::cout << "\n\n variableName :<" << variableName << ">\n\n";
+		std::cout << "\n\n text :<" << text << ">\n\n";
+		std::cout << "\n\n fileName :<" << fileName << ">\n\n";		
+		std::cout << "\n\n messageId :<" << messageId << ">\n\n";
+		openTemplate_.emit(fileName, messageId);
 	});
 	return node;
 }
