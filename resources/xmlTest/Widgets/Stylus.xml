@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<messages>
+
+    <message id="stylus.edditor">
+        <div class="flex max-h-screen min-h-screen flex-col items-stretch" x-data="{ isChecked: false }">
+
+                <div class="flex h-[25px] items-start border-b border-solid border-neutral-900">
+                    <div class="-mt-1.5">
+                        ${move-left-btn class="bg-[url(resources/icons/left-arrow-square.svg)] !p-3
+                        rounded-none !m-0 bg-cover"}
+                    </div>
+                    <div class="mr-auto">
+                        <label for="toggleMenu" :class="{ 'bg-neutral-600': isChecked }"
+                            x-text="isChecked ? 'Template' : 'Files'"
+                            class="text-sm font-bold text-neutral-400 bg-neutral-800 p-0.5 px-1.5 ml-1.5 border border-solid border-neutral-900 rounded-md"></label>
+                        <input type="checkbox" x-model="isChecked" class="hidden" id="toggleMenu" />
+                    </div>
+                    <div class="mr-2 mt-0.5 ">
+                        ${toggle-outline-checkbox class="? !p-2.5 rounded-full !m-0"}
+                    </div>
+                    <div class="-mt-[5px]">
+                        ${theme-switcher-btn class="!p-2.5 rounded-full !m-0 bg-cover"}
+                    </div>
+                    <div class="-mt-1.5">
+                        ${move-right-btn class="bg-[url(resources/icons/right-arrow-square.svg)] !p-3 rounded-none !m-0 bg-cover"}
+                    </div>
+                </div>
+
+                <div x-show="!isChecked" class="h-full grow flex flex-col items-stretch ">
+                    <div class="max-h-[225px] pb-2 grow overflow-y-scroll border-b border-solid resize-y">${tree-view class="h-fit"}</div>
+
+                    <div class="z-50 grow max-h-[calc(100vh-255px)] overflow-y-scroll">
+                        <div class="mb-auto">${stylus.element.edditor class="px-4"}</div>
+                        <div class="border-b border-solid border-neutral-900 my-2"></div>
+
+                        <div>
+                            <div class="flex pl-3">
+                                <div>${toggle-variable-content}</div>
+                                <div class="ml-2">Toggle Variable Content</div>
+                            </div>
+                            <div class="w-full p-2">${stylus.element.content class="w-full"}</div>
+                        </div>
+                    </div>
+                </div>
+                <div x-show="isChecked" class="">${templates.widget}</div>
+
+        </div>
+    </message>
+
+    <message id="stylus.templates.widget">
+        <div class="text-md text-neutral-400 font-bold flex items-center justify-between">
+            <div class="">${add-xml-file-btn class="bg-[url(resources/icons/add-file.svg)] !p-3 m-1.5 bg-cover"}</div>
+            <div class="">${add-folder-btn class=" bg-[url(resources/icons/add-folder.svg)] !p-3 m-1.5 bg-cover"}</div>
+        </div>
+        <div class="container w-full h-screen overflow-y-auto">
+            <div class="">
+                <div class="text-xl font-bold text-neutral-400 ms-2 underline">Files</div>
+                <div>${contents-files class="mb-6"}</div>
+            </div>
+            <div class="">
+                <div class="text-xl font-bold text-neutral-400 ms-2 underline">Folders</div>
+                <div>${contents-folders class="mb-6"}</div>
+            </div>
+        </div>
+    </message>
+
+    <message id="stylus.templates.folder.item">
+        <div class="-mx-2 flex items-center">
+            <div class="flex items-center ml-4 mr-2">${svg.trash class=""}</div>
+            <div>${title}</div>
+            <div class="ms-auto m-1 me-4">${svg.pencil class=""}</div>                
+        </div>
+    </message>
+
+    <message id="stylus.element.edditor">
+        <div class="">
+            <!-- <div class="border-b border-solid border-neutral-900 mb-2"></div>
+            <div>
+                <div>${}</div>
+                <div>${stylus.background.template class="w-full text-xs flex flex-col items-stretch text-neutral-400"}</div>
+            </div>
+            <div class="border-b border-solid border-neutral-900 mb-2"></div>
+            <div>${stylus.sizing.template class="w-full text-xs flex flex-col items-stretch text-neutral-400"}</div>
+            <div class="border-b border-solid border-neutral-900 mb-2"></div>
+            <div>${stylus.spacing.template class="w-full text-xs flex flex-col items-stretch text-neutral-400"}</div> -->
+        </div>
+    </message>
+
+    <message id="stylus.background.template">
+        <div class="p-4">${test-colors-widget}</div>
+    </message>
+
+    <message id="stylus.class.changer.widget">
+        <div class="flex items-center w-full mb-1 text-xs rounded-md border bg-neutral-700">
+            <div>${refresh-button class="rounded-none pr-1 m-0"}</div>
+            <div>${select-combobox class=""}</div>
+            <div>${custom-lineedit class=""}</div>
+            <div>${other}</div>
+            <div>${checkbox-select-custom}</div>
+        </div>
+    </message>
+
+    <message id="stylus.class.changer.select.template">
+        <div class="flex items-stretch justify-center w-full border border-gray-600 border-solid rounded-md text-xs">
+            <div class="">${prev-button class=" h-full rounded-l-md border-l border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900"}</div>
+            <div class="w-full">${class-combobox class=" h-full text-center p-px w-full rounded-none m-0 bg-neutral-800 appearance-none focus-visible:outline-none hover:bg-neutral-900"}</div>
+            <div class="">${next-button class=" h-full rounded-l-none rounded-r-md border-l border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900"}</div>
+        </div>
+    </message>
+
+    <message id="stylus.class.changer.custom.template">
+        <div class="flex w-full border border-gray-600 border-solid rounded-md overflow-hidden">
+            ${lineedit class="p-px w-full ps-1 rounded-none m-0 h-full bg-neutral-800 text-center appearance-none focus-visible:outline-none hover:bg-neutral-900"}
+        </div>
+    </message>
+
+    <message id="stylus.colors.widget">
+        <div class="w-full">
+            <div>${combobox-1 class=""}</div>
+        </div>
+    </message>
+
+    <message id="stylus.colors.intensity-opacity.template">
+        <div class=" mx-1 relative">
+            <div class="absolute -top-4 lect-1/2 translate-x-1/2 text-xs">${up-button}</div>
+            <div class="text-xs">${combobox class="h-full text-center p-px w-full rounded-none m-0 bg-neutral-800 appearance-none focus-visible:outline-none hover:bg-neutral-900"}</div>
+            <div class="absolute -bottom-4 lect-1/2 translate-x-1/2 text-xs">${down-button}</div>
+        </div>
+    </message>
+ 
+    <message id="stylus.sizing.template">
+        <div class="flex">
+
+            <div class="flex flex-col justify-center items-stretch w-1/2">
+                <div class="font-bold text-center w-full text-neutral-500">Width</div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${width.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${width.min.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${width.max.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+            </div>
+
+            <div class="flex flex-col justify-center w-1/2">
+                <div class="font-bold text-center w-full text-neutral-500">Height</div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${height.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${height.min.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${height.max.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+            </div>
+        </div>
+    </message>
+
+    <message id="stylus.spacing.template">
+        <div class="flex">
+
+            <div class="flex flex-col items-center w-1/2">
+                <div class="font-bold text-center w-full text-neutral-500">Margin</div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${margin.all.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${margin.vertical.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${margin.horizontal.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center w-1/2">
+                <div class="font-bold text-center w-full text-neutral-500">Padding</div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${padding.all.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${padding.vertical.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${padding.horizontal.control class="w-full mb-1 mx-auto text-xs"}
+                </div>
+            </div>
+        </div>
+
+        <div class="relative my-8 mx-auto px-4 min-h-[90px] w-4/5 border-[4px] border-dashed border-neutral-500 flex flex-col justify-between items-stretch">
+            <div class="flex mb-2 flex-col w-fit mx-auto -mt-6">
+                <div class="mb-1 flex rounded-md border bg-neutral-700">
+                    ${margin.top.control class="flex justify-center text-xs"}
+                </div>
+                <div class="p-px flex rounded-md border bg-neutral-700">
+                    ${padding.top.control class="flex justify-center text-xs"}
+                </div>
+            </div>
+            <div class="-mx-12 mb-2 flex justify-between">
+                <div class="flex rounded-md border bg-neutral-700">
+                    ${margin.left.control class="flex justify-center text-xs"}
+                </div>
+                <div class="flex rounded-md border bg-neutral-700">
+                    ${margin.right.control class="flex justify-center text-xs"}
+                </div>
+            </div>
+            <div class="-mx-6 mb-2 flex justify-between">
+                <div class="flex rounded-md border bg-neutral-700">
+                    ${padding.left.control class="flex justify-center text-xs"}
+                </div>
+                <div class="flex rounded-md border bg-neutral-700">
+                    ${padding.right.control class="flex justify-center text-xs"}
+                </div>
+            </div>
+            <div class="flex flex-col w-fit mx-auto -mb-6">
+                <div class="flex rounded-md border bg-neutral-700 mb-1">
+                    ${margin.bottom.control class="flex justify-center text-xs"}
+                </div>
+                <div class="flex rounded-md border bg-neutral-700">
+                    ${padding.bottom.control class="flex justify-center text-xs"}
+                </div>
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="flex flex-col items-center w-1/2">
+                <div class="font-bold w-full text-center text-neutral-500">Space X ${space.vertical.reverse.controle class=""}</div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${space.vertical.control class="w-full text-xs"}
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-1/2">
+                <div class="font-bold w-full text-center text-neutral-500">Space Y ${space.horizontal.reverse.controle class=""}</div>
+                <div class="flex w-full max-w-[130px] rounded-md border bg-neutral-700">
+                    ${space.horizontal.control class="w-full text-xs"}
+                </div>
+            </div>
+        </div>
+    </message>
+
+    <message id="stylus.variable.configuration.template">
+        <div class="w-full -mt-9">
+            <div class="flex justify-between items-end">
+                <div class="text-neutral-300 font-bold text-md">Variable Name</div>
+                <div>${submit-btn}</div>
+            </div>
+            <div class="">${variable.name class="w-full"}</div>
+        </div>
+        <div class="flex justify-between">
+            <div class="">
+                <div class="text-neutral-300 font-bold text-md">Folder Name</div>
+                <div class="w-fit">${folder.name class=""}</div>
+            </div>
+            <div class="">
+                <div class="text-neutral-300 font-bold text-md">Widget Type</div>
+                <div class="w-fit">${widget.type class=""}</div>
+            </div>
+        </div>
+        <div class="flex justify-between">
+            <div class="">
+                <div class="text-neutral-300 font-bold text-md">File Name</div>
+                <div class="">${file.name class=""}</div>
+            </div>
+            <div class="">
+                <div class="text-neutral-300 font-bold text-md">Message Id</div>
+                <div class="">${message.id class=""}</div>
+            </div>
+        </div>
+    </message>
+
+</messages>

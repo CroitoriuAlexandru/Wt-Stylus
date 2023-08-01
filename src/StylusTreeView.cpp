@@ -22,9 +22,9 @@ TreeNode::TreeNode(const Wt::WString& labelText, std::unique_ptr<Wt::WIconPair> 
 	add_child_last_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
 	add_sibling_before_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
 	add_sibling_after_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
-	open_template_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>("Open Template"));
+	open_template_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>("Open Temp"));
 	open_template_btn->setHidden(true);
-
+	open_template_btn->setStyleClass("mr-2.5 ml-1");
 	labelAreaEnd->setStyleClass("ms-auto flex items-center");
 	labelAreaStart->setStyleClass("me-auto flex items-center");
 	Wt::WString btns_styles = "!p-1.5 !my-0 !ms-0 bg-cover bg-no-repeat inline ";
@@ -42,20 +42,20 @@ TreeNode::TreeNode(const Wt::WString& labelText, std::unique_ptr<Wt::WIconPair> 
 void TreeNode::setTemplateNode(bool isTemplateNode)
 {
 	if(isTemplateNode){
-		remove_btn->setHidden(true);
-		move_right_btn->setHidden(true);
-		move_up_btn->setHidden(true);
-		move_down_btn->setHidden(true);
+		// remove_btn->setHidden(true);
+		// move_right_btn->setHidden(true);
+		// move_up_btn->setHidden(true);
+		// move_down_btn->setHidden(true);
 		add_child_first_btn->setHidden(true);
 		add_child_last_btn->setHidden(true);
 		add_sibling_before_btn->setHidden(true);
 		add_sibling_after_btn->setHidden(true);
 		open_template_btn->setHidden(false);
 	}else {
-		remove_btn->setHidden(false);
-		move_right_btn->setHidden(false);
-		move_up_btn->setHidden(false);
-		move_down_btn->setHidden(false);
+		// remove_btn->setHidden(false);
+		// move_right_btn->setHidden(false);
+		// move_up_btn->setHidden(false);
+		// move_down_btn->setHidden(false);
 		add_child_first_btn->setHidden(false);
 		add_child_last_btn->setHidden(false);
 		add_sibling_before_btn->setHidden(false);
@@ -114,7 +114,6 @@ void StylusTreeView::createTree()
         treeRoot()->addChildNode(createNodeTree(element));
 		selectedNodeFound = false;
         element = element->NextSiblingElement();
-
     }
 
 	if(selectedTreeNode != nullptr){
@@ -136,9 +135,18 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 {
 	// std::cout << "\n StylusTreeView::createNodeTree \n";
 	auto node = std::make_unique<TreeNode>(element->Name());
+	
+	// create template widget node if the element has a template text inside it
+	if(	element->FirstChild() && 
+		element->FirstChild()->ToText() &&
+		std::regex_search(element->FirstChild()->ToText()->Value(), template_regexp))
+	{
+		// std::cout << "\n\n template found \n\n";
+		node = createTemplateNode(element->FirstChild());
+	}
+
 	auto nodePtr = node.get();
 	node->selected().connect(this, [=](){
-		stylusState_->templateSelected = false;
 		selectionChanged_.emit(element);
 		nodePtr->expand();
 	});
@@ -199,13 +207,6 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 		selectedNodeFound = true;
 	}
 
-	if(	element->FirstChild() && 
-		element->FirstChild()->ToText() &&
-		std::regex_search(element->FirstChild()->ToText()->Value(), template_regexp))
-	{
-		node->addChildNode(createTemplateNode(element->FirstChild()));
-	}
-
 	// Check if the element has child elements
 	tinyxml2::XMLElement* child = element->FirstChildElement();
 	while (child) {
@@ -221,48 +222,64 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 
 std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* textNode)
 {
+	// std::cout << "\n\n temp[late node creation gere --------------------------------\n\n";
 	auto node = std::make_unique<TreeNode>("temp");
 	auto nodePtr = node.get();
 	node->setTemplateNode(true);
-	node->selected().connect(this, [=](){
-		stylusState_->templateSelected = true;
-		templateNodeSelected_.emit(textNode);
-	});
-	node->open_template_btn->doubleClicked().connect(this, [=](){
-		
-		std::size_t lastPos = 0;
-		std::string variableName;
-		std::string fileName;
-		std::string messageId;
-		// ${test.test class="text-center p-2 m-2" fileName="fileName.xml" messageId="templateId"}
-		// get  variableName + test.test
-		std::size_t pos = std::string(textNode->Value()).find("${");
-		variableName = std::string(textNode->Value()).substr(pos + 2, std::string(textNode->Value()).find(" ", pos) - pos - 2);
-		// remove variableName from text
-		std::string text = std::string(textNode->Value()).substr(pos + 2 + variableName.length() + 1);
-		// remove class="" argument
-		pos = text.find("class=\"");
-		if(pos != std::string::npos){
-			text = text.substr(0, pos) + text.substr(text.find("\"", pos + 7) + 2);
-		}
-		// remove fileName="" argument and place the value between "" in fileName
-		pos = text.find("fileName=\"");
-		if(pos != std::string::npos){
-			fileName = text.substr(pos + 10, text.find("\"", pos + 10) - pos - 10);
-			text = text.substr(0, pos) + text.substr(text.find("\"", pos + 10) + 2);
-		}
-		// remove messageId="" argument and place the value between "" in messageId
-		pos = text.find("messageId=\"");
-		if(pos != std::string::npos){
-			messageId = text.substr(pos + 11, text.find("\"", pos + 11) - pos - 11);
-			text = text.substr(0, pos) + text.substr(text.find("\"", pos + 11) + 2);
-		}
-		std::cout << "\n\ntext :<" << textNode->Value() << ">\n\n";
-		std::cout << "\n\n variableName :<" << variableName << ">\n\n";
-		std::cout << "\n\n text :<" << text << ">\n\n";
-		std::cout << "\n\n fileName :<" << fileName << ">\n\n";		
-		std::cout << "\n\n messageId :<" << messageId << ">\n\n";
-		openTemplate_.emit(fileName, messageId);
+
+	std::size_t lastPos = 0;
+	std::string variableName;
+	std::string folderName;
+	std::string fileName;
+	std::string messageId;
+	std::string widgetType;
+	// ${test.test class="text-center p-2 m-2" fileName="fileName.xml" messageId="templateId"}
+	// get  variableName + test.test
+	std::size_t pos = std::string(textNode->Value()).find("${");
+	variableName = std::string(textNode->Value()).substr(pos + 2, std::string(textNode->Value()).find(" ", pos) - pos - 2);
+	// remove variableName from text
+	std::string text = std::string(textNode->Value()).substr(pos + 2 + variableName.length() + 1);
+	// remove class="" argument
+	pos = text.find("class=\"");
+	if(pos != std::string::npos){
+		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 7) + 2);
+	}
+	// remove folderName="" argument and place the value between "" in folderName
+	pos = text.find("folderName=\"");
+	if(pos != std::string::npos){
+		folderName = text.substr(pos + 12, text.find("\"", pos + 12) - pos - 12);
+		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 12) + 2);
+	}
+	// remove fileName="" argument and place the value between "" in fileName
+	pos = text.find("fileName=\"");
+	if(pos != std::string::npos){
+		fileName = text.substr(pos + 10, text.find("\"", pos + 10) - pos - 10);
+		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 10) + 2);
+	}
+	// remove messageId="" argument and place the value between "" in messageId
+	pos = text.find("messageId=\"");
+	if(pos != std::string::npos){
+		messageId = text.substr(pos + 11, text.find("\"", pos + 11) - pos - 11);
+		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 11) + 2);
+	}
+	// remove widgetType="" argument and place the value between "" in widgetType
+	pos = text.find("widgetType=\"");
+	if(pos != std::string::npos){
+		widgetType = text.substr(pos + 12, text.find("\"", pos + 12) - pos - 12);
+		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 12) + 2);
+	}
+
+	// std::cout << "\n\ntext :<" << textNode->Value() << ">\n\n";
+	// std::cout << "\n\n variableName :<" << variableName << ">\n\n";
+	// std::cout << "\n\n text :<" << text << ">\n\n";
+	// std::cout << "\n\n folderName :<" << folderName << ">\n\n";
+	// std::cout << "\n\n fileName :<" << fileName << ">\n\n";		
+	// std::cout << "\n\n messageId :<" << messageId << ">\n\n";
+	// std::cout << "\n\n widgetType :<" << widgetType << ">\n\n";
+
+	node->label()->setText(variableName);
+	node->open_template_btn->doubleClicked().connect(this, [=](){		
+		openTemplate_.emit(folderName, fileName, messageId, widgetType);
 	});
 	return node;
 }

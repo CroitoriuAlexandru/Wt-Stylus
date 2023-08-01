@@ -12,7 +12,6 @@ struct StylusState {
     tinyxml2::XMLDocument doc;
     tinyxml2::XMLNode* selectedTemplate;
     tinyxml2::XMLNode* selectedElement;
-    bool templateSelected = false;
     std::string filePath;
 };
 
@@ -30,16 +29,9 @@ public:
     Wt::WPushButton* add_child_last_btn;
     Wt::WPushButton* remove_btn;
     Wt::WPushButton* open_template_btn;
-protected:
 private:
 };
 
-enum NodeType {
-    ROOT = 10,
-    ELEMENT = 20,
-    TEMPLATE = 30,
-    TEXT = 40
-};
 
 class StylusTreeView : public Wt::WTree
 {
@@ -51,14 +43,14 @@ public:
     
     Wt::Signal<>& templateModified() { return templateModified_; }
     Wt::Signal<tinyxml2::XMLNode*>& selectionChanged() { return selectionChanged_; }
-    Wt::Signal<tinyxml2::XMLNode*>& templateNodeSelected() { return templateNodeSelected_; }
-    Wt::Signal<std::string, std::string>& openTemplate() { return openTemplate_; }
+    Wt::Signal<std::string, std::string, std::string, std::string>& openTemplate() { return openTemplate_; }
 
     void createTree();
     std::unique_ptr<TreeNode> createNodeTree(tinyxml2::XMLElement* element);
     std::unique_ptr<TreeNode> createTemplateNode(tinyxml2::XMLNode* textNode);
 
-    std::regex template_regexp = std::regex("\\$\\{[\\w\\-\\.]+[ ]?(class=\"[^\"]*\")?\\}?[ ]?(fileName=\"[^\"]*\")?\\}?[ ]?(messageId=\"[^\"]*\")?\\}");
+    // \$\{[\w\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")\}
+    std::regex template_regexp = std::regex("\\$\\{[\\w\\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")\\}");
 private:
     std::shared_ptr<StylusState> stylusState_;
 
@@ -74,6 +66,6 @@ private:
 
     Wt::Signal<> templateModified_;
     Wt::Signal<tinyxml2::XMLNode*> selectionChanged_;
-    Wt::Signal<tinyxml2::XMLNode*> templateNodeSelected_;
-    Wt::Signal<std::string, std::string> openTemplate_;
+    // folderName, fileName, messageId, widgetType
+    Wt::Signal<std::string, std::string, std::string, std::string> openTemplate_;
 };

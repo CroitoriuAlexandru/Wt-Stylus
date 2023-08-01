@@ -10,6 +10,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      transitionProperty: {
+        'spacing': 'margin, padding',
+      },
       colors: {
         neutral: {
           0: "#ffffff",

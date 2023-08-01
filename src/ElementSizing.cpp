@@ -1,4 +1,4 @@
-#include "include/ElementSizingWidget.h"
+#include "include/ElementSizing.h"
 #include <regex>
 
 
@@ -35,11 +35,15 @@ SizingStyleClasses::SizingStyleClasses()
 	};
 
 	// width and height classes
-	width_classes.push_back("none");
-	height_classes.push_back("none");
+	// width_classes.push_back("none");
+	// height_classes.push_back("none");
 	for (auto& size : sizingSize) {
 		width_classes.push_back("w-" + size);
 		height_classes.push_back("h-" + size);
+		if(size.compare("full") == 0){
+			width_classes.push_back("none");
+			height_classes.push_back("none");
+		}
 	}
 
 	for(auto& size : extraSizingWidth){
@@ -98,45 +102,55 @@ SizingStyleClasses::SizingStyleClasses()
 };
 
 ElementSizingWidget::ElementSizingWidget(std::string templateName)
-	: WTemplate(tr(templateName))
+	: WDialog("Sizing")
 {
-	width_widget_ = bindWidget("width.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.sizingSize));
-	minWidth_widget_ = bindWidget("width.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.minSizing));
-	maxWidth_widget_ = bindWidget("width.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.maxWidthSizing));
-	height_widget_ = bindWidget("height.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.sizingSize));
-	minHeight_widget_ = bindWidget("height.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.minSizing));
-	maxHeight_widget_ = bindWidget("height.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.maxHeightSizing));
+	setModal(false);
+	setResizable(false);
+	setStyleClass("min-w-fit bg-neutral-700 transition-spacing duration-300 ease-in-out text-neutral-400 flex flex-col justify-start items-stretch");
+
+	contents()->setStyleClass("pb-1");
+	titleBar()->setStyleClass("cursor-pointer text-center text-md text-neutral-300");
+
+	auto content_temp = contents()->addWidget(std::make_unique<Wt::WTemplate>(Wt::WString::tr(templateName)));
+
+	width_widget_ = content_temp->bindWidget("width.control", std::make_unique<ComboBoxClassWithCustoms>());
+	height_widget_ = content_temp->bindWidget("height.control", std::make_unique<ComboBoxClassWithCustoms>());
+
+	minWidth_widget_ = content_temp->bindWidget("width.min.control", std::make_unique<ComboBoxClassWithCustoms>());
+	minHeight_widget_ = content_temp->bindWidget("height.min.control", std::make_unique<ComboBoxClassWithCustoms>());
+
+	maxWidth_widget_ = content_temp->bindWidget("width.max.control", std::make_unique<ComboBoxClassWithCustoms>());
+	maxHeight_widget_ = content_temp->bindWidget("height.max.control", std::make_unique<ComboBoxClassWithCustoms>());
 
 	// set regular expresion for custom value w-[10px]
 	width_widget_->setCustomValueString("w-");
-	minWidth_widget_->setCustomValueString("min-w-");
-	maxWidth_widget_->setCustomValueString("max-w-");
 	height_widget_->setCustomValueString("h-");
+
+	minWidth_widget_->setCustomValueString("min-w-");
 	minHeight_widget_->setCustomValueString("min-h-");
+
+	maxWidth_widget_->setCustomValueString("max-w-");
 	maxHeight_widget_->setCustomValueString("max-h-");
 
 	// set combo box values
 	width_widget_->setComboBoxValues(sizingClasses_.width_classes);
-	minWidth_widget_->setComboBoxValues(sizingClasses_.min_width_classes);
-	maxWidth_widget_->setComboBoxValues(sizingClasses_.max_width_classes);
 	height_widget_->setComboBoxValues(sizingClasses_.height_classes);
+	
+	minWidth_widget_->setComboBoxValues(sizingClasses_.min_width_classes);
 	minHeight_widget_->setComboBoxValues(sizingClasses_.min_height_classes);
+
+	maxWidth_widget_->setComboBoxValues(sizingClasses_.max_width_classes);
 	maxHeight_widget_->setComboBoxValues(sizingClasses_.max_height_classes);
 
-	// set values
-	// width_widget_->setValue("none");
-	// minWidth_widget_->setValue("none");
-	// maxWidth_widget_->setValue("none");
-	// height_widget_->setValue("none");
-	// minHeight_widget_->setValue("none");
-	// maxHeight_widget_->setValue("none");
 
 	// signals for default classes for tailwind
 	width_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
-	minWidth_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
-	maxWidth_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
 	height_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
+
+	minWidth_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
 	minHeight_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
+
+	maxWidth_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
 	maxHeight_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
 };
 
@@ -159,15 +173,13 @@ void ElementSizingWidget::setClasses(SizingData sizing)
 {
 	resetStyles();
 	// std::cout << "Element S I Z I N G Widget setStyleClasses -----------------------------------------\n";
-	// std::cout << "width: <" << sizing.width << ">\n";
-	// std::cout << "height: <" << sizing.height << ">\n";
+	if(sizing.width.compare("") != 0) width_widget_->setValue(sizing.width);
+	if(sizing.minWidth.compare("") != 0) minWidth_widget_->setValue(sizing.minWidth);
+	if(sizing.maxWidth.compare("") != 0) maxWidth_widget_->setValue(sizing.maxWidth);
 
-	width_widget_->setValue(sizing.width);
-	minWidth_widget_->setValue(sizing.minWidth);
-	maxWidth_widget_->setValue(sizing.maxWidth);
-	height_widget_->setValue(sizing.height);
-	minHeight_widget_->setValue(sizing.minHeight);
-	maxHeight_widget_->setValue(sizing.maxHeight);
+	if(sizing.height.compare("") != 0) height_widget_->setValue(sizing.height);
+	if(sizing.minHeight.compare("") != 0) minHeight_widget_->setValue(sizing.minHeight);
+	if(sizing.maxHeight.compare("") != 0) maxHeight_widget_->setValue(sizing.maxHeight);
 }
 
 void ElementSizingWidget::resetStyles()

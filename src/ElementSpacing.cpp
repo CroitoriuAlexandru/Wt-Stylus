@@ -1,6 +1,5 @@
-#include "include/ElementSpacingWidget.h"
+#include "include/ElementSpacing.h"
 #include <regex>
-
 
 SpacingStyleClasses::SpacingStyleClasses()
 
@@ -71,29 +70,38 @@ SpacingStyleClasses::SpacingStyleClasses()
 };
 
 ElementSpacingWidget::ElementSpacingWidget(std::string templateName)
-	: WTemplate(tr(templateName))
+	: WDialog("Spacing")
 {
-	margin_all_widget_ = bindWidget("margin.all.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_all_classes));
-	margin_vertical_widget_ = bindWidget("margin.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_vertical_classes));
-	margin_horizontal_widget_ = bindWidget("margin.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_horizontal_classes));
-	margin_top_widget_ = bindWidget("margin.top.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_top_classes));
-	margin_right_widget_ = bindWidget("margin.right.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_right_classes));
-	margin_bottom_widget_ = bindWidget("margin.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_bottom_classes));
-	margin_left_widget_ = bindWidget("margin.left.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_left_classes));
+	setModal(false);
+	setResizable(false);
+	setStyleClass("min-w-fit bg-neutral-700 transition-spacing duration-300 ease-in-out text-neutral-400 flex flex-col justify-start items-stretch");
 
-	padding_all_widget_ = bindWidget("padding.all.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_all_classes));
-	padding_vertical_widget_ = bindWidget("padding.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_vertical_classes));
-	padding_horizontal_widget_ = bindWidget("padding.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_horizontal_classes));
-	padding_top_widget_ = bindWidget("padding.top.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_top_classes));
-	padding_right_widget_ = bindWidget("padding.right.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_right_classes));
-	padding_bottom_widget_ = bindWidget("padding.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_bottom_classes));
-	padding_left_widget_ = bindWidget("padding.left.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_left_classes));
+	contents()->setStyleClass("pb-1");
+	titleBar()->setStyleClass("cursor-pointer text-center text-md text-neutral-300");
 
-	space_vertical_widget_ = bindWidget("space.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.space_vertical_classes));
-	space_horizontal_widget_ = bindWidget("space.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.space_horizontal_classes));
+	auto content_temp = contents()->addWidget(std::make_unique<Wt::WTemplate>(tr(templateName)));
 
-	checkbox_space_x_reverse_ = bindWidget("space.horizontal.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
-	checkbox_space_y_reverse_ = bindWidget("space.vertical.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
+	margin_all_widget_ = content_temp->bindWidget("margin.all.control", std::make_unique<ComboBoxClassWithCustoms>());
+	margin_vertical_widget_ = content_temp->bindWidget("margin.vertical.control", std::make_unique<ComboBoxClassWithCustoms>());
+	margin_horizontal_widget_ = content_temp->bindWidget("margin.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>());
+	margin_top_widget_ = content_temp->bindWidget("margin.top.control", std::make_unique<ComboBoxClassWithCustoms>());
+	margin_right_widget_ = content_temp->bindWidget("margin.right.control", std::make_unique<ComboBoxClassWithCustoms>());
+	margin_bottom_widget_ = content_temp->bindWidget("margin.bottom.control", std::make_unique<ComboBoxClassWithCustoms>());
+	margin_left_widget_ = content_temp->bindWidget("margin.left.control", std::make_unique<ComboBoxClassWithCustoms>());
+
+	padding_all_widget_ = content_temp->bindWidget("padding.all.control", std::make_unique<ComboBoxClassWithCustoms>());
+	padding_vertical_widget_ = content_temp->bindWidget("padding.vertical.control", std::make_unique<ComboBoxClassWithCustoms>());
+	padding_horizontal_widget_ = content_temp->bindWidget("padding.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>());
+	padding_top_widget_ = content_temp->bindWidget("padding.top.control", std::make_unique<ComboBoxClassWithCustoms>());
+	padding_right_widget_ = content_temp->bindWidget("padding.right.control", std::make_unique<ComboBoxClassWithCustoms>());
+	padding_bottom_widget_ = content_temp->bindWidget("padding.bottom.control", std::make_unique<ComboBoxClassWithCustoms>());
+	padding_left_widget_ = content_temp->bindWidget("padding.left.control", std::make_unique<ComboBoxClassWithCustoms>());
+
+	space_vertical_widget_ = content_temp->bindWidget("space.vertical.control", std::make_unique<ComboBoxClassWithCustoms>());
+	space_horizontal_widget_ = content_temp->bindWidget("space.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>());
+
+	checkbox_space_x_reverse_ = content_temp->bindWidget("space.horizontal.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
+	checkbox_space_y_reverse_ = content_temp->bindWidget("space.vertical.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
 
 	// set regular expresion for custom value p-[10px]
 	padding_all_widget_->setCustomValueString("p-");
@@ -158,7 +166,6 @@ ElementSpacingWidget::ElementSpacingWidget(std::string templateName)
 
 	checkbox_space_x_reverse_->changed().connect(this, [=]() { styleChanged_.emit(); });
 	checkbox_space_y_reverse_->changed().connect(this, [=]() { styleChanged_.emit(); });
-
 };
 
 std::string ElementSpacingWidget::getStyles()
@@ -186,7 +193,7 @@ std::string ElementSpacingWidget::getStyles()
 	if(space_horizontal_widget_->getValue().compare("none") != 0){ elementClasses += " " + space_horizontal_widget_->getValue(); }
 	if(checkbox_space_x_reverse_->isChecked()){ elementClasses += " space-x-reverse"; }
 	if(checkbox_space_y_reverse_->isChecked()){ elementClasses += " space-y-reverse"; }
-	std::cout << "\n\n spacing classes : " << elementClasses << "\n\n";
+	// std::cout << "\n\n spacing classes : " << elementClasses << "\n\n";
 	return elementClasses;
 
 }
@@ -268,6 +275,7 @@ void ElementSpacingWidget::resetStyles()
 
 	space_vertical_widget_->setValue();
 	space_horizontal_widget_->setValue();
+	
 	checkbox_space_x_reverse_->setChecked(false);
 	checkbox_space_y_reverse_->setChecked(false);
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+    <message id="app-root">
+        <div class="">${sdfsz class="" folderName="" fileName="Application.xml" messageId="content" widgetType="template"}</div>
+        <div class="">child after</div>
+    </message>
+    <message id="navigation">
+        <div class="">child before</div>
+        <div class="">child before</div>
+    </message>
+    <message id="content">
+        <div class="? m-1.5"/>
+    </message>
+</messages>

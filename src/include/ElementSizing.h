@@ -1,7 +1,8 @@
 #include <Wt/WTemplate.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WComboBox.h>
-#include "ComboBoxClassWithCustoms.h"
+#include "ComboBoxes.h"
+#include <Wt/WDialog.h>
 
 struct SizingStyleClasses {
     SizingStyleClasses();
@@ -35,7 +36,7 @@ struct SizingData
 };
 
 
-class ElementSizingWidget : public Wt::WTemplate
+class ElementSizingWidget : public Wt::WDialog
 {
 public:
 	ElementSizingWidget(std::string templateName = "stylus.sizing.template");

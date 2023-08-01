@@ -1,7 +1,8 @@
 #include <Wt/WTemplate.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WComboBox.h>
-#include "ComboBoxClassWithCustoms.h"
+#include "ComboBoxes.h"
+#include <Wt/WDialog.h>
 
 struct SpacingStyleClasses {
     SpacingStyleClasses();
@@ -35,7 +36,7 @@ struct SpacingData
 	std::vector<std::string> space;
 };
 
-class ElementSpacingWidget : public Wt::WTemplate
+class ElementSpacingWidget : public Wt::WDialog
 {
 public:
 	ElementSpacingWidget(std::string templateName = "stylus.spacing.template");

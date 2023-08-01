@@ -1,6 +1,6 @@
 #include "include/App.h"
-#include "include/StylusEdditor.h"
-#include "include/StylusTemplatesWidget.h"
+#include "include/Stylus.h"
+#include "include/StylusTemplates.h"
 #include <Wt/WPushButton.h>
 #include <Wt/WTemplate.h>
 #include <Wt/DomElement.h>
@@ -14,6 +14,8 @@ App::App(const Wt::WEnvironment &env)
 	: Wt::WApplication(env)
 {
 	setTitle("Starter Wt Application");
+
+	auto stylus_edditor = root()->addChild(std::make_unique<StylusEdditor>("resources/xmlTest/"));
 
 	// auto wtCss = Wt::WLink("resources/themes/default/wt.css");
 	auto defStyles = Wt::WLink("resources/themes/someDefaultStyles.css");
@@ -41,34 +43,30 @@ App::App(const Wt::WEnvironment &env)
 	// removeStyleSheet(cssLink);
 	// removeStyleSheet(tailwindCss);
 	// useStyleSheet(tailwindCss);
+	
+	// add custom javascript files
+	require("https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"); // testing for future integration with stylus
+	require("https://cdn.tailwindcss.com");	// tailwind cdn for instant refresh of styles
+	require("resources/Js/Utility.js"); // tailwind theme styles customize from here
 
 	// add mesage resource bundle from templates
-	messageResourceBundle().use(appRoot() + "resources/xml/Application");
-	messageResourceBundle().use(appRoot() + "resources/xml/Elements");
-	messageResourceBundle().use(appRoot() + "resources/xml/General");
-	messageResourceBundle().use(appRoot() + "resources/xml/Stylus");
-	messageResourceBundle().use(appRoot() + "resources/xml/Navbar");
-	messageResourceBundle().use(appRoot() + "resources/xml/svg");
-	messageResourceBundle().use(appRoot() + "resources/xml/Auth");
-	messageResourceBundle().use(appRoot() + "resources/xml/test");
+	std::vector<std::string> resources = stylus_edditor->getXmlFils();
+	for(auto& resource : resources){
+		messageResourceBundle().use(appRoot() + resource);
+	}
 
-	// add custom javascript files
-	require("https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js");
-	require("https://cdn.tailwindcss.com");
-	require("resources/Js/Utility.js");
+	stylus_edditor->setTemplate("", "Application.xml", "app-root", "template");
+
+	auto appDev = root()->addWidget(stylus_edditor->createDevApp());
+	appDevId = appDev->id();
+	stylus_edditor->appDevChanged().connect(this, [=](){
+		root()->findById(appDevId)->removeFromParent();
+		auto appDev = root()->addWidget(stylus_edditor->createDevApp());
+	});
+
+
 	instance()->setInternalPath("/");
-	
 
-
-	auto temp = root()->addWidget(std::make_unique<Wt::WTemplate>(Wt::WString::tr("test")));
-	auto temp1 = temp->bindWidget("test.test", std::make_unique<Wt::WTemplate>(Wt::WString::tr("test.test")));
-	auto stylus_edditor = root()->addChild(std::make_unique<StylusEdditor>());
-	// (Wt::WString::tr("button"));
-
-
-
-	
-	// btn->setStyleClass(Wt::WString::tr("button"));
 
 }
 

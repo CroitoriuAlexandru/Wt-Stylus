@@ -24,10 +24,10 @@ DEP = $(OBJ:$(OBJDIR)/%.o=%.d)
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: $(APPNAME)
+all: $(APPNAME) gen_obj_dir
 
 # Builds the app
-$(APPNAME): $(OBJ)
+$(APPNAME): $(OBJ) 
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
