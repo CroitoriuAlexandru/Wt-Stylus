@@ -1,5 +1,7 @@
 #include "include/ElementClassEdditor.h"
 #include "include/TailwindRegexp.h"
+#include <Wt/WApplication.h>
+#include <Wt/WAnimation.h>
 
 std::vector<std::string> findAndRemoveMatches(std::regex regex, std::string& str) {
     
@@ -47,11 +49,41 @@ std::string findAndRemoveMatche(std::regex regex, std::string& str) {
 ElementClassEdditor::ElementClassEdditor(std::string templateName)
     : WTemplate(tr(templateName))
 {
-    spacingWidget_ = bindWidget("stylus.spacing.template", std::make_unique<ElementSpacingWidget>());
-    sizingWidget_ = bindWidget("stylus.sizing.template", std::make_unique<ElementSizingWidget>());
+
+    Wt::WAnimation animation = Wt::WAnimation(Wt::AnimationEffect::SlideInFromBottom, Wt::TimingFunction::EaseInOut, 300);
+
+    // backgroundWidget_ = bindWidget("stylus.background.template", std::make_unique<ElementBackgroundWidget>());
+    // spacingWidget_ = bindWidget("stylus.spacing.template", std::make_unique<ElementSpacingWidget>());
+    // sizingWidget_ = bindWidget("stylus.sizing.template", std::make_unique<ElementSizingWidget>());
+    
+    spacingWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementSpacingWidget>());
+    sizingWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementSizingWidget>());
+    backgroundWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementBackgroundWidget>());
+
+    spacingWidget_->addStyleClass("w-[300px]");
+    sizingWidget_->addStyleClass("w-[300px]");
+    backgroundWidget_->addStyleClass("w-[300px]");
+
+
+	spacingWidget_->setOffsets(0, Wt::Side::Bottom);
+	spacingWidget_->setOffsets(300, Wt::Side::Right);
+
+    sizingWidget_->setOffsets(0, Wt::Side::Bottom);
+    sizingWidget_->setOffsets(600, Wt::Side::Right);
+
+    backgroundWidget_->setOffsets(0, Wt::Side::Bottom);
+    backgroundWidget_->setOffsets(900, Wt::Side::Right);
+
+    spacingWidget_->animateShow(animation);
+    backgroundWidget_->animateShow(animation);
+    sizingWidget_->animateShow(animation);
     
     spacingWidget_->styleChanged().connect(this, [=](){ styleChanged_.emit(getStyles()); });
     sizingWidget_->styleChanged().connect(this, [=](){ styleChanged_.emit(getStyles()); });
+    backgroundWidget_->styleChanged().connect(this, [=](){ 
+        std::cout << "\n background style changed \n";
+     });
+
 }
 
 void ElementClassEdditor::setStyleClasses(std::string classes)
