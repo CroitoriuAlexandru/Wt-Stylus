@@ -40,7 +40,7 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 	// createTreeView();	
 
 	setHidden(false, Wt::WAnimation(Wt::AnimationEffect::SlideInFromRight, Wt::TimingFunction::Linear, 350));
-}	
+}
 
 std::unique_ptr<AppDev> StylusEdditor::createDevApp()
 {
@@ -225,7 +225,7 @@ void StylusEdditor::createTitleBarControls()
 		}
 		// toggle element outline if present
 		if(!stylusState_->selectedElement){
-			std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
+			// std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
 			return;
 		}
 		if(toggle_outline_checkbox->isChecked()){

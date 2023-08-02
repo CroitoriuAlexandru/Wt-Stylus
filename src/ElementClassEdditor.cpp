@@ -52,9 +52,14 @@ ElementClassEdditor::ElementClassEdditor(std::string templateName)
 
     Wt::WAnimation animation = Wt::WAnimation(Wt::AnimationEffect::SlideInFromBottom, Wt::TimingFunction::EaseInOut, 300);
 
-    // backgroundWidget_ = bindWidget("stylus.background.template", std::make_unique<ElementBackgroundWidget>());
-    // spacingWidget_ = bindWidget("stylus.spacing.template", std::make_unique<ElementSpacingWidget>());
-    // sizingWidget_ = bindWidget("stylus.sizing.template", std::make_unique<ElementSizingWidget>());
+    auto spacing_btn_display = bindWidget("spacing-display-button", std::make_unique<Wt::WPushButton>("Spacing"));
+    auto sizing_btn_display = bindWidget("sizing-display-button", std::make_unique<Wt::WPushButton>("Sizing"));
+    auto background_btn_display = bindWidget("background-display-button", std::make_unique<Wt::WPushButton>("Background"));
+
+    auto btns_styles = Wt::WString::tr("button-stylus-display");
+    spacing_btn_display->setStyleClass(btns_styles);
+    sizing_btn_display->setStyleClass(btns_styles);
+    background_btn_display->setStyleClass(btns_styles);
     
     spacingWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementSpacingWidget>());
     sizingWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementSizingWidget>());
@@ -80,9 +85,31 @@ ElementClassEdditor::ElementClassEdditor(std::string templateName)
     
     spacingWidget_->styleChanged().connect(this, [=](){ styleChanged_.emit(getStyles()); });
     sizingWidget_->styleChanged().connect(this, [=](){ styleChanged_.emit(getStyles()); });
-    backgroundWidget_->styleChanged().connect(this, [=](){ 
-        std::cout << "\n background style changed \n";
-     });
+    backgroundWidget_->styleChanged().connect(this, [=](){ styleChanged_.emit(getStyles());});
+
+    spacing_btn_display->clicked().connect(spacingWidget_, [=](){
+        if(spacingWidget_->isVisible()){
+            spacingWidget_->animateHide(animation);
+        }else{
+            spacingWidget_->animateShow(animation);
+        }
+    });
+
+    sizing_btn_display->clicked().connect(sizingWidget_, [=](){
+        if(sizingWidget_->isVisible()){
+            sizingWidget_->animateHide(animation);
+        }else{
+            sizingWidget_->animateShow(animation);
+        }
+    });
+
+    background_btn_display->clicked().connect(backgroundWidget_, [=](){
+        if(backgroundWidget_->isVisible()){
+            backgroundWidget_->animateHide(animation);
+        }else{
+            backgroundWidget_->animateShow(animation);
+        }
+    });
 
 }
 
@@ -105,11 +132,30 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     sizing.height = findAndRemoveMatche(height_regexp, classes);
     sizing.minHeight = findAndRemoveMatche(minHeight_regex, classes);
     sizing.maxHeight = findAndRemoveMatche(maxHeight_regex, classes);
+
+    // create vector of classes for background
+    BackgroundData bgData;
+    bgData.bg_attachment = findAndRemoveMatche(background_attachment_regex, classes);
+    bgData.bg_clip = findAndRemoveMatche(background_clip_regex, classes);
+    bgData.bg_origin = findAndRemoveMatche(background_origin_regex, classes);
+    bgData.bg_position = findAndRemoveMatche(background_position_regex, classes);
+    bgData.bg_repeat = findAndRemoveMatche(background_repeat_regex, classes);
+    bgData.bg_size = findAndRemoveMatche(background_size_regex, classes);
+
+    
+    bgData.bg_image = findAndRemoveMatche(background_image_regex, classes);
+    if(bgData.bg_image != ""){
+        bgData.bg_image = findAndRemoveMatche(background_color_from_regex, classes);
+        bgData.bg_color_via = findAndRemoveMatche(background_color_via_regex, classes);
+        bgData.bg_color_to = findAndRemoveMatche(background_color_to_regex, classes);
+    }else {
+        bgData.bg_color_class = findAndRemoveMatche(background_color_regexp, classes);
+    }
+    
     // remove whitespace from start of classes string and store it in notFoundClasses
     notFoundClasses = std::regex_replace(classes, std::regex("^\\s+"), "");
 
-
-    // // console values
+    // console values
     // std::cout << "padding classes: <";
     // for (auto& paddingClass : spacing.padding) {
     //     std::cout << paddingClass << ",";
@@ -132,8 +178,11 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     // std::cout << "\n remaining classes :"<< notFoundClasses << "\n\n -------------------";
 
 
+    resetStyles();
+
     spacingWidget_->setClasses(spacing);
     sizingWidget_->setClasses(sizing);
+    backgroundWidget_->setClasses(bgData);
 
 }
 
@@ -141,6 +190,7 @@ std::string ElementClassEdditor::getStyles()
 {
     std::string styles = spacingWidget_->getStyles() + " ";
     styles += sizingWidget_->getStyles() + " ";
+    styles += backgroundWidget_->getStyles() + " ";
     styles += notFoundClasses;
     return styles;
 }
@@ -149,4 +199,5 @@ void ElementClassEdditor::resetStyles()
 {
     sizingWidget_->resetStyles();
     spacingWidget_->resetStyles();
+    backgroundWidget_->resetStyles();
 }

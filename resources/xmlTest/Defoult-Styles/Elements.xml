@@ -21,6 +21,10 @@
         dark:disabled:bg-gray-700 dark:disabled:hover:bg-gray-700
     </message>
 
+    <message id="button-stylus-display">
+        w-full text-center p-2 bg-neutral-800 text-neutral-200 rounded border-1 border-solid border-neutral-900 my-1 hover:bg-neutral-900
+    </message>
+
     <message id="stylus-panel-titlebar-folder">
         flex items-center bg-neutral-900 text-neutral-300 text-bold pl-2
     </message>

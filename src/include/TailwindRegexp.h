@@ -18,6 +18,7 @@
 
 // std::regex height_regexp = std::regex("(?:\\s|^)h-(?:full|screen|11\\/12|10\\/12|9\\/12|8\\/12|7\\/12|6\\/12|5\\/12|4\\/12|3\\/12|2\\/12|1\\/12|5\\/6|4\\/6|3\\/6|2\\/6|1\\/6|4\\/5|3\\/5|2\\/5|1\\/5|3\\/4|2\\/4|1\\/4|2\\/3|1\\/3|1\\/2|auto|96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3\\.5|3|2\\.5|2|1\\.5|1|0\\.5|px|0|\\[\\S*\\])");
 
+namespace asdasd{
 //--------------------------------------------------------------
 
 // Padding classes
@@ -70,6 +71,9 @@
 
 // space-y-0 space-y-0.5 space-y-1 space-y-1.5 space-y-2 space-y-2.5 space-y-3 space-y-3.5 space-y-4 space-y-5 space-y-6 space-y-7 space-y-8 space-y-9 space-y-10 space-y-11 space-y-12 space-y-14 space-y-16 space-y-20 space-y-24 space-y-28 space-y-32 space-y-36 space-y-40 space-y-44 space-y-48 space-y-52 space-y-56 space-y-60 space-y-64 space-y-72 space-y-80 space-y-96 space-y-px space-y-reverse space-y-[30px]
 
+}
+
+namespace sdf {
 
 // width classes
 // w-0 w-px w-0.5 w-1 w-1.5 w-2 w-2.5 w-3 w-3.5 w-4 w-5 w-6 w-7 w-8 w-9 w-10 w-11 w-12 w-14 w-16 w-20 w-24 w-28 w-32 w-36 w-40 w-44 w-48 w-52 w-56 w-60 w-64 w-72 w-80 w-96 w-auto w-1/2 w-1/3 w-2/3 w-1/4 w-2/4 w-3/4 w-1/5 w-2/5 w-3/5 w-4/5 w-1/6 w-2/6 w-3/6 w-4/6 w-5/6 w-1/12 w-2/12 w-3/12 w-4/12 w-5/12 w-6/12 w-7/12 w-8/12 w-9/12 w-10/12 w-11/12 w-full w-screen w-min w-max w-fit w-[20px]
@@ -88,3 +92,56 @@
 
 // max height classes
 // max-h-0 max-h-px max-h-0.5 max-h-1 max-h-1.5 max-h-2 max-h-2.5 max-h-3 max-h-3.5 max-h-4 max-h-5 max-h-6 max-h-7 max-h-8 max-h-9 max-h-10 max-h-11 max-h-12 max-h-14 max-h-16 max-h-20 max-h-24 max-h-28 max-h-32 max-h-36 max-h-40 max-h-44 max-h-48 max-h-52 max-h-56 max-h-60 max-h-64 max-h-72 max-h-80 max-h-96 max-h-none max-h-full max-h-screen max-h-min max-h-max max-h-fit x-h-56 max-h-60 max-h-64 max-h-72 max-h-80 max-h-96 max-h-none max-h-full max-h-screen max-h-min max-h-max max-h-fit max-h-[30px]
+}
+
+
+// background color
+// no escaping =  bg-((inherit|current|transparent|black|white|\[[\S]*\])|(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)?\/(100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0))
+// escaping for C++ = bg-((inherit|current|transparent|black|white|\\[[\\S]*\\])|(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)?\\/(100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0))
+
+// bg-inherit bg-current bg-transparent bg-black bg-white bg-[#12345]
+
+// bg-slate-50/5 bg-slate-100/10 bg-slate-200/15 bg-slate-300/20 bg-slate-400/25 bg-slate-500/30 bg-slate-600/35 bg-slate-700/40 bg-slate-800/45 bg-slate-900/50 bg-slate-950/55 bg-slate-50/60
+
+// bg-gray-50/5 bg-gray-100/10 bg-gray-200/15 bg-gray-300/20 bg-gray-400/25 bg-gray-500/30 bg-gray-600/35 bg-gray-700/40 bg-gray-800/45 bg-gray-900/50 bg-gray-950/55 bg-gray-50/60
+
+// bg-zinc-50/5 bg-zinc-100/10 bg-zinc-200/15 bg-zinc-300/20 bg-zinc-400/25 bg-zinc-500/30 bg-zinc-600/35 bg-zinc-700/40 bg-zinc-800/45 bg-zinc-900/50 bg-zinc-950/55 bg-zinc-50/60
+
+// bg-neutral-50/5 bg-neutral-100/10 bg-neutral-200/15 bg-neutral-300/20 bg-neutral-400/25 bg-neutral-500/30 bg-neutral-600/35 bg-neutral-700/40 bg-neutral-800/45 bg-neutral-900/50 bg-neutral-950/55 bg-neutral-50/60
+
+// bg-stone-50/5 bg-stone-100/10 bg-stone-200/15 bg-stone-300/20 bg-stone-400/25 bg-stone-500/30 bg-stone-600/35 bg-stone-700/40 bg-stone-800/45 bg-stone-900/50 bg-stone-950/55 bg-stone-50/60
+
+// bg-red-50/5 bg-red-100/10 bg-red-200/15 bg-red-300/20 bg-red-400/25 bg-red-500/30 bg-red-600/35 bg-red-700/40 bg-red-800/45 bg-red-900/50 bg-red-950/55 bg-red-50/60
+
+// bg-orange-50/5 bg-orange-100/10 bg-orange-200/15 bg-orange-300/20 bg-orange-400/25 bg-orange-500/30 bg-orange-600/35 bg-orange-700/40 bg-orange-800/45 bg-orange-900/50 bg-orange-950/55 bg-orange-50/60
+
+// bg-amber-50/5 bg-amber-100/10 bg-amber-200/15 bg-amber-300/20 bg-amber-400/25 bg-amber-500/30 bg-amber-600/35 bg-amber-700/40 bg-amber-800/45 bg-amber-900/50 bg-amber-950/55 bg-amber-50/60
+
+// bg-yellow-50/5 bg-yellow-100/10 bg-yellow-200/15 bg-yellow-300/20 bg-yellow-400/25 bg-yellow-500/30 bg-yellow-600/35 bg-yellow-700/40 bg-yellow-800/45 bg-yellow-900/50 bg-yellow-950/55 bg-yellow-50/60
+
+// bg-lime-50/5 bg-lime-100/10 bg-lime-200/15 bg-lime-300/20 bg-lime-400/25 bg-lime-500/30 bg-lime-600/35 bg-lime-700/40 bg-lime-800/45 bg-lime-900/50 bg-lime-950/55 bg-lime-50/60
+
+// bg-green-50/5 bg-green-100/10 bg-green-200/15 bg-green-300/20 bg-green-400/25 bg-green-500/30 bg-green-600/35 bg-green-700/40 bg-green-800/45 bg-green-900/50 bg-green-950/55 bg-green-50/60
+
+// bg-emerald-50/5 bg-emerald-100/10 bg-emerald-200/15 bg-emerald-300/20 bg-emerald-400/25 bg-emerald-500/30 bg-emerald-600/35 bg-emerald-700/40 bg-emerald-800/45 bg-emerald-900/50 bg-emerald-950/55 bg-emerald-50/60
+
+// bg-teal-50/5 bg-teal-100/10 bg-teal-200/15 bg-teal-300/20 bg-teal-400/25 bg-teal-500/30 bg-teal-600/35 bg-teal-700/40 bg-teal-800/45 bg-teal-900/50 bg-teal-950/55 bg-teal-50/60
+
+// bg-cyan-50/5 bg-cyan-100/10 bg-cyan-200/15 bg-cyan-300/20 bg-cyan-400/25 bg-cyan-500/30 bg-cyan-600/35 bg-cyan-700/40 bg-cyan-800/45 bg-cyan-900/50 bg-cyan-950/55 bg-cyan-50/60
+
+// bg-sky-50/5 bg-sky-100/10 bg-sky-200/15 bg-sky-300/20 bg-sky-400/25 bg-sky-500/30 bg-sky-600/35 bg-sky-700/40 bg-sky-800/45 bg-sky-900/50 bg-sky-950/55 bg-sky-50/60
+
+// bg-blue-50/5 bg-blue-100/10 bg-blue-200/15 bg-blue-300/20 bg-blue-400/25 bg-blue-500/30 bg-blue-600/35 bg-blue-700/40 bg-blue-800/45 bg-blue-900/50 bg-blue-950/55 bg-blue-50/60
+
+// bg-indigo-50/5 bg-indigo-100/10 bg-indigo-200/15 bg-indigo-300/20 bg-indigo-400/25 bg-indigo-500/30 bg-indigo-600/35 bg-indigo-700/40 bg-indigo-800/45 bg-indigo-900/50 bg-indigo-950/55 bg-indigo-50/60
+
+// bg-violet-50/5 bg-violet-100/10 bg-violet-200/15 bg-violet-300/20 bg-violet-400/25 bg-violet-500/30 bg-violet-600/35 bg-violet-700/40 bg-violet-800/45 bg-violet-900/50 bg-violet-950/55 bg-violet-50/60
+
+// bg-purple-50/5 bg-purple-100/10 bg-purple-200/15 bg-purple-300/20 bg-purple-400/25 bg-purple-500/30 bg-purple-600/35 bg-purple-700/40 bg-purple-800/45 bg-purple-900/50 bg-purple-950/55 bg-purple-50/60
+
+// bg-fuchsia-50/5 bg-fuchsia-100/10 bg-fuchsia-200/15 bg-fuchsia-300/20 bg-fuchsia-400/25 bg-fuchsia-500/30 bg-fuchsia-600/35 bg-fuchsia-700/40 bg-fuchsia-800/45 bg-fuchsia-900/50 bg-fuchsia-950/55 bg-fuchsia-50/60
+
+// bg-pink-50/5 bg-pink-100/10 bg-pink-200/15 bg-pink-300/20 bg-pink-400/25 bg-pink-500/30 bg-pink-600/35 bg-pink-700/40 bg-pink-800/45 bg-pink-900/50 bg-pink-950/55 bg-pink-50/60
+
+// bg-rose-50/5 bg-rose-100/10 bg-rose-200/15 bg-rose-300/20 bg-rose-400/25 bg-rose-500/30 bg-rose-600/35 bg-rose-700/40 bg-rose-800/45 bg-rose-900/50 bg-rose-950/55 bg-rose-50/60
+

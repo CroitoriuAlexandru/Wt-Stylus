@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="">${sdfsz class="" folderName="" fileName="Application.xml" messageId="content" widgetType="template"}</div>
+        <div class="p-px m-auto w-4/12 h-64  bg-rose-200/100"><div class="my-32 w-36 h-36">child before</div>
+        </div>
+        <div class="w-52  bg-slate-50/100">test</div>
         <div class="">child after</div>
     </message>
-    <message id="navigation">
-        <div class="">child before</div>
-        <div class="">child before</div>
-    </message>
-    <message id="content">
-        <div class="? m-1.5"/>
-    </message>
 </messages>
+
+<!-- bg-red-600/100 -->

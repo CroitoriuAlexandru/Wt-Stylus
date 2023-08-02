@@ -61,8 +61,8 @@ private:
 	Wt::Signal<> styleChanged_;
 
 	// sizing custom regexp
-	std::regex regex_custom_sizing =  std::regex("[w|h]-\\[[\\S]*\\]");
-	std::regex regex_custom_min_max_sizing =  std::regex("[min|max]-w-\\[[\\S]*\\]");
+	std::regex regex_custom_sizing =  std::regex("[!]?[w|h]-\\[[\\S]*\\]");
+	std::regex regex_custom_min_max_sizing =  std::regex("[!]?[min|max]-w-\\[[\\S]*\\]");
 
 };
 

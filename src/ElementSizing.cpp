@@ -106,12 +106,12 @@ ElementSizingWidget::ElementSizingWidget(std::string templateName)
 {
 	setModal(false);
 	setResizable(false);
-	setStyleClass("min-w-fit bg-neutral-700 transition-spacing duration-300 ease-in-out text-neutral-400 flex flex-col justify-start items-stretch");
+	setStyleClass("min-w-fit bg-neutral-700 text-neutral-400");
 
-	contents()->setStyleClass("pb-1");
-	titleBar()->setStyleClass("cursor-pointer text-center text-md text-neutral-300");
+	titleBar()->clear();
+	contents()->clear();
 
-	auto content_temp = contents()->addWidget(std::make_unique<Wt::WTemplate>(Wt::WString::tr(templateName)));
+	auto content_temp = titleBar()->addWidget(std::make_unique<Wt::WTemplate>(Wt::WString::tr(templateName)));
 
 	width_widget_ = content_temp->bindWidget("width.control", std::make_unique<ComboBoxClassWithCustoms>());
 	height_widget_ = content_temp->bindWidget("height.control", std::make_unique<ComboBoxClassWithCustoms>());
@@ -121,6 +121,15 @@ ElementSizingWidget::ElementSizingWidget(std::string templateName)
 
 	maxWidth_widget_ = content_temp->bindWidget("width.max.control", std::make_unique<ComboBoxClassWithCustoms>());
 	maxHeight_widget_ = content_temp->bindWidget("height.max.control", std::make_unique<ComboBoxClassWithCustoms>());
+
+	// set syzes for comboboxes
+	width_widget_->comboBox_class->addStyleClass("!w-[60px]");
+	height_widget_->comboBox_class->addStyleClass("!w-[60px]");
+	minWidth_widget_->comboBox_class->addStyleClass("!w-[60px]");
+	minHeight_widget_->comboBox_class->addStyleClass("!w-[60px]");
+	maxWidth_widget_->comboBox_class->addStyleClass("!w-[60px]");
+	maxHeight_widget_->comboBox_class->addStyleClass("!w-[60px]");
+
 
 	// set regular expresion for custom value w-[10px]
 	width_widget_->setCustomValueString("w-");

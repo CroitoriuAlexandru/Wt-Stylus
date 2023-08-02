@@ -16,7 +16,7 @@ VariableConfigurationWidget::VariableConfigurationWidget(std::vector<FolderData>
     // set combo box values
     auto widgetTypes = { "template" };
     for(auto folders : foldersData_){
-        std::cout << "\n\nfolderName :<" << folders.folderName << ">\n\n";
+        // std::cout << "\n\nfolderName :<" << folders.folderName << ">\n\n";
         comboBox_folderName->addItem(folders.folderName);
     }
 

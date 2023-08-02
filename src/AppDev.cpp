@@ -35,7 +35,6 @@ AppDev::AppDev(std::string templateId)
 {
     auto tempVariables = getWidgets(templateId);
     // std::cout << "\n\n";
-
     for(auto variable : tempVariables){
         std::string variableName = variable.substr(0, variable.find(" "));
         std::string variableType = variable.substr(variable.find("widgetType=\"") + 12, variable.find("\"", variable.find("widgetType=\"") + 12) - variable.find("widgetType=\"") - 12);
