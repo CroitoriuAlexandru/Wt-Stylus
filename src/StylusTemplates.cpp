@@ -42,13 +42,14 @@ std::vector<FolderData> StylusTemplatesWidget::getFoldersData(std::string folder
     std::vector<FolderData> foldersData;
     // std::cout << "\n\n getFoldersData path <" << folderPath << ">\n";
     // Iterate over each file in the directory
+
+
+    // files in the root folder
+    FolderData folderData;
+    folderData.folderName = "";
     for (const auto& entry : boost::filesystem::directory_iterator(folderPath)) {
-        FolderData folderData;
-        if (boost::filesystem::is_directory(entry)) {
-            folderData.folderName = entry.path().filename().string();
-            folderData.xmlFiles = getXmlFilesData(xml_folder_path + folderData.folderName + "/");
-        } else if (boost::filesystem::is_regular_file(entry)) {
-            folderData.folderName = "";
+        if (boost::filesystem::is_regular_file(entry)) {
+
             // check to see if it's an xml file
             if (entry.path().extension() == ".xml") {
                 // std::cout << "\n -------------------------\n";
@@ -58,9 +59,20 @@ std::vector<FolderData> StylusTemplatesWidget::getFoldersData(std::string folder
                 folderData.xmlFiles.push_back(xmlFileData);
             }
         }
-        foldersData.push_back(folderData);
-
     }
+    // folders from root folder
+    foldersData.push_back(folderData);
+    for (const auto& entry : boost::filesystem::directory_iterator(folderPath)) {
+        FolderData folderData;
+        if (boost::filesystem::is_directory(entry)) {
+            folderData.folderName = entry.path().filename().string();
+            folderData.xmlFiles = getXmlFilesData(xml_folder_path + folderData.folderName + "/");
+            foldersData.push_back(folderData);
+        } 
+    }
+
+
+
     // for (const auto& folder : foldersData) {
     //     std::cout << "\n\nfolder <" << folder.folderName << ">\n";
     //     for (const auto& file : folder.xmlFiles) {

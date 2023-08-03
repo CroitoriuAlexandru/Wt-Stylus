@@ -18,13 +18,12 @@
 class ComboBoxClassWithCustoms : public Wt::WTemplate
 {
 public:
-    ComboBoxClassWithCustoms();
+    ComboBoxClassWithCustoms(std::vector<std::string> classNames);
 
 	void setCustomValueString(Wt::WString custom_start){ custom_start_ = custom_start; };
     std::string getValue();
 	// classType is default classes from tailwind p-1 or custom p-[10px]
 	void setValue(std::string className = "none");
-	void setComboBoxValues(std::vector<std::string> classNames);
 	Wt::Signal<>& classChanged() { return classChanged_; }
 
 	Wt::WTemplate *select_temp_;
@@ -50,14 +49,12 @@ private:
 class ComboBoxColors : public Wt::WTemplate
 {
 public:
-	ComboBoxColors();
+	ComboBoxColors(std::vector<std::string> classNames, std::vector<std::string> colorIntensity, std::vector<std::string> colorOpacity);
 	void setCustomValueString(Wt::WString custom_start){ custom_start_ = custom_start; };
 
 	std::string getValue();
 	void setValue(std::string className = "none");
-	void setComboBoxValues(std::vector<std::string> classNames, std::vector<std::string> colorIntensity, std::vector<std::string> colorOpacity);
-	void setCustom(bool custom) { comboBox_class->setCustom(custom); };
-	void setOptionsVisible(bool visible = true);
+	void setCustom(bool custom);
 	Wt::Signal<>& classChanged() { return classChanged_; }
 private:
 	ComboBoxClassWithCustoms *comboBox_class;

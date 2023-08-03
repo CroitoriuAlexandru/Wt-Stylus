@@ -43,9 +43,9 @@ void TreeNode::setTemplateNode(bool isTemplateNode)
 {
 	if(isTemplateNode){
 		// remove_btn->setHidden(true);
-		// move_right_btn->setHidden(true);
-		// move_up_btn->setHidden(true);
-		// move_down_btn->setHidden(true);
+		move_right_btn->setHidden(true);
+		move_up_btn->setHidden(true);
+		move_down_btn->setHidden(true);
 		add_child_first_btn->setHidden(true);
 		add_child_last_btn->setHidden(true);
 		add_sibling_before_btn->setHidden(true);
@@ -53,9 +53,9 @@ void TreeNode::setTemplateNode(bool isTemplateNode)
 		open_template_btn->setHidden(false);
 	}else {
 		// remove_btn->setHidden(false);
-		// move_right_btn->setHidden(false);
-		// move_up_btn->setHidden(false);
-		// move_down_btn->setHidden(false);
+		move_right_btn->setHidden(false);
+		move_up_btn->setHidden(false);
+		move_down_btn->setHidden(false);
 		add_child_first_btn->setHidden(false);
 		add_child_last_btn->setHidden(false);
 		add_sibling_before_btn->setHidden(false);
@@ -142,13 +142,15 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 		std::regex_search(element->FirstChild()->ToText()->Value(), template_regexp))
 	{
 		// std::cout << "\n\n template found \n\n";
-		node = createTemplateNode(element->FirstChild());
+		node->addChildNode(createTemplateNode(element->FirstChild()));
 	}
 
 	auto nodePtr = node.get();
-	node->selected().connect(this, [=](){
-		selectionChanged_.emit(element);
-		nodePtr->expand();
+	node->selected().connect(this, [=](bool selectedBool){
+		if(selectedBool){
+			selectionChanged_.emit(element);
+			nodePtr->expand();
+		}
 	});
 	if(!element->Attribute("class")){
 		element->SetAttribute("class", "");
@@ -157,27 +159,27 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 		element->SetText("");
 	}
 	// signal connections for controling element
-    node->move_up_btn->doubleClicked().connect(this, [=](){
+    node->move_up_btn->clicked().connect(this, [=](){
         moveElementUp(element);
         templateModified_.emit();
     });
-    node->move_down_btn->doubleClicked().connect(this, [=](){
+    node->move_down_btn->clicked().connect(this, [=](){
         moveElementDown(element);
         templateModified_.emit();
     });
-    node->add_sibling_after_btn->doubleClicked().connect(this, [=](){
+    node->add_sibling_after_btn->clicked().connect(this, [=](){
         addSiblingElementAfter(element);
         templateModified_.emit();
     });
-    node->add_sibling_before_btn->doubleClicked().connect(this, [=](){
+    node->add_sibling_before_btn->clicked().connect(this, [=](){
         addSiblingElementBefore(element);
         templateModified_.emit();
     });
-    node->add_child_first_btn->doubleClicked().connect(this, [=](){
+    node->add_child_first_btn->clicked().connect(this, [=](){
         addChildElementFirst(element);
         templateModified_.emit();
     });
-    node->add_child_last_btn->doubleClicked().connect(this, [=](){
+    node->add_child_last_btn->clicked().connect(this, [=](){
         addChildElementLast(element);
         templateModified_.emit();
     });
@@ -188,7 +190,7 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 
     if(element->NextSiblingElement()){
         if(element->NextSiblingElement()->FirstChildElement()){
-            node->move_right_btn->doubleClicked().connect(this, [=](){
+            node->move_right_btn->clicked().connect(this, [=](){
                 moveElementRight(element);
                 templateModified_.emit();
             });
@@ -229,6 +231,7 @@ std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* 
 
 	std::size_t lastPos = 0;
 	std::string variableName;
+	std::string styleClasses;
 	std::string folderName;
 	std::string fileName;
 	std::string messageId;
@@ -242,6 +245,7 @@ std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* 
 	// remove class="" argument
 	pos = text.find("class=\"");
 	if(pos != std::string::npos){
+		styleClasses = text.substr(pos + 7, text.find("\"", pos + 7) - pos - 7);
 		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 7) + 2);
 	}
 	// remove folderName="" argument and place the value between "" in folderName
@@ -266,21 +270,30 @@ std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* 
 	pos = text.find("widgetType=\"");
 	if(pos != std::string::npos){
 		widgetType = text.substr(pos + 12, text.find("\"", pos + 12) - pos - 12);
-		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 12) + 2);
-	}
+		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 12) + 2);}
 
-	// std::cout << "\n\ntext :<" << textNode->Value() << ">\n\n";
-	// std::cout << "\n\n variableName :<" << variableName << ">\n\n";
-	// std::cout << "\n\n text :<" << text << ">\n\n";
-	// std::cout << "\n\n folderName :<" << folderName << ">\n\n";
-	// std::cout << "\n\n fileName :<" << fileName << ">\n\n";		
-	// std::cout << "\n\n messageId :<" << messageId << ">\n\n";
-	// std::cout << "\n\n widgetType :<" << widgetType << ">\n\n";
+	std::cout << "\n\n";
+	std::cout << "text :<" << textNode->Value() << ">\n";
+	std::cout << "text :<" << text << ">\n";
+	std::cout << "variableName :<" << variableName << ">\n";
+	std::cout << "styleClasses :<" << styleClasses << ">\n";
+	std::cout << "folderName :<" << folderName << ">\n";
+	std::cout << "fileName :<" << fileName << ">\n";		
+	std::cout << "messageId :<" << messageId << "\n";
+	std::cout << "widgetType :<" << widgetType << ">\n";
+	std::cout << "\n\n";
 
 	node->label()->setText(variableName);
 	node->open_template_btn->doubleClicked().connect(this, [=](){		
 		openTemplate_.emit(folderName, fileName, messageId, widgetType);
 	});
+
+	node->selected().connect(this, [=](bool selectedNode){
+		if(selectedNode){
+			selectionChanged_.emit(textNode);
+		}
+	});
+
 	return node;
 }
 

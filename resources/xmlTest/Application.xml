@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="p-px m-auto w-4/12 h-64  bg-rose-200/100"><div class="my-32 w-36 h-36">child before</div>
-        </div>
-        <div class="w-52  bg-slate-50/100">test</div>
-        <div class="">child after</div>
+        <div class="? slate-500/100     bg-gradient-to-t slate-500/100  h-24   p-10 m-0.5 my-auto mx-auto">child before</div>
+        <div class="mt-auto">siblings after</div>
+        <div class="p-9 w-2/3 h-72">${qweui class="" folderName="" fileName="Application.xml" messageId="navigation" widgetType="template"}</div>
+        <div class="">${nav-1 class="" folderName="" fileName="Application.xml" messageId="navigation" widgetType="template"}</div>
+        <div class="m-px">child after</div>
+    </message>
+    <message id="navigation">
+        <div class="w-60 h-60  bg-slate-500/100">child before</div>
+        <div class="">child before</div>
+    </message>
+    <message id="content">
+        <div class=""/>
     </message>
 </messages>
-
-<!-- bg-red-600/100 -->

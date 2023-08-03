@@ -3,7 +3,7 @@
 #include "AppDev.h"
 #include "ElementClassEdditor.h"
 #include "StylusTemplates.h"
-#include "VariableConfigurationWidget.h"
+#include "ElementContent.h"
 
 #include <Wt/WTextArea.h>
 #include <Wt/WLineEdit.h>
@@ -31,15 +31,7 @@ private:
     std::shared_ptr<StylusState> stylusState_;
     ElementClassEdditor* elementClassEdditor_;
     StylusTemplatesWidget* stylus_templates_;
-
-    // this holds the textarea and the variable configuration widget
-    Wt::WContainerWidget* element_content_;
-    VariableConfigurationWidget* element_content_variable_configuration_;
-    void changeSelectedText(std::string variableText);
-    void createDialogVariableToText(std::string text, bool toText);
-    Wt::WTextArea* element_content_textarea_;
-    
-    Wt::WCheckBox* toggle_variable_content_;
+    ElementContent* element_contents_;
 
     Wt::WTemplate* edditor_temp_;
 
@@ -58,6 +50,8 @@ private:
 
     void updateFile();
     void updateResources();
+    std::string getTemplateValue(std::string templateText, std::string attribute);
+    std::string changeTempateAttributeValue(std::string templateText, std::string attribute, std::string value);
     void dialogResized(int width, int height);
     int applicationWidthClass;
     std::unique_ptr<Wt::WPushButton> createThemeSwitcher();

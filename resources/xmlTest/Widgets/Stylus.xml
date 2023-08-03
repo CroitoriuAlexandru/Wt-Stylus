@@ -30,16 +30,10 @@
                     <div class="max-h-[225px] pb-2 grow overflow-y-scroll border-b border-solid resize-y">${tree-view class="h-fit"}</div>
 
                     <div class="z-50 grow max-h-[calc(100vh-255px)] overflow-y-scroll">
-                        <div class="mb-auto">${stylus.element.edditor class="px-4"}</div>
+                        <div class="w-full p-2">${stylus.element.content class="w-full"}</div>
                         <div class="border-b border-solid border-neutral-900 my-2"></div>
+                        <div class="mb-auto">${stylus.element.edditor class="px-4"}</div>
 
-                        <div>
-                            <div class="flex pl-3">
-                                <div>${toggle-variable-content}</div>
-                                <div class="ml-2">Toggle Variable Content</div>
-                            </div>
-                            <div class="w-full p-2">${stylus.element.content class="w-full"}</div>
-                        </div>
                     </div>
                 </div>
                 <div x-show="isChecked" class="">${templates.widget}</div>
@@ -277,33 +271,42 @@
     </message>
 
     <message id="stylus.variable.configuration.template">
-        <div class="w-full -mt-9">
-            <div class="flex justify-between items-end">
-                <div class="text-neutral-300 font-bold text-md">Variable Name</div>
+        <div class="text-neutral-400 px-2">
+            <div class="flex items-center justify-between">
+                <div>${toggle-variable-content}</div>
                 <div>${submit-btn}</div>
             </div>
-            <div class="">${variable.name class="w-full"}</div>
-        </div>
-        <div class="flex justify-between">
-            <div class="">
-                <div class="text-neutral-300 font-bold text-md">Folder Name</div>
-                <div class="w-fit">${folder.name class=""}</div>
-            </div>
-            <div class="">
-                <div class="text-neutral-300 font-bold text-md">Widget Type</div>
-                <div class="w-fit">${widget.type class=""}</div>
-            </div>
-        </div>
-        <div class="flex justify-between">
-            <div class="">
-                <div class="text-neutral-300 font-bold text-md">File Name</div>
-                <div class="">${file.name class=""}</div>
-            </div>
-            <div class="">
-                <div class="text-neutral-300 font-bold text-md">Message Id</div>
-                <div class="">${message.id class=""}</div>
-            </div>
+            <div>${content-textarea class="bg-neutral-600 p-1 px-3 mt-2  w-full border border-neutral-500 text-neutral-200 text-md rounded-lg h-[150px]"}</div>
+
+            ${<custom-template>}
+                <div class="w-full">
+                    <div class="block text-md font-medium text-neutral-400">Variable Name</div>
+                    <div class="">${variable.name class="bg-neutral-600 p-1 px-3 w-full border border-neutral-500 text-neutral-200 text-md rounded-lg"}</div>
+                </div>
+
+                <div class="flex justify-between">
+                    <div class="">
+                        <div class="block text-md font-medium text-neutral-400">Folder Name</div>
+                        <div class="w-fit">${folder.name class="bg-neutral-600 p-0.5 px-3 border border-neutral-500 text-neutral-200 text-md rounded-lg w-[125px]"}</div>
+                    </div>
+                    <div class="">
+                        <div class="block text-md font-medium text-neutral-400">Widget Type</div>
+                        <div class="w-fit">${widget.type class="bg-neutral-600 p-0.5 px-3 border border-neutral-500 text-neutral-200 text-md rounded-lg w-[125px]"}</div>
+                    </div>
+                </div>
+                <div class="flex justify-between space-x-2">
+                    <div class="">
+                        <div class="block text-md font-medium text-neutral-400">File Name</div>
+                        <div class="w-fit">${file.name class="bg-neutral-600 p-0.5 px-3 border border-neutral-500 text-neutral-200 text-md rounded-lg w-[125px]"}</div>
+                    </div>
+                    <div class="">
+                        <div class="block text-md font-medium text-neutral-400">Message Id</div>
+                        <div class="w-fit">${message.id class="bg-neutral-600 p-0.5 px-3 border border-neutral-500 text-neutral-200 text-md rounded-lg w-[125px]"}</div>
+                    </div>
+                </div>
+            ${</custom-template>}
+            
         </div>
     </message>
-
+        
 </messages>

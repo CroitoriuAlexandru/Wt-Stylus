@@ -62,6 +62,7 @@ App::App(const Wt::WEnvironment &env)
 	stylus_edditor->appDevChanged().connect(this, [=](){
 		root()->findById(appDevId)->removeFromParent();
 		auto appDev = root()->addWidget(stylus_edditor->createDevApp());
+		appDevId = appDev->id();
 	});
 
 
