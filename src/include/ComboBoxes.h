@@ -25,16 +25,19 @@ public:
 	// classType is default classes from tailwind p-1 or custom p-[10px]
 	void setValue(std::string className = "none");
 	Wt::Signal<>& classChanged() { return classChanged_; }
-
+	void setOptions(std::vector<std::string> classNames);
 	Wt::WTemplate *select_temp_;
 	void setCustom(bool custom);
+	void disable(bool disable);
 	Wt::WCheckBox *checkbox_custom_value_;
     Wt::WComboBox *comboBox_class;
 	Wt::WCheckBox *checkbox_important_;
-private:
 	Wt::WLineEdit *lineEdit_size_custom_;
-	
 	Wt::WPushButton *btn_reset_;
+
+	void setDefaultValue(std::string defaultValue) { this->defaultValue = defaultValue; };
+private:
+	std::string defaultValue = "none";
 
     Wt::WPushButton *btn_prev_;
     Wt::WPushButton *btn_next_;
@@ -54,17 +57,17 @@ public:
 
 	std::string getValue();
 	void setValue(std::string className = "none");
-	void setCustom(bool custom);
+	// void setCustom(bool custom);
 	Wt::Signal<>& classChanged() { return classChanged_; }
+
+	ComboBoxClassWithCustoms *comboBox_color;
+	ComboBoxClassWithCustoms* comboBox_intensity;
+	ComboBoxClassWithCustoms* comboBox_opacity;
 private:
-	ComboBoxClassWithCustoms *comboBox_class;
-	Wt::WComboBox *comboBox_color;
-	Wt::WComboBox *comboBox_intensity;
-	Wt::WComboBox *comboBox_opacity;
+	std::string defaultValue = "none";
 
-	Wt::WLineEdit *lineEdit_color_custom_;
+	// Wt::WLineEdit *lineEdit_color_custom_;
 
-	Wt::WContainerWidget *option_container_;
 
 	Wt::WString custom_start_;
 	Wt::Signal<> classChanged_;

@@ -272,16 +272,16 @@ std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* 
 		widgetType = text.substr(pos + 12, text.find("\"", pos + 12) - pos - 12);
 		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 12) + 2);}
 
-	std::cout << "\n\n";
-	std::cout << "text :<" << textNode->Value() << ">\n";
-	std::cout << "text :<" << text << ">\n";
-	std::cout << "variableName :<" << variableName << ">\n";
-	std::cout << "styleClasses :<" << styleClasses << ">\n";
-	std::cout << "folderName :<" << folderName << ">\n";
-	std::cout << "fileName :<" << fileName << ">\n";		
-	std::cout << "messageId :<" << messageId << "\n";
-	std::cout << "widgetType :<" << widgetType << ">\n";
-	std::cout << "\n\n";
+	// std::cout << "\n\n";
+	// std::cout << "text :<" << textNode->Value() << ">\n";
+	// std::cout << "text :<" << text << ">\n";
+	// std::cout << "variableName :<" << variableName << ">\n";
+	// std::cout << "styleClasses :<" << styleClasses << ">\n";
+	// std::cout << "folderName :<" << folderName << ">\n";
+	// std::cout << "fileName :<" << fileName << ">\n";		
+	// std::cout << "messageId :<" << messageId << "\n";
+	// std::cout << "widgetType :<" << widgetType << ">\n";
+	// std::cout << "\n\n";
 
 	node->label()->setText(variableName);
 	node->open_template_btn->doubleClicked().connect(this, [=](){		

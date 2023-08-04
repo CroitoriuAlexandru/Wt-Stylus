@@ -75,7 +75,7 @@ ElementSpacingWidget::ElementSpacingWidget(std::string templateName)
 {
 	setModal(false);
 	setResizable(false);
-	setStyleClass("min-w-fit bg-neutral-700 text-neutral-400");
+	setStyleClass("min-w-fit max-w-[300px] bg-neutral-700 text-neutral-400");
 	spacingClasses_ = SpacingStyleClasses();
 	// contents()->setStyleClass("pb-1");
 	// titleBar()->setStyleClass("cursor-pointer text-center text-md text-neutral-300");
@@ -107,25 +107,25 @@ ElementSpacingWidget::ElementSpacingWidget(std::string templateName)
 
 
 	// set syzes for comboboxes
-	padding_all_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	padding_vertical_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	padding_horizontal_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// padding_all_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// padding_vertical_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// padding_horizontal_widget_->comboBox_class->addStyleClass("!w-[55px]");
 
-	padding_top_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	padding_right_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	padding_bottom_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	padding_left_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// padding_top_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// padding_right_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// padding_bottom_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// padding_left_widget_->comboBox_class->addStyleClass("!w-[55px]");
 	
-	margin_all_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	margin_vertical_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	margin_horizontal_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// margin_all_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// margin_vertical_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// margin_horizontal_widget_->comboBox_class->addStyleClass("!w-[55px]");
 
-	margin_top_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	margin_right_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	margin_bottom_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	margin_left_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	space_vertical_widget_->comboBox_class->addStyleClass("!w-[55px]");
-	space_horizontal_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// margin_top_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// margin_right_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// margin_bottom_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// margin_left_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// space_vertical_widget_->comboBox_class->addStyleClass("!w-[55px]");
+	// space_horizontal_widget_->comboBox_class->addStyleClass("!w-[55px]");
 
 	// set regular expresion for custom value p-[10px]
 	padding_all_widget_->setCustomValueString("p-");

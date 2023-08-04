@@ -158,7 +158,6 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
         // create vector of classes for background
     auto save = classes;
     resetStyles();
-    std::cout << "\n\n\n" << classes << "\n";
     
 
     SpacingData spacing;
@@ -166,15 +165,15 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     spacing.margin = findAndRemoveMatches(margin_regexp, classes);
     spacing.space = findAndRemoveMatches(space_regexp, classes);
 
-    std::cout << classes << "\n\n\n";
 
 
 
+    std::cout << "\n\n\n before background removal - <" << classes << ">\n";
     BackgroundData bgData;
     bgData.bg_image = findAndRemoveMatche(background_image_regex, classes);
     if(bgData.bg_image != ""){
-        std::cout << "this is insane \n\n it should work \n\n\n";
-        bgData.bg_image = findAndRemoveMatche(background_color_from_regex, classes);
+        std::cout << "image data not empty:<" << bgData.bg_image << ">\n";
+        bgData.bg_color_class = findAndRemoveMatche(background_color_from_regex, classes);
         bgData.bg_color_via = findAndRemoveMatche(background_color_via_regex, classes);
         bgData.bg_color_to = findAndRemoveMatche(background_color_to_regex, classes);
     }else {
@@ -186,7 +185,7 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     bgData.bg_position = findAndRemoveMatche(background_position_regex, classes);
     bgData.bg_repeat = findAndRemoveMatche(background_repeat_regex, classes);
     bgData.bg_size = findAndRemoveMatche(background_size_regex, classes);
-
+    std::cout << "\n\n\n after background removal - <" << classes << ">\n\n\n";
 
     // create vector of classes for sizing
     SizingData sizing;

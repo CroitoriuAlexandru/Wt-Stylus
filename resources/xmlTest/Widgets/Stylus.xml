@@ -74,64 +74,84 @@
     </message>
 
     <message id="stylus.background.template">
-        <div class="p-2 space-y-1 flex flex-col items-stretch">
-            <div class="flex">
-                <div class="font-bold text-neutral-500">Gradient Img</div>
-                <div class="ms-auto">${combobox-image}</div>
+        <div class="space-y-1 m-1.5 flex flex-col items-stretch">
+            <div class="mx-1 flex ">
+                <div class="font-bold text-neutral-500 text-sm">Gradient Img</div>
+                <div class="ms-auto w-2/3">${combobox-image class=""}</div>
             </div>
-            <div class="flex justify-stretch">
-                <div class="font-bold text-neutral-500">${color-title}</div>
-                <div class="ms-auto my-2">${color-widget class="flex"}</div>
+            <div class="mx-1 flex justify-center">
+                <div class="font-bold  text-neutral-500">${color-title}</div>
+                <div class="ms-auto w-3/4">${color-widget class=""}</div>
             </div>
             ${<bg-gradient>}
-                <div class="flex justify-stretch">
+                <div class="mx-1 flex justify-center">
                     <div class="font-bold text-neutral-500">Via</div>
-                    <div class="ms-auto my-2">${combobox-color-via}</div>
+                    <div class="ms-auto w-3/4">${combobox-color-via class=""}</div>
                 </div>
-                <div class="flex justify-stretch">
+                <div class="mx-1 flex justify-center">
                     <div class="font-bold text-neutral-500">To</div>
-                    <div class="ms-auto my-2">${combobox-color-to}</div>
+                    <div class="ms-auto w-3/4">${combobox-color-to class=""}</div>
                 </div>
             ${</bg-gradient>}
             <div class="border-b border-solid border-neutral-900"></div>
-            <div class="flex">
+            <div class="mx-1 flex justify-center">
                 <div class="font-bold text-neutral-500">Clip</div>
-                <div class="ms-auto">${combobox-clip}</div>
+                <div class="ms-auto w-2/3 ">${combobox-clip}</div>
             </div>
-            <div class="flex">
+            <div class="mx-1 flex justify-center">
                 <div class="font-bold text-neutral-500">Atatchments</div>
-                <div class="ms-auto">${combobox-attachment}</div>
+                <div class="ms-auto w-2/3 ">${combobox-attachment}</div>
             </div>
-            <div class="flex">
+            <div class="mx-1 flex justify-center">
                 <div class="font-bold text-neutral-500">Origin</div>
-                <div class="ms-auto">${combobox-origin}</div>
+                <div class="ms-auto w-2/3 ">${combobox-origin}</div>
             </div>
-            <div class="flex">
+            <div class="mx-1 flex justify-center">
                 <div class="font-bold text-neutral-500">Position</div>
-                <div class="ms-auto">${combobox-position}</div>
+                <div class="ms-auto w-2/3 ">${combobox-position}</div>
             </div>
-            <div class="flex">
+            <div class="mx-1 flex justify-center">
                 <div class="font-bold text-neutral-500">Repeat</div>
-                <div class="ms-auto">${combobox-repeat}</div>
+                <div class="ms-auto w-2/3 ">${combobox-repeat}</div>
             </div>
-            <div class="flex">
+            <div class="mx-1 flex justify-center">
                 <div class="font-bold text-neutral-500">Size</div>
-                <div class="ms-auto">${combobox-size}</div>
+                <div class="ms-auto w-2/3 ">${combobox-size}</div>
             </div>
      
         </div>
     </message>
 
     <message id="stylus.class.changer.widget">
-        <div class="relative flex items-center justify-center w-full ">
-            <div class="absolute left-0">${checkbox-important class="text-neutral-400"}</div>
-            <div class="ml-3">${select-combobox class="w-full grow min-w-full"}</div>
-            <div class="w-fit">${custom-lineedit class="p-px w-full ps-1 rounded-md m-0 h-full bg-neutral-800 text-center appearance-none focus-visible:outline-none hover:bg-neutral-900"}</div>
-            <div class="">${other}</div>
-            <div>${refresh-button class="rounded-none pr-1 m-0 mr-3 text-neutral-400"}</div>
+        <div class="flex items-center justify-stretch w-full ">
+            ${<important-checkbox>}
+                <div class="absolute left-0">${checkbox-important class="text-neutral-400"}</div>
+            ${</important-checkbox>}
+            ${<class-combobox>}
+                <div class="w-full">${select-combobox class="w-full grow min-w-full"}</div>
+            ${</class-combobox>}
+            ${<class-custom>}
+                <div class="w-full">${custom-lineedit class="p-px w-full ps-1 rounded-md m-0 h-full bg-neutral-800 text-center appearance-none focus-visible:outline-none hover:bg-neutral-900"}</div>
+            ${</class-custom>}
+            <!-- ${<other-widgets>}
+               ${other-widgets}
+            ${</other-widgets>} -->
+            ${<refresh-button>}
+                <div class="absolute -right-4">${refresh-button class="rounded-none pr-1 m-0 mr-3 text-neutral-400"}</div>
+            ${</refresh-button>}
             ${<custom-checkbox>}
-                <div class="absolute right-0">${checkbox-select-custom class="mx-1 text-neutral-400"}</div>
+                <div class="absolute -right-4">${checkbox-select-custom class="mx-1 text-neutral-400"}</div>
             ${</custom-checkbox>}
+        </div>
+    </message>
+
+    <message id="stylus.class.changer.color.widget">
+        <div class="w-full">
+            <div>${color-combobox}</div>
+            <div class="flex justify-around">
+                <div>${intensity-combobox}</div>
+                <div>${opacity-combobox}</div>
+            </div>
         </div>
     </message>
 
@@ -144,12 +164,6 @@
         </div>
     </message>
 
-    <message id="stylus.colors.widget">
-        <div class="w-full">
-            <div>${combobox-1 class=""}</div>
-        </div>
-    </message>
-
     <message id="stylus.colors.intensity-opacity.template">
         <div class=" mx-1 relative">
             <div class="absolute -top-4 lect-1/2 translate-x-1/2 ">${up-button}</div>
@@ -159,67 +173,63 @@
     </message>
  
     <message id="stylus.sizing.template">
-        <div class="flex px-2">
-            <div class="flex flex-col justify-center items-stretch w-full">
-                <div class="font-bold text-center w-full text-neutral-500">Width</div>
-                <div class="flex w-full rounded-md border bg-neutral-700">
-                    ${width.control class="w-full mb-1 "}
-                </div>
-                <div class="flex w-full rounded-md border bg-neutral-700">
-                    ${width.min.control class="w-full mb-1 mx-auto "}
-                </div>
-                <div class="flex w-full rounded-md border bg-neutral-700">
-                    ${width.max.control class="w-full mb-1 mx-auto "}
-                </div>
+
+        <div class="flex w-full max-w-[300px] pl-2 pr-4 mb-1.5">
+
+            <div class="flex flex-col w-1/2 items-stretch">
+                <div class="font-bold text-center text-neutral-500">Width</div>
+                <div class="w-full">${width.control class="mb-1 w-full"}</div>
+                <div class="w-full">${width.min.control class="mb-1 w-full"}</div>
+                <div class="w-full">${width.max.control class="mb-1 w-full"}</div>
             </div>
-            <div class="border-r border-solid border-neutral-900"></div>
-            <div class="flex flex-col justify-center items-stretch w-full">
-                <div class="font-bold text-center w-full text-neutral-500">Height</div>
-                <div class="w-full">
-                    ${height.control class="w-full mb-1 mx-auto "}
-                </div>
-                <div class="w-full">
-                    ${height.min.control class="w-full mb-1 mx-auto "}
-                </div>
-                <div class="w-full">
-                    ${height.max.control class="w-full mb-1 mx-auto "}
-                </div>
+            <div class="border-r border-solid border-neutral-900 mx-2 px-2"></div>
+            <div class="flex flex-col w-1/2 justify-center">
+                <div class="font-bold text-center  text-neutral-500">Height</div>
+                <div class="w-full">${height.control class="mb-1 w-full"}</div>
+                <div class="w-full">${height.min.control class="mb-1 w-full"}</div>
+                <div class="w-full">${height.max.control class="mb-1 w-full"}</div>
             </div>
+
         </div>
+
     </message>
 
     <message id="stylus.spacing.template">
-        <div class="flex">
-
-            <div class="flex flex-col items-center w-1/2">
+      <div class="mb-1 w-full">
+        
+        <div class="flex w-full max-w-[300px] pl-2 pr-4 mb-1.5">
+              
+            <div class="flex flex-col w-1/2 items-stretch">
                 <div class="font-bold text-center text-neutral-500">Margin</div>
-                <div class="">
-                    ${margin.all.control class=" mb-1 mx-auto "}
+                <div class="w-full">
+                    ${margin.all.control class=" mb-1 w-full"}
                 </div>
-                <div class="">
-                    ${margin.vertical.control class=" mb-1 mx-auto "}
+                <div class="w-full">
+                    ${margin.vertical.control class=" mb-1 w-full"}
                 </div>
-                <div class="">
-                    ${margin.horizontal.control class=" mb-1 mx-auto "}
+                <div class="w-full">
+                    ${margin.horizontal.control class=" mb-1 w-full"}
                 </div>
             </div>
-            <div class="border-r border-solid border-neutral-900"></div>
-            <div class="flex flex-col items-center w-1/2">
+            
+            <div class="border-r border-solid border-neutral-900 mx-2 px-2"></div>
+            <div class="flex flex-col w-1/2 justify-center">
                 <div class="font-bold text-center  text-neutral-500">Padding</div>
-                <div class="">
-                    ${padding.all.control class=" mb-1 mx-auto "}
+                <div class="w-full">
+                    ${padding.all.control class=" mb-1 w-full"}
                 </div>
-                <div class="">
-                    ${padding.vertical.control class=" mb-1 mx-auto "}
+                <div class="w-full">
+                    ${padding.vertical.control class=" mb-1 w-full"}
                 </div>
-                <div class="">
-                    ${padding.horizontal.control class=" mb-1 mx-auto "}
+                <div class="w-full">
+                    ${padding.horizontal.control class=" mb-1 w-full"}
                 </div>
             </div>
 
         </div>
+        <!-- <div class="flex w-full max-w-[300px] pl-2 pr-4 mb-1.5"> -->
 
-        <div class="relative my-8 mx-auto px-4 min-h-[90px] w-4/5 border-[4px] border-dashed border-neutral-600 flex flex-col justify-between items-stretch">
+        <div class="relative my-8 mx-auto px-4 min-h-[90px] w-4/5  border-[4px] border-dashed border-neutral-600 flex flex-col justify-between items-stretch">
             <div class="flex mb-2 flex-col w-fit mx-auto -mt-6">
                 <div class="">
                     ${margin.top.control class=" "}
@@ -228,7 +238,7 @@
                     ${padding.top.control class=" "}
                 </div>
             </div>
-            <div class="-mx-12 mb-2 flex justify-between">
+            <div class="-ml-12 -mr-8 mb-2 flex justify-between">
                 <div class="">
                     ${margin.left.control class=" "}
                 </div>
@@ -268,6 +278,8 @@
                 </div>
             </div>
         </div>
+        </div>
+
     </message>
 
     <message id="stylus.variable.configuration.template">

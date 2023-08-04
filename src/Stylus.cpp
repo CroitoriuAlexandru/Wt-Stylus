@@ -70,7 +70,7 @@ void StylusEdditor::setTemplate(std::string folderName, std::string fileName, st
 {
 
 	if(!stylus_templates_->parseMessageAndDoc(folderName, fileName, messageId)){
-		std::cout << "\n\n StylusEdditor::setTemplate --- template already exists \n\n";
+		// std::cout << "\n\n StylusEdditor::setTemplate --- template already exists \n\n";
 		auto not_found_text = edditor_temp_->bindWidget("tree-view", std::make_unique<Wt::WText>("arguments fileName or messageId are not found"));
 		not_found_text->setStyleClass("text-red-400 font-bold");
 		return;
@@ -248,7 +248,7 @@ void StylusEdditor::toggleOutline(bool on)
 {
 	// std::cout << "\nStylusEdditor --- toggleOutline got called \n";
 	if(!stylusState_->selectedElement || !stylusState_->selectedElement->ToElement()){
-		std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
+		// std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
 		return;
 	}
 	std::string currentStyles = cleanStringStartEnd(stylusState_->selectedElement->ToElement()->Attribute("class"));
@@ -287,7 +287,7 @@ void StylusEdditor::updateFile()
 {
 	// check if doc exists
 	if(stylusState_->doc.Error()){
-		std::cout << "\n\n StylusEdditor::updateFile --- error getting <messages> element \n\n";
+		// std::cout << "\n\n StylusEdditor::updateFile --- error getting <messages> element \n\n";
 		return;
 	}
 	stylusState_->doc.SaveFile(stylusState_->filePath.c_str());
