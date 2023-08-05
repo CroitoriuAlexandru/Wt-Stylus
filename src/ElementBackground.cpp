@@ -48,6 +48,14 @@ BackgroundStyleClasses::BackgroundStyleClasses() {
 		"none", "bg-gradient-to-t", "bg-gradient-to-tr", "bg-gradient-to-r", "bg-gradient-to-br", "bg-gradient-to-b", "bg-gradient-to-bl", "bg-gradient-to-l", "bg-gradient-to-tl"
 	};
 
+	gradient_step = {
+		"0%", "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%", "100%"
+	};
+
+	
+
+	
+
 	for(auto styleClass : def_classes){
 		bg_color_classes.push_back("bg-" + std::string(styleClass));
 		bg_color_from_classes.push_back("from-" + std::string(styleClass));
@@ -57,11 +65,19 @@ BackgroundStyleClasses::BackgroundStyleClasses() {
 	bg_color_classes.push_back("none");
 	bg_color_from_classes.push_back("none");
 	bg_color_via_classes.push_back("none");
+	bg_color_to_classes.push_back("none");
+
 	for(auto styleClass : colors){
 		bg_color_classes.push_back("bg-" + std::string(styleClass));
 		bg_color_from_classes.push_back("from-" + std::string(styleClass));
 		bg_color_via_classes.push_back("via-" + std::string(styleClass));
 		bg_color_to_classes.push_back("to-" + std::string(styleClass));
+	}
+
+	for(auto step : gradient_step){
+		bg_gradient_step_from_classes.push_back("from-" + std::string(step));
+		bg_gradient_step_via_classes.push_back("via-" + std::string(step));
+		bg_gradient_step_to_classes.push_back("to-" + std::string(step));
 	}
 
 }
@@ -105,6 +121,14 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::string templateName)
 	comboBox_color_to->setCustomValueString("to-");
 
 
+	comboBox_color->setStepOptions(colors.bg_gradient_step_from_classes);
+	comboBox_color_via->setStepOptions(colors.bg_gradient_step_via_classes);
+	comboBox_color_to->setStepOptions(colors.bg_gradient_step_to_classes);
+
+	comboBox_color->comboBox_gradient_step->setDefaultValue("from-0%");
+	comboBox_color_via->comboBox_gradient_step->setDefaultValue("via-50%");
+	comboBox_color_to->comboBox_gradient_step->setDefaultValue("to-100%");
+
 	// deactivate custom checkbox
 	comboBox_attachment->setCondition("custom-checkbox", false);
 	comboBox_clip->setCondition("custom-checkbox", false);
@@ -124,19 +148,33 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::string templateName)
 
 	comboBox_image->classChanged().connect([=](){ 
 		auto value = comboBox_image->getValue();
-		std::cout << "\n\n value: <" << value << ">\n";
+		// std::cout << "\n\n value: <" << value << ">\n";
 
 		// background_image_regex
 		if(comboBox_image->comboBox_class->currentIndex() != 0){
+			// std::cout << " ---- ---------cusotm start = " << comboBox_color->custom_start_ << ">-----------------------\n";
 			content_temp->setCondition("bg-gradient", true);
-			content_temp->bindString("color-title", "From");
-			comboBox_color->comboBox_color->setOptions(colors.bg_color_from_classes);
-			comboBox_color->comboBox_color->setCustomValueString("from-");
+			if(comboBox_color->custom_start_.compare("from-") != 0){
+				comboBox_color->setValue();
+				styleChanged_.emit();
+				content_temp->bindString("color-title", "from");
+				comboBox_color->custom_start_ = "from-";
+				comboBox_color->comboBox_color->setOptions(colors.bg_color_from_classes);
+				comboBox_color->comboBox_color->setCustomValueString("from-");
+				comboBox_color->comboBox_gradient_step->setHidden(false);
+				comboBox_color_to->comboBox_gradient_step->setHidden(false);
+				comboBox_color_via->comboBox_gradient_step->setHidden(false);
+			}
 		}else {
+			comboBox_color->custom_start_ = "bg-";
 			content_temp->setCondition("bg-gradient", false);
 			content_temp->bindString("color-title", "Color");
 			comboBox_color->comboBox_color->setCustomValueString("bg-");
 			comboBox_color->comboBox_color->setOptions(colors.bg_color_classes);
+			comboBox_color->setValue();
+			comboBox_color->comboBox_gradient_step->setHidden(true);
+			comboBox_color_to->comboBox_gradient_step->setHidden(true);
+			comboBox_color_via->comboBox_gradient_step->setHidden(true);
 		}
 		styleChanged_.emit();
 	});
@@ -151,10 +189,6 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::string templateName)
 	comboBox_color_to->classChanged().connect([=](){ 
 		styleChanged_.emit();
 	});
-	// comboBox_color->setValue();
-	// comboBox_color_via->setValue();
-	// comboBox_color_to->setValue();
-
 };
 
 std::string ElementBackgroundWidget::getStyles()
@@ -163,9 +197,9 @@ std::string ElementBackgroundWidget::getStyles()
 
 	if(comboBox_image->getValue().compare("none") != 0){ 
 		elementClasses += comboBox_image->getValue() + " ";
-		if(comboBox_color->getValue().compare("none") != 0){ elementClasses += comboBox_color->getValue() + " "; }
-		if(comboBox_color_via->getValue().compare("none") != 0){ elementClasses += comboBox_color_via->getValue() + " "; }
-		if(comboBox_color_to->getValue().compare("none") != 0){ elementClasses += comboBox_color_to->getValue() + " "; }
+		if(comboBox_color->getValue().compare("none") != 0){ elementClasses += comboBox_color->getValue() + " " + comboBox_color->comboBox_gradient_step->getValue() + " "; }
+		if(comboBox_color_via->getValue().compare("none") != 0){ elementClasses += comboBox_color_via->getValue() + " " + comboBox_color_via->comboBox_gradient_step->getValue() + " "; }
+		if(comboBox_color_to->getValue().compare("none") != 0){ elementClasses += comboBox_color_to->getValue() + " " + comboBox_color_to->comboBox_gradient_step->getValue() + " "; }
 	}else {
 		if(comboBox_color->getValue().compare("none") != 0){ elementClasses += comboBox_color->getValue() + " "; }
 	}
@@ -182,6 +216,7 @@ std::string ElementBackgroundWidget::getStyles()
 void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 {
 	resetStyles();
+
 	// std::cout << "\n\n ElementBackgroundWidget::setClasses \n";
 	// std::cout << "attachment class = " << bgData.bg_attachment << "\n";
 	// std::cout << "clip class = " << bgData.bg_clip << "\n";
@@ -207,16 +242,27 @@ void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 		content_temp->setCondition("bg-gradient", true);
 		content_temp->bindString("color-title", "From");
 		comboBox_color->comboBox_color->setOptions(colors.bg_color_from_classes);
-
-		std::cout << " ---- ---------bgData.bg_color_from = " << bgData.bg_color_class << "\n";
-		std::cout << " ---- ---------bgData.bg_color_via = " << bgData.bg_color_via << "\n";
-		std::cout << " ---- ---------bgData.bg_color_to = " << bgData.bg_color_to << "\n";
+		// std::cout << " ---- ---------bgData.bg_color_from = " << bgData.bg_color_class << "\n";
+		// std::cout << " ---- ---------bgData.bg_color_from_step = " << bgData.bg_color_from_step << "\n";
+		// std::cout << " ---- ---------bgData.bg_color_via = " << bgData.bg_color_via << "\n";
+		// std::cout << " ---- ---------bgData.bg_color_via_step = " << bgData.bg_color_via_step << "\n";
+		// std::cout << " ---- ---------bgData.bg_color_to = " << bgData.bg_color_to << "\n";
+		// std::cout << " ---- ---------bgData.bg_color_to_step = " << bgData.bg_color_to_step << "\n";
 		comboBox_color->setValue(bgData.bg_color_class);
 		comboBox_color_via->setValue(bgData.bg_color_via);
 		comboBox_color_to->setValue(bgData.bg_color_to);
+		comboBox_color->comboBox_gradient_step->setValue(bgData.bg_color_from_step);
+		comboBox_color_via->comboBox_gradient_step->setValue(bgData.bg_color_via_step);
+		comboBox_color_to->comboBox_gradient_step->setValue(bgData.bg_color_to_step);
+		comboBox_color->comboBox_gradient_step->setHidden(false);
+		comboBox_color_to->comboBox_gradient_step->setHidden(false);
+		comboBox_color_via->comboBox_gradient_step->setHidden(false);
 	}else {
 		content_temp->setCondition("bg-gradient", false);
 		comboBox_color->setValue(bgData.bg_color_class);
+		comboBox_color->comboBox_gradient_step->setHidden(true);
+		comboBox_color_to->comboBox_gradient_step->setHidden(true);
+		comboBox_color_via->comboBox_gradient_step->setHidden(true);
 	}
 
 }
@@ -231,6 +277,7 @@ void ElementBackgroundWidget::resetStyles()
 	comboBox_size->setValue();
 	comboBox_image->setValue();
 	comboBox_color->setValue();
+
 	
 	comboBox_color_via->setValue();
 	comboBox_color_to->setValue();

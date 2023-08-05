@@ -272,6 +272,14 @@ std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* 
 		widgetType = text.substr(pos + 12, text.find("\"", pos + 12) - pos - 12);
 		text = text.substr(0, pos) + text.substr(text.find("\"", pos + 12) + 2);}
 
+	// set node found if template node has ? in class
+	if(styleClasses.find("?") != std::string::npos){
+		selectedTreeNode = node.get();
+		stylusState_->selectedElement = textNode;
+		selectedNodeFound = true;
+		selectedTreeNode = node.get();
+	}
+
 	// std::cout << "\n\n";
 	// std::cout << "text :<" << textNode->Value() << ">\n";
 	// std::cout << "text :<" << text << ">\n";

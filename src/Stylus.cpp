@@ -69,6 +69,19 @@ std::unique_ptr<AppDev> StylusEdditor::createDevApp()
 void StylusEdditor::setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType)
 {
 
+	// toggle ? if the selected node is template text
+	if(stylusState_->selectedElement && isTemplateText(stylusState_->selectedElement->Value())){
+		auto tempText = stylusState_->selectedElement->Value();
+		auto classes = getTemplateValue(tempText, "class");
+		classes = cleanStringStartEnd(classes);
+		auto newText = changeTempateAttributeValue(tempText, "class", classes);
+		stylusState_->selectedElement->SetValue(newText.c_str());
+		updateFile();
+		updateResources();
+		appDevChanged_.emit();
+	}
+
+
 	if(!stylus_templates_->parseMessageAndDoc(folderName, fileName, messageId)){
 		// std::cout << "\n\n StylusEdditor::setTemplate --- template already exists \n\n";
 		auto not_found_text = edditor_temp_->bindWidget("tree-view", std::make_unique<Wt::WText>("arguments fileName or messageId are not found"));
@@ -80,6 +93,7 @@ void StylusEdditor::setTemplate(std::string folderName, std::string fileName, st
 	createTreeView();
 	updateFile();
 	updateResources();
+	
 }
 
 
@@ -180,18 +194,16 @@ void StylusEdditor::nodeSelected(tinyxml2::XMLNode* node)
 		std::cout << "newText :" << newText << "\n\n";
 
 		stylusState_->selectedElement->SetValue(newText.c_str());
-		updateFile();
-		updateResources();
 		appDevChanged_.emit();
 	}else {
 		toggleOutline(false);
 	}
 	std::string elem_classes;
 	std::string elem_content;
+	stylusState_->selectedElement = node;
 
 	if(!node->ToElement()){
 		std::cout << "\n\n selected node is text\n";
-		stylusState_->selectedElement = node;
 		auto text = node->Value();
 		auto classes = getTemplateValue(text, "class");
 		elem_classes = classes;
@@ -201,13 +213,13 @@ void StylusEdditor::nodeSelected(tinyxml2::XMLNode* node)
 		updateResources();
 		appDevChanged_.emit();
 	}else {
-		stylusState_->selectedElement = node;
 		toggleOutline(true);
 		elem_classes = cleanStringStartEnd(stylusState_->selectedElement->ToElement()->Attribute("class"));
 		elem_content = stylusState_->selectedElement->ToElement()->GetText();
 		updateFile();
 		updateResources();
 	}
+	std::cout << "\n\n elem_classes: " << elem_classes << "\n\n";
 
 	updateDisplayElement(elem_classes, elem_content);
 
@@ -247,31 +259,82 @@ std::string StylusEdditor::changeTempateAttributeValue(std::string templateText,
 void StylusEdditor::toggleOutline(bool on)
 {
 	// std::cout << "\nStylusEdditor --- toggleOutline got called \n";
-	if(!stylusState_->selectedElement || !stylusState_->selectedElement->ToElement()){
-		// std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
+	if(!stylusState_->selectedElement){
+
+		std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
 		return;
 	}
-	std::string currentStyles = cleanStringStartEnd(stylusState_->selectedElement->ToElement()->Attribute("class"));
-
+	std::string newStyles = ""; 
 	if(on){
-		currentStyles = "? " + currentStyles;
+		newStyles = "? ";
+		// if selected element is template
+		if(isTemplateText(stylusState_->selectedElement->Value())){
+			std::cout << "\n\n StylusEdditor::toggleOutline --- selected element is template \n\n";
+			auto tempText = stylusState_->selectedElement->Value();
+			auto classes = getTemplateValue(tempText, "class");
+			classes = cleanStringStartEnd(classes);
+			auto newText = changeTempateAttributeValue(tempText, "class", newStyles);
+			stylusState_->selectedElement->SetValue(newText.c_str());
+			updateFile();
+			updateResources();
+			appDevChanged_.emit();
+		}else {
+			
+			newStyles += cleanStringStartEnd(stylusState_->selectedElement->ToElement()->Attribute("class"));
+			stylusState_->selectedElement->ToElement()->SetAttribute("class", newStyles.c_str());
+		}
 	}else {
-		currentStyles = cleanStringStartEnd(currentStyles);
+		if(isTemplateText(stylusState_->selectedElement->Value())){
+			auto tempText = stylusState_->selectedElement->Value();
+			auto classes = getTemplateValue(tempText, "class");
+			classes = cleanStringStartEnd(classes);
+			auto newText = changeTempateAttributeValue(tempText, "class", classes);
+			stylusState_->selectedElement->SetValue(newText.c_str());
+			updateFile();
+			updateResources();
+			appDevChanged_.emit();
+		}else {
+			newStyles = cleanStringStartEnd(stylusState_->selectedElement->ToElement()->Attribute("class"));
+			stylusState_->selectedElement->ToElement()->SetAttribute("class", newStyles.c_str());
+		}
 	}
 
-	stylusState_->selectedElement->ToElement()->SetAttribute("class", currentStyles.c_str());
+	// stylusState_->selectedElement->ToElement()->SetAttribute("class", currentStyles.c_str());
 
 }
 
 
 void StylusEdditor::saveStyles(std::string newStyles)
 {
-	
-	// std::cout << "\n\n newStyles: " << newStyles << "\n\n";
 	auto styles = "? " + newStyles;
-	stylusState_->selectedElement->ToElement()->SetAttribute("class", styles.c_str());
-	updateFile();
-	updateResources();
+	std::cout << "\nStylusEdditor::saveStyles --- new styles: " << styles << "\n";	
+	if(stylusState_->selectedElement && !stylusState_->selectedElement->ToElement())
+	{
+		std::string tempText = stylusState_->selectedElement->Value();
+		std::cout << "\n\n tempText: " << tempText << "\n\n";
+		if(isTemplateText(tempText)){
+			std::cout << "\n\n tempText is template text \n\n";
+			std::string newTemp = changeTempateAttributeValue(tempText, "class", styles);
+			stylusState_->selectedElement->SetValue(newTemp.c_str());
+			updateFile();
+			updateResources();
+			appDevChanged_.emit();
+		}
+
+	}else 
+	{
+		stylusState_->selectedElement->ToElement()->SetAttribute("class", styles.c_str());
+		updateFile();
+		updateResources();
+	}
+}
+
+bool StylusEdditor::isTemplateText(std::string text)
+{
+	if(std::regex_search(text, temp_pattern)){
+		return true;
+	}
+	return false;
 }
 
 

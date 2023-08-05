@@ -48,6 +48,8 @@ private:
 
     void saveStyles(std::string newStyles);
 
+    bool isTemplateText(std::string text);
+    
     void updateFile();
     void updateResources();
     std::string getTemplateValue(std::string templateText, std::string attribute);

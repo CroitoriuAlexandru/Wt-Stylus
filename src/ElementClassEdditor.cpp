@@ -152,30 +152,25 @@ ElementClassEdditor::ElementClassEdditor(std::string templateName)
 void ElementClassEdditor::setStyleClasses(std::string classes)
 {
     // clean any multiple whitespaces from the string
-    classes = std::regex_replace(classes, std::regex("\\s+"), " ");
+    // classes = std::regex_replace(classes, std::regex("\\s+"), " ");
     // std::cout << "\n\n classes from Element Class Edditor :" << classes << "\n\n";
     // create vector of classes for spacing
         // create vector of classes for background
     auto save = classes;
     resetStyles();
-    
 
-    SpacingData spacing;
-    spacing.padding = findAndRemoveMatches(padding_regexp, classes);
-    spacing.margin = findAndRemoveMatches(margin_regexp, classes);
-    spacing.space = findAndRemoveMatches(space_regexp, classes);
-
-
-
-
-    std::cout << "\n\n\n before background removal - <" << classes << ">\n";
+    // std::cout << "\n\n\n before background removal - <" << classes << ">\n";
     BackgroundData bgData;
     bgData.bg_image = findAndRemoveMatche(background_image_regex, classes);
     if(bgData.bg_image != ""){
-        std::cout << "image data not empty:<" << bgData.bg_image << ">\n";
         bgData.bg_color_class = findAndRemoveMatche(background_color_from_regex, classes);
+        // std::cout << "classes before-from-step: <" << classes << ">\n";
+        bgData.bg_color_from_step = findAndRemoveMatche(background_color_from_step, classes);
+        // std::cout << "classes after-from-step: <" << classes << ">\n";
         bgData.bg_color_via = findAndRemoveMatche(background_color_via_regex, classes);
+        bgData.bg_color_via_step = findAndRemoveMatche(background_color_via_step, classes);
         bgData.bg_color_to = findAndRemoveMatche(background_color_to_regex, classes);
+        bgData.bg_color_to_step = findAndRemoveMatche(background_color_to_step, classes);
     }else {
         bgData.bg_color_class = findAndRemoveMatche(background_color_regexp, classes);
     }
@@ -185,7 +180,14 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     bgData.bg_position = findAndRemoveMatche(background_position_regex, classes);
     bgData.bg_repeat = findAndRemoveMatche(background_repeat_regex, classes);
     bgData.bg_size = findAndRemoveMatche(background_size_regex, classes);
-    std::cout << "\n\n\n after background removal - <" << classes << ">\n\n\n";
+
+
+    // std::cout << "\n\n\n before spacing removal - <" << classes << ">\n";
+
+    SpacingData spacing;
+    spacing.padding = findAndRemoveMatches(padding_regexp, classes);
+    spacing.margin = findAndRemoveMatches(margin_regexp, classes);
+    spacing.space = findAndRemoveMatches(space_regexp, classes);
 
     // create vector of classes for sizing
     SizingData sizing;
@@ -200,8 +202,8 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     
 
     // remove whitespace from start of classes string and store it in notFoundClasses
-    std::cout << "\n\n classes from Element Class Edditor not found classes :" << notFoundClasses << "\n\n";
-    std::cout << "background classes :\n";
+    // std::cout << "\n\n classes from Element Class Edditor not found classes :" << notFoundClasses << "\n\n";
+    // std::cout << "background classes :\n";
     
     // std::cout << bgData.bg_attachment << "\n";
     // std::cout << bgData.bg_clip << "\n";
@@ -209,11 +211,21 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     // std::cout << bgData.bg_position << "\n";
     // std::cout << bgData.bg_repeat << "\n";
     // std::cout << bgData.bg_size << "\n";
-    std::cout << "<" << bgData.bg_image << ">\n";
-    std::cout << "<" << bgData.bg_color_class << ">\n";
-    std::cout << "<" << bgData.bg_color_via << ">\n";
-    std::cout << "<" << bgData.bg_color_to << ">\n";
-    std::cout << "\n\n"; 
+    // std::cout << "<" << bgData.bg_image << ">\n";
+   
+   
+   
+   
+    // std::cout << "<" << bgData.bg_color_class << ">\n";
+    // std::cout << "<" << bgData.bg_color_via << ">\n";
+    // std::cout << "<" << bgData.bg_color_to << ">\n";
+    // std::cout << "<" << bgData.bg_color_from_step << ">\n";
+    // std::cout << "<" << bgData.bg_color_via_step << ">\n";
+    // std::cout << "<" << bgData.bg_color_to_step << ">\n";
+
+
+
+    // std::cout << "\n\n"; 
     // resetStyles();
     
     spacingWidget_->setClasses(spacing);
@@ -231,9 +243,10 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
 
 std::string ElementClassEdditor::getStyles()
 {
-    std::string styles = spacingWidget_->getStyles() + " ";
-    styles += sizingWidget_->getStyles() + " ";
+    std::string styles = "";
     styles += backgroundWidget_->getStyles() + " ";
+    styles += sizingWidget_->getStyles() + " ";
+    styles += spacingWidget_->getStyles() + " ";
     styles += notFoundClasses;
     return styles;
 }

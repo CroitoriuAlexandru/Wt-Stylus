@@ -63,8 +63,8 @@ SpacingStyleClasses::SpacingStyleClasses()
 		margin_vertical_classes.push_back("my-" + step);
 		margin_all_classes.push_back("m-" + step);
 
-		space_horizontal_classes.push_back("space-x-" + step);
-		space_vertical_classes.push_back("space-y-" + step);
+		space_horizontal_classes.push_back("space-y-" + step);
+		space_vertical_classes.push_back("space-x-" + step);
 	}
 
 
@@ -102,8 +102,8 @@ ElementSpacingWidget::ElementSpacingWidget(std::string templateName)
 	space_vertical_widget_ = content_temp->bindWidget("space.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.space_vertical_classes));
 	space_horizontal_widget_ = content_temp->bindWidget("space.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.space_horizontal_classes));
 
-	checkbox_space_x_reverse_ = content_temp->bindWidget("space.horizontal.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
-	checkbox_space_y_reverse_ = content_temp->bindWidget("space.vertical.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
+	checkbox_space_x_reverse_ = content_temp->bindWidget("space.vertical.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
+	checkbox_space_y_reverse_ = content_temp->bindWidget("space.horizontal.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
 
 
 	// set syzes for comboboxes

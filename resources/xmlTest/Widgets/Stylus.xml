@@ -79,18 +79,18 @@
                 <div class="font-bold text-neutral-500 text-sm">Gradient Img</div>
                 <div class="ms-auto w-2/3">${combobox-image class=""}</div>
             </div>
-            <div class="mx-1 flex justify-center">
+            <div class="mx-1 flex mb-2">
                 <div class="font-bold  text-neutral-500">${color-title}</div>
-                <div class="ms-auto w-3/4">${color-widget class=""}</div>
+                <div class="ms-auto w-2/3">${color-widget class=""}</div>
             </div>
             ${<bg-gradient>}
-                <div class="mx-1 flex justify-center">
+                <div class="mx-1 flex mb-2">
                     <div class="font-bold text-neutral-500">Via</div>
-                    <div class="ms-auto w-3/4">${combobox-color-via class=""}</div>
+                    <div class="ms-auto w-2/3">${combobox-color-via class=""}</div>
                 </div>
-                <div class="mx-1 flex justify-center">
+                <div class="mx-1 flex mb-2">
                     <div class="font-bold text-neutral-500">To</div>
-                    <div class="ms-auto w-3/4">${combobox-color-to class=""}</div>
+                    <div class="ms-auto w-2/3">${combobox-color-to class=""}</div>
                 </div>
             ${</bg-gradient>}
             <div class="border-b border-solid border-neutral-900"></div>
@@ -131,26 +131,24 @@
                 <div class="w-full">${select-combobox class="w-full grow min-w-full"}</div>
             ${</class-combobox>}
             ${<class-custom>}
-                <div class="w-full">${custom-lineedit class="p-px w-full ps-1 rounded-md m-0 h-full bg-neutral-800 text-center appearance-none focus-visible:outline-none hover:bg-neutral-900"}</div>
+                <div class="w-full">${custom-lineedit class="p-px w-full ps-1 rounded-md m-0 h-full bg-neutral-800 text-center appearance-none hover:bg-neutral-900"}</div>
             ${</class-custom>}
-            <!-- ${<other-widgets>}
-               ${other-widgets}
-            ${</other-widgets>} -->
             ${<refresh-button>}
-                <div class="absolute -right-4">${refresh-button class="rounded-none pr-1 m-0 mr-3 text-neutral-400"}</div>
+                <div class="absolute -right-0 cursor-pointer rounded-md pr-1 m-0 mr-3 text-neutral-400 hover:bg-neutral-950 p-1 ">${refresh-button class=""}</div>
             ${</refresh-button>}
             ${<custom-checkbox>}
-                <div class="absolute -right-4">${checkbox-select-custom class="mx-1 text-neutral-400"}</div>
+                <div class="absolute -right-0  text-neutral-400">${checkbox-select-custom class=""}</div>
             ${</custom-checkbox>}
         </div>
     </message>
 
     <message id="stylus.class.changer.color.widget">
-        <div class="w-full">
+        <div class="w-full mr-1.5">
             <div>${color-combobox}</div>
-            <div class="flex justify-around">
-                <div>${intensity-combobox}</div>
-                <div>${opacity-combobox}</div>
+            <div class="w-full flex justify-end  min-w-[270px] -ml-[90px]">
+                <div class="w-fit">${intensity-combobox class="w-full min-w-fit"}</div>
+                <div class="w-fit">${opacity-combobox class="w-full min-w-fit "}</div>
+                <div class="w-fit">${gradient-step-combobox class="w-full min-w-fit pr-3"}</div>
             </div>
         </div>
     </message>
@@ -158,36 +156,35 @@
 
     <message id="stylus.class.changer.select.template">
         <div class="flex items-stretch  w-full border border-gray-600 border-solid rounded-md ">
-            <div class="">${prev-button class=" h-full rounded-l-md border-l text-neutral-400 border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900"}</div>
-            <div class="w-full">${class-combobox class=" h-full text-center p-px w-full rounded-none m-0 bg-neutral-800 text-neutral-300 appearance-none focus-visible:outline-none hover:bg-neutral-900"}</div>
-            <div class="">${next-button class=" h-full rounded-l-none rounded-r-md border-l text-neutral-400 border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900"}</div>
+            <div class="rounded-l-md border-r block text-neutral-400 border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900 cursor-pointer">${prev-button class=""}</div>
+            <div class="w-full">${class-combobox class="text-center p-px w-full rounded-none m-0 bg-neutral-800 z-50 text-neutral-300 appearance-none hover:bg-neutral-900"}</div>
+            <div class="rounded-r-md border-l block text-neutral-400 border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900 cursor-pointer">${next-button class=""}</div>
         </div>
     </message>
 
     <message id="stylus.colors.intensity-opacity.template">
         <div class=" mx-1 relative">
             <div class="absolute -top-4 lect-1/2 translate-x-1/2 ">${up-button}</div>
-            <div class="">${combobox class="h-full text-center p-px w-full rounded-none m-0 bg-neutral-800 appearance-none focus-visible:outline-none hover:bg-neutral-900"}</div>
+            <div class="">${combobox class="h-full text-center p-px w-full rounded-none m-0 bg-neutral-800 appearance-none hover:bg-neutral-900"}</div>
             <div class="absolute -bottom-4 lect-1/2 translate-x-1/2 ">${down-button}</div>
         </div>
     </message>
  
     <message id="stylus.sizing.template">
 
-        <div class="flex w-full max-w-[300px] pl-2 pr-4 mb-1.5">
+        <div class="flex w-full max-w-[300px] space-x-2  p-1.5">
 
             <div class="flex flex-col w-1/2 items-stretch">
                 <div class="font-bold text-center text-neutral-500">Width</div>
-                <div class="w-full">${width.control class="mb-1 w-full"}</div>
-                <div class="w-full">${width.min.control class="mb-1 w-full"}</div>
-                <div class="w-full">${width.max.control class="mb-1 w-full"}</div>
+                <div class="w-full">${width.control class=""}</div>
+                <div class="w-full">${width.min.control class=""}</div>
+                <div class="w-full">${width.max.control class=""}</div>
             </div>
-            <div class="border-r border-solid border-neutral-900 mx-2 px-2"></div>
             <div class="flex flex-col w-1/2 justify-center">
                 <div class="font-bold text-center  text-neutral-500">Height</div>
-                <div class="w-full">${height.control class="mb-1 w-full"}</div>
-                <div class="w-full">${height.min.control class="mb-1 w-full"}</div>
-                <div class="w-full">${height.max.control class="mb-1 w-full"}</div>
+                <div class="w-full">${height.control class=""}</div>
+                <div class="w-full">${height.min.control class=""}</div>
+                <div class="w-full">${height.max.control class=""}</div>
             </div>
 
         </div>
@@ -195,34 +192,33 @@
     </message>
 
     <message id="stylus.spacing.template">
-      <div class="mb-1 w-full">
+      <div class="w-full py-1.5">
         
-        <div class="flex w-full max-w-[300px] pl-2 pr-4 mb-1.5">
+        <div class="flex w-full max-w-[300px] px-1.5 space-x-2">
               
-            <div class="flex flex-col w-1/2 items-stretch">
+            <div class="flex flex-col w-1/2 items-stretch m-px">
                 <div class="font-bold text-center text-neutral-500">Margin</div>
                 <div class="w-full">
-                    ${margin.all.control class=" mb-1 w-full"}
+                    ${margin.all.control class=" w-full"}
                 </div>
                 <div class="w-full">
-                    ${margin.vertical.control class=" mb-1 w-full"}
+                    ${margin.vertical.control class=" w-full"}
                 </div>
                 <div class="w-full">
-                    ${margin.horizontal.control class=" mb-1 w-full"}
+                    ${margin.horizontal.control class=" w-full"}
                 </div>
             </div>
             
-            <div class="border-r border-solid border-neutral-900 mx-2 px-2"></div>
-            <div class="flex flex-col w-1/2 justify-center">
+            <div class="flex flex-col w-1/2 px-1.5 justify-center m-px">
                 <div class="font-bold text-center  text-neutral-500">Padding</div>
                 <div class="w-full">
-                    ${padding.all.control class=" mb-1 w-full"}
+                    ${padding.all.control class=" w-full"}
                 </div>
                 <div class="w-full">
-                    ${padding.vertical.control class=" mb-1 w-full"}
+                    ${padding.vertical.control class=" w-full"}
                 </div>
                 <div class="w-full">
-                    ${padding.horizontal.control class=" mb-1 w-full"}
+                    ${padding.horizontal.control class=" w-full"}
                 </div>
             </div>
 

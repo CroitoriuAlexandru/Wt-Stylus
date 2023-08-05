@@ -33,12 +33,12 @@ void ElementContent::setFoldersData(std::vector<FolderData> foldersData)
 
      // set combo box values
     auto widgetTypes = { "template" };
-    std::cout << "\n\n folders names";
+    // std::cout << "\n\n folders names";
     for(auto folders : foldersData){
-        std::cout << "\n\nfolderName :<" << folders.folderName << ">\n\n";
+        // std::cout << "\n\nfolderName :<" << folders.folderName << ">\n\n";
         comboBox_folderName->addItem(folders.folderName);
     }
-    std::cout << "end\n\n";
+    // std::cout << "end\n\n";
 
     for(auto files : foldersData[0].xmlFiles){
         comboBox_fileName->addItem(files.fileName);

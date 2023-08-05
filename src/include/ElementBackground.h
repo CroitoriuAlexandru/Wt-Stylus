@@ -17,10 +17,17 @@ struct BackgroundStyleClasses {
 	std::vector<std::string> bg_color_from_classes;
 	std::vector<std::string> bg_color_via_classes;
 	std::vector<std::string> bg_color_to_classes;
+	std::vector<std::string> bg_gradient_step_from_classes;
+	std::vector<std::string> bg_gradient_step_via_classes;
+	std::vector<std::string> bg_gradient_step_to_classes;
 
+
+	// those are used to create the classes 
 	std::vector<std::string> color_intensity;
 	std::vector<std::string> color_opacity;
-	
+	std::vector<std::string> gradient_step;
+
+
 	BackgroundStyleClasses();
 };
 
@@ -43,6 +50,9 @@ struct BackgroundData
 	std::string bg_image;
 	std::string bg_color_via;
 	std::string bg_color_to;
+	std::string bg_color_from_step;
+	std::string bg_color_via_step;
+	std::string bg_color_to_step;
 
 
 
@@ -81,9 +91,6 @@ private:
 	std::regex regex_custom_color =  std::regex("bg-\\[[\\S]*\\]");
 	// bg-(inherit|current|transparent|black|white)
 	std::regex regex_def_classes = std::regex("(bg|from|via|to)-(inherit|current|transparent|black|white)");
-	// bg-((slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)?\/(100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0))
-	std::regex regex_color_classes = std::regex("(bg|from|via|to)-((slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)?\\/(100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0))");
-
-
+	// bg-((slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)\/((100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0)|\[[\S]*\])[ ]((from|via|to)-(0|5|10|15|20|25|30|35|40|45|50|55|60|65|70|75|80|85|90|95|100)%)?)
+	std::regex regex_color_classes = std::regex("(bg|from|via|to)-((slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)\\/((100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0)|\\[[\\S]*\\]))");
 };
-

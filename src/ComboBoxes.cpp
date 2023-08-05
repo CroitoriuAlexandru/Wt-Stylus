@@ -24,7 +24,7 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 	: WTemplate(tr("stylus.class.changer.widget"))
 {
 	bindEmpty("other");
-	setStyleClass("flex justify-betwen items-center w-full text-xs relative px-3 me-2");
+	setStyleClass("flex justify-betwen items-center w-full text-xs relative pr-8 pl-3 py-1 rounded-md ");
 	
 	setCondition("important-checkbox", true);
 	setCondition("refresh-button", true);
@@ -33,13 +33,13 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 	setCondition("class-custom", false);
 	setCondition("class-combobox", true);
 
-	btn_reset_ = bindWidget("refresh-button", std::make_unique<Wt::WPushButton>("↺"));
+	btn_reset_ = bindWidget("refresh-button", std::make_unique<Wt::WText>("↺"));
 	select_temp_ = bindWidget("select-combobox", std::make_unique<Wt::WTemplate>(tr("stylus.class.changer.select.template")));
 	checkbox_custom_value_ = bindWidget("checkbox-select-custom", std::make_unique<Wt::WCheckBox>("]"));
 	checkbox_important_ = bindWidget("checkbox-important", std::make_unique<Wt::WCheckBox>("!"));
-	btn_prev_ = select_temp_->bindWidget("prev-button", std::make_unique<Wt::WPushButton>("<"));
+	btn_prev_ = select_temp_->bindWidget("prev-button", std::make_unique<Wt::WText>("<"));
 	comboBox_class = select_temp_->bindWidget("class-combobox", std::make_unique<Wt::WComboBox>());
-	btn_next_ = select_temp_->bindWidget("next-button", std::make_unique<Wt::WPushButton>(">"));
+	btn_next_ = select_temp_->bindWidget("next-button", std::make_unique<Wt::WText>(">"));
 	lineEdit_size_custom_ = bindWidget("custom-lineedit", std::make_unique<Wt::WLineEdit>());
 
 	btn_prev_->setThemeStyleEnabled(false);
@@ -47,14 +47,11 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 	btn_reset_->setThemeStyleEnabled(false);
 	
 	// comboBox_class->setStyleClass("overflow-visible");
-	checkbox_important_->setStyleClass("[&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-800 rounded-md font-bold");
-	checkbox_custom_value_->setStyleClass("[&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-800 rounded-md font-bold");
-	btn_prev_->setStyleClass("rounded-r-none rounded-l-md border-r border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900 disabled:bg-neutral-700");
-	btn_next_->setStyleClass("rounded-l-none rounded-r-md border-l border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900 disabled:bg-neutral-700");
-	btn_reset_->setStyleClass("rounded-none p-1 m-0 hover:bg-neutral-800 rounded-xl");
+	checkbox_important_->setStyleClass("[&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-950 rounded-md font-bold");
+	checkbox_custom_value_->setStyleClass("[&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-95 rounded-md font-bold");
+	comboBox_class->setStyleClass("min-w-fit");
 
 	setOptions(classNames);
-
 
 	btn_prev_->clicked().connect(this, [=](){
 		comboBox_class->setCurrentIndex(comboBox_class->currentIndex() - 1);
@@ -93,26 +90,38 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 		if(getValue().compare(defaultValue) != 0) classChanged_.emit();
 	});
 
-	// emit signal when something changes
-	comboBox_class->changed().connect(this, [=](){
-		classChanged_.emit();
-	});
-	lineEdit_size_custom_->enterPressed().connect(this, [=](){
-		classChanged_.emit();
-	});
 
+	lineEdit_size_custom_->enterPressed().connect(this, [=](){
+		if(lineEdit_size_custom_->text().toUTF8() == ""){
+			checkbox_custom_value_->setChecked(false);
+			setCustom(false);
+		}
+	});
+	// emit signal when something changes
+	comboBox_class->sactivated().connect(this, [=](Wt::WString className){
+		classChanged_.emit();
+		comboBox_class->setFocus();
+	});
 
 }
 
 void ComboBoxClassWithCustoms::setOptions(std::vector<std::string> classNames)
 {
-	comboBox_class = select_temp_->bindWidget("class-combobox", std::make_unique<Wt::WComboBox>());
+	// comboBox_class = select_temp_->bindWidget("class-combobox", std::make_unique<Wt::WComboBox>());
+	comboBox_class->clear();
 	for(auto& className : classNames){
 		comboBox_class->addItem(className);
 	}
 
 	setValue(defaultValue);
 	setCustom(false);
+
+	classChanged_.connect(this, [=](){
+		if(getValue().compare("none") == 0) 
+			toggleStyleClass("bg-neutral-900", false);
+			else 
+			toggleStyleClass("bg-neutral-900", true);
+	});
 }
 
 std::string ComboBoxClassWithCustoms::getValue()
@@ -133,17 +142,19 @@ return selectedClass;
 
 void ComboBoxClassWithCustoms::setValue(std::string className)
 {
-	if(className.compare("") == 0)
+	if(className.compare("") == 0 || className.compare("none") == 0)
 	{
 		comboBox_class->setCurrentIndex(comboBox_class->findText(defaultValue, Wt::MatchFlag::StringExactly));
+		toggleStyleClass("bg-neutral-900", false);
 		return;
 	}
+	toggleStyleClass("bg-neutral-900", true);
 	// check for ! at the start of the class
 	if(className.find("!") != std::string::npos){
 		checkbox_important_->setChecked(true);
 		// comboBox_class->checkbox_important_->clicked().emit(Wt::WMouseEvent());
 		className = className.substr(1, className.length()-1);
-		checkbox_important_->toggleStyleClass("text-red-500", true, true);
+		checkbox_important_->toggleStyleClass("text-red-500", true);
 		// std::cout << "\n\n important value :" << className << "\n\n";
 	}
 
@@ -170,7 +181,6 @@ void ComboBoxClassWithCustoms::setValue(std::string className)
 		checkbox_custom_value_->clicked().emit(Wt::WMouseEvent());
 		comboBox_class->setCurrentIndex(comboBox_class->findText(className, Wt::MatchFlag::StringExactly));
 	}
-
 }
 
 void ComboBoxClassWithCustoms::disable(bool disable)
@@ -198,57 +208,64 @@ void ComboBoxClassWithCustoms::disable(bool disable)
 ComboBoxColors::ComboBoxColors(std::vector<std::string> classNames, std::vector<std::string> colorIntensity, std::vector<std::string> colorOpacity)
 	: WTemplate(tr("stylus.class.changer.color.widget"))
 {
-	setStyleClass("relative px-3 ms-auto me-2 flex");
+	setStyleClass("relative ms-auto flex justify-start");
 	setCondition("other-widgets", true);
 	comboBox_color = bindWidget("color-combobox", std::make_unique<ComboBoxClassWithCustoms>(classNames));
 	comboBox_intensity = bindWidget("intensity-combobox", std::make_unique<ComboBoxClassWithCustoms>(colorIntensity));
 	comboBox_opacity = bindWidget("opacity-combobox", std::make_unique<ComboBoxClassWithCustoms>(colorOpacity));
+	comboBox_gradient_step = bindWidget("gradient-step-combobox", std::make_unique<ComboBoxClassWithCustoms>(colorOpacity));
+
+	comboBox_opacity->lineEdit_size_custom_->setPlaceholderText("%");
+	comboBox_gradient_step->lineEdit_size_custom_->setPlaceholderText("%");
+	comboBox_opacity->lineEdit_size_custom_->addStyleClass("!w-[50px]");
 
 	comboBox_intensity->setCondition("important-checkbox", false);
 	comboBox_opacity->setCondition("important-checkbox", false);
-	
+	comboBox_gradient_step->setCondition("important-checkbox", false);
+
 	comboBox_intensity->setCondition("refresh-button", false);
 	comboBox_opacity->setCondition("refresh-button", false);
 	
+
 	comboBox_intensity->setCondition("custom-checkbox", false);
 	comboBox_opacity->setCondition("custom-checkbox", false);
 
-	comboBox_color->removeStyleClass("relative");
-	comboBox_intensity->removeStyleClass("relative");
-	comboBox_opacity->removeStyleClass("relative");
 
-	comboBox_color->removeStyleClass("px-3");
-	comboBox_intensity->removeStyleClass("px-3");
-	comboBox_opacity->removeStyleClass("px-3");
-	
-	comboBox_color->addStyleClass("w-[100px]");
+	// reset styles --- flex justify-betwen items-center w-full text-xs relative px-3 me-2
+	comboBox_intensity->removeStyleClass("pr-8");
+	comboBox_intensity->removeStyleClass("pl-3");
+	comboBox_opacity->removeStyleClass("pr-8");
+	comboBox_opacity->removeStyleClass("pl-3");
+	comboBox_gradient_step->removeStyleClass("pl-3");
+	comboBox_gradient_step->setHidden(true);
+	// comboBox_opacity->addStyleClass("pr-3");
+	// comboBox_intensity->comboBox_class->addStyleClass("!w-[30px]");
+	// comboBox_opacity->comboBox_class->addStyleClass("!w-[30px]");
+	// comboBox_gradient_step->comboBox_class->addStyleClass("!w-[120px]");
 
 	comboBox_opacity->setDefaultValue("100");
 	comboBox_intensity->setDefaultValue("500");
 
-	comboBox_intensity->disable(true);
-	comboBox_opacity->disable(true);
 
-	comboBox_intensity->setValue("500");
-	comboBox_opacity->setValue("100");
+	comboBox_intensity->disable(true);
+	comboBox_opacity->disable(false);
+
 
 	comboBox_intensity->setValue();
 	comboBox_opacity->setValue();
 
 	comboBox_color->classChanged().connect(this, [=](){ 
 		auto color = comboBox_color->getValue();
-		if(color.compare("bg-inherit") == 0 ||
-			color.compare("bg-current") == 0 ||
-			color.compare("bg-transparent") == 0 ||
-			color.compare("bg-black") == 0 ||
-			color.compare("bg-white") == 0 ||
+		if(std::regex_match(color, regex_def_classes) ||
 			color.compare("none") == 0)
 			{
 			comboBox_intensity->disable(true);
 			comboBox_opacity->disable(true);
+			comboBox_gradient_step->disable(true);
 		}else {
 			comboBox_intensity->disable(false);
 			comboBox_opacity->disable(false);
+			comboBox_gradient_step->disable(false);
 		}
 		classChanged_.emit();
 	});
@@ -273,7 +290,10 @@ ComboBoxColors::ComboBoxColors(std::vector<std::string> classNames, std::vector<
 
 	comboBox_intensity->classChanged().connect(this, [=](){ classChanged_.emit(); });
 	comboBox_opacity->classChanged().connect(this, [=](){ classChanged_.emit(); });
-	
+	comboBox_gradient_step->classChanged().connect(this, [=](){ classChanged_.emit(); });
+
+	comboBox_intensity->setValue();
+	comboBox_opacity->setValue();
 	// // set styles
 	// std::string comboBox_styles = "apearance-none bg-neutral-800 hover:bg-neutral-900 p-px w-full rounded-none m-0 h-full w-full text-center focus-visible:outline-none";
 	// comboBox_intensity->setStyleClass(comboBox_styles);
@@ -298,40 +318,45 @@ ComboBoxColors::ComboBoxColors(std::vector<std::string> classNames, std::vector<
 
 void ComboBoxColors::setValue(std::string className)
 {
-	std::cout << "\n combobox colors set value: " << className << "\n";
-	comboBox_color->setValue();
+	// std::cout << "\n combobox colors set value: " << className << "\n";
+	comboBox_color->setValue("none");
 	comboBox_intensity->setValue("500");
 	comboBox_opacity->setValue("100");
+	comboBox_gradient_step->setValue();
 	if(std::regex_match(className, regex_custom_color)){
-		//custom color so it should :
-		// hide intensity and opacity
-		// set custom checkbox to true
-		// set custom lineEdit to value
-		std::cout << "set custom value";
+		// std::cout << "set custom value";
 		comboBox_color->setValue(className);
-	}else if(std::regex_match(className, regex_def_classes) || className.compare("none") == 0){
-		std::cout << "should deactivate" << className << "\n";
+	}else if(std::regex_match(className, regex_def_classes) || className.compare("none") == 0 || className.compare("") == 0){
+		// std::cout << "should deactivate <" << className << ">\n";
 		comboBox_intensity->disable(true);
 		comboBox_opacity->disable(true);
-		std::cout << "default value: \n";
+		comboBox_gradient_step->disable(true);
+		// std::cout << "default value: \n";
 	} else {
-		std::cout << "should activate" << className << "\n";
+		// std::cout << "should activate <" << className << ">\n";
 		comboBox_intensity->disable(false);
 		comboBox_opacity->disable(false);
+		comboBox_gradient_step->disable(false);
 		auto pos = className.find("-");
 		auto nextPos = className.find("-", pos+1);
 		auto colorClass = className.substr(0, nextPos);
 		auto intensityClass = className.substr(nextPos+1, className.find("/", nextPos+1)-nextPos-1);				
 		auto opacityClass = className.substr(className.find("/")+1, className.length()-className.find("/")-1);
-		std::cout << "colorClass: " << colorClass << "\n";
-		std::cout << "intensityClass: " << intensityClass << "\n";
-		std::cout << "opacityClass: " << opacityClass << "\n";
+		// std::cout << "colorClass: " << colorClass << "\n";
+		// std::cout << "intensityClass: " << intensityClass << "\n";
+		// std::cout << "opacityClass: " << opacityClass << "\n";
 		comboBox_color->setValue(colorClass);
 		comboBox_intensity->setValue(intensityClass);
 		comboBox_opacity->setValue(opacityClass);
 	}
 
-
+	if(std::regex_match(className, std::regex("(from|to|via)"))){
+		// comboBox_color->setValue(className);
+		// comboBox_gradient_step->setValue(className);
+		comboBox_gradient_step->setHidden(false);
+	}else {
+		comboBox_gradient_step->setHidden(true);
+	}
 }
 
 
@@ -339,12 +364,7 @@ std::string ComboBoxColors::getValue()
 {
 	std::string selectedClass = comboBox_color->getValue();
 	
-	if(selectedClass.compare("bg-inherit") == 0 ||
-		selectedClass.compare("bg-current") == 0 ||
-		selectedClass.compare("bg-transparent") == 0 ||
-		selectedClass.compare("bg-black") == 0 ||
-		selectedClass.compare("bg-white") == 0 ||
-		selectedClass.compare("none") == 0)
+	if(std::regex_match(selectedClass, regex_def_classes) || selectedClass.compare("none") == 0)
 		{
 		return selectedClass;
 	} else
@@ -354,13 +374,11 @@ std::string ComboBoxColors::getValue()
 	return selectedClass;
 }
 
-// void ComboBoxColors::setCustom(bool custom){
-// 	if(custom){
-//  		comboBox_color->setCustom(custom);
-// 		setCondition("custom-checkbox", true);
-// 	}else {
-// 		comboBox_color->setCustom(custom);
-// 		setCondition("custom-checkbox", false);
-// 	}
-// }
+void ComboBoxColors::setStepOptions(std::vector<std::string> classNames)
+{
+	auto customValue = classNames[0].substr(0, classNames[0].find("-"));
+	comboBox_gradient_step->setOptions(classNames);
+	comboBox_gradient_step->setCustomValueString(customValue);
+}
+
 
