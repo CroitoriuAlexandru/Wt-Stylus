@@ -17,13 +17,19 @@
 #include <Wt/WStackedWidget.h>
 #include <Wt/WCheckBox.h>
 
+struct TemplateData {
+    std::string folderName;
+    std::string fileName;
+    std::string messageId;
+};
+
 class StylusEdditor : public Wt::WDialog
 {
 public:
     StylusEdditor(std::string templatesPath);
     ~StylusEdditor();
     std::string cleanStringStartEnd(const std::string& input);
-    void setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType);
+    void setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType, bool insideTemplate = false);
     std::vector<std::string> getXmlFils();
     std::unique_ptr<AppDev> createDevApp();
     Wt::Signal<>& appDevChanged() { return appDevChanged_; }
@@ -34,8 +40,11 @@ private:
     ElementContent* element_contents_;
 
     Wt::WTemplate* edditor_temp_;
+    StylusTreeView* tree_view_;
+    Wt::WTextArea* edditor_classes_raw_twxtarea_;
 
-
+    std::vector<TemplateData> templates_data_;
+    Wt::WPushButton* prev_temp_btn_;
 
     void createTitleBarControls();
     void createTreeView();
@@ -54,7 +63,6 @@ private:
     void updateResources();
     std::string getTemplateValue(std::string templateText, std::string attribute);
     std::string changeTempateAttributeValue(std::string templateText, std::string attribute, std::string value);
-    void dialogResized(int width, int height);
     int applicationWidthClass;
     std::unique_ptr<Wt::WPushButton> createThemeSwitcher();
     Wt::Signal<> appDevChanged_;

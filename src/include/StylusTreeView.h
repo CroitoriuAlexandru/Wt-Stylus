@@ -41,9 +41,9 @@ public:
     Wt::WTreeNode* selectedTreeNode;
     bool selectedNodeFound;
     
-    Wt::Signal<>& templateModified() { return templateModified_; }
+    // Wt::Signal<>& templateModified() { return templateModified_; }
     Wt::Signal<tinyxml2::XMLNode*>& selectionChanged() { return selectionChanged_; }
-    Wt::Signal<std::string, std::string, std::string, std::string>& openTemplate() { return openTemplate_; }
+    Wt::Signal<std::string, std::string, std::string, std::string, bool>& openTemplate() { return openTemplate_; }
 
     void createTree();
     std::unique_ptr<TreeNode> createNodeTree(tinyxml2::XMLElement* element);
@@ -64,8 +64,8 @@ private:
     void addChildElementLast(tinyxml2::XMLElement* element, tinyxml2::XMLElement* newElement = nullptr);
     void removeElement(tinyxml2::XMLElement* element);
 
-    Wt::Signal<> templateModified_;
+    // Wt::Signal<> templateModified_;
     Wt::Signal<tinyxml2::XMLNode*> selectionChanged_;
     // folderName, fileName, messageId, widgetType
-    Wt::Signal<std::string, std::string, std::string, std::string> openTemplate_;
+    Wt::Signal<std::string, std::string, std::string, std::string, bool> openTemplate_;
 };

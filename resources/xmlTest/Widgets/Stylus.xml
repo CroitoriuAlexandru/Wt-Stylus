@@ -28,14 +28,23 @@
 
                 <div x-show="!isChecked" class="h-full grow flex flex-col items-stretch ">
                     <div class="max-h-[225px] pb-2 grow overflow-y-scroll border-b border-solid resize-y">${tree-view class="h-fit"}</div>
-
-                    <div class="z-50 grow max-h-[calc(100vh-255px)] overflow-y-scroll">
-                        <div class="w-full p-2">${stylus.element.content class="w-full"}</div>
-                        <div class="border-b border-solid border-neutral-900 my-2"></div>
-                        <div class="mb-auto">${stylus.element.edditor class="px-4"}</div>
-
+                    <div class="flex">
+                        <div class="w-4/5">${prev-temp-controler class="w-full"}</div>
+                        <div class="w-1/5 text-neutral-200 text-sm text-center">${toggle-class-view}</div>
                     </div>
+
+                    ${<controls-view>}
+                        <div class="z-50 grow max-h-[calc(100vh-255px)] overflow-y-scroll">
+                            <div class="mb-auto">${stylus.element.edditor class="px-4"}</div>
+                            <div class="border-b border-solid border-neutral-900 my-2"></div>
+                            <div class="w-full p-2">${stylus.element.content class="w-full"}</div>
+                        </div>
+                    ${</controls-view>}
+                    ${<text-view>}
+                        <div class="h-full">${textarea-classes-text-raw class="bg-neutral-600 p-1 px-3 mt-2  w-full border border-neutral-500 text-neutral-200 text-md rounded-lg "}</div>
+                    ${</text-view>}
                 </div>
+
                 <div x-show="isChecked" class="">${templates.widget}</div>
 
         </div>

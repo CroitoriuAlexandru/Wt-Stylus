@@ -20,6 +20,7 @@ public:
     Wt::WPushButton* sizing_btn_display;
     Wt::WPushButton* background_btn_display;
 
+    std::string getStyles();
 private:
     std::vector<std::string> findAndRemoveMatches(std::regex regex, std::string& str);
     std::string findAndRemoveMatche(std::regex regex, std::string& str);
@@ -35,7 +36,6 @@ private:
 
     Wt::Signal<std::string> styleChanged_;
 
-    std::string getStyles();
 
     // spacing regexp
     std::regex padding_regexp = std::regex("[!]?p[x,y,t,r,b,l]?-(?:96|80|72|64|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3\\.5|3|2\\.5|2|1\\.5|1|0\\.5|0|px|[\\[\\S]*\\])");

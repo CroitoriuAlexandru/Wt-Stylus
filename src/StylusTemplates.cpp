@@ -181,7 +181,7 @@ void StylusTemplatesWidget::setFilePanel(Wt::WPanel* panel, std::string folderNa
             
             auto fileName = fileData.fileName;
             auto messageId = message;
-            templateSelected_.emit(folderName, fileName, messageId, "template");
+            templateSelected_.emit(folderName, fileName, messageId, "template", false);
         });
     }
 }
@@ -298,7 +298,7 @@ bool StylusTemplatesWidget::parseMessageAndDoc(std::string folderName, std::stri
         while(stylusState_->selectedTemplate->ToElement()->Attribute("id") != tempMessageId){
             stylusState_->selectedTemplate = stylusState_->selectedTemplate->NextSiblingElement("message");
         }
-        removeTextBetweenElements(stylusState_->selectedTemplate);
+        // removeTextBetweenElements(stylusState_->selectedTemplate);
         response = true;
     }catch(...){
         std::cout << "\n\n StylusTemplatesWidget::parseMessageAndDoc error \n\n";
@@ -611,37 +611,38 @@ void StylusTemplatesWidget::addMessageTemplate(std::string foldeName, std::strin
 }
 
 
-void StylusTemplatesWidget::removeTextBetweenElements(tinyxml2::XMLNode* node) {
-    if (node == nullptr) {
-        return;
-    }
 
-    tinyxml2::XMLNode* child = node->FirstChild();
-    while (child != nullptr) {
-        if (child->ToElement() != nullptr) {
-            // Recursively process child elements
-            removeTextBetweenElements(child);
+// void StylusTemplatesWidget::removeTextBetweenElements(tinyxml2::XMLNode* node) {
+//     if (node == nullptr) {
+//         return;
+//     }
 
-            // Add class and text value if they don't exist
-            tinyxml2::XMLElement* element = child->ToElement();
-            if (element->Attribute("class") == nullptr) {
-                element->SetAttribute("class", "");
-            }
+//     tinyxml2::XMLNode* child = node->FirstChild();
+//     while (child != nullptr) {
+//         if (child->ToElement() != nullptr) {
+//             // Recursively process child elements
+//             removeTextBetweenElements(child);
 
-            if (!element->NoChildren()) {
-                tinyxml2::XMLNode* content = element->FirstChild();
-                if (content == nullptr) {
-                    element->InsertFirstChild(element->GetDocument()->NewText(""));
-                }
-            }
+//             // Add class and text value if they don't exist
+//             tinyxml2::XMLElement* element = child->ToElement();
+//             if (element->Attribute("class") == nullptr) {
+//                 element->SetAttribute("class", "");
+//             }
 
-        } else if (child->ToText() != nullptr) {
-            // Remove the text node if it's not inside an element
-            tinyxml2::XMLNode* parent = child->Parent();
-            if (parent != nullptr && parent->ToElement() == nullptr) {
-                parent->DeleteChild(child);
-            }
-        }
-        child = child->NextSibling();
-    }
-}
+//             if (!element->NoChildren()) {
+//                 tinyxml2::XMLNode* content = element->FirstChild();
+//                 if (content == nullptr) {
+//                     element->InsertFirstChild(element->GetDocument()->NewText(""));
+//                 }
+//             }
+
+//         } else if (child->ToText() != nullptr) {
+//             // Remove the text node if it's not inside an element
+//             tinyxml2::XMLNode* parent = child->Parent();
+//             if (parent != nullptr && parent->ToElement() == nullptr) {
+//                 parent->DeleteChild(child);
+//             }
+//         }
+//         child = child->NextSibling();
+//     }
+// }

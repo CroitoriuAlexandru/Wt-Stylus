@@ -95,6 +95,7 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 		if(lineEdit_size_custom_->text().toUTF8() == ""){
 			checkbox_custom_value_->setChecked(false);
 			setCustom(false);
+			classChanged_.emit();
 		}
 	});
 	// emit signal when something changes

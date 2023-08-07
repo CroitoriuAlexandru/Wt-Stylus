@@ -62,6 +62,7 @@ void ElementContent::setFoldersData(std::vector<FolderData> foldersData)
 
     toggle_variable_content->changed().connect(this, [=](){
         if(toggle_variable_content->isChecked()){
+            
             setCondition("custom-template", true);
             element_content_textarea->setHidden(true);
         }else{
@@ -215,6 +216,7 @@ void ElementContent::setFileNames(Wt::WString folderName)
     for(auto fileData : folderData.xmlFiles){
         comboBox_fileName->addItem(fileData.fileName);
     }
+    setMessages(comboBox_fileName->currentText());
 }
 
 void ElementContent::setMessages(Wt::WString fileName)

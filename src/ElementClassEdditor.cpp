@@ -56,7 +56,7 @@ ElementClassEdditor::ElementClassEdditor(std::string templateName)
     sizing_btn_display = bindWidget("sizing-display-button", std::make_unique<Wt::WPushButton>("Sizing"));
     background_btn_display = bindWidget("background-display-button", std::make_unique<Wt::WPushButton>("Background"));
 
-    auto btns_styles = "w-full text-center p-2 bg-neutral-800 text-neutral-200 rounded border-1 border-solid border-neutral-00 my-1 hover:bg-neutral-900";
+    auto btns_styles = "w-full text-center p-2 bg-neutral-800 text-neutral-200 rounded border-1 border-solid my-1 hover:bg-neutral-900 border-r-8 border-neutral-900 ";
     spacing_btn_display->setStyleClass(btns_styles);
     sizing_btn_display->setStyleClass(btns_styles);
     background_btn_display->setStyleClass(btns_styles);
@@ -198,7 +198,7 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     sizing.minHeight = findAndRemoveMatche(minHeight_regex, classes);
     sizing.maxHeight = findAndRemoveMatche(maxHeight_regex, classes);
 
-
+    // bool spacing_has
     
 
     // remove whitespace from start of classes string and store it in notFoundClasses

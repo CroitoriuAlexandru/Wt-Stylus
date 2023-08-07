@@ -24,7 +24,7 @@ class StylusTemplatesWidget : public Wt::WTemplate
 public:
     StylusTemplatesWidget(std::string templatesPath, std::shared_ptr<StylusState> stylusState);
     ~StylusTemplatesWidget();
-    Wt::Signal<std::string, std::string, std::string, std::string>& templateSelected() { return templateSelected_; };
+    Wt::Signal<std::string, std::string, std::string, std::string, bool>& templateSelected() { return templateSelected_; };
     bool parseMessageAndDoc(std::string folderName, std::string fileName, std::string tempMessageId);
     
     std::vector<FolderData> folders_data_;
@@ -44,11 +44,11 @@ private:
     void deleteFolderAndFiles(std::string folderName);
     void deleteMessageTemplate(std::string fileName, std::string tempMessageId);
     void addMessageTemplate(std::string foldeName, std::string fileName);
-    void removeTextBetweenElements(tinyxml2::XMLNode* node);
+    // void removeTextBetweenElements(tinyxml2::XMLNode* node);
     
     std::vector<FolderData> getFoldersData(std::string folderPath);
     std::vector<XmlFileData> getXmlFilesData(std::string folderPath);
     std::vector<std::string> getXmlFileMessages(std::string folderPath, std::string fileName);
-    Wt::Signal<std::string, std::string, std::string, std::string> templateSelected_;
+    Wt::Signal<std::string, std::string, std::string, std::string, bool> templateSelected_;
 
 };

@@ -93,11 +93,11 @@ void StylusTreeView::createTree()
 
 	rootNode->add_child_first_btn->doubleClicked().connect(this, [=](){
 		addChildElementFirst(stylusState_->selectedTemplate->ToElement());
-		templateModified_.emit();
+		createTree();
 	});
 	rootNode->add_child_last_btn->doubleClicked().connect(this, [=](){
 		addChildElementLast(stylusState_->selectedTemplate->ToElement());
-        templateModified_.emit();
+		createTree();
 	});
 	auto rootNodePtr = rootNode.get();
     setTreeRoot(std::move(rootNode));
@@ -135,7 +135,7 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 {
 	// std::cout << "\n StylusTreeView::createNodeTree \n";
 	auto node = std::make_unique<TreeNode>(element->Name());
-	
+
 	// create template widget node if the element has a template text inside it
 	if(	element->FirstChild() && 
 		element->FirstChild()->ToText() &&
@@ -161,38 +161,38 @@ std::unique_ptr<TreeNode> StylusTreeView::createNodeTree(tinyxml2::XMLElement* e
 	// signal connections for controling element
     node->move_up_btn->clicked().connect(this, [=](){
         moveElementUp(element);
-        templateModified_.emit();
+		createTree();
     });
     node->move_down_btn->clicked().connect(this, [=](){
         moveElementDown(element);
-        templateModified_.emit();
+		createTree();
     });
     node->add_sibling_after_btn->clicked().connect(this, [=](){
         addSiblingElementAfter(element);
-        templateModified_.emit();
+		createTree();
     });
     node->add_sibling_before_btn->clicked().connect(this, [=](){
         addSiblingElementBefore(element);
-        templateModified_.emit();
+		createTree();
     });
     node->add_child_first_btn->clicked().connect(this, [=](){
         addChildElementFirst(element);
-        templateModified_.emit();
+		createTree();
     });
     node->add_child_last_btn->clicked().connect(this, [=](){
         addChildElementLast(element);
-        templateModified_.emit();
+		createTree();
     });
     node->remove_btn->doubleClicked().connect(this, [=](){
         removeElement(element);
-        templateModified_.emit();
+		createTree();
     });
 
     if(element->NextSiblingElement()){
         if(element->NextSiblingElement()->FirstChildElement()){
             node->move_right_btn->clicked().connect(this, [=](){
                 moveElementRight(element);
-                templateModified_.emit();
+				createTree();
             });
         }else {
             node->move_right_btn->addStyleClass("hidden");
@@ -293,7 +293,7 @@ std::unique_ptr<TreeNode> StylusTreeView::createTemplateNode(tinyxml2::XMLNode* 
 
 	node->label()->setText(variableName);
 	node->open_template_btn->doubleClicked().connect(this, [=](){		
-		openTemplate_.emit(folderName, fileName, messageId, widgetType);
+		openTemplate_.emit(folderName, fileName, messageId, widgetType, true);
 	});
 
 	node->selected().connect(this, [=](bool selectedNode){
