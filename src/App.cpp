@@ -16,7 +16,6 @@ App::App(const Wt::WEnvironment &env)
 	setTitle("Starter Wt Application");
 	messageResourceBundle().use(appRoot() + "resources/xmlTest/Defoult-Styles/Elements");
 
-	auto stylus_edditor = root()->addChild(std::make_unique<StylusEdditor>("resources/xmlTest/"));
 
 	// auto wtCss = Wt::WLink("resources/themes/default/wt.css");
 	auto defStyles = Wt::WLink("resources/themes/someDefaultStyles.css");
@@ -51,12 +50,14 @@ App::App(const Wt::WEnvironment &env)
 	require("https://cdn.tailwindcss.com");	// tailwind cdn for instant refresh of styles
 	require("resources/Js/Utility.js"); // tailwind theme styles customize from here
 	// add mesage resource bundle from templates
+	auto stylus_edditor = root()->addChild(std::make_unique<StylusEdditor>("resources/xmlTest/"));
 	std::vector<std::string> resources = stylus_edditor->getXmlFils();
 	for(auto& resource : resources){
 		messageResourceBundle().use(appRoot() + resource);
 	}
 
 	stylus_edditor->setTemplate("", "Application.xml", "app-root", "template");
+
 
 	auto appDev = root()->addWidget(stylus_edditor->createDevApp());
 	appDevId = appDev->id();

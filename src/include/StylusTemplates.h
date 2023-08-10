@@ -42,7 +42,7 @@ private:
     void createFolder();
     void deleteFolder(std::string folderName);
     void deleteFolderAndFiles(std::string folderName);
-    void deleteMessageTemplate(std::string fileName, std::string tempMessageId);
+    void deleteMessageTemplate(std::string foldeName, std::string fileName, std::string tempMessageId);
     void addMessageTemplate(std::string foldeName, std::string fileName);
     // void removeTextBetweenElements(tinyxml2::XMLNode* node);
     

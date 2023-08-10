@@ -172,7 +172,7 @@ void StylusTemplatesWidget::setFilePanel(Wt::WPanel* panel, std::string folderNa
         auto del_message_btn = file_item->bindWidget("svg.trash", std::make_unique<Wt::WPushButton>(tr("svg.trash")));
         del_message_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
         del_message_btn->doubleClicked().connect([=](){
-            deleteMessageTemplate(fileData.fileName, message);
+            deleteMessageTemplate(folderName, fileData.fileName, message);
         });
 
         auto open_edditor_btn = file_item->bindWidget("svg.pencil", std::make_unique<Wt::WPushButton>(tr("svg.pencil")));
@@ -519,10 +519,10 @@ void StylusTemplatesWidget::deleteFolderAndFiles(std::string folderName)
     }
 }
 
-void StylusTemplatesWidget::deleteMessageTemplate(std::string fileName, std::string tempMessageId)
+void StylusTemplatesWidget::deleteMessageTemplate(std::string foldeName, std::string fileName, std::string tempMessageId)
 {
     tinyxml2::XMLDocument doc;
-    auto result = doc.LoadFile((xml_folder_path + fileName).c_str());
+    auto result = doc.LoadFile((xml_folder_path + foldeName + "/" + fileName).c_str());
     if(result != tinyxml2::XML_SUCCESS){
         std::cout << "\n\n error opening document of the message template \n\n";
         auto dialog = Wt::WApplication::instance()->root()->addChild(std::make_unique<Wt::WDialog>("Error"));
@@ -532,7 +532,7 @@ void StylusTemplatesWidget::deleteMessageTemplate(std::string fileName, std::str
     }
     auto messages = doc.FirstChildElement("messages");
     auto messageTemplate = messages->FirstChildElement("message");
-    while(messageTemplate != nullptr){
+    while(messageTemplate){
         if(messageTemplate->Attribute("id") == tempMessageId){
             auto dialog = Wt::WApplication::instance()->root()->addChild(std::make_unique<Wt::WDialog>("Are you sure ?"));
             dialog->rejectWhenEscapePressed();
@@ -555,7 +555,7 @@ void StylusTemplatesWidget::deleteMessageTemplate(std::string fileName, std::str
         }
         messageTemplate = messageTemplate->NextSiblingElement("message");
     }
-    doc.SaveFile((xml_folder_path + fileName).c_str());
+    // doc.SaveFile((xml_folder_path + fileName).c_str());
     createMenu();
 }
 

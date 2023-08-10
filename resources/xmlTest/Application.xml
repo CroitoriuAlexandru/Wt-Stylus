@@ -1,76 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="w-4/6 h-60   m-auto my-32"><div class="h-1/2">child before</div><div class="w-2/3 h-1/2   m-auto">child before</div></div>
-    </message>
-    <message id="app-roota">
-        <div class="p-0 py-0 px-0 m-auto mt-auto">child before</div>
+        <div class="? ">child before</div>
         <div class="">child before</div>
-        <div class="w-3/5 h-48   m-auto">
-            <div class="">${sdgf class="" folderName="" fileName="Application.xml" messageId="content" widgetType="template"}child before</div>
-            <div class="">child after</div>
-            <div class="p-0 py-0 px-0">child after</div>
-        </div>
-        <div class="">${y7 class="" folderName="" fileName="Application.xml" messageId="content" widgetType="template"}</div>
-        <div class="">siblings after</div>
-        <div class="">siblings after</div>
-        <div class=" w-full   m-auto">
-            <div class="">child after</div>
-        </div>
-    </message>
-    <message id="navigation">
+        <div class="">child before</div>
+        <div class="">child before</div>
         <div class="">child before</div>
     </message>
+    <message id="navbar">ASD</message>
     <message id="content">
-        <div class="w-64 h-auto bg-white rounded-2xl shadow-xl border-4 border-gray-100">
-            <div class="w-auto mx-3 my-2 h-6 flex justify-between">
-                <div class="? text-sm  min-w-0 max-w-xs max-h-40">${gfyj class="" folderName="Templates" fileName="General.xml" messageId="hamburger-svg" widgetType="template"}</div>
-                <div class="flex items-center text-xs space-x-1">
-                    <i class="fas fa-signal"/>
-                    <i class="fas fa-wifi"/>
-                    <i class="fas fa-battery-three-quarters text-sm"/>
-                </div>
-            </div>
-            <div class="w-auto m-3 h-28 text-right space-y-2 py-2">
-                <div class="text-gray-700">45 + (1250 x 100) / 100</div>
-                <div class="text-black font-bold text-3xl">12,545</div>
-            </div>
-            <div class="w-auto m-1 h-auto mb-2">
-                <div class="m-2 flex justify-between">
-                    <div class="bg-yellow-100 shadow-md rounded-2xl w-12 h-12 text-yellow-600 font-medium flex justify-center items-center">C</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">(</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">)</div>
-                    <div class="bg-yellow-500 shadow-md rounded-2xl w-12 h-12 text-white font-medium text-xl flex justify-center items-center">/</div>
-                </div>
-                <div class="m-2 flex justify-between">
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">7</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">8</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">9</div>
-                    <div class="bg-yellow-500 shadow-md rounded-2xl w-12 h-12 text-white font-medium text-xl flex justify-center items-center">x</div>
-                </div>
-                <div class="m-2 flex justify-between">
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">4</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">5</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">6</div>
-                    <div class="bg-yellow-500 shadow-md rounded-2xl w-12 h-12 text-white font-medium text-xl flex justify-center items-center">-</div>
-                </div>
-                <div class="m-2 flex justify-between">
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">1</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">2</div>
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">3</div>
-                    <div class="bg-yellow-500 shadow-md rounded-2xl w-12 h-12 text-white font-medium text-xl flex justify-center items-center">+</div>
-                </div>
-                <div class="m-2 flex justify-between">
-                    <div class="bg-gray-200 shadow-md rounded-2xl w-full h-12 text-black font-medium flex justify-center items-center">0</div>
-                    <div class="flex w-full ml-3 justify-between">
-                        <div class="bg-gray-200 shadow-md rounded-2xl w-12 h-12 text-black font-medium flex justify-center items-center">.</div>
-                        <div class="bg-green-500 shadow-md rounded-2xl w-12 h-12 text-white font-medium text-xl flex justify-center items-center">=</div>
-                    </div>
-                </div>
-                <div class="flex justify-center mt-5">
-                    <div class="w-20 h-1 bg-gray-100 rounded-l-xl rounded-r-xl"/>
-                </div>
-            </div>
-        </div>
+        <div class="? ">template content</div>
     </message>
 </messages>
