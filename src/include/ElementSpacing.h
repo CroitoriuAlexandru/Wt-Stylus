@@ -36,10 +36,10 @@ struct SpacingData
 	std::vector<std::string> space;
 };
 
-class ElementSpacingWidget : public Wt::WDialog
+class ElementSpacingWidget : public Wt::WTemplate
 {
 public:
-	ElementSpacingWidget(std::string templateName = "stylus.spacing.template");
+	ElementSpacingWidget();
 	// margin and padding at the moment
 
 	void setClasses(SpacingData spacing);

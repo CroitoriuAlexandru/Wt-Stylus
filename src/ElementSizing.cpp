@@ -101,35 +101,19 @@ SizingStyleClasses::SizingStyleClasses()
 
 };
 
-ElementSizingWidget::ElementSizingWidget(std::string templateName)
-	: WDialog("Sizing")
+ElementSizingWidget::ElementSizingWidget()
+	: WTemplate(tr("stylus-sizing-template"))
 {
-	setModal(false);
-	setResizable(false);
-	setStyleClass("min-w-fit bg-neutral-700 text-neutral-400 max-w-[300px]");
+	setStyleClass("");
 
-	titleBar()->clear();
-	contents()->clear();
+	width_widget_ = bindWidget("width.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.width_classes));
+	height_widget_ = bindWidget("height.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.height_classes));
 
-	auto content_temp = contents()->addWidget(std::make_unique<Wt::WTemplate>(Wt::WString::tr(templateName)));
+	minWidth_widget_ = bindWidget("width.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.min_width_classes));
+	minHeight_widget_ = bindWidget("height.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.min_height_classes));
 
-	width_widget_ = content_temp->bindWidget("width.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.width_classes));
-	height_widget_ = content_temp->bindWidget("height.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.height_classes));
-
-	minWidth_widget_ = content_temp->bindWidget("width.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.min_width_classes));
-	minHeight_widget_ = content_temp->bindWidget("height.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.min_height_classes));
-
-	maxWidth_widget_ = content_temp->bindWidget("width.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.max_width_classes));
-	maxHeight_widget_ = content_temp->bindWidget("height.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.max_height_classes));
-
-	// set syzes for comboboxes
-	// width_widget_->comboBox_class->addStyleClass("!w-[70px]");
-	// height_widget_->comboBox_class->addStyleClass("!w-[70px]");
-	// minWidth_widget_->comboBox_class->addStyleClass("!w-[70px]");
-	// minHeight_widget_->comboBox_class->addStyleClass("!w-[70px]");
-	// maxWidth_widget_->comboBox_class->addStyleClass("!w-[70px]");
-	// maxHeight_widget_->comboBox_class->addStyleClass("!w-[70px]");
-
+	maxWidth_widget_ = bindWidget("width.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.max_width_classes));
+	maxHeight_widget_ = bindWidget("height.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.max_height_classes));
 
 	// set regular expresion for custom value w-[10px]
 	width_widget_->setCustomValueString("w-");

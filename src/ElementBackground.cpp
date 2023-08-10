@@ -84,29 +84,24 @@ BackgroundStyleClasses::BackgroundStyleClasses() {
 
 
 
-ElementBackgroundWidget::ElementBackgroundWidget(std::string templateName)
-	: WDialog("Background"),
+ElementBackgroundWidget::ElementBackgroundWidget()
+	: WTemplate(tr("stylus-background-template")),
 	colors()
 {
 
-	setModal(false);
-	setResizable(false);
-	setStyleClass("min-w-fit max-w-[300px] bg-neutral-700 text-neutral-400");
-	titleBar()->clear();
-	contents()->clear();
+	setStyleClass("min-w-fit max-w-[300px]");
 
-	content_temp = contents()->addWidget(std::make_unique<Wt::WTemplate>(Wt::WString::tr(templateName)));
-	content_temp->bindString("color-title","Color");
-	comboBox_attachment = content_temp->bindWidget("combobox-attachment", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_attachment_classes));
-	comboBox_clip = content_temp->bindWidget("combobox-clip", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_clip_classes));
-	comboBox_origin = content_temp->bindWidget("combobox-origin", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_origin_classes));
-	comboBox_position = content_temp->bindWidget("combobox-position", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_position_classes));
-	comboBox_repeat = content_temp->bindWidget("combobox-repeat", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_repeat_classes));
-	comboBox_size = content_temp->bindWidget("combobox-size", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_size_classes));
-	comboBox_image = content_temp->bindWidget("combobox-image", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_image_classes));
-	comboBox_color = content_temp->bindWidget("color-widget", std::make_unique<ComboBoxColors>(colors.bg_color_classes, colors.color_intensity, colors.color_opacity));
-	comboBox_color_via = content_temp->bindWidget("combobox-color-via", std::make_unique<ComboBoxColors>(colors.bg_color_via_classes, colors.color_intensity, colors.color_opacity));
-	comboBox_color_to = content_temp->bindWidget("combobox-color-to", std::make_unique<ComboBoxColors>(colors.bg_color_to_classes, colors.color_intensity, colors.color_opacity));
+	bindString("color-title","Color");
+	comboBox_attachment = bindWidget("combobox-attachment", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_attachment_classes));
+	comboBox_clip = bindWidget("combobox-clip", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_clip_classes));
+	comboBox_origin = bindWidget("combobox-origin", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_origin_classes));
+	comboBox_position = bindWidget("combobox-position", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_position_classes));
+	comboBox_repeat = bindWidget("combobox-repeat", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_repeat_classes));
+	comboBox_size = bindWidget("combobox-size", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_size_classes));
+	comboBox_image = bindWidget("combobox-image", std::make_unique<ComboBoxClassWithCustoms>(colors.bg_image_classes));
+	comboBox_color = bindWidget("color-widget", std::make_unique<ComboBoxColors>(colors.bg_color_classes, colors.color_intensity, colors.color_opacity));
+	comboBox_color_via = bindWidget("combobox-color-via", std::make_unique<ComboBoxColors>(colors.bg_color_via_classes, colors.color_intensity, colors.color_opacity));
+	comboBox_color_to = bindWidget("combobox-color-to", std::make_unique<ComboBoxColors>(colors.bg_color_to_classes, colors.color_intensity, colors.color_opacity));
 
 	// set regular expresion for custom value w-[10px]
 	comboBox_attachment->setCustomValueString("bg-");
@@ -153,11 +148,11 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::string templateName)
 		// background_image_regex
 		if(comboBox_image->comboBox_class->currentIndex() != 0){
 			// std::cout << " ---- ---------cusotm start = " << comboBox_color->custom_start_ << ">-----------------------\n";
-			content_temp->setCondition("bg-gradient", true);
+			setCondition("bg-gradient", true);
 			if(comboBox_color->custom_start_.compare("from-") != 0){
 				comboBox_color->setValue();
 				styleChanged_.emit();
-				content_temp->bindString("color-title", "from");
+				bindString("color-title", "from");
 				comboBox_color->custom_start_ = "from-";
 				comboBox_color->comboBox_color->setOptions(colors.bg_color_from_classes);
 				comboBox_color->comboBox_color->setCustomValueString("from-");
@@ -167,8 +162,8 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::string templateName)
 			}
 		}else {
 			comboBox_color->custom_start_ = "bg-";
-			content_temp->setCondition("bg-gradient", false);
-			content_temp->bindString("color-title", "Color");
+			setCondition("bg-gradient", false);
+			bindString("color-title", "Color");
 			comboBox_color->comboBox_color->setCustomValueString("bg-");
 			comboBox_color->comboBox_color->setOptions(colors.bg_color_classes);
 			comboBox_color->setValue();
@@ -239,8 +234,8 @@ void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 
 
 	if(bgData.bg_image.compare("") != 0){
-		content_temp->setCondition("bg-gradient", true);
-		content_temp->bindString("color-title", "From");
+		setCondition("bg-gradient", true);
+		bindString("color-title", "From");
 		comboBox_color->comboBox_color->setOptions(colors.bg_color_from_classes);
 		// std::cout << " ---- ---------bgData.bg_color_from = " << bgData.bg_color_class << "\n";
 		// std::cout << " ---- ---------bgData.bg_color_from_step = " << bgData.bg_color_from_step << "\n";
@@ -258,7 +253,7 @@ void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 		comboBox_color_to->comboBox_gradient_step->setHidden(false);
 		comboBox_color_via->comboBox_gradient_step->setHidden(false);
 	}else {
-		content_temp->setCondition("bg-gradient", false);
+		setCondition("bg-gradient", false);
 		comboBox_color->setValue(bgData.bg_color_class);
 		comboBox_color->comboBox_gradient_step->setHidden(true);
 		comboBox_color_to->comboBox_gradient_step->setHidden(true);

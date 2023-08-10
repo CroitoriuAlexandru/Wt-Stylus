@@ -24,7 +24,7 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 	: WTemplate(tr("stylus.class.changer.widget"))
 {
 	bindEmpty("other");
-	setStyleClass("flex justify-betwen items-center w-full text-xs relative pr-8 pl-3 py-1 rounded-md ");
+	setStyleClass("flex justify-betwen items-center w-full text-sm py-0.5 rounded-sm");
 	
 	setCondition("important-checkbox", true);
 	setCondition("refresh-button", true);
@@ -37,13 +37,13 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 	select_temp_ = bindWidget("select-combobox", std::make_unique<Wt::WTemplate>(tr("stylus.class.changer.select.template")));
 	checkbox_custom_value_ = bindWidget("checkbox-select-custom", std::make_unique<Wt::WCheckBox>("]"));
 	checkbox_important_ = bindWidget("checkbox-important", std::make_unique<Wt::WCheckBox>("!"));
-	btn_prev_ = select_temp_->bindWidget("prev-button", std::make_unique<Wt::WText>("<"));
+	// btn_prev_ = select_temp_->bindWidget("prev-button", std::make_unique<Wt::WText>("<"));
 	comboBox_class = select_temp_->bindWidget("class-combobox", std::make_unique<Wt::WComboBox>());
-	btn_next_ = select_temp_->bindWidget("next-button", std::make_unique<Wt::WText>(">"));
+	// btn_next_ = select_temp_->bindWidget("next-button", std::make_unique<Wt::WText>(">"));
 	lineEdit_size_custom_ = bindWidget("custom-lineedit", std::make_unique<Wt::WLineEdit>());
 
-	btn_prev_->setThemeStyleEnabled(false);
-	btn_next_->setThemeStyleEnabled(false);
+	// btn_prev_->setThemeStyleEnabled(false);
+	// btn_next_->setThemeStyleEnabled(false);
 	btn_reset_->setThemeStyleEnabled(false);
 	
 	// comboBox_class->setStyleClass("overflow-visible");
@@ -53,16 +53,16 @@ ComboBoxClassWithCustoms::ComboBoxClassWithCustoms(std::vector<std::string> clas
 
 	setOptions(classNames);
 
-	btn_prev_->clicked().connect(this, [=](){
-		comboBox_class->setCurrentIndex(comboBox_class->currentIndex() - 1);
-		if(comboBox_class->currentIndex() < 0) comboBox_class->setCurrentIndex(comboBox_class->count()-1);
-		classChanged_.emit();
-	});
+	// btn_prev_->clicked().connect(this, [=](){
+	// 	comboBox_class->setCurrentIndex(comboBox_class->currentIndex() - 1);
+	// 	if(comboBox_class->currentIndex() < 0) comboBox_class->setCurrentIndex(comboBox_class->count()-1);
+	// 	classChanged_.emit();
+	// });
 
-	btn_next_->clicked().connect(this, [=](){
-		comboBox_class->setCurrentIndex(comboBox_class->currentIndex() + 1);
-		classChanged_.emit();
-	});
+	// btn_next_->clicked().connect(this, [=](){
+	// 	comboBox_class->setCurrentIndex(comboBox_class->currentIndex() + 1);
+	// 	classChanged_.emit();
+	// });
 
 	btn_reset_->clicked().connect(this, [=](){
 		checkbox_custom_value_->setChecked(false);
@@ -189,16 +189,16 @@ void ComboBoxClassWithCustoms::disable(bool disable)
 	if(disable)
 	{
 		comboBox_class->disable();
-		btn_prev_->disable();
-		btn_next_->disable();
+		// btn_prev_->disable();
+		// btn_next_->disable();
 		btn_reset_->disable();
 		checkbox_custom_value_->disable();
 		checkbox_important_->disable();
 		lineEdit_size_custom_->disable();
 	}else {
 		comboBox_class->enable();
-		btn_prev_->enable();
-		btn_next_->enable();
+		// btn_prev_->enable();
+		// btn_next_->enable();
 		btn_reset_->enable();
 		checkbox_custom_value_->enable();
 		checkbox_important_->enable();

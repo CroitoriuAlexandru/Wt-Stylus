@@ -23,7 +23,7 @@ struct TemplateData {
     std::string messageId;
 };
 
-class StylusEdditor : public Wt::WDialog
+class StylusEdditor : public Wt::WTemplate
 {
 public:
     StylusEdditor(std::string templatesPath);
@@ -31,10 +31,17 @@ public:
     std::string cleanStringStartEnd(const std::string& input);
     void setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType, bool insideTemplate = false);
     std::vector<std::string> getXmlFils();
-    std::unique_ptr<AppDev> createDevApp();
-    Wt::Signal<>& appDevChanged() { return appDevChanged_; }
 private:
-    std::shared_ptr<StylusState> stylusState_;
+    void createDevApp();
+    void createKeybordShortcuts();
+    Wt::WTemplate* sidebar_left ;
+    Wt::WTemplate* sidebar_right;
+    Wt::WTemplate* menu_bar;
+    Wt::WTemplate* template_view;
+
+    Wt::WTemplate* sidebar_left_hamburger;
+    Wt::WTemplate* sidebar_right_hamburger;
+
     ElementClassEdditor* elementClassEdditor_;
     StylusTemplatesWidget* stylus_templates_;
     ElementContent* element_contents_;
@@ -46,8 +53,8 @@ private:
     std::vector<TemplateData> templates_data_;
     Wt::WPushButton* prev_temp_btn_;
 
-    void createTitleBarControls();
-    void createTreeView();
+    std::shared_ptr<StylusState> stylusState_;
+    // void createTreeView();
     
     void nodeSelected(tinyxml2::XMLNode* node);
     void updateDisplayElement(std::string classes, std::string content);
@@ -65,7 +72,6 @@ private:
     std::string changeTempateAttributeValue(std::string templateText, std::string attribute, std::string value);
     int applicationWidthClass;
     std::unique_ptr<Wt::WPushButton> createThemeSwitcher();
-    Wt::Signal<> appDevChanged_;
     std::regex temp_pattern = std::regex("\\$\\{[\\w\\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")\\}");
 
 };

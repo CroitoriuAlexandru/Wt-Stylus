@@ -46,48 +46,19 @@ std::string ElementClassEdditor::findAndRemoveMatche(std::regex regex, std::stri
 }
 
 
-ElementClassEdditor::ElementClassEdditor(std::string templateName)
-    : WTemplate(tr(templateName))
+ElementClassEdditor::ElementClassEdditor()
+    : WTemplate(tr("stylus-element-edditor"))
 {
 
-    Wt::WAnimation animation = Wt::WAnimation(Wt::AnimationEffect::SlideInFromBottom, Wt::TimingFunction::EaseInOut, 300);
 
-    spacing_btn_display = bindWidget("spacing-display-button", std::make_unique<Wt::WPushButton>("Spacing"));
-    sizing_btn_display = bindWidget("sizing-display-button", std::make_unique<Wt::WPushButton>("Sizing"));
-    background_btn_display = bindWidget("background-display-button", std::make_unique<Wt::WPushButton>("Background"));
-
-    auto btns_styles = "w-full text-center p-2 bg-neutral-800 text-neutral-200 rounded border-1 border-solid my-1 hover:bg-neutral-900 border-r-8 border-neutral-900 ";
-    spacing_btn_display->setStyleClass(btns_styles);
-    sizing_btn_display->setStyleClass(btns_styles);
-    background_btn_display->setStyleClass(btns_styles);
-
-
-    
-    spacingWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementSpacingWidget>());
-    sizingWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementSizingWidget>());
-    backgroundWidget_ = Wt::WApplication::instance()->root()->addChild(std::make_unique<ElementBackgroundWidget>());
+    spacingWidget_ = bindWidget("spacing-controls", std::make_unique<ElementSpacingWidget>());
+    sizingWidget_ = bindWidget("sizing-controls", std::make_unique<ElementSizingWidget>());
+    backgroundWidget_ = bindWidget("background-controls", std::make_unique<ElementBackgroundWidget>());
 
     spacingWidget_->addStyleClass("w-[300px]");
     sizingWidget_->addStyleClass("w-[300px]");
     backgroundWidget_->addStyleClass("w-[300px]");
 
-
-	spacingWidget_->setOffsets(0, Wt::Side::Bottom);
-	spacingWidget_->setOffsets(300, Wt::Side::Right);
-
-    sizingWidget_->setOffsets(0, Wt::Side::Bottom);
-    sizingWidget_->setOffsets(600, Wt::Side::Right);
-
-    backgroundWidget_->setOffsets(0, Wt::Side::Bottom);
-    backgroundWidget_->setOffsets(900, Wt::Side::Right);
-
-    spacingWidget_->animateShow(animation);
-    backgroundWidget_->animateShow(animation);
-    sizingWidget_->animateShow(animation);
-
-    spacing_btn_display->toggleStyleClass("!bg-neutral-900", true);
-    sizing_btn_display->toggleStyleClass("!bg-neutral-900", true);
-    background_btn_display->toggleStyleClass("!bg-neutral-900", true);
 
     spacingWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
@@ -114,37 +85,6 @@ ElementClassEdditor::ElementClassEdditor(std::string templateName)
         newStyles += sizingClasses + " ";
         newStyles += spacingClasses + " ";
         styleChanged_.emit(newStyles);
-    });
-
-    // buttons to toggle element controls from display
-    spacing_btn_display->clicked().connect(spacingWidget_, [=](){
-        if(spacingWidget_->isVisible()){
-            spacing_btn_display->toggleStyleClass("!bg-neutral-900", false, true);
-            spacingWidget_->animateHide(animation);
-        }else{
-            spacing_btn_display->toggleStyleClass("!bg-neutral-900", true, true);
-            spacingWidget_->animateShow(animation);
-        }
-    });
-
-    sizing_btn_display->clicked().connect(sizingWidget_, [=](){
-        if(sizingWidget_->isVisible()){
-            sizing_btn_display->toggleStyleClass("!bg-neutral-900", false, true);
-            sizingWidget_->animateHide(animation);
-        }else{
-            sizing_btn_display->toggleStyleClass("!bg-neutral-900", true, true);
-            sizingWidget_->animateShow(animation);
-        }
-    });
-
-    background_btn_display->clicked().connect(backgroundWidget_, [=](){
-        if(backgroundWidget_->isVisible()){
-            background_btn_display->toggleStyleClass("!bg-neutral-900", false, true);
-            backgroundWidget_->animateHide(animation);
-        }else{
-            background_btn_display->toggleStyleClass("!bg-neutral-900", true, true);
-            backgroundWidget_->animateShow(animation);
-        }
     });
 
 }

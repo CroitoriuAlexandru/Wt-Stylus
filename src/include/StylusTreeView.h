@@ -20,15 +20,15 @@ class TreeNode : public Wt::WTreeNode
 public:
     TreeNode(const Wt::WString& labelText, std::unique_ptr<Wt::WIconPair> labelIcon = nullptr);
     void setTemplateNode(bool isTemplateNode);
-    Wt::WPushButton* move_up_btn;
-    Wt::WPushButton* move_down_btn;
-    Wt::WPushButton* move_right_btn;
-    Wt::WPushButton* add_sibling_after_btn;
-    Wt::WPushButton* add_sibling_before_btn;
-    Wt::WPushButton* add_child_first_btn;
-    Wt::WPushButton* add_child_last_btn;
-    Wt::WPushButton* remove_btn;
-    Wt::WPushButton* open_template_btn;
+    Wt::WText* move_up_btn;
+    Wt::WText* move_down_btn;
+    Wt::WText* move_right_btn;
+    Wt::WText* add_sibling_after_btn;
+    Wt::WText* add_sibling_before_btn;
+    Wt::WText* add_child_first_btn;
+    Wt::WText* add_child_last_btn;
+    Wt::WText* remove_btn;
+    Wt::WText* open_template_btn;
 private:
 };
 

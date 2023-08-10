@@ -3,6 +3,7 @@
 TreeNode::TreeNode(const Wt::WString& labelText, std::unique_ptr<Wt::WIconPair> labelIcon)
 	: Wt::WTreeNode(labelText, std::move(labelIcon))
 {
+	setCanReceiveFocus(true);
 	setSelectable(true);
 	setLoadPolicy(Wt::ContentLoading::NextLevel);
 	label()->setTextFormat(Wt::TextFormat::Plain);
@@ -14,15 +15,16 @@ TreeNode::TreeNode(const Wt::WString& labelText, std::unique_ptr<Wt::WIconPair> 
 	auto labelAreaStart = labelArea()->addWidget(std::make_unique<Wt::WContainerWidget>());
 	auto labelAreaEnd = labelArea()->addWidget(std::make_unique<Wt::WContainerWidget>());
 
-	remove_btn = labelArea()->insertBefore(std::make_unique<Wt::WPushButton>(""), label());
-	move_right_btn = labelAreaStart->addWidget(std::make_unique<Wt::WPushButton>(""));
-	move_up_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
-	move_down_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
-	add_child_first_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
-	add_child_last_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
-	add_sibling_before_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
-	add_sibling_after_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>(""));
-	open_template_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WPushButton>("Open Temp"));
+	remove_btn = labelArea()->insertBefore(std::make_unique<Wt::WText>(""), label());
+	move_right_btn = labelAreaStart->addWidget(std::make_unique<Wt::WText>(""));
+	move_up_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WText>(""));
+	move_down_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WText>(""));
+	add_child_first_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WText>(""));
+	add_child_last_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WText>(""));
+	add_sibling_before_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WText>(""));
+	add_sibling_after_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WText>(""));
+	open_template_btn = labelAreaEnd->addWidget(std::make_unique<Wt::WText>("Open Temp"));
+
 	open_template_btn->setHidden(true);
 	open_template_btn->setStyleClass("mr-2.5 ml-1");
 	labelAreaEnd->setStyleClass("ms-auto flex items-center");

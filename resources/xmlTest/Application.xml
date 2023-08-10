@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="? ">child before</div>
         <div class="">child before</div>
         <div class="">child before</div>
         <div class="">child before</div>
         <div class="">child before</div>
+        <div class="mx-24">child before</div>
     </message>
     <message id="navbar">ASD</message>
     <message id="content">

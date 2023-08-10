@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- <?xml version="1.0" encoding="utf-8"?>
 <messages>
 
     <message id="stylus.edditor">
@@ -232,7 +232,6 @@
             </div>
 
         </div>
-        <!-- <div class="flex w-full max-w-[300px] pl-2 pr-4 mb-1.5"> -->
 
         <div class="relative my-8 mx-auto px-4 min-h-[90px] w-4/5  border-[4px] border-dashed border-neutral-600 flex flex-col justify-between items-stretch">
             <div class="flex mb-2 flex-col w-fit mx-auto -mt-6">
@@ -326,4 +325,4 @@
         </div>
     </message>
         
-</messages>
+</messages> -->

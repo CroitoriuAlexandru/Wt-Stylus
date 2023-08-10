@@ -39,8 +39,8 @@ public:
 private:
 	std::string defaultValue = "none";
 
-    Wt::WText *btn_prev_;
-    Wt::WText *btn_next_;
+    // Wt::WText *btn_prev_;
+    // Wt::WText *btn_next_;
 	std::regex custom_option_regexp = std::regex("\\[\\S*\\]");
 	Wt::WString custom_start_;
 	Wt::Signal<> classChanged_;

@@ -47,6 +47,7 @@ std::vector<FolderData> StylusTemplatesWidget::getFoldersData(std::string folder
     // files in the root folder
     FolderData folderData;
     folderData.folderName = "";
+
     for (const auto& entry : boost::filesystem::directory_iterator(folderPath)) {
         if (boost::filesystem::is_regular_file(entry)) {
 
@@ -72,7 +73,18 @@ std::vector<FolderData> StylusTemplatesWidget::getFoldersData(std::string folder
     }
 
 
+	// add message resource boundle
+	for(auto folderData : foldersData)
+	{
+		for(auto xmlFileData : folderData.xmlFiles)
+		{
+			// remove .xml from end of string
+			auto fileName = xmlFileData.fileName.substr(0, xmlFileData.fileName.size()-4);
+			std::string xmlFilePath = xml_folder_path + folderData.folderName + "/" + fileName;
+    		Wt::WApplication::instance()->messageResourceBundle().use(xmlFilePath);
 
+		}
+	}
     // for (const auto& folder : foldersData) {
     //     std::cout << "\n\nfolder <" << folder.folderName << ">\n";
     //     for (const auto& file : folder.xmlFiles) {

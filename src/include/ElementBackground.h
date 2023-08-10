@@ -59,10 +59,10 @@ struct BackgroundData
 };
 
 
-class ElementBackgroundWidget : public Wt::WDialog
+class ElementBackgroundWidget : public Wt::WTemplate
 {
 public:
-	ElementBackgroundWidget(std::string templateName = "stylus.background.template");
+	ElementBackgroundWidget();
 	// margin and padding at the moment
 
 	void setClasses(BackgroundData bgData);
