@@ -11,55 +11,17 @@ ElementContent::ElementContent()
     button_save->clicked().connect(this, &ElementContent::processChange);
     button_save->setStyleClass(Wt::WString::tr("button-dark"));
 
-    bindEmpty("folder.name");
-    bindEmpty("file.name");
-    bindEmpty("message.id");
-    bindEmpty("widget.type");
-    bindEmpty("toggle-variable-content");
-}
-
-
-void ElementContent::setFoldersData(std::vector<FolderData> foldersData)
-{
-    foldersData_ = foldersData;
-    toggle_variable_content = bindWidget("toggle-variable-content", std::make_unique<Wt::WCheckBox>("Toggle Variable Content"));
-    
     lineEdit_variableName = bindWidget("variable.name", std::make_unique<Wt::WLineEdit>());
     comboBox_folderName = bindWidget("folder.name", std::make_unique<Wt::WComboBox>());
     comboBox_widgetType = bindWidget("widget.type", std::make_unique<Wt::WComboBox>());
     comboBox_fileName = bindWidget("file.name", std::make_unique<Wt::WComboBox>());
     comboBox_message = bindWidget("message.id", std::make_unique<Wt::WComboBox>());
 
-
-     // set combo box values
-    auto widgetTypes = { "template" };
-    // std::cout << "\n\n folders names";
-    for(auto folders : foldersData){
-        // std::cout << "\n\nfolderName :<" << folders.folderName << ">\n\n";
-        comboBox_folderName->addItem(folders.folderName);
-    }
-    // std::cout << "end\n\n";
-
-    for(auto files : foldersData[0].xmlFiles){
-        comboBox_fileName->addItem(files.fileName);
-    }
-    for(auto message : foldersData[0].xmlFiles[0].messages){
-        comboBox_message->addItem(message);
-    }
-
-    // widget type
-    for(auto widgetType : widgetTypes){
-        comboBox_widgetType->addItem(widgetType);
-    }
-
     // signals
     comboBox_folderName->changed().connect([=](){ setFileNames(comboBox_folderName->currentText()); });
     comboBox_fileName->changed().connect([=](){ setMessages(comboBox_fileName->currentText()); });
 
-    // set default values
-    comboBox_folderName->setCurrentIndex(0);
-    comboBox_folderName->changed().emit();
-
+    toggle_variable_content = bindWidget("toggle-variable-content", std::make_unique<Wt::WCheckBox>("Toggle Variable Content"));
     toggle_variable_content->changed().connect(this, [=](){
         if(toggle_variable_content->isChecked()){
             
@@ -70,6 +32,28 @@ void ElementContent::setFoldersData(std::vector<FolderData> foldersData)
             element_content_textarea->setHidden(false);
         }
     });
+    std::vector<std::string> widgetTypes = {"template"};
+    for(auto widgetType : widgetTypes){
+        comboBox_widgetType->addItem(widgetType);
+    }
+
+    // bindEmpty("folder.name");
+    // bindEmpty("file.name");
+    // bindEmpty("message.id");
+    // bindEmpty("widget.type");
+    // bindEmpty("toggle-variable-content");
+}
+
+
+void ElementContent::setFoldersData(std::vector<FolderData> foldersData)
+{
+    foldersData_ = foldersData;
+    for(auto folder : foldersData_){
+        comboBox_folderName->addItem(folder.folderName);
+    }
+    comboBox_folderName->setCurrentIndex(0);
+    setFileNames(comboBox_folderName->currentText());
+    setMessages(comboBox_fileName->currentText());
 }
 
 void ElementContent::processChange()

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+    <message id="app-root">
+        <div class="">${test class="" folderName="widgets" fileName="qwer.xml" messageId="bla1" widgetType="template"}</div>
+    </message>
+    <message id="navbar">ASD</message>
+    <message id="content">
+        <div class="? ">template content</div>
+    </message>
+    <message id="ghghjk">
+        <div class="">child before</div>
+        <div class="">child after</div>
+        <div class="">child after</div>
+        <div class="">child after</div>
+        <div class="? ">child after</div>
+    </message>
+</messages>

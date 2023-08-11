@@ -1,13 +1,17 @@
 #pragma once
 #include "StylusTreeView.h"
-#include <Wt/WMessageResourceBundle.h>
+#include "tinyxml2.h"
 
+#include <Wt/WMessageResourceBundle.h>
 #include <Wt/WDialog.h>
 #include <Wt/WTemplate.h>
 #include <Wt/WSignal.h>
-#include "tinyxml2.h"
 #include <vector>
-
+#include <Wt/WTree.h>
+#include <Wt/WTreeNode.h>
+#include <Wt/WPopupMenu.h>
+#include <Wt/WPushButton.h>
+#include <Wt/WIconPair.h>
 struct XmlFileData {
     // std::string folderName;
     std::string fileName;
@@ -29,7 +33,6 @@ public:
     
     std::vector<FolderData> folders_data_;
     std::string xml_folder_path;
-    
 private:
     std::shared_ptr<StylusState> stylusState_;
     std::unique_ptr<Wt::WPanel> createPanel(std::string title);
@@ -44,7 +47,6 @@ private:
     void deleteFolderAndFiles(std::string folderName);
     void deleteMessageTemplate(std::string foldeName, std::string fileName, std::string tempMessageId);
     void addMessageTemplate(std::string foldeName, std::string fileName);
-    // void removeTextBetweenElements(tinyxml2::XMLNode* node);
     
     std::vector<FolderData> getFoldersData(std::string folderPath);
     std::vector<XmlFileData> getXmlFilesData(std::string folderPath);

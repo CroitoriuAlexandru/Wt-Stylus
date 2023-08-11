@@ -29,7 +29,7 @@ TreeNode::TreeNode(const Wt::WString& labelText, std::unique_ptr<Wt::WIconPair> 
 	open_template_btn->setStyleClass("mr-2.5 ml-1");
 	labelAreaEnd->setStyleClass("ms-auto flex items-center");
 	labelAreaStart->setStyleClass("me-auto flex items-center");
-	Wt::WString btns_styles = "!p-1.5 !my-0 !ms-0 bg-cover bg-no-repeat inline ";
+	Wt::WString btns_styles = "!p-[7px] !my-0 !ms-0 bg-cover bg-no-repeat inline  cursor-pointer";
 	remove_btn->addStyleClass(btns_styles + " bg-[url(resources/icons/trash.svg)] me-0 sticky left-0");
 	move_right_btn->addStyleClass(btns_styles + " bg-[url(resources/icons/arrow-right-down.svg)] bg-neutral-300 rounded-full");
 	move_up_btn->addStyleClass(btns_styles + " bg-[url(resources/icons/arrow-up.svg)] me-2 bg-neutral-300 rounded-full");
@@ -446,5 +446,6 @@ void StylusTreeView::removeElement(tinyxml2::XMLElement* element)
 {
 	std::cout << "\n StylusTreeView::removeElement \n";
     stylusState_->doc.DeleteNode(element);
-	stylusState_->selectedElement = nullptr;
+	stylusState_->doc.SaveFile(stylusState_->filePath.c_str());
+	stylusState_->selectedElement = stylusState_->selectedTemplate->ToElement();
 }

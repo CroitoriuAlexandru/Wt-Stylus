@@ -32,7 +32,6 @@ public:
     void setData(std::string contentText);
     std::string contentText_;
     
-    void setFoldersData();
     std::string getData();
     Wt::Signal<>& contentChanged() { return contentChanged_; }
     Wt::Signal<>& refreshDevApp() { return refreshDevApp_; }

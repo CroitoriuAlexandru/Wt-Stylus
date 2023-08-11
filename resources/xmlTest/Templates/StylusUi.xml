@@ -29,7 +29,12 @@
 		</message>
 		
 	<message id='sidebar-left'>
-		${selected-template-tree-view class="min-h-[200px]"}
+        <div class="flex items-center justify-betweem min-h-[20px] ">
+            ${toggle-outline-checkbox class="mx-2 h-fit "}
+            ${theme-switcher-btn class="mx-2 h-fit"}
+        </div>
+		<div class="border-b border-solid border-neutral-400"></div>
+		${selected-template-tree-view class="min-h-[150px] bg-neutral-700"}
 		<div class="border-b border-solid border-neutral-400"></div>
 		${prev-temp-controler}
 		<div class="border-b border-solid border-neutral-400"></div>
@@ -262,21 +267,12 @@
  
 
 	<!-- folder templates view -->
-	<message id="stylus.templates.widget">
-        <div class="text-md text-neutral-400 font-bold flex items-center justify-between">
-            <div class="">${add-xml-file-btn class="bg-[url(resources/icons/add-file.svg)] !p-3 m-1.5 bg-cover"}</div>
-            <div class="">${add-folder-btn class=" bg-[url(resources/icons/add-folder.svg)] !p-3 m-1.5 bg-cover"}</div>
+	<message id="stylus.templates.widget">        
+        <div class="text-xl font-bold text-neutral-400 ms-2 underline flex justify-between items-center">
+            <div>Folders</div>
+            ${add-folder-btn class=" bg-[url(resources/icons/add-folder.svg)] !p-3 m-1.5 bg-cover"}
         </div>
-        <div class="container w-full h-screen overflow-y-auto">
-            <div class="">
-                <div class="text-xl font-bold text-neutral-400 ms-2 underline">Files</div>
-                <div>${contents-files class="mb-6"}</div>
-            </div>
-            <div class="">
-                <div class="text-xl font-bold text-neutral-400 ms-2 underline">Folders</div>
-                <div>${contents-folders class="mb-6"}</div>
-            </div>
-        </div>
+        <div>${contents-folders class="mb-6"}</div>
     </message>
 
     <message id="stylus.templates.folder.item">

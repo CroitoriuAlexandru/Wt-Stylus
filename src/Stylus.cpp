@@ -25,16 +25,13 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 	sidebar_right(bindWidget("sidebar-right", std::make_unique<Wt::WTemplate>(Wt::WString::tr("sidebar-right")))),
 	menu_bar(bindWidget("menu-bar", std::make_unique<Wt::WTemplate>(Wt::WString::tr("menu-bar")))),
 	template_view(bindWidget("template-view", std::make_unique<Wt::WTemplate>(Wt::WString::tr("template-view")))),
-	stylusState_(std::make_shared<StylusState>())
-	
+	stylusState_(std::make_shared<StylusState>()),
+	xml_file_path(templatesPath)
 {
-	
 	// templates widget
 	stylus_templates_ = sidebar_left->bindWidget("folder-templates-view", std::make_unique<StylusTemplatesWidget>(templatesPath, stylusState_));
-
 	sidebar_left_hamburger = template_view->bindWidget("toggle-sidebar-left", std::make_unique<Wt::WTemplate>(Wt::WString::tr("hamburger-menu")));
 	sidebar_right_hamburger = template_view->bindWidget("toggle-sidebar-right", std::make_unique<Wt::WTemplate>(Wt::WString::tr("hamburger-menu")));
-
 
 	sidebar_left_hamburger->clicked().connect(this, [=](){
 		if(sidebar_left->hasStyleClass("-ml-[300px]")){
@@ -44,7 +41,6 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 		}
 	});
 
-
 	sidebar_right_hamburger->clicked().connect(this, [=](){
 		if(sidebar_right->hasStyleClass("-mr-[300px]")){
 			sidebar_right->toggleStyleClass("-mr-[300px]", false);
@@ -52,15 +48,11 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 			sidebar_right->toggleStyleClass("-mr-[300px]", true);
 		}
 	});
-	
-
 
 	tree_view_ = sidebar_left->bindWidget("selected-template-tree-view", std::make_unique<StylusTreeView>(stylusState_));
 	tree_view_->selectionChanged().connect(this, &StylusEdditor::nodeSelected);
 	tree_view_->openTemplate().connect(this, &StylusEdditor::setTemplate);
 
-
-	
 	// style classes widget
 	elementClassEdditor_ = sidebar_right->bindWidget("element-classes-edditor", std::make_unique<ElementClassEdditor>());
 	element_contents_ = sidebar_left->bindWidget("element-content-edditor", std::make_unique<ElementContent>());
@@ -85,12 +77,43 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 			auto tempData = templates_data_[templates_data_.size() - 1];
 			templates_data_.pop_back();
 			setTemplate(tempData.folderName, tempData.fileName, tempData.messageId, "template", true);
-			if(templates_data_.size() == 1){
-				prev_temp_btn_->disable();
-			}
 		}
 	});
+
+	createTitleBarControls();
 	createKeybordShortcuts();
+}
+
+void StylusEdditor::createTitleBarControls()
+{
+	auto toggle_outline_checkbox = sidebar_left->bindWidget("toggle-outline-checkbox", std::make_unique<Wt::WCheckBox>());
+	auto theme_switcher_btn = sidebar_left->bindWidget("theme-switcher-btn", createThemeSwitcher());
+	
+	toggle_outline_checkbox->toggleStyleClass("?", true, true);
+
+	toggle_outline_checkbox->setChecked(true);
+	toggle_outline_checkbox->changed().connect(this, [=](){
+		// toggle checkbox ? style
+		if(toggle_outline_checkbox->isChecked()){
+			outline_selected_on = true;
+			toggle_outline_checkbox->toggleStyleClass("?", true, true);
+		}else {
+			outline_selected_on = false;
+			toggle_outline_checkbox->toggleStyleClass("?", false, true);
+		}
+		// toggle element outline if present
+		if(!stylusState_->selectedElement){
+			// std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
+			return;
+		}
+		if(toggle_outline_checkbox->isChecked()){
+			toggleOutline();
+		}else {
+			toggleOutline(false);
+		}
+		updateFile();
+		updateResources();
+	});
 }
 
 void StylusEdditor::createDevApp()
@@ -100,13 +123,8 @@ void StylusEdditor::createDevApp()
 
 void StylusEdditor::setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType, bool insideTemplate)
 {
-	toggleOutline(false);
-
-
-
 
 	if(!stylus_templates_->parseMessageAndDoc(folderName, fileName, messageId)){
-		// std::cout << "\n\n StylusEdditor::setTemplate --- template already exists \n\n";
 		auto not_found_text = sidebar_left->bindWidget("selected-template-tree-view", std::make_unique<Wt::WText>("arguments fileName or messageId are not found"));
 		not_found_text->setStyleClass("text-red-400 font-bold");
 		return;
@@ -115,26 +133,17 @@ void StylusEdditor::setTemplate(std::string folderName, std::string fileName, st
 	tree_view_->createTree();
 	updateFile();
 	updateResources();
+	createDevApp();
 
 	if(insideTemplate){
 		templates_data_.push_back({folderName, fileName, messageId});
-		if(templates_data_.size() > 0){
-			prev_temp_btn_->enable();
-			if(templates_data_.size() > 1)
-				prev_temp_btn_->setText(templates_data_[templates_data_.size() - 2].messageId);
-			else
-				prev_temp_btn_->setText("prev template");
-		}
+		prev_temp_btn_->enable();
 	}else {
 		templates_data_.clear();
 		templates_data_.push_back({folderName, fileName, messageId});
-		createDevApp();
-		std::cout << "\n\n StylusEdditor::setTemplate --- folderName: " << folderName << "\n";
 		prev_temp_btn_->disable();
-		std::cout << "\n\n StylusEdditor::setTemplate --- folderName: " << folderName << "\n";
-		prev_temp_btn_->setText("prev template");
 	}
-	
+	std::cout << "\n\n stylus file path: " << stylusState_->filePath << "\n\n";
 }
 
 
@@ -143,15 +152,6 @@ StylusEdditor::~StylusEdditor()
 	toggleOutline(false);
 	updateFile();
 }
-
-// void StylusEdditor::createTreeView()
-// {
-// 	// std::cout << "\nStylusEdditor --- createTreeView got called \n";
-// 	auto treeView = edditor_temp_->bindWidget("tree-view", std::make_unique<StylusTreeView>(stylusState_));
-// 	treeView->selectionChanged().connect(this, &StylusEdditor::nodeSelected);
-// 	treeView->openTemplate().connect(this, &StylusEdditor::setTemplate);
-// 	treeView->createTree();
-// }
 
 
 void StylusEdditor::nodeSelected(tinyxml2::XMLNode* node)
@@ -370,10 +370,10 @@ std::string StylusEdditor::cleanStringStartEnd(const std::string& input)
 // create theme switcher light/dark mode
 std::unique_ptr<Wt::WPushButton> StylusEdditor::createThemeSwitcher(){
     bool darkMode = false;
-    auto theme_switcher = std::make_unique<Wt::WPushButton>("");
+    auto theme_switcher = std::make_unique<Wt::WPushButton>();
 
 	// theme_switcher->setTextFormat(Wt::TextFormat::XHTML);
-	theme_switcher->addStyleClass("bg-[url(resources/icons/sun.svg)]");
+	theme_switcher->addStyleClass("bg-[url(resources/icons/sun.svg)] !p-3 !my-0 !ms-0 bg-cover bg-no-repeat inline  cursor-pointer");
 	Wt::WApplication::instance()->setHtmlClass("");
 
 	auto theme_switcher_ptr = theme_switcher.get();

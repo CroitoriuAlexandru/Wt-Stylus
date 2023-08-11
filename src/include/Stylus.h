@@ -32,6 +32,8 @@ public:
     void setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType, bool insideTemplate = false);
     std::vector<std::string> getXmlFils();
 private:
+    void createTitleBarControls();
+    std::string xml_file_path;
     void createDevApp();
     void createKeybordShortcuts();
     Wt::WTemplate* sidebar_left ;
@@ -54,7 +56,6 @@ private:
     Wt::WPushButton* prev_temp_btn_;
 
     std::shared_ptr<StylusState> stylusState_;
-    // void createTreeView();
     
     void nodeSelected(tinyxml2::XMLNode* node);
     void updateDisplayElement(std::string classes, std::string content);
