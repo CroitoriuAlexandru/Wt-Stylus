@@ -61,7 +61,7 @@ private:
     void updateDisplayElement(std::string classes, std::string content);
     
     void toggleOutline(bool on = true);
-    bool outline_selected_on = true;    
+    Wt::WCheckBox* toggle_outline_checkbox;
 
     void saveStyles(std::string newStyles);
 

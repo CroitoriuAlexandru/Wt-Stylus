@@ -3,6 +3,7 @@
 #include <Wt/WComboBox.h>
 #include "ComboBoxes.h"
 #include <Wt/WDialog.h>
+#include <Wt/WPanel.h>
 
 struct SizingStyleClasses {
     SizingStyleClasses();
@@ -36,7 +37,7 @@ struct SizingData
 };
 
 
-class ElementSizingWidget : public Wt::WTemplate
+class ElementSizingWidget : public Wt::WPanel
 {
 public:
 	ElementSizingWidget();
@@ -49,6 +50,7 @@ public:
 
 private:
 	SizingStyleClasses sizingClasses_;
+	Wt::WTemplate* content_temp;
 
 	ComboBoxClassWithCustoms* width_widget_;
 	ComboBoxClassWithCustoms* minWidth_widget_;

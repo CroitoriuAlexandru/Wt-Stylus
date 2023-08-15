@@ -12,8 +12,11 @@
 void StylusEdditor::createKeybordShortcuts()
 {
 	Wt::WApplication::instance()->globalKeyPressed().connect(this, [=](Wt::WKeyEvent e){
-		if(e.key() == Wt::Key::Key_0){
+		if(e.key() == Wt::Key::Key_7){
 			sidebar_left_hamburger->clicked().emit(Wt::WMouseEvent());
+		}
+		if(e.key() == Wt::Key::Key_9){
+			sidebar_right_hamburger->clicked().emit(Wt::WMouseEvent());
 		}
 	});
 }
@@ -64,7 +67,11 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 	});
 
 	elementClassEdditor_->styleChanged().connect(this, &StylusEdditor::saveStyles);
-	element_contents_->refreshDevApp().connect(this, &StylusEdditor::createDevApp);
+	element_contents_->refreshDevApp().connect(this, [=](){
+		createDevApp();
+		tree_view_->createTree();
+
+	});
 	stylus_templates_->templateSelected().connect(this, &StylusEdditor::setTemplate);
 
 	prev_temp_btn_ = sidebar_left->bindWidget("prev-temp-controler", std::make_unique<Wt::WPushButton>("prev template"));
@@ -86,7 +93,7 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 
 void StylusEdditor::createTitleBarControls()
 {
-	auto toggle_outline_checkbox = sidebar_left->bindWidget("toggle-outline-checkbox", std::make_unique<Wt::WCheckBox>());
+	toggle_outline_checkbox = sidebar_left->bindWidget("toggle-outline-checkbox", std::make_unique<Wt::WCheckBox>());
 	auto theme_switcher_btn = sidebar_left->bindWidget("theme-switcher-btn", createThemeSwitcher());
 	
 	toggle_outline_checkbox->toggleStyleClass("?", true, true);
@@ -95,17 +102,15 @@ void StylusEdditor::createTitleBarControls()
 	toggle_outline_checkbox->changed().connect(this, [=](){
 		// toggle checkbox ? style
 		if(toggle_outline_checkbox->isChecked()){
-			outline_selected_on = true;
 			toggle_outline_checkbox->toggleStyleClass("?", true, true);
 		}else {
-			outline_selected_on = false;
 			toggle_outline_checkbox->toggleStyleClass("?", false, true);
 		}
-		// toggle element outline if present
 		if(!stylusState_->selectedElement){
 			// std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
 			return;
 		}
+		// toggle element outline if present
 		if(toggle_outline_checkbox->isChecked()){
 			toggleOutline();
 		}else {
@@ -130,10 +135,9 @@ void StylusEdditor::setTemplate(std::string folderName, std::string fileName, st
 		return;
 	}
 
-	tree_view_->createTree();
-	updateFile();
 	updateResources();
-	createDevApp();
+	updateFile();
+	tree_view_->createTree();
 
 	if(insideTemplate){
 		templates_data_.push_back({folderName, fileName, messageId});
@@ -142,8 +146,10 @@ void StylusEdditor::setTemplate(std::string folderName, std::string fileName, st
 		templates_data_.clear();
 		templates_data_.push_back({folderName, fileName, messageId});
 		prev_temp_btn_->disable();
+		createDevApp();
 	}
-	std::cout << "\n\n stylus file path: " << stylusState_->filePath << "\n\n";
+	// std::cout << "\n\n stylus file path: " << stylusState_->filePath << "\n\n";
+
 }
 
 
@@ -163,14 +169,10 @@ void StylusEdditor::nodeSelected(tinyxml2::XMLNode* node)
 		auto classes = getTemplateValue(text, "class");
 		classes = cleanStringStartEnd(classes);
 		auto newText = changeTempateAttributeValue(text, "class", classes);
-			
-		std::cout << "\n\n text :" << text << "\n";
-		std::cout << "classes :" << classes << "\n";
-		std::cout << "newText :" << newText << "\n\n";
 
 		stylusState_->selectedElement->SetValue(newText.c_str());
 		createDevApp();
-	}else {
+	}else if(toggle_outline_checkbox->isChecked()) {
 		toggleOutline(false);
 	}
 	std::string elem_classes;
@@ -178,7 +180,6 @@ void StylusEdditor::nodeSelected(tinyxml2::XMLNode* node)
 	stylusState_->selectedElement = node;
 
 	if(!node->ToElement()){
-		std::cout << "\n\n selected node is text\n";
 		auto text = node->Value();
 		auto classes = getTemplateValue(text, "class");
 		elem_classes = classes;
@@ -187,18 +188,14 @@ void StylusEdditor::nodeSelected(tinyxml2::XMLNode* node)
 		updateFile();
 		updateResources();
 		createDevApp();
-	}else {
+	}else if(toggle_outline_checkbox->isChecked()){
 		toggleOutline(true);
 		elem_classes = cleanStringStartEnd(stylusState_->selectedElement->ToElement()->Attribute("class"));
 		elem_content = stylusState_->selectedElement->ToElement()->GetText();
 		updateFile();
 		updateResources();
 	}
-	// std::cout << "\n\n elem_classes: " << elem_classes << "\n\n";
-
 	updateDisplayElement(elem_classes, elem_content);
-
-
 }
 
 std::string StylusEdditor::getTemplateValue(std::string templateText, std::string attribute)
@@ -233,7 +230,7 @@ std::string StylusEdditor::changeTempateAttributeValue(std::string templateText,
 
 void StylusEdditor::toggleOutline(bool on)
 {
-	// std::cout << "\nStylusEdditor --- toggleOutline got called \n";
+// std::cout << "\nStylusEdditor --- toggleOutline got called \n";
 	if(!stylusState_->selectedElement){
 
 		// std::cout << "\n\n StylusEdditor::toggleOutline --- error getting selected element \n\n";
@@ -244,7 +241,6 @@ void StylusEdditor::toggleOutline(bool on)
 		newStyles = "? ";
 		// if selected element is template
 		if(isTemplateText(stylusState_->selectedElement->Value())){
-			std::cout << "\n\n StylusEdditor::toggleOutline --- selected element is template \n\n";
 			auto tempText = stylusState_->selectedElement->Value();
 			auto classes = getTemplateValue(tempText, "class");
 			classes = cleanStringStartEnd(classes);
@@ -273,8 +269,6 @@ void StylusEdditor::toggleOutline(bool on)
 			stylusState_->selectedElement->ToElement()->SetAttribute("class", newStyles.c_str());
 		}
 	}
-
-	// stylusState_->selectedElement->ToElement()->SetAttribute("class", currentStyles.c_str());
 
 }
 

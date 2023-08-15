@@ -162,15 +162,10 @@ void StylusTemplatesWidget::createMenu()
 {
     folders_data_ = getFoldersData(xml_folder_path);
     auto contents_folders = bindWidget("contents-folders", std::make_unique<Wt::WContainerWidget>());
-    auto contents_files = bindWidget("contents-files", std::make_unique<Wt::WContainerWidget>());
     contents_folders->setStyleClass("bg-neutral-700 mb-12");
-    contents_files->setStyleClass("bg-neutral-700");
     
     for(auto folderData : folders_data_)
     {
-
-        // std::cout << "\n\n folder name " << folderData.folderName << "------------------------------\n\n";
-        // std::cout << "\n\n folder name " << folderData.folderName << "\n\n";
         auto panel = contents_folders->addWidget(std::move(createPanel(folderData.folderName)));
         panel->titleBarWidget()->setStyleClass(tr("stylus-panel-titlebar-folder"));
         auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(tr("svg.trash")));

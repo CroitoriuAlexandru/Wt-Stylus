@@ -3,7 +3,8 @@
 #include <Wt/WComboBox.h>
 #include "ComboBoxes.h"
 #include <Wt/WDialog.h>
-#
+#include <Wt/WPanel.h>
+
 struct BackgroundStyleClasses {
 	std::vector<std::string> bg_attachment_classes;
 	std::vector<std::string> bg_clip_classes;
@@ -59,11 +60,12 @@ struct BackgroundData
 };
 
 
-class ElementBackgroundWidget : public Wt::WTemplate
+class ElementBackgroundWidget : public Wt::WPanel
 {
 public:
 	ElementBackgroundWidget();
 	// margin and padding at the moment
+
 
 	void setClasses(BackgroundData bgData);
     Wt::Signal<>& styleChanged() { return styleChanged_; };

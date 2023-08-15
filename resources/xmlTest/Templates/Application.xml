@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="">${test class="" folderName="widgets" fileName="qwer.xml" messageId="bla1" widgetType="template"}</div>
+        <div class="w-48 min-w-min max-w-xl h-36 min-h-full max-h-3.5">child before</div>
+        <div class="">child before</div>
+        <div class="">child before</div>
+        <div class="">child before</div>
+        <div class="bg-cyan-100/40  w-1/2">sjhfkjsdlkfjhsldjfr</div>
+        <div class="">child after</div>
+        <div class="">child after</div>
+        <div class="">child after</div>
     </message>
     <message id="navbar">ASD</message>
     <message id="content">
-        <div class="? ">template content</div>
+        <div class="">template content</div>
     </message>
     <message id="ghghjk">
         <div class="">child before</div>
@@ -13,5 +20,12 @@
         <div class="">child after</div>
         <div class="">child after</div>
         <div class="? ">child after</div>
+    </message>
+    <message id="template-view">
+        <div class="relative p-px h-full">
+			${toggle-sidebar-left class=" absolute bottom-0.5 left-0.5"}
+			${app-dev-template}
+			${toggle-sidebar-right class=" absolute bottom-0.5 right-0.5"}
+		</div>
     </message>
 </messages>

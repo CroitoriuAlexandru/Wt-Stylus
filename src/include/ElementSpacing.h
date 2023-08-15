@@ -3,6 +3,7 @@
 #include <Wt/WComboBox.h>
 #include "ComboBoxes.h"
 #include <Wt/WDialog.h>
+#include <Wt/WPanel.h>
 
 struct SpacingStyleClasses {
     SpacingStyleClasses();
@@ -36,7 +37,7 @@ struct SpacingData
 	std::vector<std::string> space;
 };
 
-class ElementSpacingWidget : public Wt::WTemplate
+class ElementSpacingWidget : public Wt::WPanel
 {
 public:
 	ElementSpacingWidget();
@@ -49,6 +50,7 @@ public:
 
 private:
 	SpacingStyleClasses spacingClasses_;
+	Wt::WTemplate* content_temp;
 
 	ComboBoxClassWithCustoms* margin_all_widget_;
     ComboBoxClassWithCustoms* margin_horizontal_widget_;

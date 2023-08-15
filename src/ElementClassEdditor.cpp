@@ -138,6 +138,15 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     sizing.minHeight = findAndRemoveMatche(minHeight_regex, classes);
     sizing.maxHeight = findAndRemoveMatche(maxHeight_regex, classes);
 
+
+    std::cout << "\n sizing width : <" << sizing.width << ">\n";
+    std::cout << "\n sizing min width : <" << sizing.minWidth << ">\n";
+    std::cout << "\n sizing max width : <" << sizing.maxWidth << ">\n";
+    std::cout << "\n sizing height : <" << sizing.height << ">\n";
+    std::cout << "\n sizing min height : <" << sizing.minHeight << ">\n";
+    std::cout << "\n sizing max height : <" << sizing.maxHeight << ">\n";
+    
+
     // bool spacing_has
     
 

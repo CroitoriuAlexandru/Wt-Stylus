@@ -13,9 +13,10 @@
 			"}
 			
 			${template-view class=" grow
-			max-h-screen min-h-screen h-screen mb-4 
+			max-h-screen min-h-screen h-screen
 			overflow-y-scroll overflow-x-none overscroll-none 
 			transition-spacing duration-300 transform
+            m-px p-px
 			"}
 			
 			${sidebar-right class="
@@ -48,10 +49,10 @@
 	</message>
 
 	<message id='template-view'>
-		<div class="relative px-0.5">
-			${toggle-sidebar-left class=" absolute top-0.5 left-0.5"}
+		<div class="relative p-px h-full">
+			${toggle-sidebar-left class=" absolute bottom-0.5 left-0.5"}
 			${app-dev-template}
-			${toggle-sidebar-right class=" absolute top-0.5 right-0.5"}
+			${toggle-sidebar-right class=" absolute bottom-0.5 right-0.5"}
 		</div>
 	</message>
 
@@ -98,12 +99,9 @@
 
 	<!-- element class edditor               sidebar right -->
 	<message id="stylus-element-edditor">
-		${spacing-controls}
-		<div class="border-b border-solid border-neutral-400"></div>
 		${sizing-controls}
-		<div class="border-b border-solid border-neutral-400"></div>
+		${spacing-controls}
 		${background-controls}
-		<div class="border-b border-solid border-neutral-400"></div>
 	</message>
 
 	<!-- Spacing Template -->

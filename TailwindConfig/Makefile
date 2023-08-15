@@ -1,43 +1,38 @@
 # Compiler settings
 CC = g++
-CXXFLAGS = -std=c++14 -I. -DICE_CPP11_MAPPING
+CXXFLAGS = -std=c++14 -I. -DICE_CPP11_MAPPING -g
 
 # Makefile settings
-APPNAME = frontend
+APPNAME = app
 EXT = .cpp
 SRCDIR = ./src
-SRCDIR_TAIWIND_CONFIG = ./TailwindConfig/src
 OBJDIR = ./src/obj
-
+DBONAME = test.db
 # Linking lib
-LDFLAGS =  -lwthttp -lwt -lwtdbo -lIce++11 -lpthread -lssl -lcrypto -lboost_filesystem
+LDFLAGS =  -lwthttp -lwt -lwtdbo -lwtdbosqlite3 -lpthread -lboost_filesystem
 
 # Runtime lib
-RLIB = --docroot . --http-address 0.0.0.0 --http-port 9090
+RLIB =
 
 
 ############## Creating variables #############
-SRC = $(wildcard $(SRCDIR)/*$(EXT)) 
-SRC_TAILWIND_CONFIG = $(wildcard $(SRCDIR_TAIWIND_CONFIG)/*$(EXT))
-OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o) $(SRC_TAILWIND_CONFIG:$(SRCDIR_TAIWIND_CONFIG)/%$(EXT)=$(OBJDIR)/%.o)
+SRC = $(wildcard $(SRCDIR)/*$(EXT))
+OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 DEP = $(OBJ:$(OBJDIR)/%.o=$(OBJDIR)/%.d)
 
 ########################################################################
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: $(APPNAME)
+all: $(APPNAME) gen_obj_dir
 
 # Builds the app
 $(APPNAME): $(OBJ) 
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
-$(OBJDIR)/%.d: $(SRCDIR)/%$(EXT)
-	@$(CXX) $(CXXFLAGS) $< -MM -MT $(@:.d=.o) >$@
-
-$(OBJDIR)/%.d: $(SRCDIR_TAIWIND_CONFIG)/%$(EXT)
-	@$(CXX) $(CXXFLAGS) $< -MM -MT $(@:.d=.o) >$@
+%.d: $(SRCDIR)/%$(EXT)
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
 
 # Includes all .h files
 -include $(DEP)
@@ -46,32 +41,24 @@ $(OBJDIR)/%.d: $(SRCDIR_TAIWIND_CONFIG)/%$(EXT)
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT) 
 	$(CC) $(CXXFLAGS) -o $@ -c $<
 
-$(OBJDIR)/%.o: $(SRCDIR_TAIWIND_CONFIG)/%$(EXT)
-	$(CC) $(CXXFLAGS) -o $@ -c $<
-	
-
 ################## Run #################
 run:
 	./$(APPNAME) $(RLIB)
 
-runTrace:
-	./$(APPNAME) --Ice.Trace.Network=2 $(RCMD) $(RLIB)
-
 dbg:
 	gdb ./$(APPNAME)
-
-.PHONY: gen_obj_dir
-gen_obj_dir:
-	mkdir -p $(OBJDIR)
 
 ################### Cleaning rules ###################
 # Cleans complete project
 .PHONY: clean
 clean:
-	$(RM) $(APPNAME) $(DEP) $(OBJ)
+	$(RM) $(APPNAME) $(DEP) $(OBJ) $(DBONAME) 
 
-cleanDependencies:
-	$(RM) $(DEP)
+################### Display variables ###################
+displayVariables:
+	@echo $(SRC)
+	@echo $(OBJ)
+	@echo $(DEP)
 
 ################### Tailwind commands ###################
 startTailwind: buildTailwindModules
@@ -85,7 +72,4 @@ else
 	@echo "Installing Tailwind modules"
 	cd resources/themes/tailwind && npm install
 endif
-
-################### Display variables ###################
-echo:
-	@echo $(DEP)
+	
