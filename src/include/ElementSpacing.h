@@ -4,32 +4,6 @@
 #include "ComboBoxes.h"
 #include <Wt/WDialog.h>
 #include <Wt/WPanel.h>
-
-struct SpacingStyleClasses {
-    SpacingStyleClasses();
-    std::vector<std::string> spacingSize;
-
-	std::vector<std::string> padding_top_classes;
-	std::vector<std::string> padding_right_classes;
-	std::vector<std::string> padding_bottom_classes;
-	std::vector<std::string> padding_left_classes;
-	std::vector<std::string> padding_vertical_classes;
-	std::vector<std::string> padding_horizontal_classes;
-	std::vector<std::string> padding_all_classes;
-
-	std::vector<std::string> margin_top_classes;
-	std::vector<std::string> margin_right_classes;
-	std::vector<std::string> margin_bottom_classes;
-	std::vector<std::string> margin_left_classes;
-	std::vector<std::string> margin_vertical_classes;
-	std::vector<std::string> margin_horizontal_classes;
-	std::vector<std::string> margin_all_classes;
-
-	std::vector<std::string> space_vertical_classes;
-	std::vector<std::string> space_horizontal_classes;
-
-};
-
 struct SpacingData
 {
 	std::vector<std::string> padding;
@@ -40,7 +14,7 @@ struct SpacingData
 class ElementSpacingWidget : public Wt::WPanel
 {
 public:
-	ElementSpacingWidget();
+	ElementSpacingWidget(std::shared_ptr<Config> tailwindConfig);
 	// margin and padding at the moment
 
 	void setClasses(SpacingData spacing);
@@ -49,7 +23,9 @@ public:
 	void resetStyles();
 
 private:
-	SpacingStyleClasses spacingClasses_;
+	void setCustomTestValues();
+
+	std::shared_ptr<Config> tailwindConfig_;
 	Wt::WTemplate* content_temp;
 
 	ComboBoxClassWithCustoms* margin_all_widget_;

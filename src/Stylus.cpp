@@ -275,7 +275,11 @@ void StylusEdditor::toggleOutline(bool on)
 
 void StylusEdditor::saveStyles(std::string newStyles)
 {
-	auto styles = "? " + newStyles;
+	std::string styles = "";
+	if(toggle_outline_checkbox->isChecked()){
+		styles = "? ";
+	}
+	styles += newStyles;
 	std::cout << "\nStylusEdditor::saveStyles --- new styles: " << styles << "\n";
 	if(stylusState_->selectedElement && !stylusState_->selectedElement->ToElement())
 	{
@@ -337,10 +341,9 @@ void StylusEdditor::updateResources()
 std::string StylusEdditor::cleanStringStartEnd(const std::string& input)
 {
 	std::string newString = input;
-	auto found = newString.find("?");
-	while(found != std::string::npos){
-		newString.erase(found, 1);
-		found = newString.find("?");
+	// remove ? from start
+	while(newString[0] == '?'){
+		newString.erase(0, 1);
 	}
 	// remove newline from start
 	while(newString[0] == '\n'){
@@ -358,6 +361,7 @@ std::string StylusEdditor::cleanStringStartEnd(const std::string& input)
 	while(newString[newString.size() - 1] == ' '){
 		newString.erase(newString.size() - 1, 1);
 	}
+	// std::cout << "\n\n newString: " << newString << "\n\n";
 	return newString;
 }
 

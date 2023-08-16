@@ -1,101 +1,46 @@
 #include "include/ElementSpacing.h"
 #include <regex>
 
-SpacingStyleClasses::SpacingStyleClasses()
-{
-	spacingSize = { "0", "px", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "5", "6", "7", "8","9", "10", "11", "12", "14", "16", "20", "24", "28", "32", "36", "40", "44", "48", "52", "56", "64", "72", "80", "96" };
-	
-	// create posible classes for margin and padding
-	for(auto i = spacingSize.size()-1; i > 2; i--){
-		margin_all_classes.push_back("-m-" + spacingSize[i]);
-		margin_vertical_classes.push_back("-my-" + spacingSize[i]);
-		margin_horizontal_classes.push_back("-mx-" + spacingSize[i]);
-		margin_top_classes.push_back("-mt-" + spacingSize[i]);
-		margin_right_classes.push_back("-mr-" + spacingSize[i]);
-		margin_bottom_classes.push_back("-mb-" + spacingSize[i]);
-		margin_left_classes.push_back("-ml-" + spacingSize[i]);
-	}
-	margin_all_classes.push_back("none");
-	margin_vertical_classes.push_back("none");
-	margin_horizontal_classes.push_back("none");
-	margin_top_classes.push_back("none");
-	margin_right_classes.push_back("none");
-	margin_bottom_classes.push_back("none");
-	margin_left_classes.push_back("none");
-
-	// add none class witch tells the widget that this class should not be added
-	padding_all_classes.push_back("none");
-	padding_vertical_classes.push_back("none");
-	padding_horizontal_classes.push_back("none");
-	padding_top_classes.push_back("none");
-	padding_right_classes.push_back("none");
-	padding_bottom_classes.push_back("none");
-	padding_left_classes.push_back("none");
-
-
-	space_vertical_classes.push_back("none");
-	space_horizontal_classes.push_back("none");
-
-	// auto classes just for margin
-	margin_all_classes.push_back("m-auto"); 
-	margin_vertical_classes.push_back("my-auto");
-	margin_horizontal_classes.push_back("mx-auto");
-	margin_top_classes.push_back("mt-auto");
-	margin_right_classes.push_back("mr-auto");
-	margin_bottom_classes.push_back("mb-auto");
-	margin_left_classes.push_back("ml-auto");
-
-	for(auto& step : spacingSize){
-		padding_top_classes.push_back("pt-" + step);
-		padding_right_classes.push_back("pr-" + step);
-		padding_bottom_classes.push_back("pb-" + step);
-		padding_left_classes.push_back("pl-" + step);
-		padding_vertical_classes.push_back("py-" + step);
-		padding_horizontal_classes.push_back("px-" + step);
-		padding_all_classes.push_back("p-" + step);
-		
-		margin_top_classes.push_back("mt-" + step);
-		margin_bottom_classes.push_back("mb-" + step);
-		margin_horizontal_classes.push_back("mx-" + step);
-		margin_right_classes.push_back("mr-" + step);
-		margin_left_classes.push_back("ml-" + step);
-		margin_vertical_classes.push_back("my-" + step);
-		margin_all_classes.push_back("m-" + step);
-
-		space_horizontal_classes.push_back("space-y-" + step);
-		space_vertical_classes.push_back("space-x-" + step);
-	}
-
-
-};
-
-ElementSpacingWidget::ElementSpacingWidget()
-	: spacingClasses_()
+ElementSpacingWidget::ElementSpacingWidget(std::shared_ptr<Config> tailwindConfig)
+	: tailwindConfig_(tailwindConfig)
 {
 	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200");
 	setTitle("Spacing");
-	titleBarWidget()->setStyleClass("flex items-center space-x-3");
+	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-500");
 	setCollapsible(true);
 	content_temp = setCentralWidget(std::make_unique<Wt::WTemplate>(tr("stylus-spacing-template")));
 
-	margin_all_widget_ = content_temp->bindWidget("margin.all.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_all_classes));
-	margin_vertical_widget_ = content_temp->bindWidget("margin.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_vertical_classes));
-	margin_horizontal_widget_ = content_temp->bindWidget("margin.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_horizontal_classes));
-	margin_top_widget_ = content_temp->bindWidget("margin.top.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_top_classes));
-	margin_right_widget_ = content_temp->bindWidget("margin.right.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_right_classes));
-	margin_bottom_widget_ = content_temp->bindWidget("margin.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_bottom_classes));
-	margin_left_widget_ = content_temp->bindWidget("margin.left.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.margin_left_classes));
+	auto resetBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
+	auto testBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
 
-	padding_all_widget_ = content_temp->bindWidget("padding.all.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_all_classes));
-	padding_vertical_widget_ = content_temp->bindWidget("padding.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_vertical_classes));
-	padding_horizontal_widget_ = content_temp->bindWidget("padding.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_horizontal_classes));
-	padding_top_widget_ = content_temp->bindWidget("padding.top.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_top_classes));
-	padding_right_widget_ = content_temp->bindWidget("padding.right.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_right_classes));
-	padding_bottom_widget_ = content_temp->bindWidget("padding.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_bottom_classes));
-	padding_left_widget_ = content_temp->bindWidget("padding.left.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.padding_left_classes));
+	std::string buttons_styles ="p-2 m-px bg-cover ";
+	
+	resetBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/refresh.svg)] !ml-auto");
+	testBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/experimental-glass.svg)] !mr-2");
 
-	space_vertical_widget_ = content_temp->bindWidget("space.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.space_vertical_classes));
-	space_horizontal_widget_ = content_temp->bindWidget("space.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(spacingClasses_.space_horizontal_classes));
+	resetBtn->clicked().connect([=](){ resetStyles(); styleChanged_.emit(); isCollapsed() ? expand() : collapse();});
+	testBtn->clicked().connect([=](){ setCustomTestValues(); styleChanged_.emit(); isCollapsed() ? expand() : collapse(); });
+
+
+
+	margin_all_widget_ = content_temp->bindWidget("margin.all.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin));
+	margin_vertical_widget_ = content_temp->bindWidget("margin.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_x));
+	margin_horizontal_widget_ = content_temp->bindWidget("margin.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_y));
+	margin_top_widget_ = content_temp->bindWidget("margin.top.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_top));
+	margin_right_widget_ = content_temp->bindWidget("margin.right.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_right));
+	margin_bottom_widget_ = content_temp->bindWidget("margin.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_bottom));
+	margin_left_widget_ = content_temp->bindWidget("margin.left.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_left));
+
+	padding_all_widget_ = content_temp->bindWidget("padding.all.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding));
+	padding_vertical_widget_ = content_temp->bindWidget("padding.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_x));
+	padding_horizontal_widget_ = content_temp->bindWidget("padding.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_y));
+	padding_top_widget_ = content_temp->bindWidget("padding.top.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_top));
+	padding_right_widget_ = content_temp->bindWidget("padding.right.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_right));
+	padding_bottom_widget_ = content_temp->bindWidget("padding.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_bottom));
+	padding_left_widget_ = content_temp->bindWidget("padding.left.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_left));
+
+	space_horizontal_widget_ = content_temp->bindWidget("space.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.space_y));
+	space_vertical_widget_ = content_temp->bindWidget("space.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.space_x));
 
 	checkbox_space_x_reverse_ = content_temp->bindWidget("space.vertical.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
 	checkbox_space_y_reverse_ = content_temp->bindWidget("space.horizontal.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
@@ -180,14 +125,15 @@ void ElementSpacingWidget::setClasses(SpacingData spacing)
 {
 	// resetStyles();
 	// std::cout << "\nElementSpacingWidget::setStyleClasses \n";
-
 	for(auto& padding_class : spacing.padding){
 		if(padding_class.find("p-") != std::string::npos){
+			std::cout << "\n\n padding_class : " << padding_class << "\n\n";
+			std::cout << "padding widget class 1 : " << padding_all_widget_->comboBox_class->itemText(1) << "\n";
 			padding_all_widget_->setValue(padding_class);
 		}else if(padding_class.find("py-") != std::string::npos){
-			padding_vertical_widget_->setValue(padding_class);
-		}else if(padding_class.find("px-") != std::string::npos){
 			padding_horizontal_widget_->setValue(padding_class);
+		}else if(padding_class.find("px-") != std::string::npos){
+			padding_vertical_widget_->setValue(padding_class);
 		}else if(padding_class.find("pt-") != std::string::npos){
 			padding_top_widget_->setValue(padding_class);
 		}else if(padding_class.find("pr-") != std::string::npos){
@@ -203,9 +149,9 @@ void ElementSpacingWidget::setClasses(SpacingData spacing)
 		if(margin_class.find("m-") != std::string::npos){
 			margin_all_widget_->setValue(margin_class);
 		}else if(margin_class.find("my-") != std::string::npos){
-			margin_vertical_widget_->setValue(margin_class);
-		}else if(margin_class.find("mx-") != std::string::npos){
 			margin_horizontal_widget_->setValue(margin_class);
+		}else if(margin_class.find("mx-") != std::string::npos){
+			margin_vertical_widget_->setValue(margin_class);
 		}else if(margin_class.find("mt-") != std::string::npos){
 			margin_top_widget_->setValue(margin_class);
 		}else if(margin_class.find("mr-") != std::string::npos){
@@ -221,12 +167,14 @@ void ElementSpacingWidget::setClasses(SpacingData spacing)
 		if(space_class.find("space-x-") != std::string::npos){
 			if(space_class.find("reverse") != std::string::npos){
 				checkbox_space_x_reverse_->setChecked(true);
+			}else {
+				space_vertical_widget_->setValue(space_class);
 			}
-			space_vertical_widget_->setValue(space_class);
 		}else if(space_class.find("space-y-") != std::string::npos){
-			space_horizontal_widget_->setValue(space_class);
 			if(space_class.find("reverse") != std::string::npos){
 				checkbox_space_y_reverse_->setChecked(true);
+			}else {
+				space_horizontal_widget_->setValue(space_class);
 			}
 		}
 	}
@@ -258,3 +206,27 @@ void ElementSpacingWidget::resetStyles()
 	checkbox_space_y_reverse_->setChecked(false);
 }
 
+void ElementSpacingWidget::setCustomTestValues()
+{
+	margin_all_widget_->setValue("m-10");
+	margin_vertical_widget_->setValue("mx-auto");
+	margin_horizontal_widget_->setValue("my-6");
+	margin_top_widget_->setValue("mt-2");
+	margin_right_widget_->setValue("mr-2");
+	margin_bottom_widget_->setValue("mb-2");
+	margin_left_widget_->setValue("ml-[10px]");
+
+	padding_all_widget_->setValue("p-10");
+	padding_vertical_widget_->setValue("px-4");
+	padding_horizontal_widget_->setValue("py-6");
+	padding_top_widget_->setValue("pt-[30px]");
+	padding_right_widget_->setValue("pr-2");
+	padding_bottom_widget_->setValue("pb-2");
+	padding_left_widget_->setValue("pl-2");
+
+	space_vertical_widget_->setValue("space-x-4");
+	space_horizontal_widget_->setValue("space-y-4");
+
+	checkbox_space_x_reverse_->setChecked(true);
+	checkbox_space_y_reverse_->setChecked(true);
+}

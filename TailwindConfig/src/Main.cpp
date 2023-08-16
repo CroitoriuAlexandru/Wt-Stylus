@@ -66,12 +66,12 @@ int main() {
     // std::cout << config.spacing.PaddingData() << std::endl;
 
     // Sizing
-    std::cout << config.sizing.WidthData() << std::endl;
-    std::cout << config.sizing.HeightData() << std::endl;
-    std::cout << config.sizing.MaxHeightData() << std::endl;
-    std::cout << config.sizing.MinWidthData() << std::endl;
-    std::cout << config.sizing.MinHeightData() << std::endl;
-    std::cout << config.sizing.MaxWidthData() << std::endl;
+    // std::cout << config.sizing.WidthData() << std::endl;
+    // std::cout << config.sizing.HeightData() << std::endl;
+    // std::cout << config.sizing.MaxHeightData() << std::endl;
+    // std::cout << config.sizing.MinWidthData() << std::endl;
+    // std::cout << config.sizing.MinHeightData() << std::endl;
+    // std::cout << config.sizing.MaxWidthData() << std::endl;
 
     // Typography
     // std::cout << config.typography.FontFamilyData() << std::endl;
@@ -101,13 +101,15 @@ int main() {
     // std::cout << config.typography.ContentData() << std::endl;
 
     // backgrounds
-    // std::cout << config.backgrounds.BackgroundAttachmentData() << std::endl;
-    // std::cout << config.backgrounds.BackgroundClipData() << std::endl;
-    // std::cout << config.backgrounds.BackgroundOriginData() << std::endl;
-    // std::cout << config.backgrounds.BackgroundPositionData() << std::endl;
-    // std::cout << config.backgrounds.BackgroundRepeatData() << std::endl;
-    // std::cout << config.backgrounds.BackgroundSizeData() << std::endl;
-    // std::cout << config.backgrounds.BackgroundImageData() << std::endl;
+    // std::cout << config.backgrounds.backgroundAttachmentData() << std::endl;
+    // std::cout << config.backgrounds.backgroundClipData() << std::endl;
+    // std::cout << config.backgrounds.backgroundColorData() << std::endl;
+    // std::cout << config.backgrounds.backgroundOriginData() << std::endl;
+    // std::cout << config.backgrounds.backgroundPositionData() << std::endl;
+    // std::cout << config.backgrounds.backgroundRepeatData() << std::endl;
+    // std::cout << config.backgrounds.backgroundSizeData() << std::endl;
+    // std::cout << config.backgrounds.backgroundImageData() << std::endl;
+    // std::cout << config.backgrounds.gradientStopsData() << std::endl;
 
     // Borders
     // std::cout << config.borders.BorderRadiusData() << std::endl;
@@ -118,9 +120,10 @@ int main() {
     // std::cout << config.borders.RingData() << std::endl;
 
     // Effects
-    // std::cout << config.effects.BoxShadowData() << std::endl;
-    // std::cout << config.effects.OpacityData() << std::endl;
-    // std::cout << config.effects.MixBlendModeData() << std::endl;
+    // std::cout << config.effects.boxShadowData() << std::endl;
+    // std::cout << config.effects.boxShadowColorData() << std::endl;
+    // std::cout << config.effects.opacityData() << std::endl;
+    // std::cout << config.effects.mixBlendModeData() << std::endl;
 
     // Filters
     // std::cout << config.filters.BlurData() << std::endl;
@@ -156,11 +159,11 @@ int main() {
     // std::cout << config.transitions_and_animation.AnimationData() << std::endl;
 
     // Transform
-    // std::cout << config.transforms.ScaleData() << std::endl;
-    // std::cout << config.transforms.RotateData() << std::endl;
-    // std::cout << config.transforms.TranslateData() << std::endl;
-    // std::cout << config.transforms.SkewData() << std::endl;
-    // std::cout << config.transforms.TransformOriginData() << std::endl;
+    std::cout << config.transforms.scaleData() << std::endl;
+    std::cout << config.transforms.rotateData() << std::endl;
+    std::cout << config.transforms.translateData() << std::endl;
+    std::cout << config.transforms.skewData() << std::endl;
+    std::cout << config.transforms.transformOriginData() << std::endl;
 
     // Interactivity
     // std::cout << config.interactivity.appearanceData() << std::endl;

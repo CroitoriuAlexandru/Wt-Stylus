@@ -1,123 +1,37 @@
 #include "include/ElementSizing.h"
 #include <regex>
 
-
-SizingStyleClasses::SizingStyleClasses()
-
-{
-	sizingSize = { 
-		"screen", "0", "px", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4",
-		"5", "6", "7", "8", "9", 
-		"10", "11", "12", "14", "16", "20", "24", "28", "32", "36", "40", "44", "48", "52", "56", "60", "64", "72", "80", "96", 
-		"fit", "min", "max", "auto", "full",
-		"1/2", 
-		"2/3", "1/3",
-		"1/4", "2/4", "3/4",
-		"1/5", "2/5", "3/5", "4/5",
-		"1/6", "2/6", "3/6", "4/6", "5/6"
-	};
-	extraSizingWidth = {"1/12", "2/12", "3/12", "4/12", "5/12", "6/12", "7/12", "8/12", "9/12", "10/12", "11/12"};
-
-	// we have min width and height togather because they are the same except that max-height has the min-height-screen class
-	minSizing = {
-		"0", "full", "min", "max", "fit"
-	};
-
-	maxWidthSizing = {
-		"0", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl", "full", "min", "max", "fit", "prose", "none", 
-		"screen-sm", "screen-md", "screen-lg", "screen-xl", "screen-2x"
-	};
-
-	maxHeightSizing = {
-		"0", "px", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4",
-		"5", "6", "7", "8", "9", "10", "11", "12", "14", "16", "20", "24", "28", "32", "36", "40", "44", "48", "52", "56", "60", "64", "72", "80", "96",
-		"none", "full", "screen", "min", "max", "fit"
-	};
-
-	// width and height classes
-	// width_classes.push_back("none");
-	// height_classes.push_back("none");
-	for (auto& size : sizingSize) {
-		width_classes.push_back("w-" + size);
-		height_classes.push_back("h-" + size);
-		if(size.compare("full") == 0){
-			width_classes.push_back("none");
-		height_classes.push_back("none");
-		}
-	}
-
-	for(auto& size : extraSizingWidth){
-		width_classes.push_back("w-" + size);
-	}
-
-	// min width and height classes
-	min_width_classes.push_back("none");
-	min_height_classes.push_back("none");
-	for (auto& size : minSizing) {
-
-		min_width_classes.push_back("min-w-" + size);
-		min_height_classes.push_back("min-h-" + size);
-	}
-	min_height_classes.push_back("min-h-screen");
-
-	// max width and height classes
-	max_width_classes.push_back("none");
-	for(auto& size : maxWidthSizing){
-		max_width_classes.push_back("max-w-" + size);
-	}
-
-	max_height_classes.push_back("none");
-	for(auto& size : maxHeightSizing){
-		max_height_classes.push_back("max-h-" + size);
-	}
-
-	std::cout << "\n\n";
-
-	// std::cout << "width classes:\n ";
-	// for (auto& widthClass : width_classes) {
-	// 	std::cout << widthClass << " ";
-	// }
-	// std::cout << "\n\nmin width classes:\n ";
-	// for(auto& minWidthClass : min_width_classes){
-	// 	std::cout << minWidthClass << " ";
-	// }
-	// std::cout << "\n\nmax width classes: \n";
-	// for(auto& maxWidthClass : max_width_classes){
-	// 	std::cout << maxWidthClass << " ";
-	// }
-	// std::cout << "\n\nheight classes: \n";
-	// for (auto& heightClass : height_classes) {
-	// 	std::cout << heightClass << " ";
-	// }
-	// std::cout << "\n\nmin height classes: \n";
-	// for(auto& minHeightClass : min_height_classes){
-	// 	std::cout << minHeightClass << " ";
-	// }
-	// std::cout << "\n\nmax height classes: \n";
-	// for(auto& maxHeightClass : max_height_classes){
-	// 	std::cout << maxHeightClass << " ";
-	// }
-	// std::cout << "\n\n";
-
-};
-
-ElementSizingWidget::ElementSizingWidget()
-	: sizingClasses_()
+ElementSizingWidget::ElementSizingWidget(std::shared_ptr<Config> tailwindConfig)
+	: tailwindConfig_(tailwindConfig)
 {
 	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200");
 	setTitle("Sizing");
-	titleBarWidget()->setStyleClass("flex items-center space-x-3");
+	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-500");
 	setCollapsible(true);
 	content_temp = setCentralWidget(std::make_unique<Wt::WTemplate>(tr("stylus-sizing-template")));
 
-	width_widget_ = content_temp->bindWidget("width.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.width_classes));
-	height_widget_ = content_temp->bindWidget("height.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.height_classes));
+	auto resetBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
+	auto testBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
 
-	minWidth_widget_ = content_temp->bindWidget("width.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.min_width_classes));
-	minHeight_widget_ = content_temp->bindWidget("height.min.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.min_height_classes));
+	std::string buttons_styles ="p-2 m-px bg-cover ";
+	
+	resetBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/refresh.svg)] !ml-auto");
+	testBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/experimental-glass.svg)] !mr-2");
 
-	maxWidth_widget_ = content_temp->bindWidget("width.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.max_width_classes));
-	maxHeight_widget_ = content_temp->bindWidget("height.max.control", std::make_unique<ComboBoxClassWithCustoms>(sizingClasses_.max_height_classes));
+	resetBtn->clicked().connect([=](){ resetStyles(); styleChanged_.emit(); isCollapsed() ? expand() : collapse();});
+	testBtn->clicked().connect([=](){ setCustomTestValues(); styleChanged_.emit(); isCollapsed() ? expand() : collapse(); });
+
+
+
+
+	width_widget_ = content_temp->bindWidget("width.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->sizing.width));
+	height_widget_ = content_temp->bindWidget("height.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->sizing.height));
+
+	minWidth_widget_ = content_temp->bindWidget("width.min.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->sizing.min_width));
+	minHeight_widget_ = content_temp->bindWidget("height.min.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->sizing.min_height));
+
+	maxWidth_widget_ = content_temp->bindWidget("width.max.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->sizing.max_width));
+	maxHeight_widget_ = content_temp->bindWidget("height.max.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->sizing.max_height));
 
 	// set regular expresion for custom value w-[10px]
 	width_widget_->setCustomValueString("w-");
@@ -171,12 +85,21 @@ void ElementSizingWidget::setClasses(SizingData sizing)
 
 void ElementSizingWidget::resetStyles()
 {
-	width_widget_->setValue();
-	minWidth_widget_->setValue();
-	maxWidth_widget_->setValue();
+	width_widget_->setValue("none");
+	minWidth_widget_->setValue("none");
+	maxWidth_widget_->setValue("none");
 
-	height_widget_->setValue();
-	minHeight_widget_->setValue();
-	maxHeight_widget_->setValue();
+	height_widget_->setValue("none");
+	minHeight_widget_->setValue("none");
+	maxHeight_widget_->setValue("none");
 }
 
+void ElementSizingWidget::setCustomTestValues()
+{
+	width_widget_->setValue("w-1/2");
+	minWidth_widget_->setValue("min-w-full");
+	maxWidth_widget_->setValue("max-w-[300px]");
+	height_widget_->setValue("h-1/2");
+	minHeight_widget_->setValue("min-h-full");
+	maxHeight_widget_->setValue("max-h-[300px]");
+}

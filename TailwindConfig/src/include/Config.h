@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 
+
 namespace Tailwind {
 
     class Config
@@ -47,25 +48,16 @@ namespace Tailwind {
 
         std::vector<std::string> spacing_VARIANTS;
         std::vector<std::string> opacity_VARIANTS;
-        std::vector<std::string> columns_VARIANTS;
-        std::vector<std::string> contrast_VARIANTS;
-        std::vector<std::string> flex_basis_VARIANTS;
         std::vector<std::string> gradient_stops_VARIANTS;
-        std::vector<std::string> height_VARIANTS;
-        std::vector<std::string> max_height_VARIANTS;
 
-        std::vector<std::string> max_width_VARIANTS;
-
-        std::vector<std::string> margin_VARIANTS;
-
-        
         std::vector<std::string> colors_VARIANTS;
         std::vector<std::string> base_colors_VARIANTS;
         std::vector<std::string> color_intensity_VARIANTS;
         std::vector<std::string> color_opacity_VARIANTS;
-    private:
 
-        
-        
+        Propriety color_intensity_propriety;
+        Propriety color_opacity_propriety;
+
+    private: 
     };
 };

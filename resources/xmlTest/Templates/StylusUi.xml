@@ -88,10 +88,12 @@
     <message id="stylus.class.changer.color.widget">
         <div class="w-full mr-1.5">
             <div>${color-combobox}</div>
-            <div class="w-full flex justify-end  min-w-[270px] -ml-[90px]">
+            <div class="w-full flex justify-start  min-w-[270px] -mr-[90px]">
                 <div class="w-fit">${intensity-combobox class="w-full min-w-fit"}</div>
                 <div class="w-fit">${opacity-combobox class="w-full min-w-fit "}</div>
-                <div class="w-fit">${gradient-step-combobox class="w-full min-w-fit pr-3"}</div>
+                ${<gradient-step>}
+                    <div class="w-fit">${gradient-step-combobox class="w-full min-w-fit pr-3"}</div>
+                ${</gradient-step>}
             </div>
         </div>
     </message>
@@ -102,6 +104,8 @@
 		${sizing-controls}
 		${spacing-controls}
 		${background-controls}
+        ${effects-controls}
+        ${transforms-controls}
 	</message>
 
 	<!-- Spacing Template -->
@@ -215,54 +219,124 @@
     <message id="stylus-background-template">
         <div class="space-y-1 m-1.5 flex flex-col items-stretch">
             <div class="mx-1 flex ">
+                <div class="mr-auto w-2/3">${combobox-image class=""}</div>
                 <div class="font-bold text-neutral-500 text-sm">Gradient Img</div>
-                <div class="ms-auto w-2/3">${combobox-image class=""}</div>
             </div>
             <div class="mx-1 flex mb-2">
+                <div class="mr-auto w-2/3">${color-widget class=""}</div>
                 <div class="font-bold  text-neutral-500">${color-title}</div>
-                <div class="ms-auto w-2/3">${color-widget class=""}</div>
             </div>
             ${<bg-gradient>}
                 <div class="mx-1 flex mb-2">
+                    <div class="mr-auto w-2/3">${combobox-color-via class=""}</div>
                     <div class="font-bold text-neutral-500">Via</div>
-                    <div class="ms-auto w-2/3">${combobox-color-via class=""}</div>
                 </div>
                 <div class="mx-1 flex mb-2">
+                    <div class="mr-auto w-2/3">${combobox-color-to class=""}</div>
                     <div class="font-bold text-neutral-500">To</div>
-                    <div class="ms-auto w-2/3">${combobox-color-to class=""}</div>
                 </div>
             ${</bg-gradient>}
             <div class="border-b border-solid border-neutral-900"></div>
             <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-clip}</div>
                 <div class="font-bold text-neutral-500">Clip</div>
-                <div class="ms-auto w-2/3 ">${combobox-clip}</div>
             </div>
             <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-attachment}</div>
                 <div class="font-bold text-neutral-500">Atatchments</div>
-                <div class="ms-auto w-2/3 ">${combobox-attachment}</div>
             </div>
             <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-origin}</div>
                 <div class="font-bold text-neutral-500">Origin</div>
-                <div class="ms-auto w-2/3 ">${combobox-origin}</div>
             </div>
             <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-position}</div>
                 <div class="font-bold text-neutral-500">Position</div>
-                <div class="ms-auto w-2/3 ">${combobox-position}</div>
             </div>
             <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-repeat}</div>
                 <div class="font-bold text-neutral-500">Repeat</div>
-                <div class="ms-auto w-2/3 ">${combobox-repeat}</div>
             </div>
             <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-size}</div>
                 <div class="font-bold text-neutral-500">Size</div>
-                <div class="ms-auto w-2/3 ">${combobox-size}</div>
             </div>
      
         </div>
     </message>
 
+	<!-- Effects -->
+    <message id="stylus-effects-template">
+        <div class="space-y-1 m-1.5 flex flex-col items-stretch text-end">
+            <div>
+                ${checkbox-box-shadow-inset}
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-box-shadow}</div>
+                <div class="font-bold text-neutral-500">Box Shadow</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-box-shadow-color}</div>
+                <div class="font-bold text-neutral-500">Box Shadow Color</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-opacity}</div>
+                <div class="font-bold text-neutral-500">Opacity</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-mix-blend-mode}</div>
+                <div class="font-bold text-neutral-500">Mix Blend Mode</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-bg-blend-mode}</div>
+                <div class="font-bold text-neutral-500">Background Blend Mode</div>
+            </div>
+        </div>
+    </message>
+
+    	<!-- Transforms -->
+        <message id="stylus-transform-template">
+            <div class="space-y-1 m-1.5 flex flex-col items-stretch text-end">
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-scale}</div>
+                    <div class="font-bold text-neutral-500">Scale</div>
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-scale-x}</div>
+                    <div class="font-bold text-neutral-500">Scale X</div>                    
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-scale-y}</div>
+                    <div class="font-bold text-neutral-500">Scale Y</div>
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-rotate}</div>
+                    <div class="font-bold text-neutral-500">Rotate</div>
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-translate-x}</div>
+                    <div class="font-bold text-neutral-500">Translate X</div>
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-translate-y}</div>
+                    <div class="font-bold text-neutral-500">Translate Y</div>
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-skew-x}</div>
+                    <div class="font-bold text-neutral-500">Skew</div>
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-skew-y}</div>
+                    <div class="font-bold text-neutral-500">Skew</div>
+                </div>
+                <div class="mx-1 flex justify-center">
+                    <div class="mr-auto w-2/3 ">${combobox-transform-origin}</div>
+                    <div class="font-bold text-neutral-500 text-sm">Transform Origin</div>
+                </div>
+            </div>
+        </message>
 	
- 
+
 
 	<!-- folder templates view -->
 	<message id="stylus.templates.widget">        

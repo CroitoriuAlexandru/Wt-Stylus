@@ -13,7 +13,16 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
 
     StyleClass width_auto = StyleClass("w-auto", "");
     StyleClass height_auto = StyleClass("h-auto", "");
-
+    max_height.styleClasses_.push_back(StyleClass("none", ""));
+    for(auto size : sizing_variants)
+    {
+        width.styleClasses_.push_back(StyleClass("w-" + size, ""));
+        height.styleClasses_.push_back(StyleClass("h-" + size, ""));
+        max_height.styleClasses_.push_back(StyleClass("max-h-" + size, ""));
+    }
+    // no class value for width and height
+    width.styleClasses_.push_back(StyleClass("none", ""));
+    height.styleClasses_.push_back(StyleClass("none", ""));
 
     for(auto size : extra_size_variants_12)
     {
@@ -25,12 +34,7 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
         width.styleClasses_.push_back(StyleClass("w-" + size, ""));
         height.styleClasses_.push_back(StyleClass("h-" + size, ""));
     }
-    for(auto size : sizing_variants)
-    {
-        width.styleClasses_.push_back(StyleClass("w-" + size, ""));
-        height.styleClasses_.push_back(StyleClass("h-" + size, ""));
-        max_height.styleClasses_.push_back(StyleClass("max-h-" + size, ""));
-    }
+
     width.styleClasses_.push_back(width_auto);
     height.styleClasses_.push_back(height_auto);
     // max height
@@ -43,6 +47,7 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
 
     // min-width 
     min_width = Propriety({
+        StyleClass("none", ""),
         StyleClass("min-w-0", ""),
         StyleClass("min-w-full", ""),
         StyleClass("min-w-min", ""),
@@ -58,6 +63,7 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
     // StyleClass min_h_max = StyleClass("min-h-max", "");
     // StyleClass min_h_fit = StyleClass("min-h-fit", "");
     min_height = Propriety({
+        StyleClass("none", ""),
         StyleClass("min-h-0", ""),
         StyleClass("min-h-full", ""),
         StyleClass("min-h-screen", ""),
@@ -68,6 +74,7 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
 
     // max-widht
     max_width = Propriety({
+        StyleClass("none", ""),
         StyleClass("max-w-0", "max-width: 0rem; /* 0px */"),
         StyleClass("max-w-none", ""),
         StyleClass("max-w-xs", "max-width: 20rem; /* 320px */"),

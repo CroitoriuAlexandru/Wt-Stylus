@@ -338,7 +338,6 @@ void StylusTreeView::moveElementUp(tinyxml2::XMLElement* element)
 		return;
 	}
 
-	stylusState_->selectedElement = newElement->ToElement();
 	removeElement(element);
 }
 
@@ -354,7 +353,6 @@ void StylusTreeView::moveElementDown(tinyxml2::XMLElement* element)
 	} else {
 		element->Parent()->Parent()->InsertAfterChild(element->Parent(), newElement);
 	}
-	stylusState_->selectedElement = newElement->ToElement();
 	removeElement(element);
 }
 

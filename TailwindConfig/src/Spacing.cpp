@@ -30,30 +30,76 @@ Spacing::Spacing(std::vector<std::string> spacing_variants)
     space_x_reverse = Propriety({StyleClass("space-x-reverse", "")}, "https://tailwindcss.com/docs/space");
     space_y_reverse = Propriety({StyleClass("space-y-reverse", "")}, "https://tailwindcss.com/docs/space");
 
+    // iterate in reverse over spacing_variants
     for(auto size : spacing_variants)
     {
-        margin.styleClasses_.push_back(StyleClass("m-" + size, ""));
-        margin_x.styleClasses_.push_back(StyleClass("mx-" + size, ""));
-        margin_y.styleClasses_.push_back(StyleClass("my-" + size, ""));
-        margin_top.styleClasses_.push_back(StyleClass("mt-" + size, ""));
-        margin_right.styleClasses_.push_back(StyleClass("mr-" + size, ""));
-        margin_bottom.styleClasses_.push_back(StyleClass("mb-" + size, ""));
-        margin_left.styleClasses_.push_back(StyleClass("ml-" + size, ""));
-        margin_start.styleClasses_.push_back(StyleClass("ms-" + size, ""));
-        margin_end.styleClasses_.push_back(StyleClass("me-" + size, ""));
+        margin.styleClasses_.push_back(StyleClass("-m-" + size, ""));
+        margin_x.styleClasses_.push_back(StyleClass("-mx-" + size, ""));
+        margin_y.styleClasses_.push_back(StyleClass("-my-" + size, ""));
+        margin_top.styleClasses_.push_back(StyleClass("-mt-" + size, ""));
+        margin_right.styleClasses_.push_back(StyleClass("-mr-" + size, ""));
+        margin_bottom.styleClasses_.push_back(StyleClass("-mb-" + size, ""));
+        margin_left.styleClasses_.push_back(StyleClass("-ml-" + size, ""));
+        margin_start.styleClasses_.push_back(StyleClass("-ms-" + size, ""));
+        margin_end.styleClasses_.push_back(StyleClass("-me-" + size, ""));
+    }
+    margin.styleClasses_.push_back(StyleClass("none", ""));
+    margin_x.styleClasses_.push_back(StyleClass("none", ""));
+    margin_y.styleClasses_.push_back(StyleClass("none", ""));
+    margin_top.styleClasses_.push_back(StyleClass("none", ""));
+    margin_right.styleClasses_.push_back(StyleClass("none", ""));
+    margin_bottom.styleClasses_.push_back(StyleClass("none", ""));
+    margin_left.styleClasses_.push_back(StyleClass("none", ""));
+    margin_start.styleClasses_.push_back(StyleClass("none", ""));
+    margin_end.styleClasses_.push_back(StyleClass("none", ""));
 
-        padding.styleClasses_.push_back(StyleClass("p-" + size, ""));
-        padding_x.styleClasses_.push_back(StyleClass("px-" + size, ""));
-        padding_y.styleClasses_.push_back(StyleClass("py-" + size, ""));
-        padding_top.styleClasses_.push_back(StyleClass("pt-" + size, ""));
-        padding_right.styleClasses_.push_back(StyleClass("pr-" + size, ""));
-        padding_bottom.styleClasses_.push_back(StyleClass("pb-" + size, ""));
-        padding_left.styleClasses_.push_back(StyleClass("pl-" + size, ""));
-        padding_start.styleClasses_.push_back(StyleClass("ps-" + size, ""));
-        padding_end.styleClasses_.push_back(StyleClass("pe-" + size, ""));
+    margin.styleClasses_.push_back(StyleClass("m-auto", ""));
+    margin_x.styleClasses_.push_back(StyleClass("mx-auto", ""));
+    margin_y.styleClasses_.push_back(StyleClass("my-auto", ""));
+    margin_top.styleClasses_.push_back(StyleClass("mt-auto", ""));
+    margin_right.styleClasses_.push_back(StyleClass("mr-auto", ""));
+    margin_bottom.styleClasses_.push_back(StyleClass("mb-auto", ""));
+    margin_left.styleClasses_.push_back(StyleClass("ml-auto", ""));
+    margin_start.styleClasses_.push_back(StyleClass("ms-auto", ""));
+    margin_end.styleClasses_.push_back(StyleClass("me-auto", ""));
+    
+    padding.styleClasses_.push_back(StyleClass("none", ""));
+    padding_x.styleClasses_.push_back(StyleClass("none", ""));
+    padding_y.styleClasses_.push_back(StyleClass("none", ""));
+    padding_top.styleClasses_.push_back(StyleClass("none", ""));
+    padding_right.styleClasses_.push_back(StyleClass("none", ""));
+    padding_bottom.styleClasses_.push_back(StyleClass("none", ""));
+    padding_left.styleClasses_.push_back(StyleClass("none", ""));
+    padding_start.styleClasses_.push_back(StyleClass("none", ""));
+    padding_end.styleClasses_.push_back(StyleClass("none", ""));
 
-        space_x.styleClasses_.push_back(StyleClass("space-x-" + size, ""));
-        space_y.styleClasses_.push_back(StyleClass("space-y-" + size, ""));
+    space_x.styleClasses_.push_back(StyleClass("none", ""));
+    space_y.styleClasses_.push_back(StyleClass("none", ""));
+
+    for( int i = spacing_variants.size() - 1; i >= 0; i--)
+    {
+        margin.styleClasses_.push_back(StyleClass("m-" + spacing_variants[i], ""));
+        margin_x.styleClasses_.push_back(StyleClass("mx-" + spacing_variants[i], ""));
+        margin_y.styleClasses_.push_back(StyleClass("my-" + spacing_variants[i], ""));
+        margin_top.styleClasses_.push_back(StyleClass("mt-" + spacing_variants[i], ""));
+        margin_right.styleClasses_.push_back(StyleClass("mr-" + spacing_variants[i], ""));
+        margin_bottom.styleClasses_.push_back(StyleClass("mb-" + spacing_variants[i], ""));
+        margin_left.styleClasses_.push_back(StyleClass("ml-" + spacing_variants[i], ""));
+        margin_start.styleClasses_.push_back(StyleClass("ms-" + spacing_variants[i], ""));
+        margin_end.styleClasses_.push_back(StyleClass("me-" + spacing_variants[i], ""));
+
+        padding.styleClasses_.push_back(StyleClass("p-" + spacing_variants[i], ""));
+        padding_x.styleClasses_.push_back(StyleClass("px-" + spacing_variants[i], ""));
+        padding_y.styleClasses_.push_back(StyleClass("py-" + spacing_variants[i], ""));
+        padding_top.styleClasses_.push_back(StyleClass("pt-" + spacing_variants[i], ""));
+        padding_right.styleClasses_.push_back(StyleClass("pr-" + spacing_variants[i], ""));
+        padding_bottom.styleClasses_.push_back(StyleClass("pb-" + spacing_variants[i], ""));
+        padding_left.styleClasses_.push_back(StyleClass("pl-" + spacing_variants[i], ""));
+        padding_start.styleClasses_.push_back(StyleClass("ps-" + spacing_variants[i], ""));
+        padding_end.styleClasses_.push_back(StyleClass("pe-" + spacing_variants[i], ""));
+
+        space_x.styleClasses_.push_back(StyleClass("space-x-" + spacing_variants[i], ""));
+        space_y.styleClasses_.push_back(StyleClass("space-y-" + spacing_variants[i], ""));
     }
 }
 

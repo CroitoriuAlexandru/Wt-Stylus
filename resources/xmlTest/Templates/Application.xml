@@ -1,31 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="w-48 min-w-min max-w-xl h-36 min-h-full max-h-3.5">child before</div>
-        <div class="">child before</div>
-        <div class="">child before</div>
-        <div class="">child before</div>
-        <div class="bg-cyan-100/40  w-1/2">sjhfkjsdlkfjhsldjfr</div>
+        <div class="w-1/2 min-w-full max-w-[300px] h-1/2 min-h-full max-h-[300px]   p-10 px-4 py-6 pt-[30px] pr-2 pb-2 pl-2 m-10 mx-auto my-6 mt-2 mr-2 mb-2 ml-[10px] space-x-4 space-y-4 space-x-reverse space-y-reverse rotate-45 translate-x-1/3 translate-y-full -skew-x-1 skew-y-3 origin-top-left">sjhfkjsdlkfjhsldjfr</div>
         <div class="">child after</div>
         <div class="">child after</div>
-        <div class="">child after</div>
-    </message>
-    <message id="navbar">ASD</message>
-    <message id="content">
-        <div class="">template content</div>
-    </message>
-    <message id="ghghjk">
-        <div class="">child before</div>
-        <div class="">child after</div>
-        <div class="">child after</div>
-        <div class="">child after</div>
-        <div class="? ">child after</div>
-    </message>
-    <message id="template-view">
-        <div class="relative p-px h-full">
-			${toggle-sidebar-left class=" absolute bottom-0.5 left-0.5"}
-			${app-dev-template}
-			${toggle-sidebar-right class=" absolute bottom-0.5 right-0.5"}
-		</div>
     </message>
 </messages>

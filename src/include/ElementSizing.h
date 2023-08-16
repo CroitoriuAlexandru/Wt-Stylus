@@ -5,26 +5,6 @@
 #include <Wt/WDialog.h>
 #include <Wt/WPanel.h>
 
-struct SizingStyleClasses {
-    SizingStyleClasses();
-    std::vector<std::string> sizingSize;
-	std::vector<std::string> extraSizingWidth;
-
-	std::vector<std::string> minSizing;
-	
-	std::vector<std::string> maxWidthSizing;
-	std::vector<std::string> maxHeightSizing;
-
-	std::vector<std::string> width_classes;
-	std::vector<std::string> height_classes;
-
-	std::vector<std::string> min_width_classes;
-	std::vector<std::string> min_height_classes;
-
-	std::vector<std::string> max_width_classes;
-	std::vector<std::string> max_height_classes;
-};
-
 struct SizingData
 {
 	std::string width = "none";
@@ -40,7 +20,7 @@ struct SizingData
 class ElementSizingWidget : public Wt::WPanel
 {
 public:
-	ElementSizingWidget();
+	ElementSizingWidget(std::shared_ptr<Config> tailwindConfig);
 	// margin and padding at the moment
 
 	void setClasses(SizingData sizing);
@@ -49,7 +29,9 @@ public:
 	void resetStyles();
 
 private:
-	SizingStyleClasses sizingClasses_;
+	void setCustomTestValues();
+	
+    std::shared_ptr<Config> tailwindConfig_;
 	Wt::WTemplate* content_temp;
 
 	ComboBoxClassWithCustoms* width_widget_;
