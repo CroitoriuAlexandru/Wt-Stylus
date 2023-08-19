@@ -119,109 +119,116 @@ Flexbox::Flexbox(std::vector<std::string> spacing_variants)
     
 }
 
-std::string Flexbox::BasisData() {
-    std::string data = "Basis ------------------------------------\n";
+std::string Flexbox::basisData() {
+    std::string data = "";
     for(auto styleClass : basis.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::DirectionData() {
-    std::string data = "Direction ------------------------------------\n";
+std::string Flexbox::directionData() {
+    std::string data = "";
     for(auto styleClass : direction.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::WrapData() {
-    std::string data = "Wrap ------------------------------------\n";
+std::string Flexbox::wrapData() {
+    std::string data = "";
     for(auto styleClass : wrap.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::FlexData() {
-    std::string data = "Flex ------------------------------------\n";
+std::string Flexbox::flexData() {
+    std::string data = "";
     for(auto styleClass : flex.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::GrowData() {
-    std::string data = "Grow ------------------------------------\n";
+std::string Flexbox::growData() {
+    std::string data = "";
     for(auto styleClass : grow.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::ShrinkData() {
-    std::string data = "Shrink ------------------------------------\n";
+std::string Flexbox::shrinkData() {
+    std::string data = "";
     for(auto styleClass : shrink.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::OrderData() {
-    std::string data = "Order ------------------------------------\n";
+std::string Flexbox::orderData() {
+    std::string data = "";
     for(auto styleClass : order.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::PlaceData() {
-    std::string data = "Place ------------------------------------\n";
-    data += "Conent ---------\n";
+std::string Flexbox::placeData() {
+    std::string data = "";
     for(auto styleClass : place_content.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "Items ---------\n";
+    data += "\n";
     for(auto styleClass : place_items.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "Self ---------\n";
+    data += "\n";
     for(auto styleClass : place_self.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::JustifyData() {
-    std::string data = "justify ------------------------------------\n";
-    data += "Content ---------\n";
+std::string Flexbox::justifyData() {
+    std::string data = "";
     for(auto styleClass : justify_content.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "Items ---------\n";
+    data += "\n";
     for(auto styleClass : justify_items.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "Self ---------\n";
+    data += "\n";
     for(auto styleClass : justify_self.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Flexbox::AlignData() {
-    std::string data = "align ------------------------------------\n";
-    data += "Content ---------\n";
+std::string Flexbox::alignData() {
+    std::string data = "";
     for(auto styleClass : align_content.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "Items ---------\n";
+    data += "\n";
     for(auto styleClass : align_items.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "Self ---------\n";
+    data += "\n";
     for(auto styleClass : align_self.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }

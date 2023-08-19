@@ -5,7 +5,7 @@ using namespace Tailwind;
 
 Config::Config()
 {
-    // 98|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3.5|3|2.5|2|1.5|1|0.5|0|px
+    // 96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3.5|3|2.5|2|1.5|1|0.5|0|px
     spacing_VARIANTS = {"96", "80", "72", "64", "60", "56", "52", "48", "44", "40", "36", "32", "28", "24", "20", "16", "14", "12", "11", "10", "9", "8", "7", "6", "5", "4", "3.5", "3", "2.5", "2", "1.5", "1", "0.5", "0", "px"};
 
     opacity_VARIANTS = {"100", "95", "90", "85", "80", "75", "70", "65", "60", "55", "50", "45", "40", "35", "30", "25", "20", "15", "10", "5", "0"};
@@ -50,24 +50,7 @@ Config::Config()
     tables = Tables(spacing_VARIANTS);
     TransitionsAndAnimation transitions_and_animation = TransitionsAndAnimation();
     transforms = Transforms(spacing_VARIANTS);
-    interactivity = Interactivity(  spacing.margin.styleClasses_,
-                                    spacing.margin_x.styleClasses_,
-                                    spacing.margin_y.styleClasses_,
-                                    spacing.margin_top.styleClasses_,
-                                    spacing.margin_right.styleClasses_,
-                                    spacing.margin_bottom.styleClasses_,
-                                    spacing.margin_left.styleClasses_,
-                                    spacing.margin_start.styleClasses_,
-                                    spacing.margin_end.styleClasses_,
-                                    spacing.padding.styleClasses_,
-                                    spacing.padding_x.styleClasses_,
-                                    spacing.padding_y.styleClasses_,
-                                    spacing.padding_top.styleClasses_,
-                                    spacing.padding_right.styleClasses_,
-                                    spacing.padding_bottom.styleClasses_,
-                                    spacing.padding_left.styleClasses_,
-                                    spacing.padding_start.styleClasses_,
-                                    spacing.padding_end.styleClasses_);
+    interactivity = Interactivity(spacing_VARIANTS);
     svg = Svg();
     accessibility = Accessibility();
 

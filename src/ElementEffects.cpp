@@ -25,7 +25,7 @@ ElementEffectsWidget::ElementEffectsWidget(std::shared_ptr<Config> tailwindConfi
 
 
 	comboBox_box_shadow = content_temp->bindWidget("combobox-box-shadow", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->effects.box_shadow));
-	checkBox_box_shadow_inner = content_temp->bindWidget("checkbox-box-shadow-inset", std::make_unique<Wt::WCheckBox>());
+	checkBox_box_shadow_inner = content_temp->bindWidget("checkbox-box-shadow-inset", std::make_unique<Wt::WCheckBox>("Shaddow Inset"));
 	box_shadow_color = content_temp->bindWidget("combobox-box-shadow-color", std::make_unique<ComboBoxColors>(tailwindConfig->effects.box_shadow_color));
 	comboBox_opacity = content_temp->bindWidget("combobox-opacity", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->effects.opacity));
 	comboBox_mix_blend_mode = content_temp->bindWidget("combobox-mix-blend-mode", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->effects.mix_blend_mode)); 

@@ -103,106 +103,104 @@ Spacing::Spacing(std::vector<std::string> spacing_variants)
     }
 }
 
-std::string Spacing::MarginData()
+std::string Spacing::marginData()
 {
-    std::string data = "Margin ------------------------------------\n";
-    data += "Margin ---------\n";
+    std::string data = " ";
     for(auto styleClass : margin.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin x ---------\n";
+    data += "\n";
     for(auto styleClass : margin_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin y ---------\n";
+    data += "\n";
     for(auto styleClass : margin_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin top ---------\n";
+    data += "\n";
     for(auto styleClass : margin_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin right ---------\n";
+    data += "\n";
     for(auto styleClass : margin_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin bottom ---------\n";
+    data += "\n";
     for(auto styleClass : margin_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin left ---------\n";
+    data += "\n";
     for(auto styleClass : margin_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin start ---------\n";
+    data += "\n";
     for(auto styleClass : margin_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nMargin end ---------\n";
+    data += "\n";
     for(auto styleClass : margin_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-
+    data += "\n";
     return data;
 }
 
-std::string Spacing::PaddingData()
+std::string Spacing::paddingData()
 {
-    std::string data = "Padding ------------------------------------\n";
-    data += "Padding ---------\n";
+    std::string data = " ";
     for(auto styleClass : padding.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding x ---------\n";
+    data += "\n";
     for(auto styleClass : padding_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding y ---------\n";
+    data += "\n";
     for(auto styleClass : padding_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding top ---------\n";
+    data += "\n";
     for(auto styleClass : padding_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding right ---------\n";
+    data += "\n";
     for(auto styleClass : padding_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding bottom ---------\n";
+    data += "\n";
     for(auto styleClass : padding_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding left ---------\n";
+    data += "\n";
     for(auto styleClass : padding_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding start ---------\n";
+    data += "\n";
     for(auto styleClass : padding_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nPadding end ---------\n";
+    data += "\n";
     for(auto styleClass : padding_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-
+    data += "\n";
     return data;
 }

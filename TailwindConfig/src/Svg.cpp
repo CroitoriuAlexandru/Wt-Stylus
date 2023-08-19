@@ -6,6 +6,7 @@ Svg::Svg()
 {
     // stroke width
     stroke_width = Propriety({
+        StyleClass("none", ""),
         StyleClass("stroke-0", "stroke-width: 0;"),
         StyleClass("stroke-1", "stroke-width: 1;"),
         StyleClass("stroke-2", "stroke-width: 2;"),
@@ -14,10 +15,11 @@ Svg::Svg()
 
 std::string Svg::strokeWidthData()
 {
-    std::string data = "Stroke Width ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : stroke_width.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }

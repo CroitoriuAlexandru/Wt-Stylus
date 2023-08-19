@@ -1,4 +1,9 @@
+// #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+// #include "include/DocTest.h"
+
 #include <iostream>
+#include <fstream>
+
 #include "include/Config.h"
 #include "include/Layout.h"
 #include "include/Borders.h"
@@ -16,176 +21,388 @@
 
 using namespace Tailwind;
 
-int main() {
+std::string getConfigData()
+{
     Config config = Config();
-
-    // Layout
-    // std::cout << config.layout.AspectRatioData() << std::endl;
-    // std::cout << config.layout.ContainerData() << std::endl;
-    // std::cout << config.layout.ColumnsData() << std::endl;
-    // std::cout << config.layout.BreakAfterData() << std::endl;
-    // std::cout << config.layout.BreakBeforeData() << std::endl;
-    // std::cout << config.layout.BreakInsideData() << std::endl;
-    // std::cout << config.layout.BoxDecorationBreakData() << std::endl;
-    // std::cout << config.layout.BoxSizingData() << std::endl;
-    // std::cout << config.layout.DisplayData() << std::endl;
-    // std::cout << config.layout.FloatsData() << std::endl;
-    // std::cout << config.layout.ClearData() << std::endl;
-    // std::cout << config.layout.IsolationData() << std::endl;
-    // std::cout << config.layout.ObjectFitData() << std::endl;
-    // std::cout << config.layout.ObjectPositionData() << std::endl;
-    // std::cout << config.layout.OverflowData() << std::endl;
-    // std::cout << config.layout.OverscrollBehaviorData() << std::endl;
-    // std::cout << config.layout.PositionData() << std::endl;
-    // std::cout << config.layout.PositionSidesData() << std::endl;
-    // std::cout << config.layout.VisibilityData() << std::endl;
-    // std::cout << config.layout.ZIndexData() << std::endl;
-
+    std::string data = "";
+    // // Layout
+    // data += config.layout.aspectRatioData();
+    // data += config.layout.containerData();
+    // data += config.layout.columnsData();
+    // data += config.layout.breakAfterData();
+    // data += config.layout.breakBeforeData();
+    // data += config.layout.breakInsideData();
+    // data += config.layout.boxDecorationBreakData();
+    // data += config.layout.boxSizingData();
+    // data += config.layout.displayData();
+    // data += config.layout.floatsData();
+    // data += config.layout.clearData();
+    // data += config.layout.isolationData();
+    // data += config.layout.objectFitData();
+    // data += config.layout.objectPositionData();
+    // data += config.layout.overflowData();
+    // data += config.layout.overscrollBehaviorData();
+    // data += config.layout.positionData();
+    // data += config.layout.positionSidesData();
+    // data += config.layout.visibilityData();
+    // data += config.layout.zIndexData();
     // Flexbox
-    // std::cout << config.flexbox.BasisData() << std::endl;
-    // std::cout << config.flexbox.DirectionData() << std::endl;
-    // std::cout << config.flexbox.WrapData() << std::endl;
-    // std::cout << config.flexbox.FlexData() << std::endl;
-    // std::cout << config.flexbox.GrowData() << std::endl;
-    // std::cout << config.flexbox.ShrinkData() << std::endl;
-    // std::cout << config.flexbox.OrderData() << std::endl;
-    // std::cout << config.flexbox.PlaceData() << std::endl;
-    // std::cout << config.flexbox.JustifyData() << std::endl;
-    // std::cout << config.flexbox.AlignData() << std::endl;
-
+    data += config.flexbox.basisData();
+    data += config.flexbox.directionData();
+    data += config.flexbox.wrapData();
+    data += config.flexbox.flexData();
+    data += config.flexbox.growData();
+    data += config.flexbox.shrinkData();
+    data += config.flexbox.orderData();
+    data += config.flexbox.placeData();
+    data += config.flexbox.justifyData();
+    data += config.flexbox.alignData();
     // Grid
-    // std::cout << config.grid.OrderData() << std::endl;
-    // std::cout << config.grid.GridTemplateData() << std::endl;
-    // std::cout << config.grid.GridColsData() << std::endl;
-    // std::cout << config.grid.GridRowsData() << std::endl;
-    // std::cout << config.grid.GridAutoData() << std::endl;
-    // std::cout << config.grid.GapData() << std::endl;
+    data += config.grid.orderData();
+    data += config.grid.gridTemplateData();
+    data += config.grid.gridColsData();
+    data += config.grid.gridRowsData();
+    data += config.grid.gridAutoData();
+    data += config.grid.gapData();
+    // // Spacing
+    // data += config.spacing.marginData();
+    // data += config.spacing.paddingData();
+    // // Sizing
+    // data += config.sizing.widthData();
+    // data += config.sizing.heightData();
+    // data += config.sizing.maxHeightData();
+    // data += config.sizing.minWidthData();
+    // data += config.sizing.minHeightData();
+    // data += config.sizing.maxWidthData();
+    // // Typography
+    // data += config.typography.fontFamilyData();
+    // data += config.typography.fontSizeData();
+    // data += config.typography.fontSmoothingData();
+    // data += config.typography.fontStyleData();
+    // data += config.typography.fontWeightData();
+    // data += config.typography.fontVariantNumericData();
+    // data += config.typography.letterSpacingData();
+    // data += config.typography.lineClampData();
+    // data += config.typography.lineHeightData();
+    // data += config.typography.listStyleImageData();
+    // data += config.typography.listStylePositionData();
+    // data += config.typography.listStyleTypeData();
+    // data += config.typography.textAlignData();
+    // data += config.typography.textDecorationData();
+    // data += config.typography.textDecorationStyleData();
+    // data += config.typography.textDecorationThiknessData();
+    // data += config.typography.textUnderlineOffsetData();
+    // data += config.typography.textTransformData();
+    // data += config.typography.textOverflowData();
+    // data += config.typography.textIndentData();
+    // data += config.typography.verticalAlignData();
+    // data += config.typography.whitespaceData();
+    // data += config.typography.wordBreakData();
+    // data += config.typography.hyphensData();
+    // data += config.typography.contentData();
+    // // backgrounds
+    // data += config.backgrounds.backgroundAttachmentData();
+    // data += config.backgrounds.backgroundClipData();
+    // data += config.backgrounds.backgroundColorData();
+    // data += config.backgrounds.backgroundOriginData();
+    // data += config.backgrounds.backgroundPositionData();
+    // data += config.backgrounds.backgroundRepeatData();
+    // data += config.backgrounds.backgroundSizeData();
+    // data += config.backgrounds.backgroundImageData();
+    // data += config.backgrounds.gradientStopsData();
+    // // Borders
+    // data += config.borders.borderRadiusData();
+    // data += config.borders.borderWidthData();
+    // data += config.borders.borderStyleData();
+    // data += config.borders.divideData();
+    // data += config.borders.outlineData();
+    // data += config.borders.ringData();
+    // // Effects
+    // data += config.effects.boxShadowData();
+    // // data += config.effects.boxShadowColorData();
+    // data += config.effects.opacityData();
+    // data += config.effects.mixBlendModeData();
+    // // Filters
+    // data += config.filters.blurData();
+    // data += config.filters.brightnessData();
+    // data += config.filters.contrastData();
+    // data += config.filters.dropShadowData();
+    // data += config.filters.grayscaleData();
+    // data += config.filters.hueRotateData();
+    // data += config.filters.invertData();
+    // data += config.filters.saturateData();
+    // data += config.filters.sepiaData();
+    // data += config.filters.backdropBlurData();
+    // data += config.filters.backdropBrightnessData();
+    // data += config.filters.backdropContrastData();
+    // data += config.filters.backdropGrayscaleData();
+    // data += config.filters.backdropHueRotateData();
+    // data += config.filters.backdropInvertData();
+    // data += config.filters.backdropOpacityData();
+    // data += config.filters.backdropSaturateData();
+    // data += config.filters.backdropSepiaData();
 
-    // Spacing
-    // std::cout << config.spacing.MarginData() << std::endl;
-    // std::cout << config.spacing.PaddingData() << std::endl;
+    // // Tables
+    // data += config.tables.borderCollapseData();
+    // data += config.tables.borderSpacingData();
+    // data += config.tables.tableLayoutData();
+    // data += config.tables.captionSideData();
 
-    // Sizing
-    // std::cout << config.sizing.WidthData() << std::endl;
-    // std::cout << config.sizing.HeightData() << std::endl;
-    // std::cout << config.sizing.MaxHeightData() << std::endl;
-    // std::cout << config.sizing.MinWidthData() << std::endl;
-    // std::cout << config.sizing.MinHeightData() << std::endl;
-    // std::cout << config.sizing.MaxWidthData() << std::endl;
+    // // Transitions & Animation
+    // data += config.transitions_and_animation.transitionPropertyData();
+    // data += config.transitions_and_animation.transitionDurationData();
+    // data += config.transitions_and_animation.transitionTimingFunctionData();
+    // data += config.transitions_and_animation.transitionDelayData();
+    // data += config.transitions_and_animation.animationData();
 
-    // Typography
-    // std::cout << config.typography.FontFamilyData() << std::endl;
-    // std::cout << config.typography.FontSizeData() << std::endl;
-    // std::cout << config.typography.FontSmoothingData() << std::endl;
-    // std::cout << config.typography.FontStyleData() << std::endl;
-    // std::cout << config.typography.FontWeightData() << std::endl;
-    // std::cout << config.typography.FontVariantNumericData() << std::endl;
-    // std::cout << config.typography.LetterSpacingData() << std::endl;
-    // std::cout << config.typography.LineClampData() << std::endl;
-    // std::cout << config.typography.LineHeightData() << std::endl;
-    // std::cout << config.typography.ListStyleImageData() << std::endl;
-    // std::cout << config.typography.ListStylePositionData() << std::endl;
-    // std::cout << config.typography.ListStyleTypeData() << std::endl;
-    // std::cout << config.typography.TextAlignData() << std::endl;
-    // std::cout << config.typography.TextDecorationData() << std::endl;
-    // std::cout << config.typography.TextDecorationStyleData() << std::endl;
-    // std::cout << config.typography.TextDecorationThiknessData() << std::endl;
-    // std::cout << config.typography.TextUnderlineOffsetData() << std::endl;
-    // std::cout << config.typography.TextTransformData() << std::endl;
-    // std::cout << config.typography.TextOverflowData() << std::endl;
-    // std::cout << config.typography.TextIndentData() << std::endl;
-    // std::cout << config.typography.VerticalAlignData() << std::endl;
-    // std::cout << config.typography.WhitespaceData() << std::endl;
-    // std::cout << config.typography.WordBreakData() << std::endl;
-    // std::cout << config.typography.HyphensData() << std::endl;
-    // std::cout << config.typography.ContentData() << std::endl;
+    // // Transform
+    // data += config.transforms.scaleData();
+    // data += config.transforms.rotateData();
+    // data += config.transforms.skewData();
+    // data += config.transforms.translateData();
 
-    // backgrounds
-    // std::cout << config.backgrounds.backgroundAttachmentData() << std::endl;
-    // std::cout << config.backgrounds.backgroundClipData() << std::endl;
-    // std::cout << config.backgrounds.backgroundColorData() << std::endl;
-    // std::cout << config.backgrounds.backgroundOriginData() << std::endl;
-    // std::cout << config.backgrounds.backgroundPositionData() << std::endl;
-    // std::cout << config.backgrounds.backgroundRepeatData() << std::endl;
-    // std::cout << config.backgrounds.backgroundSizeData() << std::endl;
-    // std::cout << config.backgrounds.backgroundImageData() << std::endl;
-    // std::cout << config.backgrounds.gradientStopsData() << std::endl;
-
-    // Borders
-    // std::cout << config.borders.BorderRadiusData() << std::endl;
-    // std::cout << config.borders.BorderWidthData() << std::endl;
-    // std::cout << config.borders.BorderStyleData() << std::endl;
-    // std::cout << config.borders.DivideData() << std::endl;
-    // std::cout << config.borders.OutlineData() << std::endl;
-    // std::cout << config.borders.RingData() << std::endl;
-
-    // Effects
-    // std::cout << config.effects.boxShadowData() << std::endl;
-    // std::cout << config.effects.boxShadowColorData() << std::endl;
-    // std::cout << config.effects.opacityData() << std::endl;
-    // std::cout << config.effects.mixBlendModeData() << std::endl;
-
-    // Filters
-    // std::cout << config.filters.BlurData() << std::endl;
-    // std::cout << config.filters.BrightnessData() << std::endl;
-    // std::cout << config.filters.ContrastData() << std::endl;
-    // std::cout << config.filters.DropShadowData() << std::endl;
-    // std::cout << config.filters.GrayscaleData() << std::endl;
-    // std::cout << config.filters.HueRotateData() << std::endl;
-    // std::cout << config.filters.InvertData() << std::endl;
-    // std::cout << config.filters.SaturateData() << std::endl;
-    // std::cout << config.filters.SepiaData() << std::endl;
-    // std::cout << config.filters.BackdropBlurData() << std::endl;
-    // std::cout << config.filters.BackdropBrightnessData() << std::endl;
-    // std::cout << config.filters.BackdropContrastData() << std::endl;
-    // std::cout << config.filters.BackdropGrayscaleData() << std::endl;
-    // std::cout << config.filters.BackdropHueRotateData() << std::endl;
-    // std::cout << config.filters.BackdropInvertData() << std::endl;
-    // std::cout << config.filters.BackdropOpacityData() << std::endl;
-    // std::cout << config.filters.BackdropSaturateData() << std::endl;
-    // std::cout << config.filters.BackdropSepiaData() << std::endl;
-
-    // Tables
-    // std::cout << config.tables.BorderCollapseData() << std::endl;
-    // std::cout << config.tables.TableLayoutData() << std::endl;
-    // std::cout << config.tables.CaptionSideData() << std::endl;
-    // std::cout << config.tables.BorderSpacingData() << std::endl;
-
-    // Transitions and Animations
-    // std::cout << config.transitions_and_animation.TransitionPropertyData() << std::endl;
-    // std::cout << config.transitions_and_animation.TransitionDurationData() << std::endl;
-    // std::cout << config.transitions_and_animation.TransitionTimingFunctionData() << std::endl;
-    // std::cout << config.transitions_and_animation.TransitionDelayData() << std::endl;
-    // std::cout << config.transitions_and_animation.AnimationData() << std::endl;
-
-    // Transform
-    std::cout << config.transforms.scaleData() << std::endl;
-    std::cout << config.transforms.rotateData() << std::endl;
-    std::cout << config.transforms.translateData() << std::endl;
-    std::cout << config.transforms.skewData() << std::endl;
-    std::cout << config.transforms.transformOriginData() << std::endl;
-
-    // Interactivity
-    // std::cout << config.interactivity.appearanceData() << std::endl;
-    // std::cout << config.interactivity.cursorData() << std::endl;
-    // std::cout << config.interactivity.pointerEventsData() << std::endl;
-    // std::cout << config.interactivity.resizeData() << std::endl;
-    // std::cout << config.interactivity.scrollBehaviorData() << std::endl;
-    // std::cout << config.interactivity.scrollMarginData() << std::endl;
-    // std::cout << config.interactivity.scrollPaddingData() << std::endl;
-    // std::cout << config.interactivity.scrollSnapAlignData() << std::endl;
-    // std::cout << config.interactivity.scrollSnapStopData() << std::endl;
-    // std::cout << config.interactivity.scrollSnapTypeData() << std::endl;
-    // std::cout << config.interactivity.touchActionData() << std::endl;
-    // std::cout << config.interactivity.userSelectData() << std::endl;
-    // std::cout << config.interactivity.willChangeData() << std::endl;
-
-    // Svg
-    // std::cout << config.svg.strokeWidthData() << std::endl;
-
-    // Accessibility
-    // std::cout << config.accessibility.screenReadersData() << std::endl;
+    // // Interactivity
+    // data += config.interactivity.appearanceData();
+    // data += config.interactivity.cursorData();
+    // data += config.interactivity.pointerEventsData();
+    // data += config.interactivity.resizeData();
+    // data += config.interactivity.scrollBehaviorData();
+    // data += config.interactivity.scrollMarginData();
+    // data += config.interactivity.scrollPaddingData();
+    // data += config.interactivity.scrollSnapAlignData();
+    // data += config.interactivity.scrollSnapStopData();
+    // data += config.interactivity.scrollSnapTypeData();
+    // data += config.interactivity.touchActionData();
+    // data += config.interactivity.userSelectData();
+    // data += config.interactivity.willChangeData();
     
-    
-return 0;
+    // // Svg
+    // data += config.svg.strokeWidthData();
+
+    // // Accesibility
+    // data += config.accessibility.screenReadersData();
+
+    return data;
 }
+
+std::vector<std::string> findAndRemoveMatches(boost::regex regex, std::string& str) {
+    boost::regex_iterator<std::string::iterator> it(str.begin(), str.end(), regex);
+    boost::regex_iterator<std::string::iterator> end;
+    std::string result = "";
+
+    std::vector<std::string> matches;
+
+    size_t lastPos = 0;
+    while (it != end) {
+        result += str.substr(lastPos, it->position() - lastPos);
+        matches.push_back(it->str()); // Store deleted value in vector
+        lastPos = it->position() + it->length();
+        ++it;
+    }
+    // remove padding classes from classes string
+    str = result + str.substr(lastPos, str.length() - lastPos);
+    return matches;
+}
+
+void removeNone(std::vector<StyleClass>& vec){
+    for(int i = 0; i < vec.size(); i++){
+        if(vec[i].className_.compare("none") == 0){
+            vec.erase(vec.begin() + i);
+            break;
+        }
+    }
+}
+
+
+int main() {
+    std::ofstream output_file("tailwindClasses.txt", std::ios::trunc);
+    Config config = Config();
+    std::string configData = getConfigData();
+
+
+
+    // // Accesibility
+    // findAndRemoveMatches(config.accessibility.screen_readers_regex, configData);
+
+    // // Svg
+    // findAndRemoveMatches(config.svg.stroke_width_regex, configData);
+    // // stroke 
+    // // fill
+
+    // // Interactivity
+    // findAndRemoveMatches(config.interactivity.will_change_regex, configData);
+    // findAndRemoveMatches(config.interactivity.user_select_regex, configData);
+    // findAndRemoveMatches(config.interactivity.touch_action_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_snap_type_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_snap_proximity_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_snap_mandatory_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_snap_stop_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_snap_align_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_padding_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_margin_regex, configData);
+    // findAndRemoveMatches(config.interactivity.scroll_behavior_regex, configData);
+    // findAndRemoveMatches(config.interactivity.resize_regex, configData);
+    // findAndRemoveMatches(config.interactivity.pointer_events_regex, configData);
+    // // carret collor
+    // findAndRemoveMatches(config.interactivity.cursor_regex, configData);
+    // findAndRemoveMatches(config.interactivity.appearance_regex, configData);
+    // // accent color
+
+    // // Transform
+    // findAndRemoveMatches(config.transforms.origin_regex, configData);
+    // findAndRemoveMatches(config.transforms.skew_regex, configData);
+    // findAndRemoveMatches(config.transforms.translate_regex, configData);
+    // findAndRemoveMatches(config.transforms.rotate_regex, configData);
+    // findAndRemoveMatches(config.transforms.scale_regex, configData);
+
+    // // transitions & animation
+    // findAndRemoveMatches(config.transitions_and_animation.animation_regex, configData);
+    // findAndRemoveMatches(config.transitions_and_animation.transition_delay_regex, configData);
+    // findAndRemoveMatches(config.transitions_and_animation.transition_timing_function_regex, configData);
+    // findAndRemoveMatches(config.transitions_and_animation.transition_duration_regex, configData);
+    // findAndRemoveMatches(config.transitions_and_animation.transition_property_regex, configData);
+
+    // // Tables
+    // findAndRemoveMatches(config.tables.caption_side_regex, configData);
+    // findAndRemoveMatches(config.tables.table_layout_regex, configData);
+    // findAndRemoveMatches(config.tables.border_spacing_regex, configData);
+    // findAndRemoveMatches(config.tables.border_spacing_y_regex, configData);
+    // findAndRemoveMatches(config.tables.border_spacing_x_regex, configData);
+    // findAndRemoveMatches(config.tables.border_collapse_regex, configData);
+
+    // // Filters
+    // findAndRemoveMatches(config.filters.backdrop_sepia_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_saturate_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_opacity_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_invert_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_hue_rotate_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_grayscale_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_contrast_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_brightness_regex, configData);
+    // findAndRemoveMatches(config.filters.backdrop_blur_regex, configData);
+    // findAndRemoveMatches(config.filters.sepia_regex, configData);
+    // findAndRemoveMatches(config.filters.saturate_regex, configData);
+    // findAndRemoveMatches(config.filters.invert_regex, configData);
+    // findAndRemoveMatches(config.filters.hue_rotate_regex, configData);
+    // findAndRemoveMatches(config.filters.grayscale_regex, configData);
+    // findAndRemoveMatches(config.filters.drop_shadow_regex, configData);
+    // findAndRemoveMatches(config.filters.contrast_regex, configData);
+    // findAndRemoveMatches(config.filters.brightness_regex, configData);
+    // findAndRemoveMatches(config.filters.blur_regex, configData);
+
+    // // Effects
+    // findAndRemoveMatches(config.effects.bg_blend_mode_regex, configData);
+    // findAndRemoveMatches(config.effects.mix_blend_mode_regex, configData);
+    // findAndRemoveMatches(config.effects.opacity_regex, configData);
+    // // findAndRemoveMatches(config.effects.box_shadow_color_regex, configData);
+    // findAndRemoveMatches(config.effects.box_shadow_regex, configData);
+
+    // // Borders
+    // findAndRemoveMatches(config.borders.ring_offset_width_regex, configData);
+    // findAndRemoveMatches(config.borders.ring_width_regex, configData);
+    // findAndRemoveMatches(config.borders.outline_offset_regex, configData);
+    // findAndRemoveMatches(config.borders.outline_style_regex, configData);
+    // findAndRemoveMatches(config.borders.outline_width_regex, configData);
+    // findAndRemoveMatches(config.borders.divide_style_regex, configData);
+    // findAndRemoveMatches(config.borders.divide_width_regex, configData);
+    // findAndRemoveMatches(config.borders.border_width_regex, configData);
+    // findAndRemoveMatches(config.borders.border_style_regex, configData);
+    // findAndRemoveMatches(config.borders.border_radius_regex, configData);
+
+    // // Backgrounds
+    // findAndRemoveMatches(config.backgrounds.background_color_to_step, configData);
+    // findAndRemoveMatches(config.backgrounds.background_color_via_step, configData);
+    // findAndRemoveMatches(config.backgrounds.background_color_from_step, configData);
+
+    // findAndRemoveMatches(config.backgrounds.background_color_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_color_to_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_color_via_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_color_from_regex, configData);
+
+    // findAndRemoveMatches(config.backgrounds.background_image_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_size_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_repeat_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_position_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_origin_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_clip_regex, configData);
+    // findAndRemoveMatches(config.backgrounds.background_attachment_regex, configData);
+
+    // // Typography
+    // findAndRemoveMatches(config.typography.content_regex, configData);
+    // findAndRemoveMatches(config.typography.hyphens_regex, configData);
+    // findAndRemoveMatches(config.typography.word_break_regex, configData);
+    // findAndRemoveMatches(config.typography.whitespace_regex, configData);
+    // findAndRemoveMatches(config.typography.vertical_align_regex, configData);
+    // findAndRemoveMatches(config.typography.text_indent_regex, configData);
+    // findAndRemoveMatches(config.typography.text_overflow_regex, configData);
+    // findAndRemoveMatches(config.typography.text_transform_regex, configData);
+    // findAndRemoveMatches(config.typography.text_underline_offset_regex, configData);
+    // findAndRemoveMatches(config.typography.text_decoration_thikness_regex, configData);
+    // findAndRemoveMatches(config.typography.text_decoration_style_regex, configData);
+    // findAndRemoveMatches(config.typography.text_decoration_regex, configData);
+    // findAndRemoveMatches(config.typography.text_align_regex, configData);
+    // findAndRemoveMatches(config.typography.line_style_type_regex, configData);
+    // findAndRemoveMatches(config.typography.line_style_position_regex, configData);
+    // findAndRemoveMatches(config.typography.line_style_image_regex, configData);
+    // findAndRemoveMatches(config.typography.line_height_regex, configData);
+    // findAndRemoveMatches(config.typography.line_clamp_regex, configData);
+    // findAndRemoveMatches(config.typography.letter_spacing_regex, configData);
+    // findAndRemoveMatches(config.typography.font_variant_numeric_regex, configData);
+    // findAndRemoveMatches(config.typography.font_weight_regex, configData);
+    // findAndRemoveMatches(config.typography.font_style_regex, configData);
+    // findAndRemoveMatches(config.typography.font_smoothing_regex, configData);
+    // findAndRemoveMatches(config.typography.font_size_regex, configData);
+    // findAndRemoveMatches(config.typography.font_family_regex, configData);
+
+    // // Sizing
+    // findAndRemoveMatches(config.sizing.width_regex, configData);
+    // findAndRemoveMatches(config.sizing.height_regex, configData);
+    // findAndRemoveMatches(config.sizing.max_height_regex, configData);
+    // findAndRemoveMatches(config.sizing.max_width_regex, configData);
+    // findAndRemoveMatches(config.sizing.min_width_regex, configData);
+    // findAndRemoveMatches(config.sizing.min_height_regex, configData);
+
+    // // Spacing
+    // findAndRemoveMatches(config.spacing.padding_regex, configData);
+    // findAndRemoveMatches(config.spacing.margin_regex, configData);
+    // findAndRemoveMatches(config.spacing.space_regex, configData);
+
+    std::cout << configData << std::endl;
+    if(output_file.is_open()){
+        output_file << configData;
+        output_file.close();
+    }
+    else{
+        std::cout << "Unable to open file" << std::endl;
+    }
+    return 0;
+}
+
+
+
+
+// TEST_CASE("Accesibility") {
+//     // Accesibility
+//     auto matches = findAndRemoveMatches(config.accessibility.screen_readers_regex, configData);
+//     // remove the first element of the vector because it is none
+//     auto screen_readers = config.accessibility.screen_readers.styleClasses_;
+//     removeNone(screen_readers);
+//     screen_readers.push_back(StyleClass("blank", ""));
+//     for(int i = 0; i < matches.size(); i++){
+//         std::cout << screen_readers[screen_readers.size()-1].className_ << std::endl;
+//         CHECK(matches[i] == screen_readers[i].className_);
+//     }
+// }
+
+// TEST_CASE("Layout") {
+//     auto matches = findAndRemoveMatches(config.layout.aspect_ratio_regex, configData);
+//     // remove the first element of the vector because it is none
+//     auto aspect_ratio = config.layout.aspect_ratio.styleClasses_;
+//     removeNone(aspect_ratio);
+//     for(int i = 0; i < matches.size()+1; i++){
+//         CHECK(matches[i] == aspect_ratio[i].className_);
+//     }
+// }
+
+
+

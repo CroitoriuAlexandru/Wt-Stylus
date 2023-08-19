@@ -15,7 +15,7 @@ ElementTransformsWidget::ElementTransformsWidget(std::shared_ptr<Config> tailwin
 	auto resetBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
 	auto testBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
 
-	std::string buttons_styles ="p-3 m-px bg-cover hover:bg-neutral-900 rounded-md ";
+	std::string buttons_styles ="p-2 m-px bg-cover hover:bg-neutral-900 rounded-md ";
 	
 	resetBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/refresh.svg)] !ml-auto");
 	testBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/experimental-glass.svg)] !mr-2");

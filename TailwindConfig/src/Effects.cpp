@@ -63,53 +63,56 @@ Effects::Effects(
 
 std::string Effects::boxShadowData()
 {
-    std::string data = "Box Shadow ------------------------------------\n";
-    data += "Box Shadow ---------\n";
+    std::string data = "";
+    data += "\n";
     for(auto styleClass : box_shadow.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nBox Shadow Inset ---------\n";
+    data += "\n";
     for(auto styleClass : box_shadow_inset.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Effects::boxShadowColorData()
 {
-    std::string data = "Box Shadow Color ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : box_shadow_color.styleClasses_)
     {
         data += styleClass.className_ + "-500/20 ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Effects::opacityData()
 {
-    std::string data = "Opacity ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : opacity.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Effects::mixBlendModeData()
 {
-    std::string data = "Blend Mode ------------------------------------\n";
-    data += "Mix Blend Mode ---------\n";
+    std::string data = "";
     for(auto styleClass : mix_blend_mode.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nBackground Blend Mode ---------\n";
+    data += "\n";
     for(auto styleClass : background_blend_mode.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 

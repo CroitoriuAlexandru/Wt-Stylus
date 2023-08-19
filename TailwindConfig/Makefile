@@ -1,6 +1,6 @@
 # Compiler settings
 CC = g++
-CXXFLAGS = -std=c++14 -I. -DICE_CPP11_MAPPING -g
+CXXFLAGS = -std=c++14 -I. -DICE_CPP11_MAPPING
 
 # Makefile settings
 APPNAME = app
@@ -9,10 +9,10 @@ SRCDIR = ./src
 OBJDIR = ./src/obj
 DBONAME = test.db
 # Linking lib
-LDFLAGS =  -lwthttp -lwt -lwtdbo -lwtdbosqlite3 -lpthread -lboost_filesystem
+LDFLAGS =  -lpthread -lboost_filesystem -lboost_regex
 
 # Runtime lib
-RLIB =
+RLIB = 
 
 
 ############## Creating variables #############
@@ -24,15 +24,18 @@ DEP = $(OBJ:$(OBJDIR)/%.o=$(OBJDIR)/%.d)
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: $(APPNAME) gen_obj_dir
+all: $(APPNAME)
 
 # Builds the app
 $(APPNAME): $(OBJ) 
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
-%.d: $(SRCDIR)/%$(EXT)
-	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
+$(OBJDIR)/%.d: $(SRCDIR)/%$(EXT)
+	@$(CXX) $(CXXFLAGS) $< -MM -MT $(@:.d=.o) >$@
+
+$(OBJDIR)/%.d: $(SRCDIR_TAIWIND_CONFIG)/%$(EXT)
+	@$(CXX) $(CXXFLAGS) $< -MM -MT $(@:.d=.o) >$@
 
 # Includes all .h files
 -include $(DEP)

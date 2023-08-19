@@ -26,11 +26,11 @@ namespace Tailwind {
         std::string opacityData();
         std::string mixBlendModeData();
 
-        std::regex box_shadow_regex = std::regex("(?![\n| ])shadow(-sm|-md|-lg|-xl|-2xl|-none|-inset|-inner| )");
-        std::regex box_shadow_color_regex = std::regex("(?![\n| ])[!]?shadow-((inherit|current|transparent|black|white|\\[[\\S]*\\])|(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)?\\/((100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0)|\\[[\\S]*\\]))");
-        std::regex opacity_regex = std::regex("(?![\n| ])opacity-(100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|\\[[\\S]*\\])");
-        std::regex mix_blend_mode_regex = std::regex("(?![\n| ])mix-blend-(normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|hard-light|soft-light|difference|exclusion|hue|saturation|color|luminosity)");
-        std::regex bg_blend_mode_regex = std::regex("(?![\n| ])bg-blend-(normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|hard-light|soft-light|difference|exclusion|hue|saturation|color|luminosity)");
+        boost::regex box_shadow_regex = boost::regex("(?<=\n| )(!)?shadow(-sm|-md|-lg|-xl|-2xl|-none|-inset|-inner| )");
+        // boost::regex box_shadow_color_regex = boost::regex("(?<=\n| )(!)?[!]?shadow-((inherit|current|transparent|black|white|\\[[\\S]*\\])|(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)?\\/((100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0)|\\[[\\S]*\\]))");
+        boost::regex opacity_regex = boost::regex("(?<=\n| )(!)?opacity-(100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0|\\[[\\S]*\\])");
+        boost::regex mix_blend_mode_regex = boost::regex("(?<=\n| )(!)?mix-blend-(normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|hard-light|soft-light|difference|exclusion|hue|saturation|color|luminosity)");
+        boost::regex bg_blend_mode_regex = boost::regex("(?<=\n| )(!)?bg-blend-(normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|hard-light|soft-light|difference|exclusion|hue|saturation|color|luminosity)");
     };
 
 };

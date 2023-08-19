@@ -25,12 +25,12 @@ namespace Tailwind {
         Propriety gap_x;
         Propriety gap_y;
 
-        std::string OrderData();
-        std::string GridTemplateData();
-        std::string GridColsData();
-        std::string GridRowsData();
-        std::string GridAutoData();
-        std::string GapData();
+        std::string orderData();
+        std::string gridTemplateData();
+        std::string gridColsData();
+        std::string gridRowsData();
+        std::string gridAutoData();
+        std::string gapData();
 
     };
 

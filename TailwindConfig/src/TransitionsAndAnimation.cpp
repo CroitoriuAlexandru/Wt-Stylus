@@ -5,7 +5,9 @@ using namespace Tailwind;
 TransitionsAndAnimation::TransitionsAndAnimation()
 {
     // transition-property
+    // none|all|colors|opacity|shadow|transform
     transition_property = Propriety({
+        StyleClass("none", ""),
         StyleClass("transition-none", "transition-property: none;"),
         StyleClass("transition-all", "transition-property: all;"),
         StyleClass("transition-colors", "transition-property: background-color, border-color, color, fill, stroke;"),
@@ -16,7 +18,9 @@ TransitionsAndAnimation::TransitionsAndAnimation()
     }, "https://tailwindcss.com/docs/transition-property");
 
     // transition-duration
+    // 1000|700|500|300|200|150|100|75|0
     transition_duration = Propriety({
+        StyleClass("none", ""),
         StyleClass("duration-0", "transition-duration: 0s;"),
         StyleClass("duration-75", "transition-duration: 75ms;"),
         StyleClass("duration-100", "transition-duration: 100ms;"),
@@ -29,7 +33,9 @@ TransitionsAndAnimation::TransitionsAndAnimation()
     }, "https://tailwindcss.com/docs/transition-duration");
 
     // transition-timing-function
+    // linear|in-out|in|out
     transition_timing_function = Propriety({
+        StyleClass("none", ""),
         StyleClass("ease-linear", "transition-timing-function: linear;"),
         StyleClass("ease-out", "transition-timing-function: cubic-bezier(0, 0, 0.2, 1);"),
         StyleClass("ease-in-out", "transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);"),
@@ -37,7 +43,9 @@ TransitionsAndAnimation::TransitionsAndAnimation()
     }, "https://tailwindcss.com/docs/transition-timing-function");
 
     // transition-delay
+    // 1000|700|500|300|200|150|100|75|0
     transition_delay = Propriety({
+        StyleClass("none", ""),
         StyleClass("delay-0", "transition-delay: 0s;"),
         StyleClass("delay-75", "transition-delay: 75ms;"),
         StyleClass("delay-100", "transition-delay: 100ms;"),
@@ -49,63 +57,70 @@ TransitionsAndAnimation::TransitionsAndAnimation()
         StyleClass("delay-1000", "transition-delay: 1000ms;")
     }, "https://tailwindcss.com/docs/transition-delay");
 
-    StyleClass animation_none = StyleClass("animate-none", "animation: none;");
-    StyleClass animation_spin = StyleClass("animate-spin", "animation: spin 1s linear infinite;");
-    StyleClass animation_ping = StyleClass("animate-ping", "animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;");
-    StyleClass animation_pulse = StyleClass("animate-pulse", "animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;");
-    StyleClass animation_bounce = StyleClass("animate-bounce", "animation: bounce 1s infinite;");
-
-    animation = Propriety({animation_none, animation_spin, animation_ping, animation_pulse, animation_bounce}, "https://tailwindcss.com/docs/animation");
+    // none|spin|ping|pulse|bounce
+    animation = Propriety({
+        StyleClass("none", ""),
+        StyleClass("animate-none", "animation: none;"),
+        StyleClass("animate-spin", "animation: spin 1s linear infinite;"),
+        StyleClass("animate-ping", "animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;"),
+        StyleClass("animate-pulse", "animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"),
+        StyleClass("animate-bounce", "animation: bounce 1s infinite;")
+    }, "https://tailwindcss.com/docs/animation");
 
 }
 
-std::string TransitionsAndAnimation::TransitionPropertyData()
+std::string TransitionsAndAnimation::transitionPropertyData()
 {
-    std::string data = "Transition Property ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : transition_property.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string TransitionsAndAnimation::TransitionDurationData()
+std::string TransitionsAndAnimation::transitionDurationData()
 {
-    std::string data = "Transition Duration ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : transition_duration.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string TransitionsAndAnimation::TransitionTimingFunctionData()
+std::string TransitionsAndAnimation::transitionTimingFunctionData()
 {
-    std::string data = "Transition Timing Function ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : transition_timing_function.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string TransitionsAndAnimation::TransitionDelayData()
+std::string TransitionsAndAnimation::transitionDelayData()
 {
-    std::string data = "Transition Delay ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : transition_delay.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string TransitionsAndAnimation::AnimationData()
+std::string TransitionsAndAnimation::animationData()
 {
-    std::string data = "Animation ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : animation.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 

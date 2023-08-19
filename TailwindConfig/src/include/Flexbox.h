@@ -26,16 +26,16 @@ namespace Tailwind {
         Propriety align_items;
         Propriety align_self;
 
-        std::string BasisData();
-        std::string DirectionData();
-        std::string WrapData();
-        std::string FlexData();
-        std::string GrowData();
-        std::string ShrinkData();
-        std::string OrderData();
-        std::string PlaceData();
-        std::string JustifyData();
-        std::string AlignData();
+        std::string basisData();
+        std::string directionData();
+        std::string wrapData();
+        std::string flexData();
+        std::string growData();
+        std::string shrinkData();
+        std::string orderData();
+        std::string placeData();
+        std::string justifyData();
+        std::string alignData();
     };
 
 };

@@ -5,26 +5,7 @@ namespace Tailwind {
 
     class Interactivity {
     public:
-        Interactivity(
-            std::vector<StyleClass> margin = {},
-            std::vector<StyleClass> margin_x = {},
-            std::vector<StyleClass> margin_y = {},
-            std::vector<StyleClass> margin_top = {},
-            std::vector<StyleClass> margin_right = {},
-            std::vector<StyleClass> margin_bottom = {},
-            std::vector<StyleClass> margin_left = {},
-            std::vector<StyleClass> margin_start = {},
-            std::vector<StyleClass> margin_end = {},
-            std::vector<StyleClass> padding = {},
-            std::vector<StyleClass> padding_x = {},
-            std::vector<StyleClass> padding_y = {},
-            std::vector<StyleClass> padding_top = {},
-            std::vector<StyleClass> padding_right = {},
-            std::vector<StyleClass> padding_bottom = {},
-            std::vector<StyleClass> padding_left = {},
-            std::vector<StyleClass> padding_start = {},
-            std::vector<StyleClass> padding_end = {}
-            );
+        Interactivity(std::vector<std::string> sizing_variants = {});
         // Accent color will be implemented programaticaly 
         Propriety appearance;
         Propriety cursor;
@@ -75,6 +56,24 @@ namespace Tailwind {
         std::string touchActionData();
         std::string userSelectData();
         std::string willChangeData();
+
+        // accent color
+        boost::regex appearance_regex = boost::regex("(?<=\n| )(!)?appearance-none");
+        boost::regex cursor_regex = boost::regex("(?<=\n| )(!)?cursor-(auto|default|pointer|wait|text|move|help|not-allowed|none|progress|cell|crosshair|vertical-text|alias|copy|no-drop|all-scroll|col-resize|row-resize|n-resize|e-resize|s-resize|w-resize|ne-resize|nw-resize|se-resize|sw-resize|ew-resize|ns-resize|nesw-resize|nwse-resize|zoom-in|zoom-out)");
+        // carret color
+        boost::regex pointer_events_regex = boost::regex("(?<=\n| )(!)?pointer-events-(none|auto)");
+        boost::regex resize_regex = boost::regex("(?<= )(?<=\n| )(!)?resize(-none|-y|-x)?");
+        boost::regex scroll_behavior_regex = boost::regex("(?<=\n| )(!)?scroll-(auto|smooth)");
+        boost::regex scroll_margin_regex = boost::regex("(?<=\n| )(!)?scroll-m(x|y|t|r|b|l|s|e)?-(96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3.5|3|2.5|2|1.5|1|0.5|0|px)");
+        boost::regex scroll_padding_regex = boost::regex("(?<=\n| )(!)?scroll-p(x|y|t|r|b|l|s|e)?-(96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3.5|3|2.5|2|1.5|1|0.5|0|px)");
+        boost::regex scroll_snap_align_regex = boost::regex("(?<=\n| )(!)?snap-(align-none|start|end|center)");
+        boost::regex scroll_snap_stop_regex = boost::regex("(?<=\n| )(!)?snap-(normal|always)");
+        boost::regex scroll_snap_type_regex = boost::regex("(?<=\n| )(!)?snap-(none|x|y|both)");
+        boost::regex scroll_snap_proximity_regex = boost::regex("(?<=\n| )(!)?snap-proximity");
+        boost::regex scroll_snap_mandatory_regex = boost::regex("(?<=\n| )(!)?snap-mandatory");
+        boost::regex touch_action_regex = boost::regex("(?<=\n| )(!)?touch-(none|manipulation|pinch-zoom|pan-down|pan-up|pan-y|pan-right|pan-left|pan-x|pan-none|auto)");
+        boost::regex user_select_regex = boost::regex("(?<=\n| )(!)?select-(none|text|all|auto)");
+        boost::regex will_change_regex = boost::regex("(?<=\n| )(!)?will-change-(auto|scroll|contents|transform)");
 
     };
 };

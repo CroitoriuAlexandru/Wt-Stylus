@@ -6,6 +6,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 {
     // font-size
     font_family = Propriety({
+        StyleClass("none", ""),
         StyleClass("font-sans", "font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\";"),
         StyleClass("font-serif", "font-family: ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif;"),
         StyleClass("font-mono", "font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;")
@@ -13,6 +14,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // font-size
     font_size = Propriety({
+        StyleClass("none", ""),
         StyleClass("text-xs", "font-size: 0.75rem; /* 12px */ line-height: 1rem; /* 16px */"),
         StyleClass("text-sm", "font-size: 0.875rem; /* 14px */ line-height: 1.25rem; /* 20px */"),
         StyleClass("text-base", "font-size: 1rem; /* 16px */ line-height: 1.5rem; /* 24px */"),
@@ -30,18 +32,21 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // font-smoothing
     font_smoothing = Propriety({
+        StyleClass("none", ""),
         StyleClass("antialiased", " -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;"),
         StyleClass("subpixel-antialiased", "-webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto;")
     }, "https://tailwindcss.com/docs/font-smoothing");
 
     // font-style
     font_style = Propriety({
+        StyleClass("none", ""),
         StyleClass("italic", "font-style: italic;"),
         StyleClass("not-italic", "font-style: normal;")
     }, "https://tailwindcss.com/docs/font-style");
 
     // font-weight
     font_weight = Propriety({
+        StyleClass("none", ""),
         StyleClass("font-thin", "font-weight: 100;"),
         StyleClass("font-extralight", "font-weight: 200;"),
         StyleClass("font-light", "font-weight: 300;"),
@@ -54,7 +59,9 @@ Typography::Typography(std::vector<std::string> spacing_variants)
     }, "https://tailwindcss.com/docs/font-weight");
 
     // font variant numeric
+    // normal-nums|ordinal|slashed-zero|lining-nums|oldstyle-nums|proportional-nums|tabular-nums|diagonal-fractions|stacked-fractions
     font_variant_numeric = Propriety({
+        StyleClass("none", ""),
         StyleClass("normal-nums", "font-variant-numeric: normal;"),
         StyleClass("ordinal", "font-variant-numeric: ordinal;"),
         StyleClass("slashed-zero", "font-variant-numeric: slashed-zero;"),
@@ -68,6 +75,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // letter-spacing
     letter_spacing = Propriety({
+        StyleClass("none", ""),
         StyleClass("tracking-tighter", "letter-spacing: -0.05em;"),
     StyleClass("tracking-tight", "letter-spacing: -0.025em;"),
     StyleClass("tracking-normal", "letter-spacing: 0;"),
@@ -78,6 +86,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // line-clamp
     line_clamp = Propriety({
+        StyleClass("none", ""),
         StyleClass("line-clamp-1", "display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;"),
         StyleClass("line-clamp-2", "display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;"),
         StyleClass("line-clamp-3", "display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;"),
@@ -88,7 +97,9 @@ Typography::Typography(std::vector<std::string> spacing_variants)
     }, "https://tailwindcss.com/docs/line-clamp");
 
     // list-height
+    // 10|9|8|7|6|5|4|3|none|tight|snug|normal|relaxed|loose
     line_height = Propriety({
+        StyleClass("none", ""),
         StyleClass("leading-10", "line-height: 1.125rem; /* 18px */"),
         StyleClass("leading-9", "line-height: 1rem; /* 16px */"),
         StyleClass("leading-8", "line-height: 0.875rem; /* 14px */"),
@@ -107,24 +118,28 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // list-style-image
     list_style_image = Propriety({
-        StyleClass("list_image_none", "list-style-type: none;")
+        StyleClass("none", ""),
+        StyleClass("list-image-none", "list-style-type: none;")
     }, "https://tailwindcss.com/docs/list-style-image");
 
     // list-style-position
     list_style_position = Propriety({
-        StyleClass("list_inside", "list-style-position: inside;"),
-        StyleClass("list_outside", "list-style-position: outside;")
+        StyleClass("none", ""),
+        StyleClass("list-inside", "list-style-position: inside;"),
+        StyleClass("list-outside", "list-style-position: outside;")
     }, "https://tailwindcss.com/docs/list-style-position");
 
     // list-style-type
     list_style_type = Propriety({
-        StyleClass("list_none", "list-style-type: none;"),
-        StyleClass("list_disc", "list-style-type: disc;"),
-        StyleClass("list_decimal", "list-style-type: decimal;")
+        StyleClass("none", ""),
+        StyleClass("list-none", "list-style-type: none;"),
+        StyleClass("list-disc", "list-style-type: disc;"),
+        StyleClass("list-decimal", "list-style-type: decimal;")
     }, "https://tailwindcss.com/docs/list-style-type");
 
     // text align
     text_align = Propriety({
+        StyleClass("none", ""),
         StyleClass("text-left", "text-align: left;"),
         StyleClass("text-center", "text-align: center;"),
         StyleClass("text-right", "text-align: right;"),
@@ -135,6 +150,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // text decoration
     text_decoration = Propriety({
+        StyleClass("none", ""),
         StyleClass("underline", "text-decoration: underline;"),
         StyleClass("overline", "text-decoration: overline;"),
         StyleClass("line-through", "text-decoration: line-through;"),
@@ -143,6 +159,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // text decoration style 
     text_decoration_style = Propriety({
+        StyleClass("none", ""),
         StyleClass("decoration-solid", "text-decoration-style: solid;"),
         StyleClass("decoration-double", "text-decoration-style: double;"),
         StyleClass("decoration-dotted", "text-decoration-style: dotted;"),
@@ -152,6 +169,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // text decoration thikness
     text_decoration_thikness = Propriety({
+        StyleClass("none", ""),
         StyleClass("decoration-auto", "text-decoration-thickness: auto;"),
         StyleClass("decoration-from-font", "text-decoration-thickness: from-font;"),
         StyleClass("decoration-0", "text-decoration-thickness: 0;"),
@@ -169,6 +187,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
     // StyleClass underline_offset_4 =     
     // StyleClass underline_offset_8 =     
     text_underline_offset = Propriety({
+        StyleClass("none", ""),
         StyleClass("underline-offset-auto", "text-underline-offset: auto;"),
         StyleClass("underline-offset-0", "text-underline-offset: 0;"),
         StyleClass("underline-offset-1", "text-underline-offset: 1;"),
@@ -179,6 +198,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // text transform
     text_transform = Propriety({
+        StyleClass("none", ""),
         StyleClass("uppercase", "text-transform: uppercase;"),
         StyleClass("lowercase", "text-transform: lowercase;"),
         StyleClass("capitalize", "text-transform: capitalize;"),
@@ -187,13 +207,14 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // text overflow
     text_overflow = Propriety({
+        StyleClass("none", ""),
         StyleClass("truncate", "overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"),
         StyleClass("text-ellipsis", "text-overflow: ellipsis;"),
         StyleClass("text-clip", "text-overflow: clip;")
     }, "https://tailwindcss.com/docs/text-overflow");
 
     // text indent
-    text_indent = Propriety({}, "https://tailwindcss.com/docs/text-indent");
+    text_indent = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/text-indent");
     for(auto size : spacing_variants)
     {
         text_indent.styleClasses_.push_back(StyleClass("indent-" + size, ""));
@@ -201,6 +222,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // vertical align
     vertical_align = Propriety({
+        StyleClass("none", ""),
         StyleClass("align-baseline", "vertical-align: baseline;"),
         StyleClass("align-top", "vertical-align: top;"),
         StyleClass("align-middle", "vertical-align: middle;"),
@@ -213,6 +235,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // whitespace
     whitespace = Propriety({
+        StyleClass("none", ""),
         StyleClass("whitespace-normal", "white-space: normal;"),
         StyleClass("whitespace-nowrap", "white-space: nowrap;"),
         StyleClass("whitespace-pre-line", "white-space: pre-line;"),
@@ -227,6 +250,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
     // StyleClass break_all =   
     // StyleClass break_keep =  
     word_break = Propriety({
+        StyleClass("none", ""),
         StyleClass("break-normal", "overflow-wrap: normal; word-break: normal;"),
         StyleClass("break-words", "overflow-wrap: break-word;"),
         StyleClass("break-all", "word-break: break-all;"),
@@ -235,6 +259,7 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // hyphens
     hyphens = Propriety({
+        StyleClass("none", ""),
         StyleClass("hyphens-none", "hyphens: none;"),
         StyleClass("hyphens-manual", "hyphens: manual;"),
         StyleClass("hyphens-auto", "hyphens: auto;")
@@ -242,276 +267,288 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
     // content
     content = Propriety({
+        StyleClass("none", ""),
         StyleClass("content-none", "content: none;"),
     }, "https://tailwindcss.com/docs/content");
 
 }
 
-std::string Typography::FontFamilyData()
+std::string Typography::fontFamilyData()
 {
-    std::string data = "Font Family ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : font_family.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::FontSizeData()
+std::string Typography::fontSizeData()
 {
-    std::string data = "Font Size ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : font_size.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::FontSmoothingData()
+std::string Typography::fontSmoothingData()
 {
-    std::string data = "Font Smoothing ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : font_smoothing.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::FontStyleData()
+std::string Typography::fontStyleData()
 {
-    std::string data = "Font Style ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : font_style.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::FontWeightData()
+std::string Typography::fontWeightData()
 {
-    std::string data = "Font Weight ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : font_weight.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::FontVariantNumericData()
+std::string Typography::fontVariantNumericData()
 {
-    std::string data = "Font Variant Numeric ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : font_variant_numeric.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::LetterSpacingData()
+std::string Typography::letterSpacingData()
 {
-    std::string data = "Letter Spacing ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : letter_spacing.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
 
     return data;
 }
 
-std::string Typography::LineClampData()
+std::string Typography::lineClampData()
 {
-    std::string data = "Line Clamp ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : line_clamp.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::LineHeightData()
+std::string Typography::lineHeightData()
 {
-    std::string data = "Line Height ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : line_height.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::ListStyleImageData()
+std::string Typography::listStyleImageData()
 {
-    std::string data =  "List Style Image ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : list_style_image.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::ListStylePositionData()
+std::string Typography::listStylePositionData()
 {
-    std::string data = "List Style Position ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : list_style_position.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::ListStyleTypeData()
+std::string Typography::listStyleTypeData()
 {
-    std::string data = "List Style Type ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : list_style_type.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::TextAlignData()
+std::string Typography::textAlignData()
 {
-    std::string data = "Text Align ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_align.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::TextDecorationData()
+std::string Typography::textDecorationData()
 {
-    std::string data = "Text Decoration ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_decoration.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::TextDecorationStyleData()
+std::string Typography::textDecorationStyleData()
 {
-    std::string data = "Text Decoration Style ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_decoration_style.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::TextDecorationThiknessData()
+std::string Typography::textDecorationThiknessData()
 {
-    std::string data = "Text Decoration Thikness ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_decoration_thikness.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
 
     return data;
 }
 
-std::string Typography::TextUnderlineOffsetData()
+std::string Typography::textUnderlineOffsetData()
 {
-    std::string data = "Text Underline Offset ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_underline_offset.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::TextTransformData()
+std::string Typography::textTransformData()
 {
-    std::string data = "Text Transform ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_transform.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::TextOverflowData()
+std::string Typography::textOverflowData()
 {
-    std::string data = "Text Overflow ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_overflow.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::TextIndentData()
+std::string Typography::textIndentData()
 {
-    std::string data = "Text Indent ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : text_indent.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::VerticalAlignData()
+std::string Typography::verticalAlignData()
 {
-    std::string data = "Vertical Align ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : vertical_align.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::WhitespaceData()
+std::string Typography::whitespaceData()
 {
-    std::string data = "Whitespace ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : whitespace.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
     return data;
 }
 
-std::string Typography::WordBreakData()
+std::string Typography::wordBreakData()
 {
-    std::string data = "Word Break ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : word_break.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
 
     return data;
 }
 
-std::string Typography::HyphensData()
+std::string Typography::hyphensData()
 {
-    std::string data = "Hyphens ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : hyphens.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
 
     return data;
 }
 
-std::string Typography::ContentData()
+std::string Typography::contentData()
 {
-    std::string data = "Content ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : content.styleClasses_)
     {
         data += styleClass.className_ + " ";
-
     }
+    data += "\n";
 
     return data;
 }

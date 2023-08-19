@@ -2,26 +2,7 @@
 
 using namespace Tailwind;
 
-Interactivity::Interactivity(
- std::vector<StyleClass> margin,
- std::vector<StyleClass> margin_x,
- std::vector<StyleClass> margin_y,
- std::vector<StyleClass> margin_top,
- std::vector<StyleClass> margin_right,
- std::vector<StyleClass> margin_bottom,
- std::vector<StyleClass> margin_left,
- std::vector<StyleClass> margin_start,
- std::vector<StyleClass> margin_end,
- std::vector<StyleClass> padding,
- std::vector<StyleClass> padding_x,
- std::vector<StyleClass> padding_y,
- std::vector<StyleClass> padding_top,
- std::vector<StyleClass> padding_right,
- std::vector<StyleClass> padding_botto,
- std::vector<StyleClass> padding_left ,
- std::vector<StyleClass> padding_start,
- std::vector<StyleClass> padding_end
-)
+Interactivity::Interactivity(std::vector<std::string> sizing_variants)
 {
     // Appearance
     appearance = Propriety({
@@ -29,7 +10,9 @@ Interactivity::Interactivity(
     }, "https://tailwindcss.com/docs/appearance");
 
     // Cursor
+    // auto|default|pointer|wait|text|move|help|not-allowed|none|progress|cell|crosshair|vertical-text|alias|copy|no-drop|all-scroll|col-resize|row-resize|n-resize|e-resize|s-resize|w-resize|ne-resize|nw-resize|se-resize|sw-resize|ew-resize|ns-resize|nesw-resize|nwse-resize|zoom-in|zoom-out
     cursor = Propriety({
+        StyleClass("none", ""),
         StyleClass("cursor-auto", "cursor: auto;"),
         StyleClass("cursor-default", "cursor: default;"),
         StyleClass("cursor-pointer", "cursor: pointer;"),
@@ -62,16 +45,19 @@ Interactivity::Interactivity(
         StyleClass("cursor-nesw-resize", "cursor: nesw-resize;"),
         StyleClass("cursor-nwse-resize", "cursor: nwse-resize;"),
         StyleClass("cursor-zoom-in", "cursor: zoom-in;"),
+        StyleClass("cursor-zoom-out", "cursor: zoom-out;"),
     }, "https://tailwindcss.com/docs/cursor");
 
     // Pointer Events
     pointer_events = Propriety({
+        StyleClass("none", ""),
         StyleClass("pointer-events-none", "pointer-events: none;"),
         StyleClass("pointer-events-auto", "pointer-events: auto;"),
     }, "https://tailwindcss.com/docs/pointer-events");
 
     // Resize 
     resize = Propriety({
+        StyleClass("none", ""),
         StyleClass("resize-none", "resize: none;"),
         StyleClass("resize-y", "resize: vertical;"),
         StyleClass("resize-x", "resize: horizontal;"),
@@ -80,55 +66,59 @@ Interactivity::Interactivity(
 
     // Scroll Behavior
     scroll_behavior = Propriety({
+        StyleClass("none", ""),
         StyleClass("scroll-auto", "scroll-behavior: auto;"),
         StyleClass("scroll-smooth", "scroll-behavior: smooth;"),
     }, "https://tailwindcss.com/docs/scroll-behavior");
 
     // Scroll Margin
-    scroll_margin = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin) scroll_margin.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_x = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_x) scroll_margin_x.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_y = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_y) scroll_margin_y.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_top = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_top) scroll_margin_top.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_right = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_right) scroll_margin_right.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_bottom = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_bottom) scroll_margin_bottom.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_left = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_left) scroll_margin_left.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_start = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_start) scroll_margin_start.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_margin_end = Propriety({}, "https://tailwindcss.com/docs/scroll-margin");
-    for(auto variant : margin_end) scroll_margin_end.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
+    scroll_margin = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_x = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_y = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_top = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_right = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_bottom = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_left = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_start = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
+    scroll_margin_end = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-margin");
 
     // Scroll Padding
-    scroll_padding = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding) scroll_padding.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_x = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_x) scroll_padding_x.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_y = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_y) scroll_padding_y.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_top = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_top) scroll_padding_top.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_right = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_right) scroll_padding_right.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_bottom = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_botto) scroll_padding_bottom.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_left = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_left) scroll_padding_left.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_start = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_start) scroll_padding_start.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
-    scroll_padding_end = Propriety({}, "https://tailwindcss.com/docs/scroll-padding");
-    for(auto variant : padding_end) scroll_padding_end.styleClasses_.push_back(StyleClass("scroll-" + variant.className_, "scroll-" + variant.propriety_));
+    scroll_padding = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_x = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_y = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_top = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_right = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_bottom = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_left = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_start = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
+    scroll_padding_end = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/scroll-padding");
 
+    for(auto sizing : sizing_variants) {
+        scroll_margin.styleClasses_.push_back(StyleClass("scroll-m-" + sizing, "" ));
+        scroll_margin_x.styleClasses_.push_back(StyleClass("scroll-mx-" + sizing, "" ));
+        scroll_margin_y.styleClasses_.push_back(StyleClass("scroll-my-" + sizing, "" ));
+        scroll_margin_top.styleClasses_.push_back(StyleClass("scroll-mt-" + sizing, "" ));
+        scroll_margin_right.styleClasses_.push_back(StyleClass("scroll-mr-" + sizing, "" ));
+        scroll_margin_bottom.styleClasses_.push_back(StyleClass("scroll-mb-" + sizing, "" ));
+        scroll_margin_left.styleClasses_.push_back(StyleClass("scroll-ml-" + sizing, "" ));
+        scroll_margin_start.styleClasses_.push_back(StyleClass("scroll-ms-" + sizing, "" ));
+        scroll_margin_end.styleClasses_.push_back(StyleClass("scroll-me-" + sizing, "" ));
 
+        scroll_padding.styleClasses_.push_back(StyleClass("scroll-p-" + sizing, "" ));
+        scroll_padding_x.styleClasses_.push_back(StyleClass("scroll-px-" + sizing, "" ));
+        scroll_padding_y.styleClasses_.push_back(StyleClass("scroll-py-" + sizing, "" ));
+        scroll_padding_top.styleClasses_.push_back(StyleClass("scroll-pt-" + sizing, "" ));
+        scroll_padding_right.styleClasses_.push_back(StyleClass("scroll-pr-" + sizing, "" ));
+        scroll_padding_bottom.styleClasses_.push_back(StyleClass("scroll-pb-" + sizing, "" ));
+        scroll_padding_left.styleClasses_.push_back(StyleClass("scroll-pl-" + sizing, "" ));
+        scroll_padding_start.styleClasses_.push_back(StyleClass("scroll-ps-" + sizing, "" ));
+        scroll_padding_end.styleClasses_.push_back(StyleClass("scroll-pe-" + sizing, "" ));
+    }
 
 
     // Scroll Snap Align
     scroll_snap_align = Propriety({
+        StyleClass("none", ""),
         StyleClass("snap-start", "scroll-snap-align: start;"),
         StyleClass("snap-end", "scroll-snap-align: end;"),
         StyleClass("snap-center", "scroll-snap-align: center;"),
@@ -137,12 +127,14 @@ Interactivity::Interactivity(
 
     // Scroll Snap Stop
     scroll_snap_stop = Propriety({
+        StyleClass("none", ""),
         StyleClass("snap-normal", "scroll-snap-stop: normal;"),
         StyleClass("snap-always", "scroll-snap-stop: always;"),
     }, "https://tailwindcss.com/docs/scroll-snap-stop");
 
     // Scroll Snap Type
     scroll_snap_type = Propriety({
+        StyleClass("none", ""),
         StyleClass("snap-none", "scroll-snap-type: none;"),
         StyleClass("snap-y", "scroll-snap-type: y;"),
         StyleClass("snap-x", "scroll-snap-type: x;"),
@@ -151,16 +143,20 @@ Interactivity::Interactivity(
 
     // Scroll Snap Mandatory
     scroll_snap_manadatory = Propriety({
+        StyleClass("none", ""),
         StyleClass("snap-mandatory", "scroll-snap-type: mandatory;"),
     }, "https://tailwindcss.com/docs/scroll-snap-type");
 
     // Scroll Snap Proximity
     scroll_snap_proximity = Propriety({
+        StyleClass("none", ""),
         StyleClass("snap-proximity", "scroll-snap-type: proximity;"),
     }, "https://tailwindcss.com/docs/scroll-snap-type");
 
     // Touch Action
+    // manipulation|pinch-zoom|pan-down|pan-up|pan-y|pan-right|pan-left|pan-x|pan-none|auto
     touch_action = Propriety({
+        StyleClass("none", ""),
         StyleClass("touch-auto", "touch-action: auto;"),
         StyleClass("touch-none", "touch-action: none;"),
         StyleClass("touch-pan-x", "touch-action: pan-x;"),
@@ -175,6 +171,7 @@ Interactivity::Interactivity(
 
     // User Select
     user_select = Propriety({
+        StyleClass("none", ""),
         StyleClass("select-none", "user-select: none;"),
         StyleClass("select-text", "user-select: text;"),
         StyleClass("select-all", "user-select: all;"),
@@ -183,230 +180,245 @@ Interactivity::Interactivity(
 
     // Will Change
     will_change = Propriety({
-        StyleClass("will-auto", "will-change: auto;"),
+        StyleClass("none", ""),
+        StyleClass("will-change-auto", "will-change: auto;"),
+        StyleClass("will-change-scroll", "will-change: scroll-position;"),
+        StyleClass("will-change-contents", "will-change: contents;"),
+        StyleClass("will-change-transform", "will-change: transform;")
     }, "https://tailwindcss.com/docs/will-change");
 
 }
 
 std::string Interactivity::appearanceData()
 {
-    std::string data = "Appearance ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : appearance.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::cursorData()
 {
-    std::string data = "Cursor ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : cursor.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::pointerEventsData()
 {
-    std::string data = "Pointer Events ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : pointer_events.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::resizeData()
 {
-    std::string data = "Resize ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : resize.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::scrollBehaviorData()
 {
-    std::string data = "Scroll Behavior ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : scroll_behavior.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::scrollMarginData()
 {
-    std::string data = "Scroll Margin ------------------------------------\n";
-    data += "Scroll Margin ---------\n";
+    std::string data = "";
     for(auto styleClass : scroll_margin.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin X ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin Y ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin Top ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin Right ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin Bottom ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin Left ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin Start ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Margin End ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_margin_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::scrollPaddingData()
 {
-    std::string data = "Scroll Padding ------------------------------------\n";
-    data += "Scroll Padding ---------\n";
+    std::string data = "";
     for(auto styleClass : scroll_padding.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding X ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding Y ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding Top ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding Right ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding Bottom ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding Left ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding Start ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Padding End ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_padding_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::scrollSnapAlignData()
 {
-    std::string data = "Scroll Snap Align ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : scroll_snap_align.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::scrollSnapStopData()
 {
-    std::string data = "Scroll Snap Stop ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : scroll_snap_stop.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::scrollSnapTypeData()
 {
-    std::string data = "Scroll Snap Type ---------\n";
+    std::string data = "";
     for(auto styleClass : scroll_snap_type.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Snap Mandatory ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_snap_manadatory.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nScroll Snap Proximity ---------\n";
+    data += "\n";
     for(auto styleClass : scroll_snap_proximity.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::touchActionData()
 {
-    std::string data = "Touch Action ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : touch_action.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::userSelectData()
 {
-    std::string data = "User Select ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : user_select.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Interactivity::willChangeData()
 {
-    std::string data = "Will Change ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : will_change.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 

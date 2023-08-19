@@ -5,8 +5,10 @@ using namespace Tailwind;
 Filters::Filters()
 {
     // blur
+    //-none|-sm|-md|-lg|-xl|-2xl|-3xl
     blur = Propriety(
         {
+        StyleClass("none", ""),
         StyleClass("blur-none", "filter: blur(0);"),
         StyleClass("blur-sm", "filter: blur(4px);"),
         StyleClass("blur-md", "filter: blur(12px);"),
@@ -20,6 +22,7 @@ Filters::Filters()
     // brightness
     brightness = Propriety(
         {
+        StyleClass("none", ""),
         StyleClass("brightness-0", "filter: brightness(0);"),
         StyleClass("brightness-50", "filter: brightness(0.5);"),
         StyleClass("brightness-75", "filter: brightness(0.75);"),
@@ -35,6 +38,7 @@ Filters::Filters()
 
     // contrast
     contrast = Propriety({
+        StyleClass("none", ""),
         StyleClass("contrast-0", "filter: contrast(0);"),
         StyleClass("contrast-50", "filter: contrast(0.5);"),
         StyleClass("contrast-75", "filter: contrast(0.75);"),
@@ -47,6 +51,7 @@ Filters::Filters()
 
     // droop shadow
     drop_shadow = Propriety({
+        StyleClass("none", ""),
         StyleClass("drop-shadow-sm", "filter: drop-shadow(0 1px 1px rgba(0,0,0,0.05));"),
         StyleClass("drop-shadow-md", "filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));"),
         StyleClass("drop-shadow-lg", "filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));"),
@@ -59,12 +64,14 @@ Filters::Filters()
 
     // grayscale
     grayscale = Propriety({
+        StyleClass("none", ""),
         StyleClass("grayscale-0", "filter: grayscale(0);"),
         StyleClass("grayscale", "filter: grayscale(100%);")
         }, "https://tailwindcss.com/docs/grayscale");
 
     //hue rotate
     hue_rotate = Propriety({
+        StyleClass("none", ""),
         StyleClass("hue-rotate-0", "filter: hue-rotate(0deg);"),
         StyleClass("hue-rotate-15", "filter: hue-rotate(15deg);"),
         StyleClass("hue-rotate-30", "filter: hue-rotate(30deg);"),
@@ -75,12 +82,14 @@ Filters::Filters()
 
     // invert
     invert = Propriety({
+        StyleClass("none", ""),
         StyleClass("invert-0", "filter: invert(0);"),
         StyleClass("invert", "filter: invert(100%);")
         }, "https://tailwindcss.com/docs/invert");
 
     // saturate
     saturate = Propriety({
+        StyleClass("none", ""),
         StyleClass("saturate-0", "filter: saturate(0);"),
         StyleClass("saturate-50", "filter: saturate(0.5);"),
         StyleClass("saturate-100", "filter: saturate(1);"),
@@ -90,12 +99,14 @@ Filters::Filters()
 
     // sepia
     sepia = Propriety({
+        StyleClass("none", ""),
         StyleClass("sepia-0", "filter: sepia(0);"),
         StyleClass("sepia", "filter: sepia(100%);")
         }, "https://tailwindcss.com/docs/sepia");
 
     // backdrop blur
     backdrop_blur = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-blur-none", "backdrop-filter: blur(0);"),
         StyleClass("backdrop-blur-sm", "backdrop-filter: blur(4px);"),
         StyleClass("backdrop-blur-md", "backdrop-filter: blur(12px);"),
@@ -108,6 +119,7 @@ Filters::Filters()
 
     // backdrop brightness
     backdrop_brightness = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-brightness-0", "backdrop-filter: brightness(0);"),
         StyleClass("backdrop-brightness-50", "backdrop-filter: brightness(0.5);"),
         StyleClass("backdrop-brightness-75", "backdrop-filter: brightness(0.75);"),
@@ -124,6 +136,7 @@ Filters::Filters()
 
     // backdrop contrast
     backdrop_contrast = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-contrast-0", "backdrop-filter: contrast(0);"),
         StyleClass("backdrop-contrast-50", "backdrop-filter: contrast(0.5);"),
         StyleClass("backdrop-contrast-75", "backdrop-filter: contrast(0.75);"),
@@ -135,12 +148,14 @@ Filters::Filters()
    
    // backdrop contrast
     backdrop_grayscale = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-grayscale-0", "backdrop-filter: grayscale(0);"),
         StyleClass("backdrop-grayscale", "backdrop-filter: grayscale(100%);")
         }, "https://tailwindcss.com/docs/backdrop-grayscale");
 
     // backdrop grayscale
     backdrop_hue_rotate = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-hue-rotate-0", "backdrop-filter: hue-rotate(0deg);"),
         StyleClass("backdrop-hue-rotate-15", "backdrop-filter: hue-rotate(15deg);"),
         StyleClass("backdrop-hue-rotate-30", "backdrop-filter: hue-rotate(30deg);"),
@@ -151,12 +166,14 @@ Filters::Filters()
 
     // backdrop invert
     backdrop_invert = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-invert-0", "backdrop-filter: invert(0);"),
         StyleClass("backdrop-invert", "backdrop-filter: invert(100%);")
         }, "https://tailwindcss.com/docs/backdrop-invert");
 
     // backdrop opacity
     backdrop_opacity = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-opacity-0", "backdrop-filter: opacity(0);"),
         StyleClass("backdrop-opacity-5", "backdrop-filter: opacity(0.05);"),
         StyleClass("backdrop-opacity-10", "backdrop-filter: opacity(0.1);"),
@@ -176,6 +193,7 @@ Filters::Filters()
     
     // backdrop saturate
     backdrop_saturate = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-saturate-0", "backdrop-filter: saturate(0);"),
         StyleClass("backdrop-saturate-50", "backdrop-filter: saturate(0.5);"),
         StyleClass("backdrop-saturate-100", "backdrop-filter: saturate(1);"),
@@ -185,188 +203,207 @@ Filters::Filters()
     
     // backdrop sepia
     backdrop_sepia = Propriety({
+        StyleClass("none", ""),
         StyleClass("backdrop-sepia-0", "backdrop-filter: sepia(0);"),
         StyleClass("backdrop-sepia", "backdrop-filter: sepia(100%);")
         }, "https://tailwindcss.com/docs/backdrop-sepia");
 }
 
-std::string Filters::BlurData()
+std::string Filters::blurData()
 {
-    std::string data = "Blur ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : blur.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BrightnessData()
+std::string Filters::brightnessData()
 {
-    std::string data = "Brightness ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : brightness.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::ContrastData()
+std::string Filters::contrastData()
 {
-    std::string data = "Cntrast ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : contrast.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::DropShadowData()
+std::string Filters::dropShadowData()
 {
-    std::string data = "Dop Shadow ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : drop_shadow.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::GrayscaleData()
+std::string Filters::grayscaleData()
 {
-    std::string data = "Grayscale ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : grayscale.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::HueRotateData()
+std::string Filters::hueRotateData()
 {
-    std::string data = "Hue Rotate ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : hue_rotate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::InvertData()
+std::string Filters::invertData()
 {
-    std::string data = "invert ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : invert.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::SaturateData()
+std::string Filters::saturateData()
 {
-    std::string data = "Saturate ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : saturate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::SepiaData()
+std::string Filters::sepiaData()
 {
-    std::string data = "Sepia ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : sepia.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropBlurData()
+std::string Filters::backdropBlurData()
 {
-    std::string data = "Backdrop Blur ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_blur.styleClasses_)
     {
         data += styleClass.className_ + "\n";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropBrightnessData()
+std::string Filters::backdropBrightnessData()
 {
-    std::string data = "Backdrop Brightness ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_brightness.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropContrastData()
+std::string Filters::backdropContrastData()
 {
-    std::string data = "Backdrop Contrast ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_contrast.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropGrayscaleData()
+std::string Filters::backdropGrayscaleData()
 {
-    std::string data = "Backdrop Grayscale ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_grayscale.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropHueRotateData()
+std::string Filters::backdropHueRotateData()
 {
-    std::string data = "Backdrop Hue Rotate ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_hue_rotate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropInvertData()
+std::string Filters::backdropInvertData()
 {
-    std::string data = "Backdrop Invert ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_invert.styleClasses_)
     {
         data += styleClass.className_ + "\n";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropOpacityData()
+std::string Filters::backdropOpacityData()
 {
-    std::string data = "Backdrop Opacity ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_opacity.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropSaturateData()
+std::string Filters::backdropSaturateData()
 {
-    std::string data = "Backdrop Saturate ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_saturate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Filters::BackdropSepiaData()
+std::string Filters::backdropSepiaData()
 {
-    std::string data = "Backdrop Sepia ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : backdrop_sepia.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 

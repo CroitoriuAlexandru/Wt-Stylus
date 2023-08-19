@@ -101,63 +101,69 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
     }, "https://tailwindcss.com/docs/max-width");
 }
 
-std::string Sizing::WidthData()
+std::string Sizing::widthData()
 {
-    std::string data = "Width ------------------------------------\n";
+    std::string data = " ";
     for(auto styleClass : width.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Sizing::HeightData()
+std::string Sizing::heightData()
 {
-    std::string data = "Height ------------------------------------\n";
+    std::string data = " ";
     for(auto styleClass : height.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Sizing::MaxHeightData()
+std::string Sizing::maxHeightData()
 {
-    std::string data = "Max Height ------------------------------------\n";
+    std::string data = " ";
     for(auto styleClass : max_height.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Sizing::MinWidthData()
+std::string Sizing::minWidthData()
 {
-    std::string data = "Min Width ------------------------------------\n";
+    std::string data = " ";
     for(auto styleClass : min_width.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Sizing::MinHeightData()
+std::string Sizing::minHeightData()
 {
-    std::string data = "Min Height ------------------------------------\n";
+    std::string data = " ";
     for(auto styleClass : min_height.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Sizing::MaxWidthData()
+std::string Sizing::maxWidthData()
 {
-    std::string data = "Max Width ------------------------------------\n";
+    std::string data = " ";
     for(auto styleClass : max_width.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 

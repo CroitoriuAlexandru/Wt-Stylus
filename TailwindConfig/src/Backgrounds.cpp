@@ -123,116 +123,124 @@ Backgrounds::Backgrounds(   std::vector<std::string> colors_default_variants,
 
 std::string Backgrounds::backgroundAttachmentData()
 {
-    std::string data = "Background Attachment ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_attachment.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::backgroundClipData()
 {
-    std::string data = "Background Clip ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_clip.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::backgroundColorData()
 {
-    std::string data = "Background Color ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_color.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n Color From ------------------------------------\n";
+    data += "\n";
     for(auto styleClass : background_color_from.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n Color Via ------------------------------------\n";
+    data += "\n";
     for(auto styleClass : background_color_from.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n Color To ------------------------------------\n";
+    data += "\n";
     for(auto styleClass : background_color_via.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::backgroundOriginData()
 {
-    std::string data = "Background Origin ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_origin.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::backgroundPositionData()
 {
-    std::string data = "Background Position ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_position.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::backgroundRepeatData()
 {
-    std::string data = "Background Repeat ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_repeat.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::backgroundSizeData()
 {
-    std::string data = "Background Size ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_size.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::backgroundImageData()
 {
-    std::string data = "Background Image ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : background_image.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
 std::string Backgrounds::gradientStopsData()
 {
-    std::string data = "Gradient Stops ------------------------------------\n";
-    data += "from ----\n";
+    std::string data = "";
     for(auto styleClass : gradient_stops_from.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nvia ----\n";
+    data += "\n";
     for(auto styleClass : gradient_stops_via.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\nto ----\n";
+    data += "\n";
     for(auto styleClass : gradient_stops_to.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }

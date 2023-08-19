@@ -140,7 +140,7 @@ Transforms::Transforms(std::vector<std::string> sizing_variants)
 
 std::string Transforms::scaleData()
 {
-    std::string data = " Scale ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : scale.styleClasses_)
     {
         data += styleClass.className_ + " ";

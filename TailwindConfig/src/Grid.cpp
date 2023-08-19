@@ -105,95 +105,98 @@ Grid::Grid(std::vector<std::string> spacing_variants)
 
 }
 
-std::string Grid::OrderData()
+std::string Grid::orderData()
 {
-    std::string data = "Order data\n";
+    std::string data = "";
     for(auto styleClass : order.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Grid::GridTemplateData()
+std::string Grid::gridTemplateData()
 {
-    std::string data = "Grid Template Columns data\n";
+    std::string data = "";
     for(auto styleClass : grid_template_columns.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGrid Template Rows data\n";
+    data += "\n";
     for(auto styleClass : grid_template_rows.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Grid::GridColsData()
+std::string Grid::gridColsData()
 {
-    std::string data = "Grid Cols Start data\n";
+    std::string data = "1";
     for(auto styleClass : grid_cols_start.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGrid Cols Span data\n";
+    data += "\n";
     for(auto styleClass : grid_cols_span.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGrid Cols End data\n";
+    data += "\n";
     for(auto styleClass : grid_cols_end.styleClasses_) {
-        data += styleClass.className_ + "  -----  propriety <" + styleClass.propriety_ + ">\n";
+        data += styleClass.className_ + " ";
     }
-
+    data += "\n";
     return data;
 }
 
-std::string Grid::GridRowsData()
+std::string Grid::gridRowsData()
 {
-    std::string data = "Grid Rows Start ------------------------------------\n";
+    std::string data = "";
     for(auto styleClass : grid_rows_start.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGrid Rows Span data\n";
+    data += "\n";
     for(auto styleClass : grid_rows_span.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGrid Rows End data\n";
+    data += "\n";
     for(auto styleClass : grid_rows_end.styleClasses_) {
         data += styleClass.className_ + " ";
     }
+    data += "\n";
     return data;
 }
 
-std::string Grid::GapData()
+std::string Grid::gapData()
 {
-    std::string data = "Gap data\n";
+    std::string data = "";
     for(auto styleClass : gap.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGap X data\n";
+    data += "\n";
     for(auto styleClass : gap_x.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGap Y data\n";
+    data += "\n";
     for(auto styleClass : gap_y.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-
+    data += "\n";
     return data;
 }
 
-std::string Grid::GridAutoData()
+std::string Grid::gridAutoData()
 {
-    std::string data = "Grid Auto Flow data\n";
+    std::string data = "";
     for(auto styleClass : grid_auto_flow.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGrid Auto Columns data\n";
+    data += "\n";
     for(auto styleClass : grid_auto_columns.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\nGrid Auto Rows data\n";
+    data += "\n";
     for(auto styleClass : grid_auto_rows.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-
+    data += "\n";
     return data;
 }
