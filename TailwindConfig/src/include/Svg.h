@@ -12,7 +12,7 @@ namespace Tailwind {
 
         std::string strokeWidthData();
 
-        boost::regex stroke_width_regex = boost::regex("(?<=\n| )(!)?stroke-(0|1|2)");
+        boost::regex stroke_width_regex = boost::regex("(?<=\n| )(!)?stroke-(0|1|2)(?!\\w|-)");
     };
 
 };

@@ -110,47 +110,47 @@ std::string Spacing::marginData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : margin_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
@@ -161,46 +161,72 @@ std::string Spacing::paddingData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : padding_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
+    return data;
+}
+
+std::string Spacing::spaceData()
+{
+    std::string data = " ";
+    for(auto styleClass : space_x.styleClasses_)
+    {
+        data += styleClass.className_ + " ";
+    }
+    data += "\n ";
+    for(auto styleClass : space_y.styleClasses_)
+    {
+        data += styleClass.className_ + " ";
+    }
+    data += "\n ";
+    for(auto styleClass : space_x_reverse.styleClasses_)
+    {
+        data += styleClass.className_ + " ";
+    }
+    data += "\n ";
+    for(auto styleClass : space_y_reverse.styleClasses_)
+    {
+        data += styleClass.className_ + " ";
+    }
+    data += "\n ";
     return data;
 }

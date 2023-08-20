@@ -19,11 +19,11 @@ namespace Tailwind {
         std::string transitionDelayData();
         std::string animationData();
 
-        boost::regex transition_property_regex = boost::regex("(?<=\n| )(!)?transition(-none|-all|-colors|-opacity|-shadow|-transform)?");
-        boost::regex transition_duration_regex = boost::regex("(?<=\n| )(!)?duration-(1000|700|500|300|200|150|100|75|0)");
-        boost::regex transition_timing_function_regex = boost::regex("(?<=\n| )(!)?ease-(linear|in-out|in|out)");
-        boost::regex transition_delay_regex = boost::regex("(?<=\n| )(!)?delay-(1000|700|500|300|200|150|100|75|0)");
-        boost::regex animation_regex = boost::regex("(?<=\n| )(!)?animate-(none|spin|ping|pulse|bounce)");
+        boost::regex transition_property_regex = boost::regex("(?<=\n| )(!)?transition(-none|-all|-colors|-opacity|-shadow|-transform)?(?!\\w|-)");
+        boost::regex transition_duration_regex = boost::regex("(?<=\n| )(!)?duration-(1000|700|500|300|200|150|100|75|0)(?!\\w|-)");
+        boost::regex transition_timing_function_regex = boost::regex("(?<=\n| )(!)?ease-(linear|in-out|in|out)(?!\\w|-)");
+        boost::regex transition_delay_regex = boost::regex("(?<=\n| )(!)?delay-(1000|700|500|300|200|150|100|75|0)(?!\\w|-)");
+        boost::regex animation_regex = boost::regex("(?<=\n| )(!)?animate-(none|spin|ping|pulse|bounce)(?!\\w|-)");
     };
 
 };

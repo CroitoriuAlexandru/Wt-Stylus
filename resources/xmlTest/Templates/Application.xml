@@ -2,7 +2,5 @@
 <messages>
     <message id="app-root">
         <div class="">sjhfkjsdlkfjhsldjfr</div>
-        <div class="bg-red-500/100 bg-fixed bg-clip-border bg-origin-border bg-center bg-repeat bg-auto">child after</div>
-        <div class="">child after</div>
     </message>
 </messages>

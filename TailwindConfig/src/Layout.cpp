@@ -208,230 +208,230 @@ Layout::Layout(std::vector<std::string> spacingScale)
 
 
 std::string Layout::aspectRatioData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : aspect_ratio.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::containerData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : container.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::columnsData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : columns.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::breakAfterData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : break_after.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::breakBeforeData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : break_before.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::breakInsideData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : break_inside.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::boxDecorationBreakData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : box_decoration_break.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::boxSizingData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : box_sizing.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::displayData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : display.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::floatsData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : floats.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::clearData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : clear.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::isolationData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : isolation.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::objectFitData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : object_fit.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::objectPositionData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : object_position.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::overflowData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : overflow.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : overflow_x.styleClasses_){
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : overflow_y.styleClasses_){
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::overscrollBehaviorData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : overscroll_behavior.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : overscroll_behavior_x.styleClasses_){
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : overscroll_behavior_y.styleClasses_){
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::positionData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : position.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::positionSidesData(){
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : position_inset.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_inset_x.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_inset_y.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_start.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_end.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_top.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_right.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_bottom.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : position_left.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::visibilityData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : visibility.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Layout::zIndexData() {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : z_index.styleClasses_) {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 

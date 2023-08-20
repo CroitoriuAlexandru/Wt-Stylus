@@ -275,280 +275,280 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
 std::string Typography::fontFamilyData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : font_family.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::fontSizeData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : font_size.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::fontSmoothingData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : font_smoothing.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::fontStyleData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : font_style.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::fontWeightData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : font_weight.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::fontVariantNumericData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : font_variant_numeric.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::letterSpacingData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : letter_spacing.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
 
     return data;
 }
 
 std::string Typography::lineClampData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : line_clamp.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::lineHeightData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : line_height.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::listStyleImageData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : list_style_image.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::listStylePositionData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : list_style_position.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::listStyleTypeData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : list_style_type.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::textAlignData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_align.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::textDecorationData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_decoration.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::textDecorationStyleData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_decoration_style.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::textDecorationThiknessData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_decoration_thikness.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
 
     return data;
 }
 
 std::string Typography::textUnderlineOffsetData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_underline_offset.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::textTransformData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_transform.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::textOverflowData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_overflow.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::textIndentData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : text_indent.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::verticalAlignData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : vertical_align.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::whitespaceData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : whitespace.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Typography::wordBreakData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : word_break.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
 
     return data;
 }
 
 std::string Typography::hyphensData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : hyphens.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
 
     return data;
 }
 
 std::string Typography::contentData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : content.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
 
     return data;
 }

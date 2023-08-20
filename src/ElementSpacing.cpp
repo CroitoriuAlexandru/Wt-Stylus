@@ -127,8 +127,6 @@ void ElementSpacingWidget::setClasses(SpacingData spacing)
 	// std::cout << "\nElementSpacingWidget::setStyleClasses \n";
 	for(auto& padding_class : spacing.padding){
 		if(padding_class.find("p-") != std::string::npos){
-			std::cout << "\n\n padding_class : " << padding_class << "\n\n";
-			std::cout << "padding widget class 1 : " << padding_all_widget_->comboBox_class->itemText(1) << "\n";
 			padding_all_widget_->setValue(padding_class);
 		}else if(padding_class.find("py-") != std::string::npos){
 			padding_horizontal_widget_->setValue(padding_class);

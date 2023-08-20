@@ -99,8 +99,9 @@ ElementClassEdditor::ElementClassEdditor()
 void ElementClassEdditor::setStyleClasses(std::string classes)
 {
     resetStyles();
-    std::cout << "\n\n classes : " << classes << "\n\n";
-    
+    classes = " " + classes;
+    std::cout << "\n\n classes : <" << classes << ">\n\n";
+        
     LayoutData layout;
     layout.aspect_ratio = findAndRemoveMatche(tailwindConfig_->layout.aspect_ratio_regex, classes);
     if(findAndRemoveMatche(tailwindConfig_->layout.container_regex, classes) != ""){
@@ -120,6 +121,10 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     layout.object_position = findAndRemoveMatche(tailwindConfig_->layout.object_position_regex, classes);
     layout.overflow = findAndRemoveMatches(tailwindConfig_->layout.overflow_regex, classes);
     layout.overscroll_behavior = findAndRemoveMatches(tailwindConfig_->layout.overscroll_behavior_regex, classes);
+    // std::cout << "\n\n classes : <" << classes << ">" << "\n\n";
+    // for(auto overscroll : layout.overscroll_behavior){
+        // std::cout << "\n\n overscroll : <" << overscroll << ">" << "\n\n";
+    // }
     layout.position = findAndRemoveMatche(tailwindConfig_->layout.position_regex, classes);
     layout.inset = findAndRemoveMatches(tailwindConfig_->layout.position_inset_regex, classes);
     layout.top_left_bottom_right = findAndRemoveMatches(tailwindConfig_->layout.position_sides_regex, classes);
@@ -135,12 +140,16 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     transforms.transform_origin = findAndRemoveMatche(tailwindConfig_->transforms.origin_regex, classes);
 
     EffectsData effects;
-    effects.boxShadow = findAndRemoveMatche(tailwindConfig_->effects.box_shadow_regex, classes);
-    if(effects.boxShadow.find("shadow-inner") != std::string::npos){
-        effects.boxShadowInner = true;
-    }
+    auto boxShadowVec = findAndRemoveMatches(tailwindConfig_->effects.box_shadow_regex, classes);
+	for(auto& boxShadow : boxShadowVec)
+	{
+		if(boxShadow.find("inner") != std::string::npos)
+			effects.boxShadowInner = true;
+		else 
+            effects.boxShadow = boxShadow;
+	}
     effects.opacity = findAndRemoveMatche(tailwindConfig_->effects.opacity_regex, classes);
-    // effects.boxShadowColor = findAndRemoveMatche(tailwindConfig_->effects.box_shadow_color_regex, classes);
+    effects.boxShadowColor = findAndRemoveMatche(tailwindConfig_->effects.box_shadow_color_regex, classes);
     effects.mixBlendMode = findAndRemoveMatche(tailwindConfig_->effects.mix_blend_mode_regex, classes);
     effects.backgroundBlendMode = findAndRemoveMatche(tailwindConfig_->effects.bg_blend_mode_regex, classes);
 
@@ -193,6 +202,7 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     transformsClasses = transformsWidget_->getStyles();
 
     notFoundClasses = std::regex_replace(classes, std::regex("^\\s+"), "");
+    std::cout << "\n\n notFoundClasses : " << notFoundClasses << "\n\n";
 }
 
 std::string ElementClassEdditor::getStyles()

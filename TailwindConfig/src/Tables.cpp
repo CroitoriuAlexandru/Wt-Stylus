@@ -39,54 +39,54 @@ Tables::Tables(std::vector<std::string> spacing_variants)
 
 std::string Tables::borderCollapseData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : border_collapse.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data +="\n";
+    data +="\n ";
     return data;
 }
 
 std::string Tables::tableLayoutData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : table_layout.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data +="\n";
+    data +="\n ";
     return data;
 }
 
 std::string Tables::captionSideData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : caption_side.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data +="\n";
+    data +="\n ";
     return data;
 }
 
 std::string Tables::borderSpacingData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : border_spacing.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data +="\n";
+    data +="\n ";
     for(auto styleClass : border_spacing_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data +="\n";
+    data +="\n ";
     for(auto styleClass : border_spacing_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data +="\n";
+    data +="\n ";
     return data;
 }

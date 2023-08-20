@@ -191,234 +191,234 @@ Interactivity::Interactivity(std::vector<std::string> sizing_variants)
 
 std::string Interactivity::appearanceData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : appearance.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::cursorData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : cursor.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::pointerEventsData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : pointer_events.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::resizeData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : resize.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::scrollBehaviorData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : scroll_behavior.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::scrollMarginData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : scroll_margin.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_margin_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::scrollPaddingData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : scroll_padding.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_top.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_right.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_bottom.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_left.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_start.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_padding_end.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::scrollSnapAlignData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : scroll_snap_align.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::scrollSnapStopData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : scroll_snap_stop.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::scrollSnapTypeData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : scroll_snap_type.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_snap_manadatory.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scroll_snap_proximity.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::touchActionData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : touch_action.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::userSelectData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : user_select.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Interactivity::willChangeData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : will_change.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 

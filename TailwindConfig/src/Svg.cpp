@@ -15,11 +15,11 @@ Svg::Svg()
 
 std::string Svg::strokeWidthData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : stroke_width.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }

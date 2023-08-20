@@ -14,11 +14,11 @@ Accessibility::Accessibility()
 
 std::string Accessibility::screenReadersData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : screen_readers.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }

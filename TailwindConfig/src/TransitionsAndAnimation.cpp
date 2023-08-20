@@ -71,56 +71,56 @@ TransitionsAndAnimation::TransitionsAndAnimation()
 
 std::string TransitionsAndAnimation::transitionPropertyData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : transition_property.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string TransitionsAndAnimation::transitionDurationData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : transition_duration.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string TransitionsAndAnimation::transitionTimingFunctionData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : transition_timing_function.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string TransitionsAndAnimation::transitionDelayData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : transition_delay.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string TransitionsAndAnimation::animationData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : animation.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 

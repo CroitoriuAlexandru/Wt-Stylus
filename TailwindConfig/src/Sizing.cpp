@@ -108,7 +108,7 @@ std::string Sizing::widthData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
@@ -119,7 +119,7 @@ std::string Sizing::heightData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
@@ -130,7 +130,7 @@ std::string Sizing::maxHeightData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
@@ -141,7 +141,7 @@ std::string Sizing::minWidthData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
@@ -152,7 +152,7 @@ std::string Sizing::minHeightData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
@@ -163,7 +163,7 @@ std::string Sizing::maxWidthData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 

@@ -140,17 +140,17 @@ Transforms::Transforms(std::vector<std::string> sizing_variants)
 
 std::string Transforms::scaleData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : scale.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scale_x.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : scale_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
@@ -175,7 +175,7 @@ std::string Transforms::translateData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : translate_y.styleClasses_)
     {
         data += styleClass.className_ + " ";
@@ -190,7 +190,7 @@ std::string Transforms::skewData()
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : skew_y.styleClasses_)
     {
         data += styleClass.className_ + " ";

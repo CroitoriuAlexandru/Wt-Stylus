@@ -195,106 +195,106 @@ Borders::Borders()
 
 std::string Borders::borderRadiusData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto border_radius : border_radius.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_s.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_e.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_t.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_r.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_b.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_l.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_ss.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_se.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_ee.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_es.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_tl.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_tr.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_br.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_radius : border_radius_bl.styleClasses_) { data += border_radius.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Borders::borderWidthData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto border_width : border_width.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_x.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_y.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_t.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_r.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_b.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_l.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_s.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto border_width : border_width_e.styleClasses_) { data += border_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Borders::borderStyleData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto border_style : border_style.styleClasses_) { data += border_style.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Borders::divideData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto divide_x : divide_x.styleClasses_) { data += divide_x.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto divide_y : divide_y.styleClasses_) { data += divide_y.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto divide_x_reverse : divide_x_reverse.styleClasses_) { data += divide_x_reverse.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto divide_y_reverse : divide_y_reverse.styleClasses_) { data += divide_y_reverse.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto divide_style : divide_style.styleClasses_) { data += divide_style.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Borders::outlineData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto outline_style : outline_style.styleClasses_) { data += outline_style.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto outline_width : outline_width.styleClasses_) { data += outline_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto outline_offset : outline_offset.styleClasses_) { data += outline_offset.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Borders::ringData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto ring_width : ring_width.styleClasses_) { data += ring_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     for(auto ring_offset_width : ring_offset_width.styleClasses_) { data += ring_offset_width.className_ + " "; }
-    data += "\n";
+    data += "\n ";
     return data;
 }

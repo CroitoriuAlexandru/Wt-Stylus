@@ -63,56 +63,55 @@ Effects::Effects(
 
 std::string Effects::boxShadowData()
 {
-    std::string data = "";
-    data += "\n";
+    std::string data = " ";
     for(auto styleClass : box_shadow.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : box_shadow_inset.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Effects::boxShadowColorData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : box_shadow_color.styleClasses_)
     {
         data += styleClass.className_ + "-500/20 ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Effects::opacityData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : opacity.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Effects::mixBlendModeData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : mix_blend_mode.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     for(auto styleClass : background_blend_mode.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 

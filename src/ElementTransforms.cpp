@@ -92,12 +92,12 @@ void ElementTransformsWidget::setClasses(TransformsData transformsData)
 {
 	resetStyles();
 	for(auto& scale_class : transformsData.scale){
-		if(scale_class.find("scale-") != std::string::npos){
-			comboBox_scale_->setValue(scale_class);
-		}else if(scale_class.find("scale-x-") != std::string::npos){
+		if(scale_class.find("scale-x-") != std::string::npos){
 			comboBox_scale_x_->setValue(scale_class);
 		}else if(scale_class.find("scale-y-") != std::string::npos){
 			comboBox_scale_y_->setValue(scale_class);
+		}else if(scale_class.find("scale-") != std::string::npos){
+			comboBox_scale_->setValue(scale_class);
 		}
 	}
 	
@@ -139,8 +139,8 @@ void ElementTransformsWidget::setCustomTestValues()
 	comboBox_scale_x_->setValue("scale-x-50");
 	comboBox_scale_y_->setValue("scale-y-50");
 	comboBox_rotate_->setValue("rotate-45");
-	comboBox_translate_x_->setValue("translate-x-50");
-	comboBox_translate_y_->setValue("translate-y-50");
+	comboBox_translate_x_->setValue("translate-x-52");
+	comboBox_translate_y_->setValue("translate-y-52");
 	comboBox_skew_x_->setValue("skew-x-50");
 	comboBox_skew_y_->setValue("skew-y-50");
 	comboBox_transform_origin_->setValue("origin-center");

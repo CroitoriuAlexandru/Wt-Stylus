@@ -278,7 +278,7 @@
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-box-shadow-color}</div>
-                <div class="font-bold text-neutral-500">Box Shadow Color</div>
+                <div class="font-bold text-neutral-500">Shadow Color</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-opacity}</div>
@@ -290,7 +290,7 @@
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-bg-blend-mode}</div>
-                <div class="font-bold text-neutral-500">Background Blend Mode</div>
+                <div class="font-bold text-neutral-500">Bg Blend Mode</div>
             </div>
         </div>
     </message>

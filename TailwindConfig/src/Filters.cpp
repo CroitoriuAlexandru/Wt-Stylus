@@ -211,199 +211,199 @@ Filters::Filters()
 
 std::string Filters::blurData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : blur.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::brightnessData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : brightness.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::contrastData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : contrast.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::dropShadowData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : drop_shadow.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::grayscaleData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : grayscale.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::hueRotateData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : hue_rotate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::invertData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : invert.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::saturateData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : saturate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::sepiaData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : sepia.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropBlurData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_blur.styleClasses_)
     {
         data += styleClass.className_ + "\n";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropBrightnessData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_brightness.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropContrastData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_contrast.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropGrayscaleData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_grayscale.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropHueRotateData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_hue_rotate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropInvertData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_invert.styleClasses_)
     {
         data += styleClass.className_ + "\n";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropOpacityData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_opacity.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropSaturateData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_saturate.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 
 std::string Filters::backdropSepiaData()
 {
-    std::string data = "";
+    std::string data = " ";
     for(auto styleClass : backdrop_sepia.styleClasses_)
     {
         data += styleClass.className_ + " ";
     }
-    data += "\n";
+    data += "\n ";
     return data;
 }
 

@@ -7,7 +7,7 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 {
 
 	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200");
-	setTitle("Transforms");
+	setTitle("Layout");
 	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-500");
 	setCollapsible(true);
 	content_temp = setCentralWidget(std::make_unique<Wt::WTemplate>(tr("stylus-layout-template")));
@@ -120,7 +120,7 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 
 	// signals for default classes for tailwind
 	comboBox_aspect_ratio_->classChanged().connect([=](){ styleChanged_.emit(); });
-	checkBox_container_->checked().connect([=](){ styleChanged_.emit(); });
+	checkBox_container_->changed().connect([=](){ styleChanged_.emit(); });
 	comboBox_columns_->classChanged().connect([=](){ styleChanged_.emit(); });
 	comboBox_break_after_->classChanged().connect([=](){ styleChanged_.emit(); });
 	comboBox_break_before_->classChanged().connect([=](){ styleChanged_.emit(); });
@@ -193,6 +193,63 @@ void ElementLayoutWidget::setClasses(LayoutData layoutData)
 {
 	resetStyles();
 
+	// std::cout << "\n aspect_ratio <" << layoutData.aspect_ratio << ">";
+	// std::cout << "\n container <" << layoutData.container << ">";
+	// std::cout << "\n columns <" << layoutData.columns << ">";
+	// std::cout << "\n break_after <" << layoutData.break_after << ">";
+	// std::cout << "\n break_before <" << layoutData.break_before << ">";
+	// std::cout << "\n break_inside <" << layoutData.break_inside << ">";
+	// std::cout << "\n box_decoration_break <" << layoutData.box_decoration_break << ">";
+	// std::cout << "\n box_sizing <" << layoutData.box_sizing << ">";
+	// std::cout << "\n display <" << layoutData.display << ">";
+	// std::cout << "\n floats <" << layoutData.floats << ">";
+	// std::cout << "\n clear <" << layoutData.clear << ">";
+	// std::cout << "\n isolation <" << layoutData.isolation << ">";
+	// std::cout << "\n object_fit <" << layoutData.object_fit << ">";
+	// std::cout << "\n object_position <" << layoutData.object_position << ">";
+	// for(auto& overflow_class : layoutData.overflow){
+	// 	if(overflow_class.find("overflow-x") != std::string::npos)
+	// 		std::cout << "\n overflow <" << overflow_class << ">";
+	// 	else if(overflow_class.find("overflow-y") != std::string::npos)
+	// 		std::cout << "\n overflow_y <" << overflow_class << ">";
+	// 	else if(overflow_class.find("overflow") != std::string::npos)
+	// 		std::cout << "\n overflow_x <" << overflow_class << ">";
+	// }
+	for(auto& overscroll_behavior_class : layoutData.overscroll_behavior){
+		if(overscroll_behavior_class.find("overscroll-x") != std::string::npos)
+			std::cout << "\n overscroll_behavior_x <" << overscroll_behavior_class << ">";
+		else if(overscroll_behavior_class.find("overscroll-y") != std::string::npos)
+			std::cout << "\n overscroll_behavior_y <" << overscroll_behavior_class << ">";
+		else if(overscroll_behavior_class.find("overscroll") != std::string::npos)
+			std::cout << "\n overscroll_behavior <" << overscroll_behavior_class << ">";
+	}
+	// std::cout << "\n position <" << layoutData.position << ">";
+	// for(auto& inset : layoutData.inset){
+	// 	if(inset.find("inset")){
+	// 		std::cout << "\n position_inset <" << inset << ">";
+	// 	}else if (inset.find("inset-x") != std::string::npos){
+	// 		std::cout << "\n position_inset_x <" << inset << ">";
+	// 	}else if (inset.find("inset-y") != std::string::npos){
+	// 		std::cout << "\n position_inset_y <" << inset << ">";
+	// 	}
+	// }
+	// for(auto& side : layoutData.top_left_bottom_right){
+	// 	if(side.find("top")){
+	// 		std::cout << "\n position_top <" << side << ">";
+	// 	}else if (side.find("right") != std::string::npos){
+	// 		std::cout << "\n position_right <" << side << ">";
+	// 	}else if (side.find("bottom") != std::string::npos){
+	// 		std::cout << "\n position_bottom <" << side << ">";
+	// 	}else if (side.find("left") != std::string::npos){
+	// 		std::cout << "\n position_left <" << side << ">";
+	// 	}
+
+	// }
+
+	// std::cout << "\n visibility <" << layoutData.visibility << ">";
+	// std::cout << "\n z_index <" << layoutData.z_index << ">";
+	std::cout << "\n\n";
+
 	if(layoutData.aspect_ratio.compare("none") != 0){ comboBox_aspect_ratio_->setValue(layoutData.aspect_ratio); }
 	if(layoutData.container){ checkBox_container_->setChecked(true); }
 	if(layoutData.columns.compare("none") != 0){ comboBox_columns_->setValue(layoutData.columns); }
@@ -208,31 +265,34 @@ void ElementLayoutWidget::setClasses(LayoutData layoutData)
 	if(layoutData.object_fit.compare("none") != 0){ comboBox_object_fit_->setValue(layoutData.object_fit); }
 	if(layoutData.object_position.compare("none") != 0){ comboBox_object_position_->setValue(layoutData.object_position); }
 	for(auto& overflow_class : layoutData.overflow){
-		if(overflow_class.find("overflow-") != std::string::npos){
-			comboBox_overflow_->setValue(overflow_class);
-		}else if(overflow_class.find("overflow-x-") != std::string::npos){
+		if(overflow_class.find("overflow-x-") != std::string::npos){
 			comboBox_overflow_x_->setValue(overflow_class);
-		}else if(overflow_class.find("overflow-y-") != std::string::npos){
+		} else if(overflow_class.find("overflow-y-") != std::string::npos){
 			comboBox_overflow_y_->setValue(overflow_class);
+		}else if(overflow_class.find("overflow-") != std::string::npos){
+			comboBox_overflow_->setValue(overflow_class);
 		}
 	}
+
 	for(auto& overscroll_behavior_class : layoutData.overscroll_behavior){
-		if(overscroll_behavior_class.find("overscroll-behavior-") != std::string::npos){
-			comboBox_overscroll_behavior_->setValue(overscroll_behavior_class);
-		}else if(overscroll_behavior_class.find("overscroll-behavior-x-") != std::string::npos){
+		if(overscroll_behavior_class.find("overscroll-x") != std::string::npos){
 			comboBox_overscroll_behavior_x_->setValue(overscroll_behavior_class);
-		}else if(overscroll_behavior_class.find("overscroll-behavior-y-") != std::string::npos){
+		}else if(overscroll_behavior_class.find("overscroll-y") != std::string::npos){
 			comboBox_overscroll_behavior_y_->setValue(overscroll_behavior_class);
+		}
+		else if(overscroll_behavior_class.find("overscroll") != std::string::npos){
+			comboBox_overscroll_behavior_->setValue(overscroll_behavior_class);
 		}
 	}
 	if(layoutData.position.compare("none") != std::string::npos){ comboBox_position_->setValue(layoutData.position); }
 	for(auto& inset_class : layoutData.inset){
-		if(inset_class.find("inset-") != std::string::npos){
-			comboBox_inset_->setValue(inset_class);
-		}else if(inset_class.find("inset-x-") != std::string::npos){
+		if(inset_class.find("inset-x-") != std::string::npos){
 			comboBox_inset_x_->setValue(inset_class);
 		}else if(inset_class.find("inset-y-") != std::string::npos){
 			comboBox_inset_y_->setValue(inset_class);
+		}
+		else if(inset_class.find("inset-") != std::string::npos){
+			comboBox_inset_->setValue(inset_class);
 		}
 	}
 	for(auto& top_left_bottom_right_class : layoutData.top_left_bottom_right){
@@ -295,7 +355,7 @@ void ElementLayoutWidget::setCustomTestValues()
 	comboBox_break_before_->setValue("break-before-avoid");
 	comboBox_break_inside_->setValue("break-inside-avoid");
 	comboBox_box_decoration_break_->setValue("box-decoration-clone");
-	comboBox_box_sizing_->setValue("border-box");
+	comboBox_box_sizing_->setValue("box-border");
 	comboBox_display_->setValue("inline-block");
 	comboBox_floats_->setValue("float-right");
 	comboBox_clear_->setValue("clear-both");
