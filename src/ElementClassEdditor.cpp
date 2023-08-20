@@ -20,7 +20,7 @@ ElementClassEdditor::ElementClassEdditor()
     backgroundWidget_->collapse();
     effectsWidget_->collapse();
     transformsWidget_->collapse();
-    // layoutWidget_->collapse();
+    layoutWidget_->collapse();
 
     layoutWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";

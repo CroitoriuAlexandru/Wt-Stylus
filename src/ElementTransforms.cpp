@@ -6,9 +6,9 @@ ElementTransformsWidget::ElementTransformsWidget(std::shared_ptr<Config> tailwin
 	: tailwindConfig_(tailwindConfig)
 {
 
-	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200");
+	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900");
 	setTitle("Transforms");
-	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-500");
+	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900");
 	setCollapsible(true);
 	content_temp = setCentralWidget(std::make_unique<Wt::WTemplate>(tr("stylus-transform-template")));
 
@@ -23,15 +23,15 @@ ElementTransformsWidget::ElementTransformsWidget(std::shared_ptr<Config> tailwin
 	resetBtn->clicked().connect([=](){ resetStyles(); styleChanged_.emit(); isCollapsed() ? expand() : collapse();});
 	testBtn->clicked().connect([=](){ setCustomTestValues(); styleChanged_.emit(); isCollapsed() ? expand() : collapse(); });
 
-	comboBox_scale_ = content_temp->bindWidget("combobox-scale", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.scale));
-	comboBox_scale_x_ = content_temp->bindWidget("combobox-scale-x", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.scale_x));
-	comboBox_scale_y_ = content_temp->bindWidget("combobox-scale-y", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.scale_y));
-	comboBox_rotate_ = content_temp->bindWidget("combobox-rotate", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.rotate));
-	comboBox_translate_x_ = content_temp->bindWidget("combobox-translate-x", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.translate_x));
-	comboBox_translate_y_ = content_temp->bindWidget("combobox-translate-y", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.translate_y));
-	comboBox_skew_x_ = content_temp->bindWidget("combobox-skew-x", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.skew_x));
-	comboBox_skew_y_ = content_temp->bindWidget("combobox-skew-y", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.skew_y));
-	comboBox_transform_origin_ = content_temp->bindWidget("combobox-transform-origin", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->transforms.transform_origin));
+	comboBox_scale_ = content_temp->bindWidget("combobox-scale", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.scale));
+	comboBox_scale_x_ = content_temp->bindWidget("combobox-scale-x", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.scale_x));
+	comboBox_scale_y_ = content_temp->bindWidget("combobox-scale-y", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.scale_y));
+	comboBox_rotate_ = content_temp->bindWidget("combobox-rotate", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.rotate));
+	comboBox_translate_x_ = content_temp->bindWidget("combobox-translate-x", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.translate_x));
+	comboBox_translate_y_ = content_temp->bindWidget("combobox-translate-y", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.translate_y));
+	comboBox_skew_x_ = content_temp->bindWidget("combobox-skew-x", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.skew_x));
+	comboBox_skew_y_ = content_temp->bindWidget("combobox-skew-y", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.skew_y));
+	comboBox_transform_origin_ = content_temp->bindWidget("combobox-transform-origin", std::make_unique<StyleClassComboBox>(tailwindConfig->transforms.transform_origin));
 
 
 	comboBox_scale_->setCustomValueString("scale-");
@@ -46,18 +46,17 @@ ElementTransformsWidget::ElementTransformsWidget(std::shared_ptr<Config> tailwin
 
 
 
-	// deactivate custom checkbox
-	comboBox_scale_->setCondition("custom-checkbox", false);
-	comboBox_scale_x_->setCondition("custom-checkbox", false);
-	comboBox_scale_y_->setCondition("custom-checkbox", false);
-	comboBox_rotate_->setCondition("custom-checkbox", false);
-	comboBox_translate_x_->setCondition("custom-checkbox", false);
-	comboBox_translate_y_->setCondition("custom-checkbox", false);
-	comboBox_skew_x_->setCondition("custom-checkbox", false);
-	comboBox_skew_y_->setCondition("custom-checkbox", false);
-	comboBox_transform_origin_->setCondition("custom-checkbox", false);
-
-
+	// // deactivate custom checkbox
+	comboBox_scale_->checkbox_custom_value_->hide();
+	comboBox_scale_x_->checkbox_custom_value_->hide();
+	comboBox_scale_y_->checkbox_custom_value_->hide();
+	comboBox_rotate_->checkbox_custom_value_->hide();
+	comboBox_translate_x_->checkbox_custom_value_->hide();
+	comboBox_translate_y_->checkbox_custom_value_->hide();
+	comboBox_skew_x_->checkbox_custom_value_->hide();
+	comboBox_skew_y_->checkbox_custom_value_->hide();
+	comboBox_transform_origin_->checkbox_custom_value_->hide();
+	
 	// signals for default classes for tailwind
 	comboBox_scale_->classChanged().connect([=](){ styleChanged_.emit(); });
 	comboBox_scale_x_->classChanged().connect([=](){ styleChanged_.emit(); });

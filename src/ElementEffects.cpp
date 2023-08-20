@@ -6,9 +6,9 @@ ElementEffectsWidget::ElementEffectsWidget(std::shared_ptr<Config> tailwindConfi
 	: tailwindConfig_(tailwindConfig)
 {
 
-	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200");
+	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900");
 	setTitle("Effects");
-	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-500");
+	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900");
 	setCollapsible(true);
 	content_temp = setCentralWidget(std::make_unique<Wt::WTemplate>(tr("stylus-effects-template")));
 
@@ -24,12 +24,12 @@ ElementEffectsWidget::ElementEffectsWidget(std::shared_ptr<Config> tailwindConfi
 	testBtn->clicked().connect([=](){ setCustomTestValues(); styleChanged_.emit(); isCollapsed() ? expand() : collapse(); });
 
 
-	comboBox_box_shadow = content_temp->bindWidget("combobox-box-shadow", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->effects.box_shadow));
+	comboBox_box_shadow = content_temp->bindWidget("combobox-box-shadow", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.box_shadow));
 	checkBox_box_shadow_inner = content_temp->bindWidget("checkbox-box-shadow-inset", std::make_unique<Wt::WCheckBox>("Shaddow Inset"));
 	box_shadow_color = content_temp->bindWidget("combobox-box-shadow-color", std::make_unique<ComboBoxColors>(tailwindConfig->effects.box_shadow_color));
-	comboBox_opacity = content_temp->bindWidget("combobox-opacity", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->effects.opacity));
-	comboBox_mix_blend_mode = content_temp->bindWidget("combobox-mix-blend-mode", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->effects.mix_blend_mode)); 
-	comboBox_bg_blend_mode = content_temp->bindWidget("combobox-bg-blend-mode", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->effects.background_blend_mode));
+	comboBox_opacity = content_temp->bindWidget("combobox-opacity", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.opacity));
+	comboBox_mix_blend_mode = content_temp->bindWidget("combobox-mix-blend-mode", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.mix_blend_mode)); 
+	comboBox_bg_blend_mode = content_temp->bindWidget("combobox-bg-blend-mode", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.background_blend_mode));
 
 	comboBox_box_shadow->setCustomValueString("shadow-");
 	box_shadow_color->setCustomValueString("shadow-");
@@ -37,13 +37,15 @@ ElementEffectsWidget::ElementEffectsWidget(std::shared_ptr<Config> tailwindConfi
 	comboBox_bg_blend_mode->setCustomValueString("bg-blend-");
 
 
-	// deactivate custom checkbox
-	comboBox_box_shadow->setCondition("custom-checkbox", false);
-	box_shadow_color->setCondition("custom-checkbox", false);
-	comboBox_mix_blend_mode->setCondition("custom-checkbox", false);
-	comboBox_opacity->setCondition("custom-checkbox", false);
-	comboBox_bg_blend_mode->setCondition("custom-checkbox", false);
-	checkBox_box_shadow_inner->setChecked(false);
+	// // deactivate custom checkbox
+	comboBox_box_shadow->checkbox_custom_value_->hide();
+	// box_shadow_color->checkbox_custom_value_->hide();
+	comboBox_mix_blend_mode->checkbox_custom_value_->hide();
+	comboBox_opacity->checkbox_custom_value_->hide();
+	comboBox_bg_blend_mode->checkbox_custom_value_->hide();
+	// checkBox_box_shadow_inner->setChecked(false);
+
+
 
 	// signals for default classes for tailwind
 	comboBox_box_shadow->classChanged().connect([=](){ styleChanged_.emit(); });

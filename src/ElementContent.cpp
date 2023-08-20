@@ -32,16 +32,13 @@ ElementContent::ElementContent()
             element_content_textarea->setHidden(false);
         }
     });
+
+    element_content_textarea->enterPressed().connect([=](){ processChange();  });
+
     std::vector<std::string> widgetTypes = {"template"};
     for(auto widgetType : widgetTypes){
         comboBox_widgetType->addItem(widgetType);
     }
-
-    // bindEmpty("folder.name");
-    // bindEmpty("file.name");
-    // bindEmpty("message.id");
-    // bindEmpty("widget.type");
-    // bindEmpty("toggle-variable-content");
 }
 
 
@@ -58,9 +55,6 @@ void ElementContent::setFoldersData(std::vector<FolderData> foldersData)
 
 void ElementContent::processChange()
 {
-    // std::cout << "\n\n ElementContent::processChange() --- \n";
-    // std::cout << "ElementContent::processChange() --- contentText_ :<" << contentText_ << ">\n";
-    // std::cout << "ElementContent::processChange() --- getData() :<" << getData() << ">\n\n";
     auto textData = getData();
 
     if(textData.compare(contentText_) == 0){

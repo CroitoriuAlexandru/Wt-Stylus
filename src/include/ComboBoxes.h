@@ -6,6 +6,7 @@
 #include <Wt/WCheckBox.h>
 #include <Wt/WSpinBox.h>
 #include <Wt/WSignal.h>
+#include <Wt/WContainerWidget.h>
 #include <vector>
 #include <string>
 #include <regex>
@@ -16,10 +17,10 @@
 
 
 // this widget is used for margin, padding
-class ComboBoxClassWithCustoms : public Wt::WTemplate
+class StyleClassComboBox : public Wt::WContainerWidget
 {
 public:
-    ComboBoxClassWithCustoms(Propriety propriety);
+    StyleClassComboBox(Propriety propriety);
 
 	void setCustomValueString(Wt::WString custom_start){ custom_start_ = custom_start; };
     std::string getValue();
@@ -40,8 +41,6 @@ public:
 private:
 	std::string defaultValue = "none";
 
-    // Wt::WText *btn_prev_;
-    // Wt::WText *btn_next_;
 	std::regex custom_option_regexp = std::regex("\\[\\S*\\]");
 	Wt::WString custom_start_;
 	Wt::Signal<> classChanged_;
@@ -50,7 +49,7 @@ private:
 
 
 
-class ComboBoxColors : public Wt::WTemplate
+class ComboBoxColors : public Wt::WContainerWidget
 {
 public:
 	ComboBoxColors(ProprietyColor proprietyColor);
@@ -63,9 +62,9 @@ public:
 
 	std::string custom_start_;
 
-	ComboBoxClassWithCustoms *comboBox_color;
-	ComboBoxClassWithCustoms* comboBox_intensity;
-	ComboBoxClassWithCustoms* comboBox_opacity;
+	StyleClassComboBox *comboBox_color;
+	StyleClassComboBox* comboBox_intensity;
+	StyleClassComboBox* comboBox_opacity;
 protected:
 
 
@@ -89,7 +88,7 @@ public:
 	BackgroundColorWidget(ProprietyColor proprietyColor, Propriety gradientStep);
 	void setValue(std::string className = "none");
 
-	ComboBoxClassWithCustoms* comboBox_gradient_step;
+	StyleClassComboBox* comboBox_gradient_step;
 
 private:
 };

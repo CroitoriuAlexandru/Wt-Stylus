@@ -28,24 +28,24 @@ private:
 	std::shared_ptr<Config> tailwindConfig_;
 	Wt::WTemplate* content_temp;
 
-	ComboBoxClassWithCustoms* margin_all_widget_;
-    ComboBoxClassWithCustoms* margin_horizontal_widget_;
-    ComboBoxClassWithCustoms* margin_vertical_widget_;
-    ComboBoxClassWithCustoms* margin_top_widget_;
-    ComboBoxClassWithCustoms* margin_right_widget_;
-    ComboBoxClassWithCustoms* margin_bottom_widget_;
-    ComboBoxClassWithCustoms* margin_left_widget_;
+	StyleClassComboBox* margin_all_widget_;
+    StyleClassComboBox* margin_horizontal_widget_;
+    StyleClassComboBox* margin_vertical_widget_;
+    StyleClassComboBox* margin_top_widget_;
+    StyleClassComboBox* margin_right_widget_;
+    StyleClassComboBox* margin_bottom_widget_;
+    StyleClassComboBox* margin_left_widget_;
 
-    ComboBoxClassWithCustoms* padding_all_widget_;
-    ComboBoxClassWithCustoms* padding_horizontal_widget_;
-    ComboBoxClassWithCustoms* padding_vertical_widget_;
-    ComboBoxClassWithCustoms* padding_top_widget_;
-    ComboBoxClassWithCustoms* padding_right_widget_;
-    ComboBoxClassWithCustoms* padding_bottom_widget_;
-    ComboBoxClassWithCustoms* padding_left_widget_;
+    StyleClassComboBox* padding_all_widget_;
+    StyleClassComboBox* padding_horizontal_widget_;
+    StyleClassComboBox* padding_vertical_widget_;
+    StyleClassComboBox* padding_top_widget_;
+    StyleClassComboBox* padding_right_widget_;
+    StyleClassComboBox* padding_bottom_widget_;
+    StyleClassComboBox* padding_left_widget_;
 
-	ComboBoxClassWithCustoms* space_vertical_widget_;
-	ComboBoxClassWithCustoms* space_horizontal_widget_;
+	StyleClassComboBox* space_vertical_widget_;
+	StyleClassComboBox* space_horizontal_widget_;
 
 	Wt::Signal<> styleChanged_;
 

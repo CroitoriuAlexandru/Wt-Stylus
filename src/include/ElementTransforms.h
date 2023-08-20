@@ -32,15 +32,15 @@ private:
 	Wt::WTemplate* 				content_temp;
 	std::shared_ptr<Config> 	tailwindConfig_;
 	
-	ComboBoxClassWithCustoms* 	comboBox_scale_;
-	ComboBoxClassWithCustoms* 	comboBox_scale_x_;
-	ComboBoxClassWithCustoms* 	comboBox_scale_y_;
-	ComboBoxClassWithCustoms* 	comboBox_rotate_;
-	ComboBoxClassWithCustoms* 	comboBox_translate_x_;
-	ComboBoxClassWithCustoms* 	comboBox_translate_y_;
-	ComboBoxClassWithCustoms* 	comboBox_skew_x_;
-	ComboBoxClassWithCustoms* 	comboBox_skew_y_;
-	ComboBoxClassWithCustoms* 	comboBox_transform_origin_;
-	
+	StyleClassComboBox* 		comboBox_scale_;
+	StyleClassComboBox* 		comboBox_scale_x_;
+	StyleClassComboBox* 		comboBox_scale_y_;
+	StyleClassComboBox* 		comboBox_rotate_;
+	StyleClassComboBox* 		comboBox_translate_x_;
+	StyleClassComboBox* 		comboBox_translate_y_;
+	StyleClassComboBox* 		comboBox_skew_x_;
+	StyleClassComboBox* 		comboBox_skew_y_;
+	StyleClassComboBox* 		comboBox_transform_origin_;
+
 	Wt::Signal<> styleChanged_;
 };

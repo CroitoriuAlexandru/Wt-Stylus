@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
-    <message id="app-root">
-        <div class="">sjhfkjsdlkfjhsldjfr</div>
-    </message>
+    <message id="app-root" class="aspect-square container columns-2 break-after-avoid break-before-avoid break-inside-avoid box-decoration-clone box-border inline-block float-right clear-both isolate object-contain object-bottom overflow-auto overflow-x-scroll overflow-y-scroll overscroll-contain overscroll-x-contain overscroll-y-contain absolute inset-0 inset-x-0 inset-y-0 top-5 right-3 bottom-2 left-7 visible z-10  w-1/2 min-w-full max-w-[300px] h-1/2 min-h-full max-h-[300px]   p-10 px-4 py-6 pt-[30px] pr-2 pb-2 pl-2 m-10 mx-auto my-6 mt-2 mr-2 mb-2 ml-[10px] space-x-4 space-y-4 space-x-reverse space-y-reverse bg-red-500/100 bg-fixed bg-clip-border bg-origin-border bg-center bg-repeat bg-auto  shadow-md shadow-inner opacity-50 shadow-red-500/40 mix-blend-color bg-blend-color  scale-50 scale-x-50 scale-y-50 rotate-45 translate-x-52 translate-y-52 -skew-x-12 -skew-y-12 origin-center"></message>
 </messages>

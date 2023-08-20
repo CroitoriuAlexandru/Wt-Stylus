@@ -13,6 +13,7 @@ struct StylusState {
     tinyxml2::XMLNode* selectedTemplate;
     tinyxml2::XMLNode* selectedElement;
     std::string filePath;
+    tinyxml2::XMLNode* copyNode;
 };
 
 class TreeNode : public Wt::WTreeNode
@@ -46,15 +47,6 @@ public:
     Wt::Signal<std::string, std::string, std::string, std::string, bool>& openTemplate() { return openTemplate_; }
 
     void createTree();
-    std::unique_ptr<TreeNode> createNodeTree(tinyxml2::XMLElement* element);
-    std::unique_ptr<TreeNode> createTemplateNode(tinyxml2::XMLNode* textNode);
-
-    // \$\{[\w\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")\}
-    std::regex template_regexp = std::regex("\\$\\{[\\w\\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")\\}");
-private:
-    std::shared_ptr<StylusState> stylusState_;
-
-
     void moveElementUp(tinyxml2::XMLElement* element);
     void moveElementDown(tinyxml2::XMLElement* element);
     void moveElementRight(tinyxml2::XMLElement* element);
@@ -63,6 +55,16 @@ private:
     void addChildElementFirst(tinyxml2::XMLElement* element, tinyxml2::XMLElement* newElement = nullptr);
     void addChildElementLast(tinyxml2::XMLElement* element, tinyxml2::XMLElement* newElement = nullptr);
     void removeElement(tinyxml2::XMLElement* element);
+
+    // \$\{[\w\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")\}
+    std::regex template_regexp = std::regex("\\$\\{[\\w\\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")\\}");
+private:
+    std::shared_ptr<StylusState> stylusState_;
+
+    std::unique_ptr<TreeNode> createNodeTree(tinyxml2::XMLElement* element);
+    std::unique_ptr<TreeNode> createTemplateNode(tinyxml2::XMLNode* textNode);
+
+
 
     // Wt::Signal<> templateModified_;
     Wt::Signal<tinyxml2::XMLNode*> selectionChanged_;

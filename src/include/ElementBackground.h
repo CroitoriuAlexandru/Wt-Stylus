@@ -50,13 +50,13 @@ private:
 	Wt::WTemplate* content_temp;
 	std::shared_ptr<Config> tailwindConfig_;
 	
-	ComboBoxClassWithCustoms *comboBox_attachment;
-	ComboBoxClassWithCustoms *comboBox_clip;
-	ComboBoxClassWithCustoms *comboBox_origin;
-	ComboBoxClassWithCustoms *comboBox_position;
-	ComboBoxClassWithCustoms *comboBox_repeat;
-	ComboBoxClassWithCustoms *comboBox_size;
-	ComboBoxClassWithCustoms *comboBox_image;
+	StyleClassComboBox *comboBox_attachment;
+	StyleClassComboBox *comboBox_clip;
+	StyleClassComboBox *comboBox_origin;
+	StyleClassComboBox *comboBox_position;
+	StyleClassComboBox *comboBox_repeat;
+	StyleClassComboBox *comboBox_size;
+	StyleClassComboBox *comboBox_image;
 	BackgroundColorWidget *comboBox_color;
 
 	BackgroundColorWidget *comboBox_color_via;

@@ -56,41 +56,14 @@
 		</div>
 	</message>
 
-	<!-- class changer                       select widget -->
-    <message id="stylus.class.changer.select.template">
-        <div class="flex items-stretch  w-full border border-gray-600 border-solid rounded-md ">
-            <!-- <div class="rounded-l-md border-r block text-neutral-400 border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900 cursor-pointer">${prev-button class=""}</div> -->
-            <div class="w-full">${class-combobox class="text-center p-px w-full rounded-md m-0 bg-neutral-800 z-50 text-neutral-300 appearance-none hover:bg-neutral-900"}</div>
-            <!-- <div class="rounded-r-md border-l block text-neutral-400 border-gray-600 border-solid px-1 bg-neutral-800 hover:bg-neutral-900 cursor-pointer">${next-button class=""}</div> -->
-        </div>
-    </message>
-
-    <message id="stylus.class.changer.widget">
-        <div class="flex items-center w-full ">
-            ${<important-checkbox>}
-               ${checkbox-important class="hover:bg-neutral-800 text-center p-0.5"}
-            ${</important-checkbox>}
-            ${<class-combobox>}
-                ${select-combobox class="w-full grow rounded-md h-full bg-neutral-800 text-center appearance-none hover:bg-neutral-900 min-w-[70px]"}
-            ${</class-combobox>}
-            ${<class-custom>}
-               ${custom-lineedit class="w-full grow rounded-md h-full bg-neutral-800 text-center appearance-none hover:bg-neutral-900 min-w-[70px]"}
-            ${</class-custom>}
-            ${<refresh-button>}
-              ${refresh-button class="hover:bg-neutral-800 text-center p-0.5 cursor-pointer"}
-            ${</refresh-button>}
-            ${<custom-checkbox>}
-               ${checkbox-select-custom class="hover:bg-neutral-800 text-center p-0.5"}
-            ${</custom-checkbox>}
-        </div>
-    </message>
-
     <message id="stylus.class.changer.color.widget">
         <div class="w-full mr-1.5">
             <div>${color-combobox}</div>
             <div class="w-full flex justify-start  min-w-[270px] -mr-[90px]">
-                <div class="w-fit">${intensity-combobox class="w-full min-w-fit"}</div>
-                <div class="w-fit">${opacity-combobox class="w-full min-w-fit "}</div>
+                ${<opacity-intensity>}
+                    <div class="w-fit">${intensity-combobox class="w-full min-w-fit"}</div>
+                    <div class="w-fit">${opacity-combobox class="w-full min-w-fit "}</div>
+                ${</opacity-intensity>}
                 ${<gradient-step>}
                     <div class="w-fit">${gradient-step-combobox class="w-full min-w-fit pr-3"}</div>
                 ${</gradient-step>}
@@ -115,7 +88,7 @@
 		  <div class="flex w-full px-2 space-x-1">
 				
 			  <div class="flex flex-col w-1/2 items-stretch m-px">
-				  <div class="font-bold text-center text-neutral-500">Margin</div>
+				  <div class="font-bold text-center text-neutral-400">Margin</div>
 				  <div class="w-full">
 					  ${margin.all.control class="w-full"}
 				  </div>
@@ -128,7 +101,7 @@
 			  </div>
 			  
 			  <div class="flex flex-col w-1/2 px-1.5 justify-center m-px">
-				  <div class="font-bold text-center  text-neutral-500">Padding</div>
+				  <div class="font-bold text-center  text-neutral-400">Padding</div>
 				  <div class="w-full">
 					  ${padding.all.control class="w-full"}
 				  </div>
@@ -179,13 +152,13 @@
   
 		  <div class="flex">
 			  <div class="flex flex-col items-center w-1/2">
-				  <div class="font-bold w-full text-center text-neutral-500">Space X ${space.vertical.reverse.controle class=""}</div>
+				  <div class="font-bold w-full text-center text-neutral-400">Space X ${space.vertical.reverse.controle class=""}</div>
 				  <div class="">
 					  ${space.vertical.control class=" "}
 				  </div>
 			  </div>
 			  <div class="flex flex-col items-center w-1/2">
-				  <div class="font-bold w-full text-center text-neutral-500">Space Y ${space.horizontal.reverse.controle class=""}</div>
+				  <div class="font-bold w-full text-center text-neutral-400">Space Y ${space.horizontal.reverse.controle class=""}</div>
 				  <div class="">
 					  ${space.horizontal.control class=""}
 				  </div>
@@ -200,13 +173,13 @@
         <div class="flex w-full max-w-[300px] space-x-2  p-1.5">
 
             <div class="flex flex-col w-1/2 items-stretch">
-                <div class="font-bold text-center text-neutral-500">Width</div>
+                <div class="font-bold text-center text-neutral-400">Width</div>
                 <div class="w-full">${width.control class=""}</div>
                 <div class="w-full">${width.min.control class=""}</div>
                 <div class="w-full">${width.max.control class=""}</div>
             </div>
             <div class="flex flex-col w-1/2 justify-center">
-                <div class="font-bold text-center  text-neutral-500">Height</div>
+                <div class="font-bold text-center  text-neutral-400">Height</div>
                 <div class="w-full">${height.control class=""}</div>
                 <div class="w-full">${height.min.control class=""}</div>
                 <div class="w-full">${height.max.control class=""}</div>
@@ -221,46 +194,46 @@
         <div class="space-y-1 m-1.5 flex flex-col items-stretch">
             <div class="mx-1 flex ">
                 <div class="mr-auto w-2/3">${combobox-image class=""}</div>
-                <div class="font-bold text-neutral-500 text-sm">Gradient Img</div>
+                <div class="font-bold text-neutral-400 text-sm">Gradient Img</div>
             </div>
             <div class="mx-1 flex mb-2">
                 <div class="mr-auto w-2/3">${color-widget class=""}</div>
-                <div class="font-bold  text-neutral-500">${color-title}</div>
+                <div class="font-bold  text-neutral-400">${color-title}</div>
             </div>
             ${<bg-gradient>}
                 <div class="mx-1 flex mb-2">
                     <div class="mr-auto w-2/3">${combobox-color-via class=""}</div>
-                    <div class="font-bold text-neutral-500">Via</div>
+                    <div class="font-bold text-neutral-400">Via</div>
                 </div>
                 <div class="mx-1 flex mb-2">
                     <div class="mr-auto w-2/3">${combobox-color-to class=""}</div>
-                    <div class="font-bold text-neutral-500">To</div>
+                    <div class="font-bold text-neutral-400">To</div>
                 </div>
             ${</bg-gradient>}
             <div class="border-b border-solid border-neutral-900"></div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-clip}</div>
-                <div class="font-bold text-neutral-500">Clip</div>
+                <div class="font-bold text-neutral-400">Clip</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-attachment}</div>
-                <div class="font-bold text-neutral-500">Atatchments</div>
+                <div class="font-bold text-neutral-400">Atatchments</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-origin}</div>
-                <div class="font-bold text-neutral-500">Origin</div>
+                <div class="font-bold text-neutral-400">Origin</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-position}</div>
-                <div class="font-bold text-neutral-500">Position</div>
+                <div class="font-bold text-neutral-400">Position</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-repeat}</div>
-                <div class="font-bold text-neutral-500">Repeat</div>
+                <div class="font-bold text-neutral-400">Repeat</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-size}</div>
-                <div class="font-bold text-neutral-500">Size</div>
+                <div class="font-bold text-neutral-400">Size</div>
             </div>
      
         </div>
@@ -274,23 +247,23 @@
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-box-shadow}</div>
-                <div class="font-bold text-neutral-500">Box Shadow</div>
+                <div class="font-bold text-neutral-400">Box Shadow</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-box-shadow-color}</div>
-                <div class="font-bold text-neutral-500">Shadow Color</div>
+                <div class="font-bold text-neutral-400">Shadow Color</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-opacity}</div>
-                <div class="font-bold text-neutral-500">Opacity</div>
+                <div class="font-bold text-neutral-400">Opacity</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-mix-blend-mode}</div>
-                <div class="font-bold text-neutral-500">Mix Blend Mode</div>
+                <div class="font-bold text-neutral-400">Mix Blend Mode</div>
             </div>
             <div class="mx-1 flex justify-center">
                 <div class="mr-auto w-2/3 ">${combobox-bg-blend-mode}</div>
-                <div class="font-bold text-neutral-500">Bg Blend Mode</div>
+                <div class="font-bold text-neutral-400">Bg Blend Mode</div>
             </div>
         </div>
     </message>
@@ -298,171 +271,181 @@
     <!-- Transforms -->
     <message id="stylus-transform-template">
         <div class="space-y-1 m-1.5 flex flex-col items-stretch text-end">
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-scale}</div>
-                <div class="font-bold text-neutral-500">Scale</div>
+            <div class="w-full">
+                <div class="font-bold text-neutral-400 text-center text-sm">Scale</div>
+                <div class="mr-auto w-full ">${combobox-scale}</div>
             </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-scale-x}</div>
-                <div class="font-bold text-neutral-500">Scale X</div>                    
+            <div class="flex justify-center space-x-2">
+                <div class="w-full">
+                    <div class="font-bold text-neutral-400 text-center text-sm">Scale X</div>
+                    <div class="mr-auto w-full ">${combobox-scale-x}</div>
+                </div>
+                <div class="w-full">
+                    <div class="font-bold text-neutral-400 text-center text-sm">Scale Y</div>
+                    <div class="mr-auto w-full ">${combobox-scale-y}</div>
+                </div>
             </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-scale-y}</div>
-                <div class="font-bold text-neutral-500">Scale Y</div>
+            <div class="border-b border-solid border-neutral-800"></div>
+            <div class="flex justify-center space-x-2">
+                <div class="w-full">
+                    <div class="font-bold text-neutral-400 text-center text-sm">Translate X</div>
+                    <div class="mr-auto w-full ">${combobox-translate-x}</div>
+                </div>
+                <div class="w-full">
+                    <div class="font-bold text-neutral-400 text-center text-sm">Translate Y</div>
+                    <div class="mr-auto w-full ">${combobox-translate-y}</div>
+                </div>
             </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-rotate}</div>
-                <div class="font-bold text-neutral-500">Rotate</div>
+            <div class="border-b border-solid border-neutral-800"></div>
+            <div class="w-full">
+                <div class="font-bold text-neutral-400 text-center text-sm">Rotate</div>
+                <div class="mr-auto w-full ">${combobox-rotate}</div>
             </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-translate-x}</div>
-                <div class="font-bold text-neutral-500">Translate X</div>
+            <div class="border-b border-solid border-neutral-800"></div>
+            <div class="flex justify-center space-x-2">
+                <div class="w-full">
+                    <div class="font-bold text-neutral-400 text-center text-sm">Skew X</div>
+                    <div class="mr-auto w-full ">${combobox-skew-x}</div>
+                </div>
+                <div class="w-full">
+                    <div class="font-bold text-neutral-400 text-center text-sm">Skew Y</div>
+                    <div class="mr-auto w-full ">${combobox-skew-y}</div>
+                </div>
             </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-translate-y}</div>
-                <div class="font-bold text-neutral-500">Translate Y</div>
-            </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-skew-x}</div>
-                <div class="font-bold text-neutral-500">Skew</div>
-            </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-skew-y}</div>
-                <div class="font-bold text-neutral-500">Skew</div>
-            </div>
-            <div class="mx-1 flex justify-center">
-                <div class="mr-auto w-2/3 ">${combobox-transform-origin}</div>
-                <div class="font-bold text-neutral-500 text-sm">Transform Origin</div>
+            <div class="border-b border-solid border-neutral-800"></div>
+            <div class="w-full">
+                <div class="font-bold text-neutral-400 text-center text-sm">Transform Origin</div>
+                <div class="mr-auto w-full ">${combobox-transform-origin}</div>
             </div>
         </div>
     </message>
 
-        
-    	<!-- Layout -->
-        <message id="stylus-layout-template">
-            <div class="space-y-1 m-1.5 flex flex-col items-stretch text-end">
-                <div>
-                    ${checkbox-container}
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-aspect-ratio}</div>
-                    <div class="font-bold text-neutral-500">Aspect Ratio</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-columns}</div>
-                    <div class="font-bold text-neutral-500">Columns</div>                    
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-break-after}</div>
-                    <div class="font-bold text-neutral-500">Break After</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-break-before}</div>
-                    <div class="font-bold text-neutral-500">Break After</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-break-inside}</div>
-                    <div class="font-bold text-neutral-500">Break Inside</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-box-decoration-break}</div>
-                    <div class="font-bold text-neutral-500">Box Decoration Break</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-box-sizing}</div>
-                    <div class="font-bold text-neutral-500">Box Sizing</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-display}</div>
-                    <div class="font-bold text-neutral-500">Display</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-floats}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Floats</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-clear}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Clear</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-isolation}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Isolation</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-object-fit}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Object Fit</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-object-position}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Object Position</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-overflow}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Overflow</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-overflow-x}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Overflow X</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-overflow-y}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Overflow Y</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-overscroll-behavior}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Overscroll Behavior</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-overscroll-behavior-x}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Overscroll Behavior X</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-overscroll-behavior-y}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Overscroll Behavior Y</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-position}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Position</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-inset}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Inset</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-inset-x}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Inset X</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-inset-y}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Inset Y</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-top}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Top</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-bottom}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Bottom</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-left}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Left</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-right}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Right</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-visibility}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Visibility</div>
-                </div>
-                <div class="mx-1 flex justify-center">
-                    <div class="mr-auto w-2/3 ">${combobox-z-index}</div>
-                    <div class="font-bold text-neutral-500 text-sm">Z Index</div>
-                </div>
+    
+    <!-- Layout -->
+    <message id="stylus-layout-template">
+        <div class="space-y-1 m-1.5 flex flex-col items-stretch text-end">
+            <div>
+                ${checkbox-container}
             </div>
-        </message>
-	
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-aspect-ratio}</div>
+                <div class="font-bold text-neutral-400">Aspect Ratio</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-columns}</div>
+                <div class="font-bold text-neutral-400">Columns</div>                    
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-break-after}</div>
+                <div class="font-bold text-neutral-400">Break After</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-break-before}</div>
+                <div class="font-bold text-neutral-400">Break After</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-break-inside}</div>
+                <div class="font-bold text-neutral-400">Break Inside</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-box-decoration-break}</div>
+                <div class="font-bold text-neutral-400">Box Decoration Break</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-box-sizing}</div>
+                <div class="font-bold text-neutral-400">Box Sizing</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-display}</div>
+                <div class="font-bold text-neutral-400">Display</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-floats}</div>
+                <div class="font-bold text-neutral-400 text-sm">Floats</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-clear}</div>
+                <div class="font-bold text-neutral-400 text-sm">Clear</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-isolation}</div>
+                <div class="font-bold text-neutral-400 text-sm">Isolation</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-object-fit}</div>
+                <div class="font-bold text-neutral-400 text-sm">Object Fit</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-object-position}</div>
+                <div class="font-bold text-neutral-400 text-sm">Object Position</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-overflow}</div>
+                <div class="font-bold text-neutral-400 text-sm">Overflow</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-overflow-x}</div>
+                <div class="font-bold text-neutral-400 text-sm">Overflow X</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-overflow-y}</div>
+                <div class="font-bold text-neutral-400 text-sm">Overflow Y</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-overscroll-behavior}</div>
+                <div class="font-bold text-neutral-400 text-sm">Overscroll Behavior</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-overscroll-behavior-x}</div>
+                <div class="font-bold text-neutral-400 text-sm">Overscroll Behavior X</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-overscroll-behavior-y}</div>
+                <div class="font-bold text-neutral-400 text-sm">Overscroll Behavior Y</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-position}</div>
+                <div class="font-bold text-neutral-400 text-sm">Position</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-inset}</div>
+                <div class="font-bold text-neutral-400 text-sm">Inset</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-inset-x}</div>
+                <div class="font-bold text-neutral-400 text-sm">Inset X</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-inset-y}</div>
+                <div class="font-bold text-neutral-400 text-sm">Inset Y</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-top}</div>
+                <div class="font-bold text-neutral-400 text-sm">Top</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-bottom}</div>
+                <div class="font-bold text-neutral-400 text-sm">Bottom</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-left}</div>
+                <div class="font-bold text-neutral-400 text-sm">Left</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-right}</div>
+                <div class="font-bold text-neutral-400 text-sm">Right</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-visibility}</div>
+                <div class="font-bold text-neutral-400 text-sm">Visibility</div>
+            </div>
+            <div class="mx-1 flex justify-center">
+                <div class="mr-auto w-2/3 ">${combobox-z-index}</div>
+                <div class="font-bold text-neutral-400 text-sm">Z Index</div>
+            </div>
+        </div>
+    </message>
+
 
 
 

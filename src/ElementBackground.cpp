@@ -6,9 +6,9 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwin
 	: tailwindConfig_(tailwindConfig)
 {
 
-	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 relative");
+	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900");
 	setTitle("Backgrounds");
-	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-500");
+	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900");
 	setCollapsible(true);
 	content_temp = setCentralWidget(std::make_unique<Wt::WTemplate>(tr("stylus-background-template")));
 	
@@ -27,13 +27,13 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwin
 
 
 	content_temp->bindString("color-title","Color");
-	comboBox_attachment = content_temp->bindWidget("combobox-attachment", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->backgrounds.background_attachment));
-	comboBox_clip = content_temp->bindWidget("combobox-clip", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->backgrounds.background_clip));
-	comboBox_origin = content_temp->bindWidget("combobox-origin", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->backgrounds.background_origin));
-	comboBox_position = content_temp->bindWidget("combobox-position", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->backgrounds.background_position));
-	comboBox_repeat = content_temp->bindWidget("combobox-repeat", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->backgrounds.background_repeat));
-	comboBox_size = content_temp->bindWidget("combobox-size", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->backgrounds.background_size));
-	comboBox_image = content_temp->bindWidget("combobox-image", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig->backgrounds.background_image));
+	comboBox_attachment = content_temp->bindWidget("combobox-attachment", std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_attachment));
+	comboBox_clip = content_temp->bindWidget("combobox-clip", std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_clip));
+	comboBox_origin = content_temp->bindWidget("combobox-origin", std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_origin));
+	comboBox_position = content_temp->bindWidget("combobox-position", std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_position));
+	comboBox_repeat = content_temp->bindWidget("combobox-repeat", std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_repeat));
+	comboBox_size = content_temp->bindWidget("combobox-size", std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_size));
+	comboBox_image = content_temp->bindWidget("combobox-image", std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_image));
 	comboBox_color = content_temp->bindWidget("color-widget", std::make_unique<BackgroundColorWidget>(
 		tailwindConfig->backgrounds.background_color, 
 		tailwindConfig_->backgrounds.gradient_stops_from));
@@ -69,13 +69,14 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwin
 	comboBox_color_to->comboBox_gradient_step->setDefaultValue("to-100%");
 
 	// deactivate custom checkbox
-	comboBox_attachment->setCondition("custom-checkbox", false);
-	comboBox_clip->setCondition("custom-checkbox", false);
-	comboBox_origin->setCondition("custom-checkbox", false);
-	comboBox_repeat->setCondition("custom-checkbox", false);
-	comboBox_size->setCondition("custom-checkbox", false);
-	comboBox_position->setCondition("custom-checkbox", false);
-	comboBox_image->setCondition("custom-checkbox", false);
+	comboBox_attachment->checkbox_custom_value_->hide();
+	comboBox_clip->checkbox_custom_value_->hide();
+	comboBox_origin->checkbox_custom_value_->hide();
+	comboBox_repeat->checkbox_custom_value_->hide();
+	comboBox_size->checkbox_custom_value_->hide();
+	comboBox_image->checkbox_custom_value_->hide();
+	comboBox_position->checkbox_custom_value_->hide();
+	// comboBox_color->checkbox_custom_value_->hide();
 
 	// signals for default classes for tailwind
 	comboBox_attachment->classChanged().connect([=](){ styleChanged_.emit(); });
@@ -155,18 +156,6 @@ std::string ElementBackgroundWidget::getStyles()
 void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 {
 	resetStyles();
-
-	// std::cout << "\n\n ElementBackgroundWidget::setClasses \n";
-	// std::cout << "attachment class = " << bgData.bg_attachment << "\n";
-	// std::cout << "clip class = " << bgData.bg_clip << "\n";
-	// std::cout << "color class = " << bgData.bg_color_class << "\n";
-	// std::cout << "origin class = " << bgData.bg_origin << "\n";
-	// std::cout << "position class = " << bgData.bg_position << "\n";
-	// std::cout << "repeat class = " << bgData.bg_repeat << "\n";
-	// std::cout << "size class = " << bgData.bg_size << "\n";
-	// std::cout << "image class = " << bgData.bg_image << "\n";
-	// std::cout << "color via class = " << bgData.bg_color_via << "\n";
-	// std::cout << "color to class = " << bgData.bg_color_to << "\n";
 
 	comboBox_attachment->setValue(bgData.bg_attachment);
 	comboBox_clip->setValue(bgData.bg_clip);

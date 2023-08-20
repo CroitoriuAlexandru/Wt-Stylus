@@ -8,7 +8,7 @@ TreeNode::TreeNode(const Wt::WString& labelText, std::unique_ptr<Wt::WIconPair> 
 	setLoadPolicy(Wt::ContentLoading::NextLevel);
 	label()->setTextFormat(Wt::TextFormat::Plain);
 	expand();
-
+	setAttributeValue("oncontextmenu", "event.cancelBubble = true; event.returnValue = false; return false;");
 	labelArea()->setStyleClass("flex flex-row items-center justify-center text-neutral-300");
 
 	// auto labelAreaStart = labelArea()->insertAfter(std::make_unique<Wt::WContainerWidget>(), label());
@@ -364,11 +364,9 @@ void StylusTreeView::moveElementRight(tinyxml2::XMLElement* element)
 		std::cout << "\n StylusTreeView::moveElementRight but no next sibling \n";
 		return;
 	}
-	if(!element->NextSiblingElement()->FirstChildElement()){
-		std::cout << "\n\n StylusTreeView::moveElementRight but next sibling has no child \n\n";
-		return;
+	if(element->NextSiblingElement()->GetText() != ""){
+		element->NextSiblingElement()->SetText("");
 	}
-	
 	element->NextSiblingElement()->InsertFirstChild(newElement);
 	stylusState_->selectedElement = newElement->ToElement();	
 	removeElement(element);
@@ -378,6 +376,10 @@ void StylusTreeView::moveElementRight(tinyxml2::XMLElement* element)
 void StylusTreeView::addSiblingElementBefore(tinyxml2::XMLElement* element, tinyxml2::XMLElement* newElement)
 {
 	std::cout << "\n StylusTreeView::addSiblingElementBefore \n";
+	if(element == stylusState_->selectedTemplate->ToElement()){
+		std::cout << "\n StylusTreeView::addSiblingElementBefore is template \n";
+		return;
+	}
 	if(newElement == nullptr){
 		newElement = stylusState_->doc.NewElement("div");
 		newElement->SetAttribute("class", "");
@@ -394,6 +396,10 @@ void StylusTreeView::addSiblingElementBefore(tinyxml2::XMLElement* element, tiny
 void StylusTreeView::addSiblingElementAfter(tinyxml2::XMLElement* element, tinyxml2::XMLElement* newElement)
 {
 	std::cout << "\n StylusTreeView::addSiblingElementAfter \n";
+	if(element == stylusState_->selectedTemplate->ToElement()){
+		std::cout << "\n StylusTreeView::addSiblingElementAfter is template \n";
+		return;
+	}
 	if(newElement == nullptr){
 		// create element <div class="text-center">header</div>
 		newElement = stylusState_->doc.NewElement("div");
@@ -443,7 +449,13 @@ void StylusTreeView::addChildElementLast(tinyxml2::XMLElement* element, tinyxml2
 void StylusTreeView::removeElement(tinyxml2::XMLElement* element)
 {
 	std::cout << "\n StylusTreeView::removeElement \n";
-    stylusState_->doc.DeleteNode(element);
+	if(element == stylusState_->selectedTemplate->ToElement()){
+		std::cout << "\n StylusTreeView::removeElement is template \n";
+		return;
+	}
+
+    
+	stylusState_->doc.DeleteNode(element);
 	stylusState_->doc.SaveFile(stylusState_->filePath.c_str());
-	stylusState_->selectedElement = stylusState_->selectedTemplate->ToElement();
+	stylusState_->selectedElement =  nullptr;
 }

@@ -11,12 +11,161 @@
 
 void StylusEdditor::createKeybordShortcuts()
 {
-	Wt::WApplication::instance()->globalKeyPressed().connect(this, [=](Wt::WKeyEvent e){
+	Wt::WApplication::instance()->globalKeyWentDown().connect(this, [=](Wt::WKeyEvent e){
 		if(e.key() == Wt::Key::Key_7){
 			sidebar_left_hamburger->clicked().emit(Wt::WMouseEvent());
 		}
 		if(e.key() == Wt::Key::Key_9){
 			sidebar_right_hamburger->clicked().emit(Wt::WMouseEvent());
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::Down){
+			std::cout << "\n\n select next sibling \n\n";
+			if(stylusState_->selectedElement){
+				auto nextElement = stylusState_->selectedElement->NextSiblingElement();
+				if(nextElement){
+					nodeSelected(nextElement);
+					tree_view_->createTree();
+				}else if(stylusState_->selectedElement->FirstChildElement()){
+					nodeSelected(stylusState_->selectedElement->FirstChildElement());
+					tree_view_->createTree();
+				}else {
+					auto parent = stylusState_->selectedElement->Parent();
+					while(parent != stylusState_->selectedTemplate){
+						if(parent->NextSiblingElement()){
+							nodeSelected(parent->NextSiblingElement());
+							tree_view_->createTree();
+							break;
+						}
+						parent = parent->Parent();
+					}
+				}
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::Up){
+			std::cout << "\n\n select previous sibling \n\n";
+			if(stylusState_->selectedElement){
+				auto prevElement = stylusState_->selectedElement->PreviousSiblingElement();
+				if(prevElement){
+					nodeSelected(prevElement);
+					tree_view_->createTree();
+				}else if (stylusState_->selectedElement->Parent() != stylusState_->selectedTemplate){
+					nodeSelected(stylusState_->selectedElement->Parent());
+					tree_view_->createTree();
+				}
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::Left){
+			std::cout << "\n\n select parent \n\n";
+			if(stylusState_->selectedElement){
+				auto parentElement = stylusState_->selectedElement->Parent();
+				if(stylusState_->selectedElement->Parent() != stylusState_->selectedTemplate){
+					nodeSelected(parentElement);
+					tree_view_->createTree();
+				}
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::Right){
+			std::cout << "\n\n select first child \n\n";
+			if(stylusState_->selectedElement){
+				auto childElement = stylusState_->selectedElement->FirstChildElement();
+				if(childElement){
+					nodeSelected(childElement);
+					tree_view_->createTree();
+				}
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::D){
+			std::cout << "\n\n Delete element \n\n";
+			auto element = stylusState_->selectedElement;
+			if(element){
+				if(element->PreviousSiblingElement()){
+					toggleOutline(false);
+					stylusState_->selectedElement = element->PreviousSiblingElement();
+					toggleOutline(true);
+				}else if (element->Parent() != stylusState_->selectedTemplate && element != stylusState_->selectedTemplate){
+					toggleOutline(false);
+					stylusState_->selectedElement = element->Parent();
+					toggleOutline(true);
+				}
+
+				tree_view_->removeElement(element->ToElement());
+				// createDevApp();
+				updateResources();
+				tree_view_->createTree();
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::A){
+			std::cout << "\n\n Add Sibling up \n\n";
+			if(stylusState_->selectedElement){
+				tree_view_->addSiblingElementBefore(stylusState_->selectedElement->ToElement());
+				tree_view_->createTree();
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::S){
+			std::cout << "\n\n Add Sibling down \n\n";
+			if(stylusState_->selectedElement){
+				tree_view_->addSiblingElementAfter(stylusState_->selectedElement->ToElement());
+				tree_view_->createTree();
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::Z){
+			std::cout << "\n\n Add Child first \n\n";
+			if(stylusState_->selectedElement){
+				tree_view_->addChildElementFirst(stylusState_->selectedElement->ToElement());
+				tree_view_->createTree();
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::X){
+			std::cout << "\n\n Add Child last \n\n";
+			if(stylusState_->selectedElement){
+				tree_view_->addChildElementLast(stylusState_->selectedElement->ToElement());
+				tree_view_->createTree();
+			}
+		}
+
+
+
+
+		if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::Up){
+			std::cout << "\n\n Move element up \n\n";
+			if(stylusState_->selectedElement){
+				tree_view_->moveElementUp(stylusState_->selectedElement->ToElement());
+				tree_view_->createTree();
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::Down){
+			std::cout << "\n\n Move element down \n\n";
+			if(stylusState_->selectedElement){
+				tree_view_->moveElementDown(stylusState_->selectedElement->ToElement());
+				tree_view_->createTree();
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::Right){
+			std::cout << "\n\n Move element right \n\n";
+			if(stylusState_->selectedElement){
+				tree_view_->moveElementRight(stylusState_->selectedElement->ToElement());
+				tree_view_->createTree();
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::C){
+			std::cout << "\n\n Copy element \n\n";
+			if(stylusState_->selectedElement){
+				stylusState_->copyNode = stylusState_->selectedElement->DeepClone(&stylusState_->doc);
+			}
+		}
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::V){
+			std::cout << "\n\n Paste element \n\n";
+			toggleOutline(false);
+			if(stylusState_->selectedElement && stylusState_->copyNode){
+				tree_view_->addSiblingElementAfter(stylusState_->selectedElement->ToElement(), stylusState_->copyNode->ToElement());
+				tree_view_->createTree();
+			}
+		}
+
+
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::Space){
+			std::cout << "\n\n Focus on element contents \n\n";
+			element_contents_->element_content_textarea->setFocus(true);
 		}
 	});
 }
@@ -59,6 +208,7 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 	// style classes widget
 	elementClassEdditor_ = sidebar_right->bindWidget("element-classes-edditor", std::make_unique<ElementClassEdditor>());
 	element_contents_ = sidebar_left->bindWidget("element-content-edditor", std::make_unique<ElementContent>());
+	
 	element_contents_->setFoldersData(stylus_templates_->folders_data_);
 	element_contents_->contentChanged().connect(this, [=](){
 		stylusState_->selectedElement->ToElement()->SetText(element_contents_->getData().c_str());

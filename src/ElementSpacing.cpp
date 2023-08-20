@@ -4,9 +4,9 @@
 ElementSpacingWidget::ElementSpacingWidget(std::shared_ptr<Config> tailwindConfig)
 	: tailwindConfig_(tailwindConfig)
 {
-	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200");
+	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900");
 	setTitle("Spacing");
-	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-500");
+	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900");
 	setCollapsible(true);
 	content_temp = setCentralWidget(std::make_unique<Wt::WTemplate>(tr("stylus-spacing-template")));
 
@@ -23,24 +23,24 @@ ElementSpacingWidget::ElementSpacingWidget(std::shared_ptr<Config> tailwindConfi
 
 
 
-	margin_all_widget_ = content_temp->bindWidget("margin.all.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin));
-	margin_vertical_widget_ = content_temp->bindWidget("margin.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_x));
-	margin_horizontal_widget_ = content_temp->bindWidget("margin.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_y));
-	margin_top_widget_ = content_temp->bindWidget("margin.top.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_top));
-	margin_right_widget_ = content_temp->bindWidget("margin.right.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_right));
-	margin_bottom_widget_ = content_temp->bindWidget("margin.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_bottom));
-	margin_left_widget_ = content_temp->bindWidget("margin.left.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.margin_left));
+	margin_all_widget_ = content_temp->bindWidget("margin.all.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.margin));
+	margin_vertical_widget_ = content_temp->bindWidget("margin.vertical.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.margin_x));
+	margin_horizontal_widget_ = content_temp->bindWidget("margin.horizontal.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.margin_y));
+	margin_top_widget_ = content_temp->bindWidget("margin.top.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.margin_top));
+	margin_right_widget_ = content_temp->bindWidget("margin.right.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.margin_right));
+	margin_bottom_widget_ = content_temp->bindWidget("margin.bottom.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.margin_bottom));
+	margin_left_widget_ = content_temp->bindWidget("margin.left.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.margin_left));
 
-	padding_all_widget_ = content_temp->bindWidget("padding.all.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding));
-	padding_vertical_widget_ = content_temp->bindWidget("padding.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_x));
-	padding_horizontal_widget_ = content_temp->bindWidget("padding.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_y));
-	padding_top_widget_ = content_temp->bindWidget("padding.top.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_top));
-	padding_right_widget_ = content_temp->bindWidget("padding.right.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_right));
-	padding_bottom_widget_ = content_temp->bindWidget("padding.bottom.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_bottom));
-	padding_left_widget_ = content_temp->bindWidget("padding.left.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.padding_left));
+	padding_all_widget_ = content_temp->bindWidget("padding.all.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.padding));
+	padding_vertical_widget_ = content_temp->bindWidget("padding.vertical.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.padding_x));
+	padding_horizontal_widget_ = content_temp->bindWidget("padding.horizontal.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.padding_y));
+	padding_top_widget_ = content_temp->bindWidget("padding.top.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.padding_top));
+	padding_right_widget_ = content_temp->bindWidget("padding.right.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.padding_right));
+	padding_bottom_widget_ = content_temp->bindWidget("padding.bottom.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.padding_bottom));
+	padding_left_widget_ = content_temp->bindWidget("padding.left.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.padding_left));
 
-	space_horizontal_widget_ = content_temp->bindWidget("space.horizontal.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.space_y));
-	space_vertical_widget_ = content_temp->bindWidget("space.vertical.control", std::make_unique<ComboBoxClassWithCustoms>(tailwindConfig_->spacing.space_x));
+	space_horizontal_widget_ = content_temp->bindWidget("space.horizontal.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.space_y));
+	space_vertical_widget_ = content_temp->bindWidget("space.vertical.control", std::make_unique<StyleClassComboBox>(tailwindConfig_->spacing.space_x));
 
 	checkbox_space_x_reverse_ = content_temp->bindWidget("space.vertical.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));
 	checkbox_space_y_reverse_ = content_temp->bindWidget("space.horizontal.reverse.controle", std::make_unique<Wt::WCheckBox>("reverse"));

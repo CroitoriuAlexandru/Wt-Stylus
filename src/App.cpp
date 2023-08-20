@@ -22,8 +22,9 @@ App::App(const Wt::WEnvironment &env)
 
 	setCssTheme("default");
 	useStyleSheet(defStyles);
-	
 
+	globalKeyWentDown().preventDefaultAction(true);
+	
 	// add custom javascript files
 	// require("https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"); // testing for future integration with stylus
 	require("https://cdn.tailwindcss.com");

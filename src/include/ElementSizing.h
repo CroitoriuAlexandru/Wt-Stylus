@@ -34,13 +34,13 @@ private:
     std::shared_ptr<Config> tailwindConfig_;
 	Wt::WTemplate* content_temp;
 
-	ComboBoxClassWithCustoms* width_widget_;
-	ComboBoxClassWithCustoms* minWidth_widget_;
-	ComboBoxClassWithCustoms* maxWidth_widget_;
+	StyleClassComboBox* width_widget_;
+	StyleClassComboBox* minWidth_widget_;
+	StyleClassComboBox* maxWidth_widget_;
 
-	ComboBoxClassWithCustoms* height_widget_;
-	ComboBoxClassWithCustoms* minHeight_widget_;
-	ComboBoxClassWithCustoms* maxHeight_widget_;
+	StyleClassComboBox* height_widget_;
+	StyleClassComboBox* minHeight_widget_;
+	StyleClassComboBox* maxHeight_widget_;
 
 	Wt::Signal<> styleChanged_;
 

@@ -33,12 +33,12 @@ private:
 	Wt::WTemplate* content_temp;
 	std::shared_ptr<Config> tailwindConfig_;
 	
-	ComboBoxClassWithCustoms*	comboBox_box_shadow;
+	StyleClassComboBox*	comboBox_box_shadow;
 	Wt::WCheckBox* 				checkBox_box_shadow_inner;
 	ComboBoxColors*				box_shadow_color;
-	ComboBoxClassWithCustoms*	comboBox_opacity;
-	ComboBoxClassWithCustoms*	comboBox_mix_blend_mode;
-	ComboBoxClassWithCustoms*	comboBox_bg_blend_mode;
+	StyleClassComboBox*	comboBox_opacity;
+	StyleClassComboBox*	comboBox_mix_blend_mode;
+	StyleClassComboBox*	comboBox_bg_blend_mode;
 
 	Wt::Signal<> styleChanged_;
 
