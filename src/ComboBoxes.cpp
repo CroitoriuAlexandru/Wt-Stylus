@@ -10,13 +10,13 @@ void StyleClassComboBox::setCustom(bool custom)
 		checkbox_custom_value_->setChecked(true);
 		comboBox_class->hide();
 		lineEdit_size_custom_->show();
-		lineEdit_size_custom_->setFocus();
+		// lineEdit_size_custom_->setFocus();
 		checkbox_custom_value_->toggleStyleClass("[&>span]:text-green-700", true, true);
 	}else {
 		checkbox_custom_value_->setChecked(false);
 		lineEdit_size_custom_->hide();
 		comboBox_class->show();
-		comboBox_class->setFocus();
+		// comboBox_class->setFocus();
 		checkbox_custom_value_->toggleStyleClass("[&>span]:text-green-700", false, true);
 	}
 }
@@ -79,60 +79,60 @@ StyleClassComboBox::StyleClassComboBox(Propriety propriety)
 
 	// emit signal when something changes
 	comboBox_class->sactivated().connect(this, [=](Wt::WString className){
+		// comboBox_class->setFocus();
 		classChanged_.emit();
-		comboBox_class->setFocus();
 	});
 
 	// create keybord shortcuts when combobox is focused
-	comboBox_class->keyWentDown().connect(this, [=](Wt::WKeyEvent e){
-		if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::Q){
-			if(comboBox_class->currentText() == "none") return;
-			if(checkbox_important_->isChecked()) {
-				checkbox_important_->setChecked(false);
-				checkbox_important_->toggleStyleClass("text-red-500", false, true);
-			} else {
-				checkbox_important_->setChecked(true);
-				checkbox_important_->toggleStyleClass("text-red-500", true, true);
-			}
-			classChanged_.emit();
-			comboBox_class->setFocus();
-		}else if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::W){
-			if(checkbox_custom_value_->isHidden()) return;
-			if(checkbox_custom_value_->isChecked()) {
-				setCustom(false);
-			} else {
-				setCustom(true);
-			}
-		}else if (e.key() == Wt::Key::Left || e.key() == Wt::Key::Up){
-			comboBox_class->setCurrentIndex(comboBox_class->currentIndex() - 1);
-			classChanged_.emit();
-			comboBox_class->setFocus();
-		}else if (e.key() == Wt::Key::Right || e.key() == Wt::Key::Down){
-			comboBox_class->setCurrentIndex(comboBox_class->currentIndex() + 1);
-			classChanged_.emit();
-			comboBox_class->setFocus();
-		}
-	});
+	// comboBox_class->keyWentDown().connect(this, [=](Wt::WKeyEvent e){
+	// 	if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::Q){
+	// 		if(comboBox_class->currentText() == "none") return;
+	// 		if(checkbox_important_->isChecked()) {
+	// 			checkbox_important_->setChecked(false);
+	// 			checkbox_important_->toggleStyleClass("text-red-500", false, true);
+	// 		} else {
+	// 			checkbox_important_->setChecked(true);
+	// 			checkbox_important_->toggleStyleClass("text-red-500", true, true);
+	// 		}
+	// 		classChanged_.emit();
+	// 		comboBox_class->setFocus();
+	// 	}else if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::W){
+	// 		if(checkbox_custom_value_->isHidden()) return;
+	// 		if(checkbox_custom_value_->isChecked()) {
+	// 			setCustom(false);
+	// 		} else {
+	// 			setCustom(true);
+	// 		}
+		// }else if (e.key() == Wt::Key::Left || e.key() == Wt::Key::Up){
+		// 	comboBox_class->setCurrentIndex(comboBox_class->currentIndex() - 1);
+		// 	classChanged_.emit();
+		// 	comboBox_class->setFocus();
+		// }else if (e.key() == Wt::Key::Right || e.key() == Wt::Key::Down){
+		// 	comboBox_class->setCurrentIndex(comboBox_class->currentIndex() + 1);
+		// 	classChanged_.emit();
+		// 	comboBox_class->setFocus();
+	// 	}
+	// });
 
-		lineEdit_size_custom_->keyWentDown().connect(this, [=](Wt::WKeyEvent e){
-			if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::Q){
-				if(checkbox_important_->isChecked()) {
-					checkbox_important_->setChecked(false);
-					checkbox_important_->toggleStyleClass("text-red-500", false, true);
-				} else {
-					checkbox_important_->setChecked(true);
-					checkbox_important_->toggleStyleClass("text-red-500", true, true);
-				}
-				classChanged_.emit();
-				lineEdit_size_custom_->setFocus();
-			}else if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::W){
-				if(checkbox_custom_value_->isChecked()) {
-					setCustom(false);
-				} else {
-					setCustom(true);
-				}
-			}
-		});
+		// lineEdit_size_custom_->keyWentDown().connect(this, [=](Wt::WKeyEvent e){
+		// 	if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::Q){
+		// 		if(checkbox_important_->isChecked()) {
+		// 			checkbox_important_->setChecked(false);
+		// 			checkbox_important_->toggleStyleClass("text-red-500", false, true);
+		// 		} else {
+		// 			checkbox_important_->setChecked(true);
+		// 			checkbox_important_->toggleStyleClass("text-red-500", true, true);
+		// 		}
+		// 		classChanged_.emit();
+		// 		lineEdit_size_custom_->setFocus();
+		// 	}else if(e.modifiers() == Wt::KeyboardModifier::Shift && e.key() == Wt::Key::W){
+		// 		if(checkbox_custom_value_->isChecked()) {
+		// 			setCustom(false);
+		// 		} else {
+		// 			setCustom(true);
+		// 		}
+		// 	}
+		// });
 
 }
 
@@ -173,7 +173,9 @@ return selectedClass;
 
 void StyleClassComboBox::setValue(std::string className)
 {
-	if(className.compare("") == 0 || className.compare("none") == 0)
+	//  this is used by the search to reset styles to the default value 
+	std::string reset = "res";
+	if(className.compare("") == 0 || className.compare("none") == 0 || className.substr(className.length() - reset.length()) == reset)
 	{
 		comboBox_class->setCurrentIndex(comboBox_class->findText(defaultValue, Wt::MatchFlag::StringExactly));
 		checkbox_important_->setChecked(false);

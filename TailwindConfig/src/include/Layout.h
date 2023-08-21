@@ -43,6 +43,8 @@ namespace Tailwind {
         Propriety visibility;
         Propriety z_index;
 
+        std::vector<std::string> search_data();
+
 
         std::vector<std::string> columns_variants;
         std::vector<std::string> break_before_after_variants;

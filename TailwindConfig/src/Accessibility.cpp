@@ -12,6 +12,16 @@ Accessibility::Accessibility()
     }, "https://tailwindcss.com/docs/screen-readers");
 }
 
+std::vector<std::string> Accessibility::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : screen_readers.styleClasses_){
+        data.push_back("accessibility/" + styleClass.className_);
+    }
+    return data;
+}
+
+
 std::string Accessibility::screenReadersData()
 {
     std::string data = " ";

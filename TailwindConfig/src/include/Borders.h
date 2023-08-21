@@ -48,6 +48,7 @@ namespace Tailwind {
         Propriety ring_offset_width;
         // ring offset color has to many classes and its interpreted programaticaly
 
+        std::vector<std::string> search_data();
 
         // used just for printing
         std::string borderRadiusData();

@@ -273,6 +273,87 @@ Typography::Typography(std::vector<std::string> spacing_variants)
 
 }
 
+std::vector<std::string> Typography::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : font_family.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : font_size.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : font_smoothing.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : font_style.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : font_weight.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : font_variant_numeric.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : letter_spacing.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : line_clamp.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : line_height.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : list_style_image.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : list_style_position.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : list_style_type.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_align.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_decoration.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_decoration_style.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_decoration_thikness.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_underline_offset.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_transform.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_overflow.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : text_indent.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : vertical_align.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : whitespace.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : word_break.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : hyphens.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    for(auto styleClass : content.styleClasses_){
+        data.push_back("typography/" + styleClass.className_);
+    }
+    return data;
+}
+
 std::string Typography::fontFamilyData()
 {
     std::string data = " ";

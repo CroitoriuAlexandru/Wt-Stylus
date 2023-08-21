@@ -34,6 +34,8 @@ namespace Tailwind {
         Propriety hyphens;
         Propriety content;
 
+        std::vector<std::string> search_data();
+
         
         boost::regex font_family_regex = boost::regex("(?<=\n| )(!)?font-(sans|serif|mono)(?!\\w|-)");
         boost::regex font_size_regex = boost::regex("(?<=\n| )(!)?text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)(?!\\w|-)");

@@ -24,12 +24,9 @@ public:
     Wt::WPushButton* sizing_btn_display;
     Wt::WPushButton* background_btn_display;
 
+    std::shared_ptr<Config> tailwindConfig_;
+
     std::string getStyles();
-private:
-    std::vector<std::string> findAndRemoveMatches(std::regex regex, std::string& str);
-    std::vector<std::string> findAndRemoveMatches(boost::regex regex, std::string& str);
-    std::string findAndRemoveMatche(std::regex regex, std::string& str);
-    std::string findAndRemoveMatche(boost::regex regex, std::string& str);
 
     ElementBackgroundWidget *backgroundWidget_;
     ElementSpacingWidget *spacingWidget_;
@@ -37,6 +34,11 @@ private:
     ElementEffectsWidget *effectsWidget_;
     ElementTransformsWidget *transformsWidget_;
     ElementLayoutWidget *layoutWidget_;
+private:
+    std::vector<std::string> findAndRemoveMatches(std::regex regex, std::string& str);
+    std::vector<std::string> findAndRemoveMatches(boost::regex regex, std::string& str);
+    std::string findAndRemoveMatche(std::regex regex, std::string& str);
+    std::string findAndRemoveMatche(boost::regex regex, std::string& str);
 
     std::string notFoundClasses = "";
     std::string backgroundClasses = "";
@@ -47,6 +49,5 @@ private:
     std::string layoutClasses = "";
     
     Wt::Signal<std::string> styleChanged_;
-    std::shared_ptr<Config> tailwindConfig_;
 
 };

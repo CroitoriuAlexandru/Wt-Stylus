@@ -206,6 +206,108 @@ Layout::Layout(std::vector<std::string> spacingScale)
     }
 };
 
+std::vector<std::string> Layout::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : aspect_ratio.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : container.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : columns.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : break_after.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : break_before.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : break_inside.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : box_decoration_break.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : box_sizing.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : display.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : floats.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : clear.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : isolation.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : object_fit.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : object_position.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : overflow.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : overflow_x.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : overflow_y.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : overscroll_behavior.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : overscroll_behavior_x.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : overscroll_behavior_y.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_inset.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_inset_x.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_inset_y.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_top.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_right.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_bottom.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_left.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_start.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : position_end.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : visibility.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    for(auto styleClass : z_index.styleClasses_){
+        data.push_back("layout/" + styleClass.className_);
+    }
+    return data;
+}
+
 
 std::string Layout::aspectRatioData() {
     std::string data = " ";

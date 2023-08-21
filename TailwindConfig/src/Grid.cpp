@@ -132,6 +132,67 @@ Grid::Grid(std::vector<std::string> spacing_variants)
 
 }
 
+std::vector<std::string> Grid::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : order.styleClasses_) {
+        data.push_back("flex/grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_template_columns.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_template_rows.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_cols_start.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_cols_span.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_cols_end.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_rows_start.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_rows_span.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_rows_end.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_auto_flow.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_auto_columns.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : grid_auto_rows.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : gap.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : gap_x.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : gap_y.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : place_content.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : place_items.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+    for(auto styleClass : place_self.styleClasses_) {
+        data.push_back("grid/" + styleClass.className_);
+    }
+
+return data;
+}
+
 std::string Grid::orderData()
 {
     std::string data = " ";

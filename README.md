@@ -14,6 +14,7 @@ ctrl + d = Delete Node
 7 = Toggle Left Panel
 9 = Toggle Right Panel
 
-### Combo Box keyboard shortcuts
-shift + q = Toggle Important
-shift + w = Toggle Custom
+### Commands Panel
+ctrl + z = select template
+ctrl + x = select Style
+ctrl + c = select ... still thinking

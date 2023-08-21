@@ -6,15 +6,17 @@ namespace Tailwind {
     class Transforms {
     public:
         Transforms(std::vector<std::string> sizing_variants = {});
-        Propriety scale = Propriety({}, "");
-        Propriety scale_x = Propriety({}, "");
-        Propriety scale_y = Propriety({}, "");
-        Propriety rotate = Propriety({}, "");
-        Propriety translate_x = Propriety({}, "");
-        Propriety translate_y = Propriety({}, "");
-        Propriety skew_x = Propriety({}, "");
-        Propriety skew_y = Propriety({}, "");
-        Propriety transform_origin = Propriety({}, "");
+        Propriety scale;
+        Propriety scale_x;
+        Propriety scale_y;
+        Propriety rotate;
+        Propriety translate_x;
+        Propriety translate_y;
+        Propriety skew_x;
+        Propriety skew_y;
+        Propriety transform_origin;
+
+        std::vector<std::string> search_data();
 
         std::string scaleData();
         std::string rotateData();

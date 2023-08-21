@@ -51,6 +51,8 @@ namespace Tailwind {
         boost::regex place_items_regex =        boost::regex("(?<=\n| )(!)?place-items-(start|end|center|baseline|stretch)(?!\\w|-)");
         boost::regex place_content_regex =      boost::regex("(?<=\n| )(!)?place-content-(center|start|end|between|around|evenly|baseline|stretch)(?!\\w|-)");
 
+        std::vector<std::string> search_data();
+
 
         std::string orderData();
         std::string gridTemplateData();

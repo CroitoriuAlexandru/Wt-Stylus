@@ -8,9 +8,11 @@
 #include <Wt/WPushButton.h>
 #include <Wt/WLabel.h>
 #include <regex>
+#include <Wt/WSuggestionPopup.h>
 
 void StylusEdditor::createKeybordShortcuts()
 {
+
 	Wt::WApplication::instance()->globalKeyWentDown().connect(this, [=](Wt::WKeyEvent e){
 		if(e.key() == Wt::Key::Key_7){
 			sidebar_left_hamburger->clicked().emit(Wt::WMouseEvent());
@@ -167,7 +169,247 @@ void StylusEdditor::createKeybordShortcuts()
 			std::cout << "\n\n Focus on element contents \n\n";
 			element_contents_->element_content_textarea->setFocus(true);
 		}
+
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::Q){
+			std::cout << "\n\n launch search dialog \n\n";
+			createSearchDialog();
+		}
+
+		if(e.modifiers() == Wt::KeyboardModifier::Control && e.key() == Wt::Key::B){
+			if(Wt::WApplication::instance()->globalKeyWentDown().propagationPrevented()){
+				std::cout << "\n\n propagation not prevented \n\n";
+				Wt::WApplication::instance()->globalKeyWentDown().preventDefaultAction(false);
+				Wt::WApplication::instance()->globalKeyWentDown().preventPropagation(false);
+			}else {
+				std::cout << "\n\n propagation Prevented \n\n";
+				Wt::WApplication::instance()->globalKeyWentDown().preventDefaultAction(true);
+				Wt::WApplication::instance()->globalKeyWentDown().preventPropagation(true);
+			}
+		}
 	});
+}
+
+void StylusEdditor::createSearchDialog()
+{
+	if(Wt::WApplication::instance()->findWidget("search-dialog"))
+	{
+		Wt::WApplication::instance()->findWidget("search-input")->setFocus(true);
+		return;
+	}
+	auto dialog = Wt::WApplication::instance()->root()->addChild(std::make_unique<Wt::WDialog>("title"));
+	dialog->setObjectName("search-dialog");
+	// dialog->setTitleBarEnabled(false);
+	dialog->rejectWhenEscapePressed(true);
+	dialog->setModal(false);
+	dialog->setMovable(false);
+	dialog->setResizable(false);
+	dialog->setOffsets(100, Wt::Side::Top);
+	dialog->setWidth(400);
+	dialog->setStyleClass("text-center !border-0 !bg-transparent !p-0 !m-0 !rounded-none !shadow-none ");
+	dialog->contents()->setStyleClass("max-w-full");
+	// Set options for email address suggestions:
+	Wt::WSuggestionPopup::Options contactOptions;
+	contactOptions.highlightBeginTag = "<span class=\"highlight\">";
+	contactOptions.highlightEndTag = "</span>";
+	contactOptions.listSeparator = '/';
+	// contactOptions.whitespace = "/";
+	contactOptions.wordSeparators = "/";
+	// contactOptions.appendReplacedText = "/";
+
+	auto sp = dialog->contents()->addChild(
+      std::make_unique<Wt::WSuggestionPopup>(
+            Wt::WSuggestionPopup::generateMatcherJS(contactOptions),
+            Wt::WSuggestionPopup::generateReplacerJS(contactOptions)));
+
+
+	auto lineEdit = dialog->contents()->addWidget(std::make_unique<Wt::WLineEdit>());
+	lineEdit->keyWentDown().preventDefaultAction(true);
+	lineEdit->keyWentDown().connect(this, [=](Wt::WKeyEvent e){
+		if(e.modifiers() == Wt::KeyboardModifier::Control &&e.key() == Wt::Key::Z){
+			lineEdit->setText("");
+			setSearchOptions(sp, dialog, SearchOption::Folders);
+		}else if (e.modifiers() == Wt::KeyboardModifier::Control &&e.key() == Wt::Key::X){
+			lineEdit->setText("");
+			setSearchOptions(sp, dialog, SearchOption::Classes);
+		}else if (e.modifiers() == Wt::KeyboardModifier::Control &&e.key() == Wt::Key::C){
+			lineEdit->setText("");
+			setSearchOptions(sp, dialog, SearchOption::Focus);
+		}
+	});
+	lineEdit->keyWentDown().preventDefaultAction(false);
+	lineEdit->setObjectName("search-input");
+	lineEdit->setStyleClass("bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 w-full max-w-full");
+	lineEdit->setPlaceholderText("Search");
+	sp->setStyleClass("flex wrap");
+	sp->forEdit(lineEdit, Wt::PopupTrigger::Editing);
+
+	sp->activated().connect(this, [=](){
+		auto text = lineEdit->text().toUTF8();
+			// std::cout << "\n\n text: " << text << "\n\n";
+		if(text[0] == '@'){
+			text = text.substr(2);
+
+			std::string folderName = "";
+			std::string fileName = "";
+			std::string messageId = "";
+			auto pos = text.find("/");
+			if(pos != std::string::npos){
+			folderName = text.substr(0, pos);
+			text = text.substr(pos + 1);
+			}
+			pos = text.find("/");
+			if(pos != std::string::npos){
+				fileName = text.substr(0, pos);
+			}
+			text = text.substr(pos + 1);
+			messageId = text;
+			setTemplate(folderName, fileName, messageId, "template", true);
+	
+		}else if (text[0] == '!'){
+			text = text.substr(2);
+			auto pos = text.find("/");
+			std::string styleCathegory = text.substr(0, pos);
+			pos = text.find("/");
+			std::string styleClass = text.substr(pos + 1);
+			std::cout << "\n\n styleCathegory: " << styleCathegory << "\n\n";
+			std::cout << "\n\n styleClass: " << styleClass << "\n\n";
+			if(styleCathegory.compare("spacing") == 0){
+				if(styleClass.compare("reset") == 0){
+					elementClassEdditor_->spacingWidget_->resetStyles();
+				}else if(styleClass.find("p-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->padding_all_widget_->setValue(styleClass);
+				}else if(styleClass.find("py-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->padding_horizontal_widget_->setValue(styleClass);
+				}else if(styleClass.find("px-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->padding_vertical_widget_->setValue(styleClass);
+				}else if(styleClass.find("pt-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->padding_top_widget_->setValue(styleClass);
+				}else if(styleClass.find("pr-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->padding_right_widget_->setValue(styleClass);
+				}else if(styleClass.find("pb-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->padding_bottom_widget_->setValue(styleClass);
+				}else if(styleClass.find("pl-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->padding_left_widget_->setValue(styleClass);
+				}else if(styleClass.find("m-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->margin_all_widget_->setValue(styleClass);
+				}else if(styleClass.find("my-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->margin_horizontal_widget_->setValue(styleClass);
+				}else if(styleClass.find("mx-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->margin_vertical_widget_->setValue(styleClass);
+				}else if(styleClass.find("mt-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->margin_top_widget_->setValue(styleClass);
+				}else if(styleClass.find("mr-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->margin_right_widget_->setValue(styleClass);
+				}else if(styleClass.find("mb-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->margin_bottom_widget_->setValue(styleClass);
+				}else if(styleClass.find("ml-") != std::string::npos){
+					elementClassEdditor_->spacingWidget_->margin_left_widget_->setValue(styleClass);
+				}else if(styleClass.find("space-x-") != std::string::npos){
+					if(styleClass.find("reverse-res") != std::string::npos){
+						elementClassEdditor_->spacingWidget_->checkbox_space_x_reverse_->setChecked(false);
+					}else if(styleClass.find("reverse") != std::string::npos){
+						elementClassEdditor_->spacingWidget_->checkbox_space_x_reverse_->setChecked(true);
+					}else {
+						elementClassEdditor_->spacingWidget_->space_vertical_widget_->setValue(styleClass);
+					}
+
+				}else if(styleClass.find("space-y-") != std::string::npos){
+					if(styleClass.find("reverse-res") != std::string::npos){
+						elementClassEdditor_->spacingWidget_->checkbox_space_y_reverse_->setChecked(false);
+					}else if(styleClass.find("reverse") != std::string::npos){
+						elementClassEdditor_->spacingWidget_->checkbox_space_y_reverse_->setChecked(true);
+					}else {
+						elementClassEdditor_->spacingWidget_->space_horizontal_widget_->setValue(styleClass);
+					}
+				}
+				elementClassEdditor_->spacingWidget_->styleChanged().emit();
+			}else if(styleCathegory.compare("sizing") == 0){
+				
+				if(styleClass.find("min-w-") != std::string::npos){
+					elementClassEdditor_->sizingWidget_->minWidth_widget_->setValue(styleClass);
+				}else if(styleClass.find("min-h-") != std::string::npos){
+					elementClassEdditor_->sizingWidget_->minHeight_widget_->setValue(styleClass);
+				}else if(styleClass.find("max-w-") != std::string::npos){
+					elementClassEdditor_->sizingWidget_->maxWidth_widget_->setValue(styleClass);
+				}else if(styleClass.find("max-h-") != std::string::npos){
+					elementClassEdditor_->sizingWidget_->maxHeight_widget_->setValue(styleClass);
+				}else if(styleClass.find("w-") != std::string::npos){
+					elementClassEdditor_->sizingWidget_->width_widget_->setValue(styleClass);
+				}else if(styleClass.find("h-") != std::string::npos){
+					elementClassEdditor_->sizingWidget_->height_widget_->setValue(styleClass);
+				}
+				elementClassEdditor_->sizingWidget_->styleChanged().emit();
+			}
+		}
+		lineEdit->setText("");
+		lineEdit->setFocus(true);
+	});
+	dialog->finished().connect(this, [=](Wt::DialogCode code) {
+		if(code == Wt::DialogCode::Accepted){
+			std::cout << "\n\n accepted \n\n";
+		}else {
+			std::cout << "\n\n rejected \n\n";
+		}
+		Wt::WApplication::instance()->root()->removeChild(dialog);
+	});
+	dialog->animateShow(Wt::WAnimation(Wt::AnimationEffect::Fade, Wt::TimingFunction::EaseInOut, 250));
+	setSearchOptions(sp, dialog, SearchOption::Classes);
+}
+
+void StylusEdditor::setSearchOptions(Wt::WSuggestionPopup *sp, Wt::WDialog *dialog, SearchOption searchOption)
+{
+	sp->clearSuggestions();
+	if(searchOption == SearchOption::Folders){
+		dialog->setWindowTitle("Chose Template");
+		for(auto& folder : stylus_templates_->folders_data_){
+			auto option = "";
+			for(auto& file : folder.xmlFiles){
+				for(auto& message : file.messages){
+					sp->addSuggestion("@/" + folder.folderName + "/" + file.fileName + "/" + message);
+				}
+			}
+		}
+	}else if (searchOption == SearchOption::Classes){
+		dialog->setWindowTitle("Set Style Classes");
+		auto sizing_data = elementClassEdditor_->tailwindConfig_->sizing.search_data();
+		auto spacing_data = elementClassEdditor_->tailwindConfig_->spacing.search_data();
+		sp->addSuggestion("!/sizing/reset");
+		for(int i = 0; i < sizing_data.size(); i++){
+			auto sizingData = sizing_data[i];
+			if(sizingData.compare("sizing/none") == 0){
+				// get last position of - and get everithing before it
+				sizingData = sizing_data[i+1];
+				auto pos = sizingData.find_last_of("-");
+				sizingData = sizingData.substr(0, pos);
+				std::string text = "!/" + sizingData + "-res";
+				sp->addSuggestion(text);
+			}else {
+				sp->addSuggestion("!/" + sizingData);
+			}
+		}
+
+		sp->addSuggestion("!/spacing/reset");
+		for(int i = 0; i < spacing_data.size(); i++){
+			auto spacingData = spacing_data[i];
+			if(spacingData.compare("spacing/none") == 0){
+				// get last position of - and get everithing before it
+				spacingData = spacing_data[i+1];
+				auto pos = spacingData.find_last_of("-");
+				spacingData = spacingData.substr(0, pos);
+				std::string text = "!/" + spacingData + "-res";
+				sp->addSuggestion(text);
+			}else if(spacingData.compare("spacing/space-x-reverse") == 0){
+				sp->addSuggestion("!/spacing/space-x-reverse-res");
+				sp->addSuggestion("!/" + spacingData);
+			}else if(spacingData.compare("spacing/space-y-reverse") == 0){
+				sp->addSuggestion("!/spacing/space-y-reverse-res");
+				sp->addSuggestion("!/" + spacingData);
+			}else{
+				sp->addSuggestion("!/" + spacingData);
+			}
+		}
+	}
+	
 }
 
 
@@ -225,8 +467,7 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 	stylus_templates_->templateSelected().connect(this, &StylusEdditor::setTemplate);
 
 	prev_temp_btn_ = sidebar_left->bindWidget("prev-temp-controler", std::make_unique<Wt::WPushButton>("prev template"));
-	std::string btn_classes = Wt::WString::tr("button-dark").toUTF8() + "!m-0.5 !p-1 text-xs";
-    prev_temp_btn_->setStyleClass(btn_classes);
+    prev_temp_btn_->setStyleClass("block cursor-pointer rounded-lg border-0 p-1 bg-neutral-900 hover:bg-neutral-800");
 	prev_temp_btn_->disable();
 	prev_temp_btn_->clicked().connect(this, [=](){
 		if(templates_data_.size() > 1){
@@ -541,29 +782,4 @@ std::unique_ptr<Wt::WPushButton> StylusEdditor::createThemeSwitcher(){
         }
     });
 	return theme_switcher;
-}
-
-// used by the application to get message resources with the paths returned from here
-std::vector<std::string> StylusEdditor::getXmlFils()
-{
-	std::vector<std::string> xmlFiles;
-	
-	auto path = stylus_templates_->xml_folder_path;
-	for(auto folderData : stylus_templates_->folders_data_)
-	{
-		for(auto xmlFileData : folderData.xmlFiles)
-		{
-			// remove .xml from end of string
-			auto fileName = xmlFileData.fileName.substr(0, xmlFileData.fileName.size()-4);
-			xmlFiles.push_back(path + folderData.folderName + "/" + fileName);
-		}
-	}
-	// std::cout << "\n\n";
-	// for(auto xmlFile : xmlFiles)
-	// {
-	// 	std::cout << "\n xmlFile: " << xmlFile << "";
-	// }
-	// std::cout << "\n\n";
-
-	return xmlFiles;
 }

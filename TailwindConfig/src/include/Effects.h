@@ -20,6 +20,7 @@ namespace Tailwind {
         Propriety mix_blend_mode;
         Propriety background_blend_mode;
 
+        std::vector<std::string> search_data();
 
         std::string boxShadowData();
         std::string boxShadowColorData();

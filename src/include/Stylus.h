@@ -16,7 +16,12 @@
 #include <iostream>
 #include <Wt/WStackedWidget.h>
 #include <Wt/WCheckBox.h>
-
+enum SearchOption
+{
+    Classes = 10,
+    Folders = 11,
+    Focus = 12,
+};
 struct TemplateData {
     std::string folderName;
     std::string fileName;
@@ -30,8 +35,10 @@ public:
     ~StylusEdditor();
     std::string cleanStringStartEnd(const std::string& input);
     void setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType, bool insideTemplate = false);
-    std::vector<std::string> getXmlFils();
+    
 private:
+    void createSearchDialog();
+    void setSearchOptions(Wt::WSuggestionPopup *sp,Wt::WDialog *dialog, SearchOption searchOption);
     void createTitleBarControls();
     std::string xml_file_path;
     void createDevApp();

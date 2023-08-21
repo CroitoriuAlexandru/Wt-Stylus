@@ -61,6 +61,30 @@ Effects::Effects(
 
 }
 
+std::vector<std::string> Effects::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : box_shadow.styleClasses_){
+        data.push_back("effects/" + styleClass.className_);
+    }
+    for(auto styleClass : box_shadow_inset.styleClasses_){
+        data.push_back("effects/" + styleClass.className_);
+    }
+    for(auto styleClass : box_shadow_color.styleClasses_){
+        data.push_back("effects/" + styleClass.className_);
+    }
+    for(auto styleClass : opacity.styleClasses_){
+        data.push_back("effects/" + styleClass.className_);
+    }
+    for(auto styleClass : mix_blend_mode.styleClasses_){
+        data.push_back("effects/" + styleClass.className_);
+    }
+    for(auto styleClass : background_blend_mode.styleClasses_){
+        data.push_back("effects/" + styleClass.className_);
+    }
+    return data;
+}
+
 std::string Effects::boxShadowData()
 {
     std::string data = " ";

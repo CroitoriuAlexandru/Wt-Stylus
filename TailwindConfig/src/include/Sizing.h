@@ -21,6 +21,8 @@ namespace Tailwind {
         std::string minHeightData();
         std::string maxHeightData();
         
+        std::vector<std::string> search_data();
+
         boost::regex width_regex = boost::regex("(?<=\n| )(!)?w-(fit|max|min|screen|full|11\\/12|10\\/12|9\\/12|8\\/12|7\\/12|6\\/12|5\\/12|4\\/12|3\\/12|2\\/12|1\\/12|5\\/6|4\\/6|3\\/6|2\\/6|1\\/6|4\\/5|3\\/5|2\\/5|1\\/5|3\\/4|2\\/4|1\\/4|2\\/3|1\\/3|1\\/2|auto|96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3\\.5|3|2\\.5|2|1\\.5|1|0\\.5|px|0|\\[\\S*\\])(?!\\w|-)");
 
         boost::regex min_width_regex = boost::regex("(?<=\n| )(!)?min-w-(0|full|min|max|fit|\\[[\\S]*\\])(?!\\w|-)");

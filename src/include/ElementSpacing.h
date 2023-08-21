@@ -22,11 +22,6 @@ public:
 	std::string getStyles();
 	void resetStyles();
 
-private:
-	void setCustomTestValues();
-
-	std::shared_ptr<Config> tailwindConfig_;
-	Wt::WTemplate* content_temp;
 
 	StyleClassComboBox* margin_all_widget_;
     StyleClassComboBox* margin_horizontal_widget_;
@@ -47,10 +42,15 @@ private:
 	StyleClassComboBox* space_vertical_widget_;
 	StyleClassComboBox* space_horizontal_widget_;
 
-	Wt::Signal<> styleChanged_;
-
 	Wt::WCheckBox* checkbox_space_x_reverse_;
 	Wt::WCheckBox* checkbox_space_y_reverse_;
+private:
+	void setCustomTestValues();
+
+	std::shared_ptr<Config> tailwindConfig_;
+	Wt::WTemplate* content_temp;
+
+	Wt::Signal<> styleChanged_;
 
 	std::regex regex_custom_padding =  std::regex("p[x,y,l,r,t,b]?-\\[[\\S]*\\]"); 
 	std::regex regex_custom_margin =  std::regex("-?m[x,y,l,r,t,b]?-\\[[\\S]*\\]");

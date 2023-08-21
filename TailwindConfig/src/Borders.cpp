@@ -193,6 +193,117 @@ Borders::Borders()
 }
 
 
+std::vector<std::string> Borders::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto border_radius_class : border_radius.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_s.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_e.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_t.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_r.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_b.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_l.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_ss.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_se.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_ee.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_es.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_tl.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_tr.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_br.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_radius_class : border_radius_bl.styleClasses_){
+        data.push_back("borders/" + border_radius_class.className_);
+    }
+    for(auto border_width_class : border_width.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_x.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_y.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_t.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_r.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_b.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_l.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_s.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_width_class : border_width_e.styleClasses_){
+        data.push_back("borders/" + border_width_class.className_);
+    }
+    for(auto border_style_class : border_style.styleClasses_){
+        data.push_back("borders/" + border_style_class.className_);
+    }
+    for(auto divide_x_class : divide_x.styleClasses_){
+        data.push_back("borders/" + divide_x_class.className_);
+    }
+    for(auto divide_y_class : divide_y.styleClasses_){
+        data.push_back("borders/" + divide_y_class.className_);
+    }
+    for(auto divide_x_reverse_class : divide_x_reverse.styleClasses_){
+        data.push_back("borders/" + divide_x_reverse_class.className_);
+    }
+    for(auto divide_y_reverse_class : divide_y_reverse.styleClasses_){
+        data.push_back("borders/" + divide_y_reverse_class.className_);
+    }
+    for(auto divide_style_class : divide_style.styleClasses_){
+        data.push_back("borders/" + divide_style_class.className_);
+    }
+    for(auto outline_width_class : outline_width.styleClasses_){
+        data.push_back("borders/" + outline_width_class.className_);
+    }
+    for(auto outline_style_class : outline_style.styleClasses_){
+        data.push_back("borders/" + outline_style_class.className_);
+    }
+    for(auto outline_offset_class : outline_offset.styleClasses_){
+        data.push_back("borders/" + outline_offset_class.className_);
+    }
+    for(auto ring_width_class : ring_width.styleClasses_){
+        data.push_back("borders/" + ring_width_class.className_);
+    }
+    for(auto ring_offset_width_class : ring_offset_width.styleClasses_){
+        data.push_back("borders/" + ring_offset_width_class.className_);
+    }
+    return data;
+}
+
 std::string Borders::borderRadiusData()
 {
     std::string data = " ";

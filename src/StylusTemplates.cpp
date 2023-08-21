@@ -134,7 +134,7 @@ void StylusTemplatesWidget::setFilePanel(Wt::WPanel* panel, std::string folderNa
     panel->setAnimation(animation);
     
     auto messages_display = panel->setCentralWidget(std::make_unique<Wt::WContainerWidget>());
-    messages_display->setStyleClass(tr("stylus-panel-content"));
+    messages_display->setStyleClass("bg-neutral-700 text-neutral-200 ");
     for(const auto message : fileData.messages)
     {
         auto file_item = messages_display->addWidget(std::make_unique<Wt::WTemplate>(tr("stylus.templates.folder.item")));
@@ -167,9 +167,9 @@ void StylusTemplatesWidget::createMenu()
     for(auto folderData : folders_data_)
     {
         auto panel = contents_folders->addWidget(std::move(createPanel(folderData.folderName)));
-        panel->titleBarWidget()->setStyleClass(tr("stylus-panel-titlebar-folder"));
-        auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(tr("svg.trash")));
-        delete_file_btn->setStyleClass("p-1 m-1 ms-auto");
+        panel->titleBarWidget()->setStyleClass("flex items-center bg-neutral-900 text-neutral-300 text-bold pl-2");
+        auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>());
+        delete_file_btn->setStyleClass("bg-[url(resources/icons/trash.svg)] !p-2 m-1 ms-auto bg-cover");
         delete_file_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
         delete_file_btn->doubleClicked().connect([=](){
             deleteFolder(folderData.folderName);
@@ -189,7 +189,7 @@ void StylusTemplatesWidget::createMenu()
         {
             auto file_iten_panel = panel_central->addWidget(std::move(createPanel(fileData.fileName)));
             setFilePanel(file_iten_panel, folderData.folderName, fileData);
-            file_iten_panel->titleBarWidget()->setStyleClass(tr("stylus-panel-titlebar-file"));
+            file_iten_panel->titleBarWidget()->setStyleClass("flex items-center bg-neutral-800 text-neutral-300 text-bold pl-4");
         }
 
     }

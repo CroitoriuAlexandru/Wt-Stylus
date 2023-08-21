@@ -24,6 +24,8 @@ namespace Tailwind {
         Propriety backdrop_opacity;
         Propriety backdrop_saturate;
         Propriety backdrop_sepia;
+        
+        std::vector<std::string> search_data();
 
         std::string blurData();
         std::string brightnessData();

@@ -43,6 +43,8 @@ namespace Tailwind {
         Propriety user_select;
         Propriety will_change;
 
+        std::vector<std::string> search_data();
+
         std::string appearanceData();
         std::string cursorData();
         std::string pointerEventsData();

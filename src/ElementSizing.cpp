@@ -57,30 +57,39 @@ ElementSizingWidget::ElementSizingWidget(std::shared_ptr<Config> tailwindConfig)
 
 std::string ElementSizingWidget::getStyles()
 {
+	bool activeClasses = false;
 	std::string elementClasses;
 
-	if(width_widget_->getValue().compare("none") != 0){ elementClasses += width_widget_->getValue() + " "; }
-	if(minWidth_widget_->getValue().compare("none") != 0){ elementClasses += minWidth_widget_->getValue() + " "; }
-	if(maxWidth_widget_->getValue().compare("none") != 0){ elementClasses += maxWidth_widget_->getValue() + " "; }
+	if(width_widget_->getValue().compare("none") != 0){ elementClasses += width_widget_->getValue() + " "; activeClasses = true; }
+	if(minWidth_widget_->getValue().compare("none") != 0){ elementClasses += minWidth_widget_->getValue() + " "; activeClasses = true; }
+	if(maxWidth_widget_->getValue().compare("none") != 0){ elementClasses += maxWidth_widget_->getValue() + " "; activeClasses = true; }
 	 
-	if(height_widget_->getValue().compare("none") != 0){ elementClasses += height_widget_->getValue() + " "; }
-	if(minHeight_widget_->getValue().compare("none") != 0){ elementClasses += minHeight_widget_->getValue() + " "; }
-	if(maxHeight_widget_->getValue().compare("none") != 0){ elementClasses += maxHeight_widget_->getValue() + " "; }
+	if(height_widget_->getValue().compare("none") != 0){ elementClasses += height_widget_->getValue() + " "; activeClasses = true; }
+	if(minHeight_widget_->getValue().compare("none") != 0){ elementClasses += minHeight_widget_->getValue() + " "; activeClasses = true; }
+	if(maxHeight_widget_->getValue().compare("none") != 0){ elementClasses += maxHeight_widget_->getValue() + " "; activeClasses = true; }
+
+	if(activeClasses) expand();
+	else collapse();
 
 	return elementClasses;
 }
 
 void ElementSizingWidget::setClasses(SizingData sizing)
 {
+	bool activeClasses = false;
 	resetStyles();
 	// std::cout << "Element S I Z I N G Widget setStyleClasses -----------------------------------------\n";
-	width_widget_->setValue(sizing.width);
-	minWidth_widget_->setValue(sizing.minWidth);
-	maxWidth_widget_->setValue(sizing.maxWidth);
 
-	height_widget_->setValue(sizing.height);
-	minHeight_widget_->setValue(sizing.minHeight);
-	maxHeight_widget_->setValue(sizing.maxHeight);
+	if(sizing.width.compare("none") != 0){ width_widget_->setValue(sizing.width); activeClasses = true; }
+	if(sizing.minWidth.compare("none") != 0){ minWidth_widget_->setValue(sizing.minWidth); activeClasses = true; }
+	if(sizing.maxWidth.compare("none") != 0){ maxWidth_widget_->setValue(sizing.maxWidth); activeClasses = true; }
+
+	if(sizing.height.compare("none") != 0){ height_widget_->setValue(sizing.height); activeClasses = true; }
+	if(sizing.minHeight.compare("none") != 0){ minHeight_widget_->setValue(sizing.minHeight); activeClasses = true; }
+	if(sizing.maxHeight.compare("none") != 0){ maxHeight_widget_->setValue(sizing.maxHeight); activeClasses = true; }
+	
+	if(activeClasses) expand(); 
+	else collapse();
 }
 
 void ElementSizingWidget::resetStyles()

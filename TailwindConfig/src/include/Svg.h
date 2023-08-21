@@ -9,6 +9,8 @@ namespace Tailwind {
         // fill will be implemented programaticaly
         // stroke will be implemented programaticaly
         Propriety stroke_width;
+        
+        std::vector<std::string> search_data();
 
         std::string strokeWidthData();
 

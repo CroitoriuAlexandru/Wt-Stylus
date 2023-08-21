@@ -28,12 +28,6 @@ public:
 	std::string getStyles();
 	void resetStyles();
 
-private:
-	void setCustomTestValues();
-	
-    std::shared_ptr<Config> tailwindConfig_;
-	Wt::WTemplate* content_temp;
-
 	StyleClassComboBox* width_widget_;
 	StyleClassComboBox* minWidth_widget_;
 	StyleClassComboBox* maxWidth_widget_;
@@ -41,6 +35,12 @@ private:
 	StyleClassComboBox* height_widget_;
 	StyleClassComboBox* minHeight_widget_;
 	StyleClassComboBox* maxHeight_widget_;
+private:
+	void setCustomTestValues();
+	
+    std::shared_ptr<Config> tailwindConfig_;
+	Wt::WTemplate* content_temp;
+
 
 	Wt::Signal<> styleChanged_;
 

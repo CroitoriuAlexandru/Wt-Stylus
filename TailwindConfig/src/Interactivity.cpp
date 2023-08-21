@@ -189,6 +189,106 @@ Interactivity::Interactivity(std::vector<std::string> sizing_variants)
 
 }
 
+std::vector<std::string> Interactivity::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto appearance_class : appearance.styleClasses_){
+        data.push_back("interactivity/" + appearance_class.className_);
+    }
+    for(auto cursor_class : cursor.styleClasses_){
+        data.push_back("interactivity/" + cursor_class.className_);
+    }
+    for(auto pointer_events_class : pointer_events.styleClasses_){
+        data.push_back("interactivity/" + pointer_events_class.className_);
+    }
+    for(auto resize_class : resize.styleClasses_){
+        data.push_back("interactivity/" + resize_class.className_);
+    }
+    for(auto scroll_behavior_class : scroll_behavior.styleClasses_){
+        data.push_back("interactivity/" + scroll_behavior_class.className_);
+    }
+    for(auto scroll_margin_class : scroll_margin.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_class.className_);
+    }
+    for(auto scroll_margin_x_class : scroll_margin_x.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_x_class.className_);
+    }
+    for(auto scroll_margin_y_class : scroll_margin_y.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_y_class.className_);
+    }
+    for(auto scroll_margin_top_class : scroll_margin_top.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_top_class.className_);
+    }
+    for(auto scroll_margin_right_class : scroll_margin_right.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_right_class.className_);
+    }
+    for(auto scroll_margin_bottom_class : scroll_margin_bottom.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_bottom_class.className_);
+    }
+    for(auto scroll_margin_left_class : scroll_margin_left.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_left_class.className_);
+    }
+    for(auto scroll_margin_start_class : scroll_margin_start.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_start_class.className_);
+    }
+    for(auto scroll_margin_end_class : scroll_margin_end.styleClasses_){
+        data.push_back("interactivity/" + scroll_margin_end_class.className_);
+    }
+    for(auto scroll_padding_class : scroll_padding.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_class.className_);
+    }
+    for(auto scroll_padding_x_class : scroll_padding_x.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_x_class.className_);
+    }
+    for(auto scroll_padding_y_class : scroll_padding_y.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_y_class.className_);
+    }
+    for(auto scroll_padding_top_class : scroll_padding_top.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_top_class.className_);
+    }
+    for(auto scroll_padding_right_class : scroll_padding_right.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_right_class.className_);
+    }
+    for(auto scroll_padding_bottom_class : scroll_padding_bottom.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_bottom_class.className_);
+    }
+    for(auto scroll_padding_left_class : scroll_padding_left.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_left_class.className_);
+    }
+    for(auto scroll_padding_start_class : scroll_padding_start.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_start_class.className_);
+    }
+    for(auto scroll_padding_end_class : scroll_padding_end.styleClasses_){
+        data.push_back("interactivity/" + scroll_padding_end_class.className_);
+    }
+    for(auto scroll_snap_align_class : scroll_snap_align.styleClasses_){
+        data.push_back("interactivity/" + scroll_snap_align_class.className_);
+    }
+    for(auto scroll_snap_stop_class : scroll_snap_stop.styleClasses_){
+        data.push_back("interactivity/" + scroll_snap_stop_class.className_);
+    }
+    for(auto scroll_snap_type_class : scroll_snap_type.styleClasses_){
+        data.push_back("interactivity/" + scroll_snap_type_class.className_);
+    }
+    for(auto scroll_snap_manadatory_class : scroll_snap_manadatory.styleClasses_){
+        data.push_back("interactivity/" + scroll_snap_manadatory_class.className_);
+    }
+    for(auto scroll_snap_proximity_class : scroll_snap_proximity.styleClasses_){
+        data.push_back("interactivity/" + scroll_snap_proximity_class.className_);
+    }
+    for(auto touch_action_class : touch_action.styleClasses_){
+        data.push_back("interactivity/" + touch_action_class.className_);
+    }
+    for(auto user_select_class : user_select.styleClasses_){
+        data.push_back("interactivity/" + user_select_class.className_);
+    }
+    for(auto will_change_class : will_change.styleClasses_){
+        data.push_back("interactivity/" + will_change_class.className_);
+    }
+    return data;
+}
+
+
 std::string Interactivity::appearanceData()
 {
     std::string data = " ";

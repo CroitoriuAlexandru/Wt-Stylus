@@ -37,6 +37,31 @@ Tables::Tables(std::vector<std::string> spacing_variants)
     }
 }
 
+std::vector<std::string> Tables::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto border_collapse_class : border_collapse.styleClasses_){
+        data.push_back("tables/" + border_collapse_class.className_);
+    }
+    for(auto border_spacing_class : border_spacing.styleClasses_){
+        data.push_back("tables/" + border_spacing_class.className_);
+    }
+    for(auto border_spacing_x_class : border_spacing_x.styleClasses_){
+        data.push_back("tables/" + border_spacing_x_class.className_);
+    }
+    for(auto border_spacing_y_class : border_spacing_y.styleClasses_){
+        data.push_back("tables/" + border_spacing_y_class.className_);
+    }
+    for(auto table_layout_class : table_layout.styleClasses_){
+        data.push_back("tables/" + table_layout_class.className_);
+    }
+    for(auto caption_side_class : caption_side.styleClasses_){
+        data.push_back("tables/" + caption_side_class.className_);
+    }
+return data;
+}
+
+
 std::string Tables::borderCollapseData()
 {
     std::string data = " ";

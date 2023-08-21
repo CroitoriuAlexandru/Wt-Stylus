@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+    <message id="app-root">
+        <div class="">siblings before</div>
+        <div class="">siblings before</div>
+        <div class="">child before</div>
+        <div class="p-10 pl-px m-10"><div class="">child before</div>
+            <div class="">child before</div>
+            <div class="">child before</div>
+        </div>
+    </message>
+    <message id="app-test">
+        <div class="">siblings before</div>
+        <div class="">siblings before</div>
+        <div class="">siblings before</div>
+        <div class="">siblings before</div>
+        <div class="? ">
+            <div class="">child after</div>
+        </div>
+        <div class="">siblings after</div>
+    </message>
+</messages>

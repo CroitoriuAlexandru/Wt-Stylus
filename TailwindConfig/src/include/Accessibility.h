@@ -9,6 +9,8 @@ namespace Tailwind {
     public:
         Accessibility();
         Propriety screen_readers;
+        
+        std::vector<std::string> search_data();
 
         std::string screenReadersData();
         boost::regex screen_readers_regex = boost::regex("(?<=\n| )(!)?(sr-only|not-sr-only)(?!\\w|-)");

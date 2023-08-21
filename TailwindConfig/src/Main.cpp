@@ -424,7 +424,12 @@ int main() {
     findAndRemoveMatches(config.layout.aspect_ratio_regex, configData);
 
 
-    std::cout << configData << std::endl;
+    auto sizing_search_data = config.sizing.search_data();
+    for(auto data : sizing_search_data){
+        std::cout << "\n <" << data << ">";
+    }
+
+    // std::cout << configData << std::endl;
     if(output_file.is_open()){
         output_file << configData;
         output_file.close();

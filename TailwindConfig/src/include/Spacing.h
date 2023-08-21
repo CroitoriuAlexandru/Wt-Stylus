@@ -31,6 +31,8 @@ namespace Tailwind {
         Propriety space_y;
         Propriety space_y_reverse;
 
+        std::vector<std::string> search_data();
+
 
         std::string marginData();
         std::string paddingData();

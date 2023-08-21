@@ -31,6 +31,8 @@ namespace Tailwind {
         Propriety gradient_stops_via;
         Propriety gradient_stops_to;
 
+        std::vector<std::string> search_data();
+
         std::string backgroundAttachmentData();
         std::string backgroundClipData();
         std::string backgroundColorData();

@@ -69,6 +69,28 @@ TransitionsAndAnimation::TransitionsAndAnimation()
 
 }
 
+std::vector<std::string> TransitionsAndAnimation::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : transition_property.styleClasses_){
+        data.push_back("transition-property/" + styleClass.className_);
+    }
+    for(auto styleClass : transition_duration.styleClasses_){
+        data.push_back("transition-duration/" + styleClass.className_);
+    }
+    for(auto styleClass : transition_timing_function.styleClasses_){
+        data.push_back("transition-timing-function/" + styleClass.className_);
+    }
+    for(auto styleClass : transition_delay.styleClasses_){
+        data.push_back("transition-delay/" + styleClass.className_);
+    }
+    for(auto styleClass : animation.styleClasses_){
+        data.push_back("animation/" + styleClass.className_);
+    }
+    return data;
+}
+
+
 std::string TransitionsAndAnimation::transitionPropertyData()
 {
     std::string data = " ";

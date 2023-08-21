@@ -13,6 +13,9 @@ namespace Tailwind {
         Propriety table_layout;
         Propriety caption_side;
 
+        std::vector<std::string> search_data();
+
+
         std::string borderCollapseData();
         std::string borderSpacingData();
         std::string tableLayoutData();

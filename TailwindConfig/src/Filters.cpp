@@ -209,6 +209,66 @@ Filters::Filters()
         }, "https://tailwindcss.com/docs/backdrop-sepia");
 }
 
+std::vector<std::string> Filters::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : blur.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : brightness.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : contrast.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : drop_shadow.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : grayscale.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : hue_rotate.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : invert.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : saturate.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : sepia.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_blur.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_brightness.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_contrast.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_grayscale.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_hue_rotate.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_invert.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_opacity.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_saturate.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+    for(auto styleClass : backdrop_sepia.styleClasses_){
+        data.push_back("filters/" + styleClass.className_);
+    }
+return data;
+}
+
 std::string Filters::blurData()
 {
     std::string data = " ";

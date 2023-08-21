@@ -138,6 +138,39 @@ Transforms::Transforms(std::vector<std::string> sizing_variants)
 
 }
 
+std::vector<std::string> Transforms::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto scale_class : scale.styleClasses_){
+        data.push_back("transforms/" + scale_class.className_);
+    }
+    for(auto scale_x_class : scale_x.styleClasses_){
+        data.push_back("transforms/" + scale_x_class.className_);
+    }
+    for(auto scale_y_class : scale_y.styleClasses_){
+        data.push_back("transforms/" + scale_y_class.className_);
+    }
+    for(auto rotate_class : rotate.styleClasses_){
+        data.push_back("transforms/" + rotate_class.className_);
+    }
+    for(auto translate_x_class : translate_x.styleClasses_){
+        data.push_back("transforms/" + translate_x_class.className_);
+    }
+    for(auto translate_y_class : translate_y.styleClasses_){
+        data.push_back("transforms/" + translate_y_class.className_);
+    }
+    for(auto skew_x_class : skew_x.styleClasses_){
+        data.push_back("transforms/" + skew_x_class.className_);
+    }
+    for(auto skew_y_class : skew_y.styleClasses_){
+        data.push_back("transforms/" + skew_y_class.className_);
+    }
+    for(auto transform_origin_class : transform_origin.styleClasses_){
+        data.push_back("transforms/" + transform_origin_class.className_);
+    }
+    return data;
+}
+
 std::string Transforms::scaleData()
 {
     std::string data = " ";

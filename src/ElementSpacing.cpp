@@ -94,38 +94,44 @@ ElementSpacingWidget::ElementSpacingWidget(std::shared_ptr<Config> tailwindConfi
 std::string ElementSpacingWidget::getStyles()
 {
 	std::string elementClasses;
+	bool activeClasses = false;
 
-	if(padding_all_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_all_widget_->getValue(); }
-	if(padding_vertical_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_vertical_widget_->getValue(); }
-	if(padding_horizontal_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_horizontal_widget_->getValue(); }
-	if(padding_top_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_top_widget_->getValue(); }
-	if(padding_right_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_right_widget_->getValue(); }
-	if(padding_bottom_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_bottom_widget_->getValue(); }
-	if(padding_left_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_left_widget_->getValue(); }
+	if(padding_all_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_all_widget_->getValue(); activeClasses = true;}
+	if(padding_vertical_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_vertical_widget_->getValue(); activeClasses = true;}
+	if(padding_horizontal_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_horizontal_widget_->getValue(); activeClasses = true;}
+	if(padding_top_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_top_widget_->getValue(); activeClasses = true;}
+	if(padding_right_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_right_widget_->getValue(); activeClasses = true;}
+	if(padding_bottom_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_bottom_widget_->getValue(); activeClasses = true;}
+	if(padding_left_widget_->getValue().compare("none") != 0){ elementClasses += " " + padding_left_widget_->getValue(); activeClasses = true;}
 
-	if(margin_all_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_all_widget_->getValue(); }
-	if(margin_vertical_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_vertical_widget_->getValue(); }
-	if(margin_horizontal_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_horizontal_widget_->getValue(); }
-	if(margin_top_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_top_widget_->getValue(); }
-	if(margin_right_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_right_widget_->getValue(); }
-	if(margin_bottom_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_bottom_widget_->getValue(); }
-	if(margin_left_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_left_widget_->getValue(); }
+	if(margin_all_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_all_widget_->getValue(); activeClasses = true;}
+	if(margin_vertical_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_vertical_widget_->getValue(); activeClasses = true;}
+	if(margin_horizontal_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_horizontal_widget_->getValue(); activeClasses = true;}
+	if(margin_top_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_top_widget_->getValue(); activeClasses = true;}
+	if(margin_right_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_right_widget_->getValue(); activeClasses = true;}
+	if(margin_bottom_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_bottom_widget_->getValue(); activeClasses = true;}
+	if(margin_left_widget_->getValue().compare("none") != 0){ elementClasses += " " + margin_left_widget_->getValue(); activeClasses = true;}
 
 
-	if(space_vertical_widget_->getValue().compare("none") != 0){ elementClasses += " " + space_vertical_widget_->getValue(); }
-	if(space_horizontal_widget_->getValue().compare("none") != 0){ elementClasses += " " + space_horizontal_widget_->getValue(); }
-	if(checkbox_space_x_reverse_->isChecked()){ elementClasses += " space-x-reverse"; }
-	if(checkbox_space_y_reverse_->isChecked()){ elementClasses += " space-y-reverse"; }
-	// std::cout << "\n\n spacing classes : " << elementClasses << "\n\n";
+	if(space_vertical_widget_->getValue().compare("none") != 0){ elementClasses += " " + space_vertical_widget_->getValue(); activeClasses = true;}
+	if(space_horizontal_widget_->getValue().compare("none") != 0){ elementClasses += " " + space_horizontal_widget_->getValue(); activeClasses = true;}
+	if(checkbox_space_x_reverse_->isChecked()){ elementClasses += " space-x-reverse"; activeClasses = true; }
+	if(checkbox_space_y_reverse_->isChecked()){ elementClasses += " space-y-reverse"; activeClasses = true; }
+
+	if(activeClasses) expand();
+	else collapse();
+
 	return elementClasses;
-
 }
 
 void ElementSpacingWidget::setClasses(SpacingData spacing)
 {
+	bool activeClasses = false;
 	// resetStyles();
 	// std::cout << "\nElementSpacingWidget::setStyleClasses \n";
 	for(auto& padding_class : spacing.padding){
+		if(padding_class.compare("none") != 0) activeClasses = true;
+
 		if(padding_class.find("p-") != std::string::npos){
 			padding_all_widget_->setValue(padding_class);
 		}else if(padding_class.find("py-") != std::string::npos){
@@ -144,6 +150,8 @@ void ElementSpacingWidget::setClasses(SpacingData spacing)
 	}
 
 	for(auto& margin_class : spacing.margin){
+		if(margin_class.compare("none") != 0) activeClasses = true;
+		
 		if(margin_class.find("m-") != std::string::npos){
 			margin_all_widget_->setValue(margin_class);
 		}else if(margin_class.find("my-") != std::string::npos){
@@ -162,6 +170,8 @@ void ElementSpacingWidget::setClasses(SpacingData spacing)
 	}
 
 	for(auto& space_class : spacing.space){
+		if(space_class.compare("none") != 0) activeClasses = true;
+
 		if(space_class.find("space-x-") != std::string::npos){
 			if(space_class.find("reverse") != std::string::npos){
 				checkbox_space_x_reverse_->setChecked(true);
@@ -176,6 +186,9 @@ void ElementSpacingWidget::setClasses(SpacingData spacing)
 			}
 		}
 	}
+
+	if(activeClasses) expand();
+	else collapse();
 }
 
 void ElementSpacingWidget::resetStyles()

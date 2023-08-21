@@ -115,6 +115,50 @@ Flexbox::Flexbox(std::vector<std::string> spacing_variants)
     
 }
 
+std::vector<std::string> Flexbox::search_data()
+{
+    std::vector<std::string> data = {};
+    for(auto styleClass : basis.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : direction.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : wrap.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : flex.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : grow.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : shrink.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : justify_content.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : justify_items.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : justify_self.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : align_content.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : align_items.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+    for(auto styleClass : align_self.styleClasses_) {
+        data.push_back("flex/" + styleClass.className_);
+    }
+
+return data;
+}
+
+
 std::string Flexbox::basisData() {
     std::string data = " ";
     for(auto styleClass : basis.styleClasses_) {

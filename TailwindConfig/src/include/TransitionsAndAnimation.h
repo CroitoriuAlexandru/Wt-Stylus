@@ -12,6 +12,8 @@ namespace Tailwind {
         Propriety transition_delay;
         Propriety animation;
         
+        std::vector<std::string> search_data();
+
 
         std::string transitionPropertyData();
         std::string transitionDurationData();
