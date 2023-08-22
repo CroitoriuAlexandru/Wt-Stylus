@@ -56,67 +56,36 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 	comboBox_z_index_ = content_temp->bindWidget("combobox-z-index", std::make_unique<StyleClassComboBox>(tailwindConfig->layout.z_index));
 
 
-	comboBox_aspect_ratio_->setCustomValueString("aspect-ratio-");
-	comboBox_columns_->setCustomValueString("columns-");
-	comboBox_break_after_->setCustomValueString("break-after-");
-	comboBox_break_before_->setCustomValueString("break-before-");
-	comboBox_break_inside_->setCustomValueString("break-inside-");
-	comboBox_box_decoration_break_->setCustomValueString("box-decoration-break-");
-	comboBox_box_sizing_->setCustomValueString("box-sizing-");
-	comboBox_display_->setCustomValueString("display-");
-	comboBox_floats_->setCustomValueString("floats-");
-	comboBox_clear_->setCustomValueString("clear-");
-	comboBox_isolation_->setCustomValueString("isolation-");
-	comboBox_object_fit_->setCustomValueString("object-fit-");
-	comboBox_object_position_->setCustomValueString("object-position-");
-	comboBox_overflow_->setCustomValueString("overflow-");
-	comboBox_overflow_x_->setCustomValueString("overflow-x-");
-	comboBox_overflow_y_->setCustomValueString("overflow-y-");
-	comboBox_overscroll_behavior_->setCustomValueString("overscroll-behavior-");
-	comboBox_overscroll_behavior_x_->setCustomValueString("overscroll-behavior-x-");
-	comboBox_overscroll_behavior_y_->setCustomValueString("overscroll-behavior-y-");
-	comboBox_position_->setCustomValueString("position-");
-	comboBox_inset_->setCustomValueString("inset-");
-	comboBox_inset_x_->setCustomValueString("inset-x-");
-	comboBox_inset_y_->setCustomValueString("inset-y-");
-	comboBox_top_->setCustomValueString("top-");
-	comboBox_right_->setCustomValueString("right-");
-	comboBox_bottom_->setCustomValueString("bottom-");
-	comboBox_left_->setCustomValueString("left-");
-	comboBox_visibility_->setCustomValueString("visibility-");
-	comboBox_z_index_->setCustomValueString("z-");
+	// comboBox_aspect_ratio_->setCustomValueString("aspect-ratio-");
+	// comboBox_columns_->setCustomValueString("columns-");
+	// comboBox_break_after_->setCustomValueString("break-after-");
+	// comboBox_break_before_->setCustomValueString("break-before-");
+	// comboBox_break_inside_->setCustomValueString("break-inside-");
+	// comboBox_box_decoration_break_->setCustomValueString("box-decoration-break-");
+	// comboBox_box_sizing_->setCustomValueString("box-sizing-");
+	// comboBox_display_->setCustomValueString("display-");
+	// comboBox_floats_->setCustomValueString("floats-");
+	// comboBox_clear_->setCustomValueString("clear-");
+	// comboBox_isolation_->setCustomValueString("isolation-");
+	// comboBox_object_fit_->setCustomValueString("object-fit-");
+	// comboBox_object_position_->setCustomValueString("object-position-");
+	// comboBox_overflow_->setCustomValueString("overflow-");
+	// comboBox_overflow_x_->setCustomValueString("overflow-x-");
+	// comboBox_overflow_y_->setCustomValueString("overflow-y-");
+	// comboBox_overscroll_behavior_->setCustomValueString("overscroll-behavior-");
+	// comboBox_overscroll_behavior_x_->setCustomValueString("overscroll-behavior-x-");
+	// comboBox_overscroll_behavior_y_->setCustomValueString("overscroll-behavior-y-");
+	// comboBox_position_->setCustomValueString("position-");
+	// comboBox_inset_->setCustomValueString("inset-");
+	// comboBox_inset_x_->setCustomValueString("inset-x-");
+	// comboBox_inset_y_->setCustomValueString("inset-y-");
+	// comboBox_top_->setCustomValueString("top-");
+	// comboBox_right_->setCustomValueString("right-");
+	// comboBox_bottom_->setCustomValueString("bottom-");
+	// comboBox_left_->setCustomValueString("left-");
+	// comboBox_visibility_->setCustomValueString("visibility-");
+	// comboBox_z_index_->setCustomValueString("z-");
 
-
-	// // deactivate custom checkbox
-	comboBox_aspect_ratio_->checkbox_custom_value_->hide();
-	comboBox_columns_->checkbox_custom_value_->hide();
-	comboBox_break_after_->checkbox_custom_value_->hide();
-	comboBox_break_before_->checkbox_custom_value_->hide();
-	comboBox_break_inside_->checkbox_custom_value_->hide();
-	comboBox_box_decoration_break_->checkbox_custom_value_->hide();
-	comboBox_box_sizing_->checkbox_custom_value_->hide();
-	comboBox_display_->checkbox_custom_value_->hide();
-	comboBox_floats_->checkbox_custom_value_->hide();
-	comboBox_clear_->checkbox_custom_value_->hide();
-	comboBox_isolation_->checkbox_custom_value_->hide();
-	comboBox_object_fit_->checkbox_custom_value_->hide();
-	comboBox_object_position_->checkbox_custom_value_->hide();
-	comboBox_overflow_->checkbox_custom_value_->hide();
-	comboBox_overflow_x_->checkbox_custom_value_->hide();
-	comboBox_overflow_y_->checkbox_custom_value_->hide();
-	comboBox_overscroll_behavior_->checkbox_custom_value_->hide();
-	comboBox_overscroll_behavior_x_->checkbox_custom_value_->hide();
-	comboBox_overscroll_behavior_y_->checkbox_custom_value_->hide();
-	comboBox_position_->checkbox_custom_value_->hide();
-	comboBox_inset_->checkbox_custom_value_->hide();
-	comboBox_inset_x_->checkbox_custom_value_->hide();
-	comboBox_inset_y_->checkbox_custom_value_->hide();
-	comboBox_top_->checkbox_custom_value_->hide();
-	comboBox_right_->checkbox_custom_value_->hide();
-	comboBox_bottom_->checkbox_custom_value_->hide();
-	comboBox_left_->checkbox_custom_value_->hide();
-	comboBox_visibility_->checkbox_custom_value_->hide();
-	comboBox_z_index_->checkbox_custom_value_->hide();
 
 
 	// signals for default classes for tailwind
@@ -224,7 +193,7 @@ void ElementLayoutWidget::setClasses(LayoutData layoutData)
 	// 	else if(overscroll_behavior_class.find("overscroll") != std::string::npos)
 	// 		std::cout << "\n overscroll_behavior <" << overscroll_behavior_class << ">";
 	// }
-	std::cout << "\n position <" << layoutData.position << "> ---------------------\n";
+	// std::cout << "\n position <" << layoutData.position << "> ---------------------\n";
 	// for(auto& inset : layoutData.inset){
 	// 	if(inset.find("inset")){
 	// 		std::cout << "\n position_inset <" << inset << ">";

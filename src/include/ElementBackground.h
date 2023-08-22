@@ -8,27 +8,28 @@
 struct BackgroundData
 {
 	// bg-(fixed|local|scroll)
-	std::string bg_attachment;
+	std::string bg_attachment = "none";
 	// bg-clip-(border|padding|content|text)
-	std::string bg_clip;
-	std::string bg_color_class;
+	std::string bg_clip = "none";
+	std::string bg_color_class = "none";
 	// bg-origin-(border|padding|content)
-	std::string bg_origin;
+	std::string bg_origin = "none";
 	// bg-(bottom|center|left|left-bottom|left-top|right|right-bottom|right-top|top)
-	std::string bg_position;
+	std::string bg_position = "none";
 	// bg-(repeat|no-repeat|repeat-x|repeat-y|repeat-round|repeat-space)
-	std::string bg_repeat;
+	std::string bg_repeat = "none";
 	// bg-(auto|cover|contain)
-	std::string bg_size;
+	std::string bg_size = "none";
 	// bg-gradient-(to-t|to-tr|to-r|to-br|to-b|to-bl|to-l|to-tl)
-	std::string bg_image;
-	std::string bg_color_via;
-	std::string bg_color_to;
-	std::string bg_color_from_step;
-	std::string bg_color_via_step;
-	std::string bg_color_to_step;
+	std::string bg_image = "none";
 
+	std::string bg_color_from = "none";
+	std::string bg_color_via = "none";
+	std::string bg_color_to = "none";
 
+	std::string bg_color_from_step = "none";
+	std::string bg_color_via_step = "none";
+	std::string bg_color_to_step = "none";
 
 };
 
@@ -44,11 +45,6 @@ public:
     Wt::Signal<>& styleChanged() { return styleChanged_; };
 	std::string getStyles();
 	void resetStyles();
-private:
-	void setCustomTestValues();
-	
-	Wt::WTemplate* content_temp;
-	std::shared_ptr<Config> tailwindConfig_;
 	
 	StyleClassComboBox *comboBox_attachment;
 	StyleClassComboBox *comboBox_clip;
@@ -57,10 +53,19 @@ private:
 	StyleClassComboBox *comboBox_repeat;
 	StyleClassComboBox *comboBox_size;
 	StyleClassComboBox *comboBox_image;
-	BackgroundColorWidget *comboBox_color;
+	ColorsComboBox *comboBox_color;
 
-	BackgroundColorWidget *comboBox_color_via;
-	BackgroundColorWidget *comboBox_color_to;
+	ColorsComboBox *comboBox_color_from;
+	ColorsComboBox *comboBox_color_via;
+	ColorsComboBox *comboBox_color_to;
+
+private:
+	void setCustomTestValues();
+	
+	// Wt::WTemplate* content_temp;
+	std::shared_ptr<Config> tailwindConfig_;
+	
+
 
 	Wt::Signal<> styleChanged_;
 

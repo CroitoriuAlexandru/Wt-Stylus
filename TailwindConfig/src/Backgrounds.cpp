@@ -48,6 +48,7 @@ Backgrounds::Backgrounds(   std::vector<std::string> colors_default_variants,
     background_color.styleClasses_.push_back(StyleClass("none", ""));
     background_color_from.styleClasses_.push_back(StyleClass("none", ""));
     background_color_via.styleClasses_.push_back(StyleClass("none", ""));
+    background_color_to.styleClasses_.push_back(StyleClass("none", ""));
 
     for(auto color : colors_variants)
     {
@@ -124,62 +125,66 @@ Backgrounds::Backgrounds(   std::vector<std::string> colors_default_variants,
 
 std::vector<std::string> Backgrounds::search_data()
 {
-    std::vector<std::string> data = {};
+    std::vector<std::string> data = {"backgrounds | reset"};
     for(auto styleClass : background_attachment.styleClasses_)
     {
-        data.push_back("background-attachment/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_clip.styleClasses_)
     {
-        data.push_back("background-clip/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color.styleClasses_)
     {
-        data.push_back("background-color/" + styleClass.className_);
+        if(styleClass.className_ == "none"){
+            data.push_back("backgrounds | " + std::string("bg-res"));
+            continue;
+        }
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color_from.styleClasses_)
     {
-        data.push_back("background-color/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color_via.styleClasses_)
     {
-        data.push_back("background-color/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color_to.styleClasses_)
     {
-        data.push_back("background-color/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_origin.styleClasses_)
     {
-        data.push_back("background-origin/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_position.styleClasses_)
     {
-        data.push_back("background-position/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_repeat.styleClasses_)
     {
-        data.push_back("background-repeat/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_size.styleClasses_)
     {
-        data.push_back("background-size/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_image.styleClasses_)
     {
-        data.push_back("background-image/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : gradient_stops_from.styleClasses_)
     {
-        data.push_back("gradient-stops/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : gradient_stops_via.styleClasses_)
     {
-        data.push_back("gradient-stops/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : gradient_stops_to.styleClasses_)
     {
-        data.push_back("gradient-stops/" + styleClass.className_);
+        data.push_back("backgrounds | " + styleClass.className_);
     }
 return data;
 }

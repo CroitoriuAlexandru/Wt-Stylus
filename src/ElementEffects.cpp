@@ -26,7 +26,7 @@ ElementEffectsWidget::ElementEffectsWidget(std::shared_ptr<Config> tailwindConfi
 
 	comboBox_box_shadow = content_temp->bindWidget("combobox-box-shadow", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.box_shadow));
 	checkBox_box_shadow_inner = content_temp->bindWidget("checkbox-box-shadow-inset", std::make_unique<Wt::WCheckBox>("Shaddow Inset"));
-	box_shadow_color = content_temp->bindWidget("combobox-box-shadow-color", std::make_unique<ComboBoxColors>(tailwindConfig->effects.box_shadow_color));
+	box_shadow_color = content_temp->bindWidget("combobox-box-shadow-color", std::make_unique<ColorsComboBox>(tailwindConfig->effects.box_shadow_color));
 	comboBox_opacity = content_temp->bindWidget("combobox-opacity", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.opacity));
 	comboBox_mix_blend_mode = content_temp->bindWidget("combobox-mix-blend-mode", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.mix_blend_mode)); 
 	comboBox_bg_blend_mode = content_temp->bindWidget("combobox-bg-blend-mode", std::make_unique<StyleClassComboBox>(tailwindConfig->effects.background_blend_mode));
@@ -38,11 +38,11 @@ ElementEffectsWidget::ElementEffectsWidget(std::shared_ptr<Config> tailwindConfi
 
 
 	// // deactivate custom checkbox
-	comboBox_box_shadow->checkbox_custom_value_->hide();
-	// box_shadow_color->checkbox_custom_value_->hide();
-	comboBox_mix_blend_mode->checkbox_custom_value_->hide();
-	comboBox_opacity->checkbox_custom_value_->hide();
-	comboBox_bg_blend_mode->checkbox_custom_value_->hide();
+	comboBox_box_shadow->checkBox_custom_value_->hide();
+	// box_shadow_color->checkBox_custom_value_->hide();
+	comboBox_mix_blend_mode->checkBox_custom_value_->hide();
+	comboBox_opacity->checkBox_custom_value_->hide();
+	comboBox_bg_blend_mode->checkBox_custom_value_->hide();
 	// checkBox_box_shadow_inner->setChecked(false);
 
 

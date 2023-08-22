@@ -39,8 +39,6 @@ private:
 	void setCustomTestValues();
 	
     std::shared_ptr<Config> tailwindConfig_;
-	Wt::WTemplate* content_temp;
-
 
 	Wt::Signal<> styleChanged_;
 

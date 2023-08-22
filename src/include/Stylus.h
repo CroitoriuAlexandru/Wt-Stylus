@@ -21,6 +21,8 @@ enum SearchOption
     Classes = 10,
     Folders = 11,
     Focus = 12,
+    ColorIntensity = 13,
+    ColorOpacity = 14,
 };
 struct TemplateData {
     std::string folderName;
@@ -38,7 +40,7 @@ public:
     
 private:
     void createSearchDialog();
-    void setSearchOptions(Wt::WSuggestionPopup *sp,Wt::WDialog *dialog, SearchOption searchOption);
+    void setSearchOptions(Wt::WSuggestionPopup *sp,Wt::WDialog *dialog, Wt::WLineEdit *lineEdit, SearchOption searchOption);
     void createTitleBarControls();
     std::string xml_file_path;
     void createDevApp();

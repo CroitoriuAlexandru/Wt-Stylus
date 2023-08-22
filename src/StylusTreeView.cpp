@@ -448,13 +448,10 @@ void StylusTreeView::addChildElementLast(tinyxml2::XMLElement* element, tinyxml2
 
 void StylusTreeView::removeElement(tinyxml2::XMLElement* element)
 {
-	std::cout << "\n StylusTreeView::removeElement \n";
-	if(element == stylusState_->selectedTemplate->ToElement()){
+	if(!element || element == stylusState_->selectedTemplate->ToElement()){
 		std::cout << "\n StylusTreeView::removeElement is template \n";
 		return;
 	}
-
-    
 	stylusState_->doc.DeleteNode(element);
 	stylusState_->doc.SaveFile(stylusState_->filePath.c_str());
 	stylusState_->selectedElement =  nullptr;

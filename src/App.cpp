@@ -32,7 +32,8 @@ App::App(const Wt::WEnvironment &env)
 
 	// add mesage resource bundle from templates
 	auto stylus_edditor = root()->addWidget(std::make_unique<StylusEdditor>("resources/xmlTest/"));
-
+	stylus_edditor->setCanReceiveFocus(true);
+	stylus_edditor->setObjectName("stylus");
 	stylus_edditor->setTemplate("templates", "Application.xml", "app-root", "template");
 
 

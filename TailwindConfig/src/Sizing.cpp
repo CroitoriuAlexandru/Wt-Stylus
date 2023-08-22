@@ -105,22 +105,22 @@ std::vector<std::string> Sizing::search_data()
 {
     std::vector<std::string> data = {};
     for(auto width_class : width.styleClasses_){
-        data.push_back("sizing/" + width_class.className_);
+        data.push_back("sizing | " + width_class.className_);
     }
     for(auto min_width_class : min_width.styleClasses_){
-        data.push_back("sizing/" + min_width_class.className_);
+        data.push_back("sizing | " + min_width_class.className_);
     }
     for(auto max_width_class : max_width.styleClasses_){
-        data.push_back("sizing/" + max_width_class.className_);
+        data.push_back("sizing | " + max_width_class.className_);
     }
     for(auto height_class : height.styleClasses_){
-        data.push_back("sizing/" + height_class.className_);
+        data.push_back("sizing | " + height_class.className_);
     }
     for(auto min_height_class : min_height.styleClasses_){
-        data.push_back("sizing/" + min_height_class.className_);
+        data.push_back("sizing | " + min_height_class.className_);
     }
     for(auto max_height_class : max_height.styleClasses_){
-        data.push_back("sizing/" + max_height_class.className_);
+        data.push_back("sizing | " + max_height_class.className_);
     }
 return data;
 }

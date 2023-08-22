@@ -15,8 +15,8 @@ ElementClassEdditor::ElementClassEdditor()
     transformsWidget_ = bindWidget("transforms-controls", std::make_unique<ElementTransformsWidget>(tailwindConfig_));
     layoutWidget_ = bindWidget("layout-controls", std::make_unique<ElementLayoutWidget>(tailwindConfig_));
 
-    spacingWidget_->collapse();
-    sizingWidget_->collapse();
+    // sizingWidget_->collapse();
+    // spacingWidget_->collapse();
     backgroundWidget_->collapse();
     effectsWidget_->collapse();
     transformsWidget_->collapse();
@@ -156,16 +156,16 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
 
     BackgroundData bgData;
     bgData.bg_image = findAndRemoveMatche(tailwindConfig_->backgrounds.background_image_regex, classes);
-    if(bgData.bg_image != ""){
-        bgData.bg_color_class = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_from_regex, classes);
-        bgData.bg_color_from_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_from_step, classes);
-        bgData.bg_color_via = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_via_regex, classes);
-        bgData.bg_color_via_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_via_step, classes);
-        bgData.bg_color_to = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_regex, classes);
-        bgData.bg_color_to_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_step, classes);
-    }else {
-        bgData.bg_color_class = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_regex, classes);
-    }
+
+    bgData.bg_color_from = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_from_regex, classes);
+    bgData.bg_color_from_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_from_step, classes);
+    bgData.bg_color_via = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_via_regex, classes);
+    bgData.bg_color_via_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_via_step, classes);
+    bgData.bg_color_to = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_regex, classes);
+    bgData.bg_color_to_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_step, classes);
+    // std::cout << "\n --- bg color should be taken out \n at the moment classes <" << classes << ">\n";
+    bgData.bg_color_class = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_regex, classes);
+    // std::cout << "\n --- bg color should be taken out \n at the moment classes <" << classes << ">\n";
 
     bgData.bg_attachment = findAndRemoveMatche(tailwindConfig_->backgrounds.background_attachment_regex, classes);
     bgData.bg_clip = findAndRemoveMatche(tailwindConfig_->backgrounds.background_clip_regex, classes);

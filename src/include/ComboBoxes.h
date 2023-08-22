@@ -22,19 +22,20 @@ class StyleClassComboBox : public Wt::WContainerWidget
 public:
     StyleClassComboBox(Propriety propriety);
 
-	void setCustomValueString(Wt::WString custom_start){ custom_start_ = custom_start; };
+	void setCustomValueString(std::string custom_start);
     std::string getValue();
 	// classType is default classes from tailwind p-1 or custom p-[10px]
 	void setValue(std::string className = "none");
 	Wt::Signal<>& classChanged() { return classChanged_; }
-	void setOptions(Propriety propriety);
+	// void setOptions(Propriety propriety);
 	Wt::WTemplate *select_temp_;
 	void setCustom(bool custom);
 	void disable(bool disable);
-	Wt::WCheckBox *checkbox_custom_value_;
-    Wt::WComboBox *comboBox_class;
+
 	Wt::WCheckBox *checkbox_important_;
-	Wt::WLineEdit *lineEdit_size_custom_;
+    Wt::WComboBox *comboBox_class;
+	Wt::WLineEdit *lineEdit_custom_value_;
+	Wt::WCheckBox *checkBox_custom_value_;
 	Wt::WText *btn_reset_;
 
 	void setDefaultValue(std::string defaultValue) { this->defaultValue = defaultValue; };
@@ -42,25 +43,25 @@ private:
 	std::string defaultValue = "none";
 
 	std::regex custom_option_regexp = std::regex("\\[\\S*\\]");
-	Wt::WString custom_start_;
+	std::string custom_start_ = "none";
 	Wt::Signal<> classChanged_;
 };
 
 
 
 
-class ComboBoxColors : public Wt::WContainerWidget
+class ColorsComboBox : public Wt::WContainerWidget
 {
 public:
-	ComboBoxColors(ProprietyColor proprietyColor);
+	ColorsComboBox(ProprietyColor proprietyColor);
 	void setCustomValueString(std::string custom_start){ custom_start_ = custom_start; };
 
 	std::string getValue();
 	void setValue(std::string className = "none");
-	// void setCustom(bool custom);
 	Wt::Signal<>& classChanged() { return classChanged_; }
 
 	std::string custom_start_;
+	Wt::WText *title;
 
 	StyleClassComboBox *comboBox_color;
 	StyleClassComboBox* comboBox_intensity;
@@ -79,16 +80,4 @@ protected:
 private:
 	std::string defaultValue = "none";
 
-	// Wt::WLineEdit *lineEdit_color_custom_;
-};
-
-class BackgroundColorWidget : public ComboBoxColors
-{
-public:
-	BackgroundColorWidget(ProprietyColor proprietyColor, Propriety gradientStep);
-	void setValue(std::string className = "none");
-
-	StyleClassComboBox* comboBox_gradient_step;
-
-private:
 };

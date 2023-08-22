@@ -35,7 +35,7 @@ private:
 	
 	StyleClassComboBox*	comboBox_box_shadow;
 	Wt::WCheckBox* 				checkBox_box_shadow_inner;
-	ComboBoxColors*				box_shadow_color;
+	ColorsComboBox*				box_shadow_color;
 	StyleClassComboBox*	comboBox_opacity;
 	StyleClassComboBox*	comboBox_mix_blend_mode;
 	StyleClassComboBox*	comboBox_bg_blend_mode;

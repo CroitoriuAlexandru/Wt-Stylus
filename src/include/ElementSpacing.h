@@ -22,7 +22,6 @@ public:
 	std::string getStyles();
 	void resetStyles();
 
-
 	StyleClassComboBox* margin_all_widget_;
     StyleClassComboBox* margin_horizontal_widget_;
     StyleClassComboBox* margin_vertical_widget_;
@@ -39,16 +38,16 @@ public:
     StyleClassComboBox* padding_bottom_widget_;
     StyleClassComboBox* padding_left_widget_;
 
-	StyleClassComboBox* space_vertical_widget_;
-	StyleClassComboBox* space_horizontal_widget_;
+	StyleClassComboBox* space_x_widget_;
+	StyleClassComboBox* space_y_widget_;
 
 	Wt::WCheckBox* checkbox_space_x_reverse_;
 	Wt::WCheckBox* checkbox_space_y_reverse_;
+	
 private:
 	void setCustomTestValues();
 
 	std::shared_ptr<Config> tailwindConfig_;
-	Wt::WTemplate* content_temp;
 
 	Wt::Signal<> styleChanged_;
 
