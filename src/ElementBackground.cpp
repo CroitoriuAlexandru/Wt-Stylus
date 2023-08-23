@@ -3,10 +3,11 @@
 #include <string>
 
 ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwindConfig)
-	: tailwindConfig_(tailwindConfig)
+	: tailwindConfig_(tailwindConfig),
+	gradient_group(std::make_shared<Wt::WButtonGroup>())
 {
 
-	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900");
+	setStyleClass("min-w-fit max-w-[300px] !border-x-0 !bg-neutral-700 !text-neutral-200 !border-neutral-900 px-1.5");
 	setTitle("Backgrounds");
 	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900");
 	setCollapsible(true);
@@ -16,17 +17,73 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwin
 	auto resetBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
 	auto testBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
 
-	std::string buttons_styles ="p-2 m-px bg-cover ";
+	std::string iconStyles ="p-2 m-px bg-cover ";
 	
-	resetBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/refresh.svg)] !ml-auto");
-	testBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/experimental-glass.svg)] !mr-2");
+	resetBtn->setStyleClass(iconStyles + "bg-[url(resources/icons/refresh.svg)] !ml-auto");
+	testBtn->setStyleClass(iconStyles + "bg-[url(resources/icons/experimental-glass.svg)] !mr-2");
 
 	resetBtn->clicked().connect([=](){ resetStyles(); styleChanged_.emit(); isCollapsed() ? expand() : collapse();});
 	testBtn->clicked().connect([=](){ setCustomTestValues(); styleChanged_.emit(); isCollapsed() ? expand() : collapse(); });
 
 	auto centralWidget = setCentralWidget(std::make_unique<Wt::WContainerWidget>());
 
-	centralWidget->setStyleClass("flex flex-col w-full max-w-[300px] space-x-2 p-1.5");
+	centralWidget->setStyleClass("flex flex-col w-full max-w-[300px]");
+
+
+	auto gratient_wrapper = centralWidget->addWidget(std::make_unique<Wt::WGroupBox>("Gradient"));
+	gratient_wrapper->setStyleClass("flex justify-start border border-solid pb-1 border-neutral-900");
+
+	for(int index = 0; index < tailwindConfig->backgrounds.background_image.styleClasses_.size(); ++index){
+		auto btn = gratient_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+		// get the text after the last -
+		std::string gradient_name = tailwindConfig->backgrounds.background_image.styleClasses_[index].className_;
+		std::string gradient_direction = gradient_name.substr(gradient_name.find_last_of("-")+1);
+
+		btn->setStyleClass("flex w-fit h-fit cursor-pointer m-px mx-0.5 p-px");
+		btn->addStyleClass("[&>span]:bg-cover [&>input]:hidden [&>span]:p-2.5 [&>span]:m-px [&>span]:rounded-md");
+		btn->addStyleClass("[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400 ");
+		std::string tooltip_text;
+		if(gradient_direction.compare("tl") == 0){
+			tooltip_text = "To Top Left";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-left-up.svg)]");
+		}else if (gradient_direction.compare("tr") == 0){
+			tooltip_text = "To Top Right";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-right-up.svg)]");
+		}else if (gradient_direction.compare("bl") == 0){
+			tooltip_text = "To Bottom Left";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-left-down.svg)]");
+		}else if (gradient_direction.compare("br") == 0){
+			tooltip_text = "To Bottom Right";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-right-down.svg)]");
+		}else if (gradient_direction.compare("t") == 0){
+			tooltip_text = "To Top";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-up.svg)]");
+		}else if (gradient_direction.compare("b") == 0){
+			tooltip_text = "To Bottom";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-down.svg)]");
+		}else if (gradient_direction.compare("l") == 0){
+			tooltip_text = "To Left";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-left.svg)]");
+		}else if (gradient_direction.compare("r") == 0){
+			tooltip_text = "To Right";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-right.svg)]");
+		}else if (gradient_name.compare("bg-none") == 0){
+			btn->addStyleClass("[&>span]:!p-0.5 mr-auto text-xs [&>span]:bg-neutral-900 [&>span]:hover:bg-neutral-800 text-white [&>input:checked_+_span]:bg-neutral-400 [&>span]:text-center");
+			tooltip_text = "No Background";
+			btn->setText("bg none");
+		}else {
+			tooltip_text = "No style class applied";
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] ");
+		}
+		btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg(tooltip_text).arg(gradient_name), Wt::TextFormat::UnsafeXHTML);
+		gradient_group->addButton(btn, index);
+	}
+
+	gradient_group->checkedChanged().connect(this, [=](){
+		std::cout << "\n\n gradient changed to : <" << tailwindConfig->backgrounds.background_image.styleClasses_[gradient_group->checkedId()].className_ << ">\n\n";
+		styleChanged_.emit();
+	});
+
 
 	comboBox_image = centralWidget->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_image));
 	comboBox_color = centralWidget->addWidget(std::make_unique<ColorsComboBox>(tailwindConfig->backgrounds.background_color));
@@ -91,8 +148,9 @@ std::string ElementBackgroundWidget::getStyles()
 {
 	bool activeClasses = false;
 	std::string elementClasses;
-
-	if(comboBox_image->getValue().compare("none") != 0){
+	gradient_group->checkedId();
+	std::string gradient_name = tailwindConfig_->backgrounds.background_image.styleClasses_[gradient_group->checkedId()].className_;
+	if(gradient_name.compare("none") != 0){
 		activeClasses = true; 
 		elementClasses += comboBox_image->getValue() + " ";
 		if(comboBox_color_from->getValue().compare("none") != 0){ elementClasses += comboBox_color_from->getValue() + " "; }
@@ -114,12 +172,21 @@ std::string ElementBackgroundWidget::getStyles()
 	return elementClasses;
 }
 
+int ElementBackgroundWidget::getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec){
+	for(int index = 0; index < vec.size(); ++index){
+		if(vec[index].className_.compare(str) == 0) return index;
+	}
+	return 0;
+}
+
+
 void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 {
 	bool activeClasses = false;
 	resetStyles();
 
 	// comboBox_color->comboBox_color->setOptions(colors.bg_color_from_classes);
+	std::cout << " ---- ---------bgData.bg_image = <" << bgData.bg_image << ">\n";
 	// std::cout << " ---- ---------bgData.bg_color_from = <" << bgData.bg_color_class << ">\n";
 	// std::cout << " ---- ---------bgData.bg_color_from_step = " << bgData.bg_color_from_step << "\n";
 	// std::cout << " ---- ---------bgData.bg_color_via = " << bgData.bg_color_via << "\n";
@@ -127,34 +194,25 @@ void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 	// std::cout << " ---- ---------bgData.bg_color_to = " << bgData.bg_color_to << "\n";
 	// std::cout << " ---- ---------bgData.bg_color_to_step = " << bgData.bg_color_to_step << "\n";
 
-	if(bgData.bg_image.compare("none") == 0){
-		if(bgData.bg_color_class.compare("none") != 0) {comboBox_color->setValue(bgData.bg_color_class); activeClasses = true; }
-		if(bgData.bg_color_from.compare("none") != 0) comboBox_color_from->setValue(bgData.bg_color_class);
+	if(bgData.bg_image.compare("none") != 0){
+		int gradientIndex = getIndesOfStringInVector(bgData.bg_image, tailwindConfig_->backgrounds.background_image.styleClasses_);
+		if(gradientIndex != 0){ gradient_group->button(gradientIndex)->setChecked(true); }
+
+		if(bgData.bg_color_class.compare("none") != 0) {comboBox_color->setValue(bgData.bg_color_class); }
+		if(bgData.bg_color_from.compare("none") != 0) comboBox_color_from->setValue(bgData.bg_color_from);
 		if(bgData.bg_color_via.compare("none") != 0) comboBox_color_via->setValue(bgData.bg_color_via);
 		if(bgData.bg_color_to.compare("none") != 0) comboBox_color_to->setValue(bgData.bg_color_to);
 		if(bgData.bg_color_from_step.compare("none") != 0) comboBox_color_from->setValue(bgData.bg_color_from_step);
 		if(bgData.bg_color_via_step.compare("none") != 0) comboBox_color_via->setValue(bgData.bg_color_via_step);
 		if(bgData.bg_color_to_step.compare("none") != 0) comboBox_color_to->setValue(bgData.bg_color_to_step);
 		
-		comboBox_color_from->setValue("none");
-		comboBox_color_via->setValue("none");
-		comboBox_color_to->setValue("none");
 		comboBox_color->hide();
 		comboBox_color_from->show();
 		comboBox_color_via->show();
 		comboBox_color_to->show();
-	} else if(bgData.bg_image.compare("bg-none") == 0){
-		comboBox_color->setValue("none");
-		comboBox_color_from->setValue("none");
-		comboBox_color_via->setValue("none");
-		comboBox_color_to->setValue("none");
-		comboBox_color->hide();
-		comboBox_color_from->hide();
-		comboBox_color_via->hide();
-		comboBox_color_to->hide();
-
-	}else {
+	} else {
 		activeClasses = true;
+
 		comboBox_color->setValue(bgData.bg_color_class);
 		comboBox_color_from->setValue("none");
 		comboBox_color_via->setValue("none");
@@ -180,22 +238,24 @@ void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 
 void ElementBackgroundWidget::resetStyles()
 {
-	comboBox_attachment->setValue();
-	comboBox_clip->setValue();
-	comboBox_origin->setValue();
-	comboBox_position->setValue();
-	comboBox_repeat->setValue();
-	comboBox_size->setValue();
-	comboBox_image->setValue();
-	comboBox_color->setValue();
+	gradient_group->button(0)->setChecked(true);
+	comboBox_attachment->setValue("none");
+	comboBox_clip->setValue("none");
+	comboBox_origin->setValue("none");
+	comboBox_position->setValue("none");
+	comboBox_repeat->setValue("none");
+	comboBox_size->setValue("none");
+	comboBox_image->setValue("none");
+	comboBox_color->setValue("none");
 
-	
-	comboBox_color_via->setValue();
-	comboBox_color_to->setValue();
+	comboBox_color_from->setValue("none");
+	comboBox_color_via->setValue("none");
+	comboBox_color_to->setValue("none");
 }
 
 void ElementBackgroundWidget::setCustomTestValues()
 {
+	gradient_group->button(5)->setChecked(true);
 	comboBox_attachment->setValue("bg-fixed");
 	comboBox_clip->setValue("bg-clip-border");
 	comboBox_origin->setValue("bg-origin-border");

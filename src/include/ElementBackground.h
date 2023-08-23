@@ -4,6 +4,9 @@
 #include "ComboBoxes.h"
 #include <Wt/WDialog.h>
 #include <Wt/WPanel.h>
+#include <Wt/WGroupBox.h>
+#include <Wt/WButtonGroup.h>
+#include <Wt/WRadioButton.h>
 
 struct BackgroundData
 {
@@ -59,14 +62,15 @@ public:
 	ColorsComboBox *comboBox_color_via;
 	ColorsComboBox *comboBox_color_to;
 
+	std::shared_ptr<Wt::WButtonGroup> gradient_group;
+	std::shared_ptr<Wt::WButtonGroup> gradient_step_group;
+	std::shared_ptr<Wt::WButtonGroup> color_group;
 private:
+	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
 	void setCustomTestValues();
 	
-	// Wt::WTemplate* content_temp;
 	std::shared_ptr<Config> tailwindConfig_;
 	
-
-
 	Wt::Signal<> styleChanged_;
 
 	// bg custom regexp

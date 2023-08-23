@@ -2,6 +2,13 @@
 
 <messages>
 
+    <message id="tooltip-styleClasses">
+        <div class="bg-neutral-50 text-center rounded-lg">
+            <div class="text-lg font-bold border-b border-solid whitespace-nowrap">{2}</div>
+            <div class="text-lg font-semibold">{1}</div>
+        </div>
+    </message>
+
 	<message id='stylus'>
 		<div class="flex w-screen h-screen ">
 			

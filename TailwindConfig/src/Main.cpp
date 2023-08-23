@@ -199,7 +199,7 @@ std::vector<std::string> findAndRemoveMatches(boost::regex regex, std::string& s
         lastPos = it->position() + it->length();
         ++it;
     }
-    // remove padding classes from classes string
+    // remove last match
     str = result + str.substr(lastPos, str.length() - lastPos);
     return matches;
 }

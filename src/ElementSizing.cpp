@@ -4,7 +4,7 @@
 ElementSizingWidget::ElementSizingWidget(std::shared_ptr<Config> tailwindConfig)
 	: tailwindConfig_(tailwindConfig)
 {
-	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900");
+	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900 px-1.5");
 	setTitle("Sizing");
 	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900");
 	setCollapsible(true);
