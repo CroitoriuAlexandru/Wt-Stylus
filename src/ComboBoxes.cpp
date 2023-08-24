@@ -6,7 +6,7 @@
 
 void StyleClassComboBox::setCustom(bool custom)
 {
-	if(custom_start_.compare("none") == 0) return;
+	// if(custom_start_.compare("none") == 0) return;
 	if(custom){
 		checkBox_custom_value_->setChecked(true);
 		comboBox_class->hide();
@@ -45,7 +45,8 @@ void StyleClassComboBox::setCustomValueString(std::string custom_start)
 	lineEdit_custom_value_->keyWentUp().preventDefaultAction(true);
 
 	lineEdit_custom_value_->keyWentUp().connect(this, [=](Wt::WKeyEvent e){
-		if(e.key() == Wt::Key::F1 ){
+		if(e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::Z){
+			if(lineEdit_custom_value_->valueText() == "") return;
 			if(checkbox_important_->isChecked()) {
 				checkbox_important_->setChecked(false);
 				checkbox_important_->toggleStyleClass("text-red-500", false, true);
@@ -53,15 +54,15 @@ void StyleClassComboBox::setCustomValueString(std::string custom_start)
 				checkbox_important_->setChecked(true);
 				checkbox_important_->toggleStyleClass("text-red-500", true, true);
 			}
-			classChanged_.emit();
-			lineEdit_custom_value_->setFocus();
-		}else if(e.key() == Wt::Key::F2 ){
+			classChanged_.emit(current_value);
+		}else if(e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::X){
+			if(custom_start_.compare("none") == 0) return;
 			if(checkBox_custom_value_->isChecked()) {
 				setCustom(false);
 			} else {
 				setCustom(true);
 			}
-		}else if (e.key() == Wt::Key::Escape){
+		}else if (e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::Q){
 			auto app = Wt::WApplication::instance();
 			auto search_input = app->findWidget("search-input");
 			if(search_input != nullptr) search_input->setFocus(true);
@@ -73,8 +74,10 @@ void StyleClassComboBox::setCustomValueString(std::string custom_start)
 
 	lineEdit_custom_value_->enterPressed().connect(this, [=](){
 		if(lineEdit_custom_value_->text().toUTF8() != ""){
-			classChanged_.emit();
-			lineEdit_custom_value_->setFocus(true);
+			current_value = custom_start_ + "[" + lineEdit_custom_value_->valueText().toUTF8() + "]";
+			if(checkbox_important_->isChecked()) current_value = "!" + current_value;
+			classChanged_.emit(current_value);
+			// lineEdit_custom_value_->setFocus(true);
 		}
 	});
 }
@@ -118,7 +121,7 @@ StyleClassComboBox::StyleClassComboBox(Propriety propriety)
 		comboBox_class->setCurrentIndex(comboBox_class->findText(defaultValue, Wt::MatchFlag::StringExactly));
 		checkbox_important_->setChecked(false);
 		checkbox_important_->toggleStyleClass("text-red-500", false, true);
-		classChanged_.emit();
+		classChanged_.emit(current_value);
 	});
 
 
@@ -128,14 +131,18 @@ StyleClassComboBox::StyleClassComboBox(Propriety propriety)
 		}else {
 			checkbox_important_->toggleStyleClass("text-red-500", false, true);
 		}
-		if(getValue().compare(defaultValue) != 0) classChanged_.emit();
+		current_value = "!" + current_value;
+		if(getValue().compare(defaultValue) != 0) classChanged_.emit(getValue());
+
+
 	});
 
 
 	// emit signal when something changes
 	comboBox_class->sactivated().connect(this, [=](Wt::WString className){
-		// comboBox_class->setFocus();
-		classChanged_.emit();
+		if(checkbox_important_->isChecked()) current_value = "!" + className.toUTF8();
+		else current_value = className.toUTF8();
+		classChanged_.emit(current_value);
 	});
 
 
@@ -144,12 +151,13 @@ StyleClassComboBox::StyleClassComboBox(Propriety propriety)
 			toggleStyleClass("bg-neutral-900", false);
 			else 
 			toggleStyleClass("bg-neutral-900", true);
+
+		if(checkBox_custom_value_->isChecked()) lineEdit_custom_value_->setFocus();
+		else comboBox_class->setFocus();
 	});
 
-	comboBox_class->keyWentUp().preventDefaultAction();
-
 	comboBox_class->keyWentUp().connect(this, [=](Wt::WKeyEvent e){
-		if(e.key() == Wt::Key::F1){
+		if(e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::Z){
 			if(comboBox_class->currentText() == "none") return;
 			if(checkbox_important_->isChecked()) {
 				checkbox_important_->setChecked(false);
@@ -158,24 +166,15 @@ StyleClassComboBox::StyleClassComboBox(Propriety propriety)
 				checkbox_important_->setChecked(true);
 				checkbox_important_->toggleStyleClass("text-red-500", true, true);
 			}
-			classChanged_.emit();
-			comboBox_class->setFocus();
-		}else if(e.key() == Wt::Key::F2){
+			classChanged_.emit(current_value);
+		}else if(e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::X){
 			if(custom_start_.compare("none") == 0) return;
 			if(checkBox_custom_value_->isChecked()) {
 				setCustom(false);
 			} else {
 				setCustom(true);
 			}
-		}else if (e.key() == Wt::Key::Left || e.key() == Wt::Key::Up){
-			comboBox_class->setCurrentIndex(comboBox_class->currentIndex() - 1);
-			classChanged_.emit();
-			comboBox_class->setFocus();
-		}else if (e.key() == Wt::Key::Right || e.key() == Wt::Key::Down){
-			comboBox_class->setCurrentIndex(comboBox_class->currentIndex() + 1);
-			classChanged_.emit();
-			comboBox_class->setFocus();
-		}else if (e.key() == Wt::Key::Escape){
+		}else if (e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::Q){
 			auto app = Wt::WApplication::instance();
 			auto search_input = app->findWidget("search-input");
 			if(search_input != nullptr) search_input->setFocus(true);
@@ -185,38 +184,13 @@ StyleClassComboBox::StyleClassComboBox(Propriety propriety)
 		}
 	});
 
-	
 	setValue("none");
-}
-
-std::string StyleClassComboBox::getValue()
-{
-	std::string selectedClass = "";
-
-		if(custom_start_.compare("none") != 0 &&
-			checkBox_custom_value_->isChecked() && 
-			lineEdit_custom_value_->text().toUTF8() != ""
-		){
-			selectedClass = custom_start_ + "[" + lineEdit_custom_value_->valueText().toUTF8() + "]";
-		}else{
-			selectedClass = comboBox_class->currentText().toUTF8();
-		}	
-		if(checkbox_important_->isChecked() && selectedClass.compare(defaultValue) != 0){
-			selectedClass = "!" + selectedClass;
-		}
-
-
-return selectedClass;
 }
 
 void StyleClassComboBox::setValue(std::string className)
 {
-	// if(className.compare("70") == 0)
-	// 	{	
-	// 		std::cout << "\n\n recived value : <" << className << ">\n\n";
-	// 		std::cout << "\n\n index of value: <" << comboBox_class->findText(className, Wt::MatchFlag::StringExactly) << ">\n\n";
-	// 		std::cout << "\n\n value of index: <" << comboBox_class->itemText(comboBox_class->findText(className, Wt::MatchFlag::StringExactly)) << ">\n\n";
-	// 	}
+	current_value = className;
+
 	//  this is used by the search to reset styles to the default value 
 	std::string reset = "res";
 	if(className.compare("") == 0 || className.compare("none") == 0 || className.substr(className.length() - reset.length()) == reset)
@@ -225,7 +199,7 @@ void StyleClassComboBox::setValue(std::string className)
 		checkbox_important_->setChecked(false);
 		checkbox_important_->toggleStyleClass("text-red-500", false, true);
 		if(custom_start_.compare("none") != 0){
-			// checkBox_custom_value_->setChecked(false);
+			checkBox_custom_value_->setChecked(false);
 			setCustom(false);
 		}
 		toggleStyleClass("bg-neutral-900", false);
@@ -292,26 +266,20 @@ ColorSelecionWidget::ColorSelecionWidget(ProprietyColor proprietyColor, std::str
 {
 	setStyleClass("mx-auto");
 	auto colors_header = addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto colors_wrapper = addWidget(std::make_unique<Wt::WContainerWidget>());
+	auto opacity_wrapper = addWidget(std::make_unique<Wt::WContainerWidget>());
 	auto colors_picker_wrapper = addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto slider_wrapper = addWidget(std::make_unique<Wt::WContainerWidget>());
 
 	colors_header->addWidget(std::make_unique<Wt::WText>(title))->setStyleClass("font-bold text-neutral-400");
 
-	colors_header->setStyleClass("flex items-center");
-	colors_wrapper->setStyleClass("flex justify-center font-bold text-neutral-400");
-	slider_wrapper->setStyleClass("flex justify-between items-center");
-	slider_wrapper->addWidget(std::make_unique<Wt::WText>("Opacity:"))->setStyleClass("font-bold text-neutral-400");
+	colors_header->setStyleClass("flex items-center ");
+	colors_header->addWidget(std::make_unique<Wt::WText>("Opacity"))->setStyleClass("font-bold text-neutral-400 text-sm ml-auto mr-1");
 
-	opacity_slider = slider_wrapper->addWidget(std::make_unique<Wt::WSlider>(Wt::Orientation::Horizontal));
-	opacity_slider->setStyleClass("min-h-fit min-w-fit");
-	opacity_slider->setHandleWidth(10);
-	
-	opacity_slider->resize(200, 20);
-	opacity_slider->setRange(0, 100);
-	opacity_slider->setTickInterval(5);
-	opacity_slider->setTickPosition(Wt::WSlider::TicksBothSides);
-	opacity_slider->setValue(100);
+	opacity_widget = colors_header->addWidget(std::make_unique<Wt::WSpinBox>());
+	opacity_widget->setStyleClass("min-h-fit min-w-fit");
+
+	opacity_widget->setRange(0, 100);
+	opacity_widget->setSingleStep(5);
+	opacity_widget->setStyleClass("bg-neutral-800 text-neutral-400 appearance-none hover:bg-neutral-900");
 
 	auto colors_size = proprietyColor.styleClasses_.size();
 	auto intensities_size = proprietyColor.intensity_.styleClasses_.size();
@@ -371,16 +339,18 @@ ColorSelecionWidget::ColorSelecionWidget(ProprietyColor proprietyColor, std::str
 			
 		}
 	}
-
-	colors_group->checkedChanged().connect(this, [=](){ classChanged_.emit();});
-	opacity_slider->valueChanged().connect(this, [=](){ 
-		
-		if(opacity_slider->value() % 5 == 0) {
-			opacity_slider->setValue(opacity_slider->value() - opacity_slider->value() % 5);
-			classChanged_.emit();
-		}
+	for(auto color : colors_vector){
+		// std::cout << "\n color: " << color << "\n";
+	}
+	colors_group->checkedChanged().connect(this, [=](){ classChanged_.emit(current_value);});
+	opacity_widget->valueChanged().connect(this, [=](){ 
+		if(opacity_widget->value() > 100) opacity_widget->setValue(100); classChanged_.emit(current_value);
 	});
-	// opacity_slider->setValue(100);
+	opacity_widget->enterPressed().connect(this, [=](){ 
+		if(opacity_widget->value() > 100) opacity_widget->setValue(100); classChanged_.emit(current_value);
+		 opacity_widget->setFocus();
+	});
+
 }
 
 
@@ -393,29 +363,39 @@ int ColorSelecionWidget::getIndexOfStringInVector(std::string str, std::vector<s
 
 void ColorSelecionWidget::setValue(std::string className)
 {
-	// std::cout << "\n segfault here \n";
-	// opacity_slider->setValue(100);
-	// std::cout << "\n segfault here \n";
-
-	colors_group->seedId(0);
+	std::cout << "\n\n className: " << className << "\n\n";
+	current_value = className;
+	if(className.compare("none") == 0) {
+		colors_group->button(5)->setChecked(true);
+		opacity_widget->setValue(100);
+		colors_group->seedId(0);
+		return;
+	}
+		
 	std::string class_name = className.substr(0, className.find("/"));
-	std::cout << "\n\n set value color: " << class_name << "\n\n";
-	int index = getIndexOfStringInVector(className, colors_vector);
+	int index = getIndexOfStringInVector(className.substr(0, className.find("/")), colors_vector);
 	std::string color_class_name = colors_vector[index];
-	std::cout << "\n\n index of color: " << index << "\n\n";
+	// std::cout << "\n class name:" << class_name << "\n\n";
+	// std::cout << "\n class from vector: " << color_class_name << "\n";
 	colors_group->button(index)->setChecked(true);
+
+	if(className.find("/") != std::string::npos){
+		std::string opacity = className.substr(className.find("/")+1, className.length()-className.find("/")-1);
+		opacity_widget->setValue(std::stoi(opacity));
+	}
 }
 
 std::string ColorSelecionWidget::getValue()
 {
 	std::string selectedClass = colors_vector[colors_group->checkedId()];
-	std::cout << "\n\n selected color: " << selectedClass << "\n\n";
-	if(std::regex_match(selectedClass, regex_def_classes) || selectedClass.compare("none") == 0) {
+	if(selectedClass.compare("none") == 0) {
 		return selectedClass;
 	}
-	std::cout << "\n\n opacity: " << opacity_slider->value() << "\n\n";
-	if(opacity_slider->value() != 100 && opacity_slider->value() % 5 == 0){
-		selectedClass += "/" + std::to_string(opacity_slider->value());
+	int opacity_value = opacity_widget->value();
+	if(opacity_value != 100){
+		if(opacity_value % 5 != 0) opacity_value = opacity_value - (opacity_value % 5);
+		opacity_widget->setValue(opacity_value);
+		selectedClass += "/" + std::to_string(opacity_widget->value());
 	} 
 	return selectedClass;
 }

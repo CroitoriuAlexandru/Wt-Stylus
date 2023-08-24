@@ -12,7 +12,7 @@ struct BackgroundData
 	std::string bg_attachment = "none";
 	// bg-clip-(border|padding|content|text)
 	std::string bg_clip = "none";
-	std::string bg_color_class = "none";
+	std::string bg_color = "none";
 	// bg-origin-(border|padding|content)
 	std::string bg_origin = "none";
 	// bg-(bottom|center|left|left-bottom|left-top|right|right-bottom|right-top|top)
@@ -47,18 +47,24 @@ public:
 	std::string getStyles();
 	void resetStyles();
 	
-	StyleClassComboBox *comboBox_attachment;
-	StyleClassComboBox *comboBox_clip;
-	StyleClassComboBox *comboBox_origin;
-	StyleClassComboBox *comboBox_position;
-	StyleClassComboBox *comboBox_repeat;
-	StyleClassComboBox *comboBox_size;
-	ColorSelecionWidget *colors_widget;
+	ColorSelecionWidget *bg_color_widget;
+	ColorSelecionWidget *bg_color_from_widget;
+	ColorSelecionWidget *bg_color_via_widget;
+	ColorSelecionWidget *bg_color_to_widget;
 
 	std::shared_ptr<Wt::WButtonGroup> gradient_group;
-	// std::shared_ptr<Wt::WButtonGroup> gradient_step_group;
+	std::shared_ptr<Wt::WButtonGroup> gradient_step_group;
+
+	std::shared_ptr<Wt::WButtonGroup> attachment_group;
+	std::shared_ptr<Wt::WButtonGroup> clip_group;
+	std::shared_ptr<Wt::WButtonGroup> origin_group;
+	std::shared_ptr<Wt::WButtonGroup> position_group;
+	std::shared_ptr<Wt::WButtonGroup> repeat_group;
+	std::shared_ptr<Wt::WButtonGroup> size_group;
+
+	// this is where the radio buttons for chosing from via to collors. its saved because it needs to be hidden when not needed
+	Wt::WContainerWidget *from_via_to_wrapper;
 	int getIndexOfStringInVector(std::string str, std::vector<StyleClass> vec);
-private:
 	void setCustomTestValues();
 	
 	std::shared_ptr<Config> tailwindConfig_;

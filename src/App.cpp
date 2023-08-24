@@ -27,7 +27,7 @@ App::App(const Wt::WEnvironment &env)
 	
 	// add custom javascript files
 	// require("https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"); // testing for future integration with stylus
-	require("https://cdn.tailwindcss.com");
+	// require("https://cdn.tailwindcss.com");
 	require("resources/Js/Utility.js"); // tailwind theme styles customize from here
 
 	// add mesage resource bundle from templates

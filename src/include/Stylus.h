@@ -21,8 +21,6 @@ enum SearchOption
     Classes = 10,
     Folders = 11,
     Focus = 12,
-    ColorIntensity = 13,
-    ColorOpacity = 14,
 };
 struct TemplateData {
     std::string folderName;

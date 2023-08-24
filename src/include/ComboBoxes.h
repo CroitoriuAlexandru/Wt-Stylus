@@ -14,7 +14,7 @@
 #include <Wt/WGroupBox.h>
 #include <Wt/WButtonGroup.h>
 #include <Wt/WRadioButton.h>
-#include <Wt/WSlider.h>
+#include <Wt/WSpinBox.h>
 
 #include <Wt/WString.h>
 #include <Wt/WLineEdit.h>
@@ -28,10 +28,10 @@ public:
     StyleClassComboBox(Propriety propriety);
 
 	void setCustomValueString(std::string custom_start);
-    std::string getValue();
+    std::string getValue() { return current_value; };
 	// classType is default classes from tailwind p-1 or custom p-[10px]
 	void setValue(std::string className = "none");
-	Wt::Signal<>& classChanged() { return classChanged_; }
+	Wt::Signal<std::string>& classChanged() { return classChanged_; }
 	// void setOptions(Propriety propriety);
 	Wt::WTemplate *select_temp_;
 	void setCustom(bool custom);
@@ -44,12 +44,13 @@ public:
 	Wt::WText *btn_reset_;
 
 	void setDefaultValue(std::string defaultValue) { this->defaultValue = defaultValue; };
+	std::string current_value = "none";
 private:
 	std::string defaultValue = "none";
 
 	// std::regex custom_option_regexp = std::regex("\\[\\S*\\]");
 	std::string custom_start_ = "none";
-	Wt::Signal<> classChanged_;
+	Wt::Signal<std::string> classChanged_;
 };
 
 
@@ -61,20 +62,22 @@ public:
 	ColorSelecionWidget(ProprietyColor proprietyColor, std::string title = "title not set");
 	void setCustomValueString(std::string custom_start){ custom_start_ = custom_start; };
 
+	// std::string getValue() { return current_value; };
 	std::string getValue();
 	void setValue(std::string className = "none");
 
 	std::string custom_start_;
 
 	std::shared_ptr<Wt::WButtonGroup> colors_group;
-	Wt::WSlider *opacity_slider;
+	Wt::WSpinBox *opacity_widget;
 	std::vector<std::string> colors_vector = {};
 	int getIndexOfStringInVector(std::string str, std::vector<std::string> vec);
 
-	Wt::Signal<>& classChanged() { return classChanged_; }
+	Wt::Signal<std::string>& classChanged() { return classChanged_; }
+	std::string current_value = "none";
 private:
 
-	Wt::Signal<> classChanged_;
+	Wt::Signal<std::string> classChanged_;
 
 	std::regex regex_custom_color =  std::regex("[!]?bg-\\[[\\S]*\\]");
 	std::regex regex_def_classes = std::regex("[!]?(bg|from|via|to)-(inherit|current|transparent|black|white)");

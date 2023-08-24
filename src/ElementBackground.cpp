@@ -4,7 +4,14 @@
 
 ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwindConfig)
 	: tailwindConfig_(tailwindConfig),
-	gradient_group(std::make_shared<Wt::WButtonGroup>())
+	gradient_group(std::make_shared<Wt::WButtonGroup>()),
+	gradient_step_group(std::make_shared<Wt::WButtonGroup>()),
+	attachment_group(std::make_shared<Wt::WButtonGroup>()),
+	clip_group(std::make_shared<Wt::WButtonGroup>()),
+	origin_group(std::make_shared<Wt::WButtonGroup>()),
+	position_group(std::make_shared<Wt::WButtonGroup>()),
+	repeat_group(std::make_shared<Wt::WButtonGroup>()),
+	size_group(std::make_shared<Wt::WButtonGroup>())
 {
 
 	setStyleClass("min-w-fit max-w-[300px] !border-x-0 !bg-neutral-700 !text-neutral-200 !border-neutral-900 px-1.5");
@@ -28,104 +35,223 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwin
 
 	centralWidget->setStyleClass("flex flex-col w-full max-w-[300px]");
 
+	// gradient image and colors
+	// {
+		auto gratient_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto gradient_header = gratient_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto gradient_body = gratient_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto none_btns_wrapper = gradient_body->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto directions_from_via_to_wrapper = gradient_body->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto directions_wrapper = directions_from_via_to_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		from_via_to_wrapper = directions_from_via_to_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
 
-	auto gratient_wrapper = centralWidget->addWidget(std::make_unique<Wt::WGroupBox>("Gradient"));
-	gratient_wrapper->setStyleClass("flex justify-start border border-solid pb-1 border-neutral-900");
+		gradient_header->addWidget(std::make_unique<Wt::WText>("Gradient"))->setStyleClass("font-bold text-neutral-400");
+		gradient_header->setStyleClass("flex");
+		gradient_body->setStyleClass("flex");
+		none_btns_wrapper->setStyleClass("flex");
+		directions_from_via_to_wrapper->setStyleClass("flex flex-col");
+		directions_wrapper->setStyleClass("flex");
+		from_via_to_wrapper->setStyleClass("flex");
+		for(int index = 0; index < tailwindConfig->backgrounds.background_image.styleClasses_.size(); ++index){
+			// get the text after the last -
+			std::string gradient_name = tailwindConfig->backgrounds.background_image.styleClasses_[index].className_;
+			std::string gradient_direction = gradient_name.substr(gradient_name.find_last_of("-")+1);
+			Wt::WRadioButton *btn;
+			
+			std::string tooltip_text;
+			if(gradient_direction.compare("tl") == 0){
+				tooltip_text = "To Top Left";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-left-up.svg)]");
+			}else if (gradient_direction.compare("tr") == 0){
+				tooltip_text = "To Top Right";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-right-up.svg)]");
+			}else if (gradient_direction.compare("bl") == 0){
+				tooltip_text = "To Bottom Left";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-left-down.svg)]");
+			}else if (gradient_direction.compare("br") == 0){
+				tooltip_text = "To Bottom Right";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-right-down.svg)]");
+			}else if (gradient_direction.compare("t") == 0){
+				tooltip_text = "To Top";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-up.svg)]");
+			}else if (gradient_direction.compare("b") == 0){
+				tooltip_text = "To Bottom";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-down.svg)]");
+			}else if (gradient_direction.compare("l") == 0){
+				tooltip_text = "To Left";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-left.svg)]");
+			}else if (gradient_direction.compare("r") == 0){
+				tooltip_text = "To Right";
+				btn = directions_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/arrow-right.svg)]");
+			}else if (gradient_name.compare("bg-none") == 0){
+				tooltip_text = "No Background";
+				btn = none_btns_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:!p-0.5 mr-auto text-xs [&>span]:bg-neutral-900 [&>span]:hover:bg-neutral-800 text-white [&>input:checked_+_span]:bg-neutral-400 [&>span]:text-center [&>input:checked_+_span]:text-black");
+				btn->setText("none");
+			}else {
+				tooltip_text = "No style class applied";
+				btn = none_btns_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] ");
+			}
 
-	for(int index = 0; index < tailwindConfig->backgrounds.background_image.styleClasses_.size(); ++index){
-		auto btn = gratient_wrapper->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		// get the text after the last -
-		std::string gradient_name = tailwindConfig->backgrounds.background_image.styleClasses_[index].className_;
-		std::string gradient_direction = gradient_name.substr(gradient_name.find_last_of("-")+1);
-
-		btn->setStyleClass("flex w-fit h-fit cursor-pointer m-px mx-0.5 p-px");
-		btn->addStyleClass("[&>span]:bg-cover [&>input]:hidden [&>span]:p-2.5 [&>span]:m-px [&>span]:rounded-md");
-		btn->addStyleClass("[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400 ");
-		std::string tooltip_text;
-		if(gradient_direction.compare("tl") == 0){
-			tooltip_text = "To Top Left";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-left-up.svg)]");
-		}else if (gradient_direction.compare("tr") == 0){
-			tooltip_text = "To Top Right";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-right-up.svg)]");
-		}else if (gradient_direction.compare("bl") == 0){
-			tooltip_text = "To Bottom Left";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-left-down.svg)]");
-		}else if (gradient_direction.compare("br") == 0){
-			tooltip_text = "To Bottom Right";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-right-down.svg)]");
-		}else if (gradient_direction.compare("t") == 0){
-			tooltip_text = "To Top";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-up.svg)]");
-		}else if (gradient_direction.compare("b") == 0){
-			tooltip_text = "To Bottom";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-down.svg)]");
-		}else if (gradient_direction.compare("l") == 0){
-			tooltip_text = "To Left";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-left.svg)]");
-		}else if (gradient_direction.compare("r") == 0){
-			tooltip_text = "To Right";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/arrow-right.svg)]");
-		}else if (gradient_name.compare("bg-none") == 0){
-			btn->addStyleClass("[&>span]:!p-0.5 mr-auto text-xs [&>span]:bg-neutral-900 [&>span]:hover:bg-neutral-800 text-white [&>input:checked_+_span]:bg-neutral-400 [&>span]:text-center [&>input:checked_+_span]:text-black");
-			tooltip_text = "No Background";
-			btn->setText("bg none");
-		}else {
-			tooltip_text = "No style class applied";
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] ");
+			btn->addStyleClass("flex w-fit h-fit cursor-pointer m-px mx-0.5 p-px");
+			btn->addStyleClass("[&>span]:bg-cover [&>input]:hidden [&>span]:p-2.5 [&>span]:m-px [&>span]:rounded-md");
+			btn->addStyleClass("[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400 ");
+			btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg(tooltip_text).arg(gradient_name), Wt::TextFormat::UnsafeXHTML);
+			gradient_group->addButton(btn, index);
 		}
-		btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg(tooltip_text).arg(gradient_name), Wt::TextFormat::UnsafeXHTML);
-		gradient_group->addButton(btn, index);
-	}
+
+		auto btn = from_via_to_wrapper->addWidget(std::make_unique<Wt::WRadioButton>("from color"));
+		btn->setStyleClass("mx-auto flex w-fit h-fit cursor-pointer m-px mx-0.5 p-px");
+		btn->addStyleClass("[&>input]:hidden [&>span]:p-3 [&>span]:m-px [&>span]:rounded-md");
+		btn->addStyleClass("[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400");
+		btn->addStyleClass("[&>span]:!p-0.5 text-xs [&>span]:bg-neutral-900 [&>span]:hover:bg-neutral-800 text-white [&>input:checked_+_span]:bg-neutral-400 [&>span]:text-center [&>input:checked_+_span]:text-black");
+		btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg("From Color").arg("from"), Wt::TextFormat::UnsafeXHTML);
+		gradient_step_group->addButton(btn, 0);
+
+		btn = from_via_to_wrapper->addWidget(std::make_unique<Wt::WRadioButton>("via color"));
+		btn->setStyleClass("mx-auto flex w-fit h-fit cursor-pointer m-px mx-0.5 p-px");
+		btn->addStyleClass("[&>input]:hidden [&>span]:p-3 [&>span]:m-px [&>span]:rounded-md");
+		btn->addStyleClass("[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400");
+		btn->addStyleClass("[&>span]:!p-0.5 text-xs [&>span]:bg-neutral-900 [&>span]:hover:bg-neutral-800 text-white [&>input:checked_+_span]:bg-neutral-400 [&>span]:text-center [&>input:checked_+_span]:text-black");
+		btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg("Via Color").arg("via"), Wt::TextFormat::UnsafeXHTML);
+		gradient_step_group->addButton(btn, 1);
+
+		btn = from_via_to_wrapper->addWidget(std::make_unique<Wt::WRadioButton>("to color"));
+		btn->setStyleClass("mx-auto flex w-fit h-fit cursor-pointer m-px mx-0.5 p-px");
+		btn->addStyleClass("[&>input]:hidden [&>span]:p-3 [&>span]:m-px [&>span]:rounded-md");
+		btn->addStyleClass("[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400");
+		btn->addStyleClass("[&>span]:!p-0.5 text-xs [&>span]:bg-neutral-900 [&>span]:hover:bg-neutral-800 text-white [&>input:checked_+_span]:bg-neutral-400 [&>span]:text-center [&>input:checked_+_span]:text-black");
+		btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg("To Color").arg("to"), Wt::TextFormat::UnsafeXHTML);
+		gradient_step_group->addButton(btn, 2);
+
+		bg_color_widget = centralWidget->addWidget(std::make_unique<ColorSelecionWidget>(tailwindConfig->backgrounds.background_color, "Bg Color"));
+		bg_color_from_widget = centralWidget->addWidget(std::make_unique<ColorSelecionWidget>(tailwindConfig->backgrounds.background_color_from, "From Color"));
+		bg_color_via_widget = centralWidget->addWidget(std::make_unique<ColorSelecionWidget>(tailwindConfig->backgrounds.background_color_via, "Via Color"));
+		bg_color_to_widget = centralWidget->addWidget(std::make_unique<ColorSelecionWidget>(tailwindConfig->backgrounds.background_color_to, "To Color"));
+	// }
+
+	// attachment
+	// {
+		auto attachment_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto attachment_header = attachment_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto attachment_body = attachment_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		attachment_header->addWidget(std::make_unique<Wt::WText>("Background Attachment"))->setStyleClass("font-bold text-neutral-400");
+
+		attachment_header->setStyleClass("flex");
+		attachment_body->setStyleClass("flex");
+
+		for(int index = 0; index < tailwindConfig->backgrounds.background_attachment.styleClasses_.size(); ++index){
+			auto attachment_class = tailwindConfig->backgrounds.background_attachment.styleClasses_[index];
+			Wt::WRadioButton *btn;
+			if(attachment_class.className_.compare("none") == 0) {
+				btn = attachment_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
+				btn->setStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:bg-cover [&>span]:p-3");
+			}else {
+				btn = attachment_body->addWidget(std::make_unique<Wt::WRadioButton>(attachment_class.className_));
+				btn->setStyleClass("[&>span]:!p-0.5 mr-auto [&>span]:bg-neutral-900 [&>span]:hover:bg-neutral-800 text-white [&>input:checked_+_span]:bg-neutral-400 [&>span]:text-center [&>input:checked_+_span]:text-black");
+			}
+			btn->addStyleClass("flex w-fit h-fit cursor-pointer m-px mx-0.5 p-px");
+			btn->addStyleClass("[&>input]:hidden [&>span]:m-px [&>span]:rounded-md");
+			btn->addStyleClass("[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400 ");
+			btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg(attachment_class.propriety_).arg(attachment_class.className_), Wt::TextFormat::UnsafeXHTML);
+			attachment_group->addButton(btn, index);
+		}
+	// }
+
+	gradient_step_group->button(0)->setChecked(true);
+	// signals 
+	gradient_step_group->checkedChanged().connect(this, [=](){
+		switch(gradient_step_group->checkedId()){
+			case 0:
+				bg_color_from_widget->show();
+				bg_color_via_widget->hide();
+				bg_color_to_widget->hide();
+				break;
+			case 1:
+				bg_color_from_widget->hide();
+				bg_color_via_widget->show();
+				bg_color_to_widget->hide();
+				break;
+			case 2:
+				bg_color_from_widget->hide();
+				bg_color_via_widget->hide();
+				bg_color_to_widget->show();
+				break;
+		}
+		styleChanged_.emit();
+	});
 
 
-	colors_widget = centralWidget->addWidget(std::make_unique<ColorSelecionWidget>(tailwindConfig->backgrounds.background_color, "Background Color"));
-	comboBox_attachment = centralWidget->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_attachment));
-	comboBox_clip = centralWidget->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_clip));
-	comboBox_origin = centralWidget->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_origin));
-	comboBox_position = centralWidget->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_position));
-	comboBox_repeat = centralWidget->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_repeat));
-	comboBox_size = centralWidget->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig->backgrounds.background_size));
+	gradient_group->checkedChanged().connect(this, [=](){
+		if(gradient_group->checkedId() > 1){
+			from_via_to_wrapper->show();
+			bg_color_widget->hide();
+			switch(gradient_step_group->checkedId()){
+				case 0:
+					bg_color_from_widget->show();
+					bg_color_via_widget->hide();
+					bg_color_to_widget->hide();
+					break;
+				case 1:
+					bg_color_from_widget->hide();
+					bg_color_via_widget->show();
+					bg_color_to_widget->hide();
+					break;
+				case 2:
+					bg_color_from_widget->hide();
+					bg_color_via_widget->hide();
+					bg_color_to_widget->show();
+					break;
+			}
+
+		}else {
+			bg_color_widget->show();
+			bg_color_from_widget->hide();
+			bg_color_via_widget->hide();
+			bg_color_to_widget->hide();
+			from_via_to_wrapper->hide();
+		}
+		styleChanged_.emit();
+	});
+
+	bg_color_widget->classChanged().connect([=](){ styleChanged_.emit(); });
+	bg_color_from_widget->classChanged().connect([=](){ styleChanged_.emit(); });
+	bg_color_via_widget->classChanged().connect([=](){ styleChanged_.emit(); });
+	bg_color_to_widget->classChanged().connect([=](){ styleChanged_.emit(); });
+	// attachment_group->checkedChanged().connect(this, [=](){ styleChanged_.emit(); });
 
 
-	// set regular expresion for custom value w-[10px]
-	// colors_widget->setCustomValueString("bg-");
-	comboBox_attachment->setCustomValueString("bg-");
-	comboBox_clip->setCustomValueString("bg-clip-");
-	comboBox_origin->setCustomValueString("bg-origin-");
-	comboBox_position->setCustomValueString("bg-");
-	comboBox_repeat->setCustomValueString("bg-");
-	comboBox_size->setCustomValueString("bg-");
 
-	// signals for default classes for tailwind
-	colors_widget->classChanged().connect([=](){ styleChanged_.emit(); });
-	gradient_group->checkedChanged().connect(this, [=](){ styleChanged_.emit();});
-	comboBox_attachment->classChanged().connect([=](){ styleChanged_.emit(); });
-	comboBox_clip->classChanged().connect([=](){ styleChanged_.emit(); });
-	comboBox_origin->classChanged().connect([=](){ styleChanged_.emit(); });
-	comboBox_position->classChanged().connect([=](){ styleChanged_.emit(); });
-	comboBox_repeat->classChanged().connect([=](){ styleChanged_.emit(); });
-	comboBox_size->classChanged().connect([=](){ styleChanged_.emit(); });
-	
+	collapsed().connect(this, [=](){ 
+		std::cout << "\n ------------------------ collapsed ------------------------" << std::endl;
+	 });
+	expanded().connect(this, [=](){
+		std::cout << "\n ------------------------ expanded ------------------------" << std::endl;
+	 });
 };
 
 std::string ElementBackgroundWidget::getStyles()
 {
-	bool activeClasses = false;
 	std::string elementClasses;
 	std::string gradient_name = tailwindConfig_->backgrounds.background_image.styleClasses_[gradient_group->checkedId()].className_;
-	if(gradient_name.compare("none") != 0){ elementClasses += gradient_name + " "; activeClasses = true; }
-	if(colors_widget->getValue().compare("none") != 0){ elementClasses += colors_widget->getValue() + " "; activeClasses = true; }
-	if(comboBox_attachment->getValue().compare("none") != 0){ elementClasses += comboBox_attachment->getValue() + " "; activeClasses = true; }
-	if(comboBox_clip->getValue().compare("none") != 0){ elementClasses += comboBox_clip->getValue() + " "; activeClasses = true; }
-	if(comboBox_origin->getValue().compare("none") != 0){ elementClasses += comboBox_origin->getValue() + " "; activeClasses = true; }
-	if(comboBox_position->getValue().compare("none") != 0){ elementClasses += comboBox_position->getValue() + " "; activeClasses = true; }
-	if(comboBox_repeat->getValue().compare("none") != 0){ elementClasses += comboBox_repeat->getValue() + " "; activeClasses = true; }
-	if(comboBox_size->getValue().compare("none") != 0){ elementClasses += comboBox_size->getValue() + " "; activeClasses = true; }
-	std::cout << "\n\n background style classes: " << elementClasses << "\n\n";
-	// if(activeClasses) expand();
-	// else collapse();
-	
+	if(gradient_name.compare("none") != 0){elementClasses += gradient_name + " "; }
+	if(bg_color_from_widget->getValue().compare("none") != 0){ elementClasses += bg_color_from_widget->getValue() + " "; }
+	if(bg_color_via_widget->getValue().compare("none") != 0){ elementClasses += bg_color_via_widget->getValue() + " "; }
+	if(bg_color_to_widget->getValue().compare("none") != 0){ elementClasses += bg_color_to_widget->getValue() + " "; }
+	if(bg_color_widget->getValue().compare("none") != 0){ elementClasses += bg_color_widget->getValue() + " "; }
+	// if(attachment_group->checkedId() != -1){ elementClasses += tailwindConfig_->backgrounds.background_attachment.styleClasses_[attachment_group->checkedId()].className_ + " "; }
+
+
+
 	return elementClasses;
 }
 
@@ -142,32 +268,51 @@ void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 	bool activeClasses = false;
 	resetStyles();
 
-	// comboBox_color->comboBox_color->setOptions(colors.bg_color_from_classes);
-	std::cout << " ---- ---------bgData.bg_image = <" << bgData.bg_image << ">\n";
-	// std::cout << " ---- ---------bgData.bg_color_from = <" << bgData.bg_color_class << ">\n";
-	// std::cout << " ---- ---------bgData.bg_color_from_step = " << bgData.bg_color_from_step << "\n";
-	// std::cout << " ---- ---------bgData.bg_color_via = " << bgData.bg_color_via << "\n";
-	// std::cout << " ---- ---------bgData.bg_color_via_step = " << bgData.bg_color_via_step << "\n";
-	// std::cout << " ---- ---------bgData.bg_color_to = " << bgData.bg_color_to << "\n";
-	// std::cout << " ---- ---------bgData.bg_color_to_step = " << bgData.bg_color_to_step << "\n";
-
-	if(bgData.bg_image.compare("none") != 0){
+	if(bgData.bg_image.compare("none") != 0 || bgData.bg_image == ""){
 		int gradientIndex = getIndexOfStringInVector(bgData.bg_image, tailwindConfig_->backgrounds.background_image.styleClasses_);
-		if(gradientIndex != 0){ gradient_group->button(gradientIndex)->setChecked(true); }
+		
+		if(gradientIndex > 1){
+			gradient_group->button(gradientIndex)->setChecked(true);
+			from_via_to_wrapper->show();
+			gradient_step_group->button(0)->setChecked(true);
+			bg_color_widget->hide();
+		}
+		
+		// show from via to widget depending on the gradient step radio
+		switch(gradient_step_group->checkedId()){
+			case 0:
+				bg_color_from_widget->show();
+				bg_color_via_widget->hide();
+				bg_color_to_widget->hide();
+				break;
+			case 1:
+				bg_color_from_widget->hide();
+				bg_color_via_widget->show();
+				bg_color_to_widget->hide();
+				break;
+			case 2:
+				bg_color_from_widget->hide();
+				bg_color_via_widget->hide();
+				bg_color_to_widget->show();
+				break;
+		}
 		activeClasses = true;
 	}
-	if(bgData.bg_color_class.compare("none") != 0){
-		colors_widget->setValue(bgData.bg_color_class);
-		activeClasses = true;
+	if(bgData.bg_color_from.compare("none") != 0){
+		bg_color_from_widget->setValue(bgData.bg_color_from);
+		gradient_step_group->button(0)->setChecked(true);
 	}
-	if(bgData.bg_attachment.compare("none") != 0) { comboBox_attachment->setValue(bgData.bg_attachment); activeClasses = true; }
-	if(bgData.bg_clip.compare("none") != 0) { comboBox_clip->setValue(bgData.bg_clip); activeClasses = true; }
-	if(bgData.bg_origin.compare("none") != 0) { comboBox_origin->setValue(bgData.bg_origin); activeClasses = true; }
-	if(bgData.bg_position.compare("none") != 0) { comboBox_position->setValue(bgData.bg_position); activeClasses = true; }
-	if(bgData.bg_repeat.compare("none") != 0) { comboBox_repeat->setValue(bgData.bg_repeat); activeClasses = true; }
-	if(bgData.bg_size.compare("none") != 0) { comboBox_size->setValue(bgData.bg_size); activeClasses = true; }
-
-
+	if(bgData.bg_color_via.compare("none") != 0){ bg_color_via_widget->setValue(bgData.bg_color_via); }
+	if(bgData.bg_color_to.compare("none") != 0){ bg_color_to_widget->setValue(bgData.bg_color_to); }
+	if(bgData.bg_color.compare("none") != 0){
+		std::cout << "bg color is not none and backgrounds panel should expand: " << bgData.bg_color << std::endl;
+		bg_color_widget->setValue(bgData.bg_color); 
+		activeClasses = true; 
+	}
+	// if(bgData.bg_attachment.compare("none") != 0){ 
+		// attachment_group->button(getIndexOfStringInVector(bgData.bg_attachment, tailwindConfig_->backgrounds.background_attachment.styleClasses_))->setChecked(true); activeClasses = true; 
+		// }
+	std::cout << "active classes:--------------------- " << activeClasses << std::endl;
 	if(activeClasses) expand();
 	else collapse();
 }
@@ -175,23 +320,29 @@ void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 void ElementBackgroundWidget::resetStyles()
 {
 	gradient_group->button(0)->setChecked(true);
-	colors_widget->setValue("none");
-	comboBox_attachment->setValue("none");
-	comboBox_clip->setValue("none");
-	comboBox_origin->setValue("none");
-	comboBox_position->setValue("none");
-	comboBox_repeat->setValue("none");
-	comboBox_size->setValue("none");
+	gradient_step_group->button(0)->setChecked(true);
+	bg_color_widget->setValue("none");
+
+	bg_color_from_widget->setValue("none");
+	bg_color_via_widget->setValue("none");
+	bg_color_to_widget->setValue("none");
+	
+	bg_color_widget->show();
+	from_via_to_wrapper->hide();
+	bg_color_from_widget->hide();
+	bg_color_via_widget->hide();
+	bg_color_to_widget->hide();
+
 }
 
 void ElementBackgroundWidget::setCustomTestValues()
 {
 	gradient_group->button(5)->setChecked(true);
-	colors_widget->setValue("bg-neutral-400/60");
-	comboBox_attachment->setValue("bg-fixed");
-	comboBox_clip->setValue("bg-clip-border");
-	comboBox_origin->setValue("bg-origin-border");
-	comboBox_position->setValue("bg-center");
-	comboBox_repeat->setValue("bg-repeat");
-	comboBox_size->setValue("bg-auto");
+	bg_color_widget->setValue("bg-neutral-400/60");
+	// comboBox_attachment->setValue("bg-fixed");
+	// comboBox_clip->setValue("bg-clip-border");
+	// comboBox_origin->setValue("bg-origin-border");
+	// comboBox_position->setValue("bg-center");
+	// comboBox_repeat->setValue("bg-repeat");
+	// comboBox_size->setValue("bg-auto");
 }

@@ -217,7 +217,7 @@ std::string Backgrounds::backgroundColorData()
     std::string data = " ";
     for(auto styleClass : background_color.styleClasses_)
     {
-        data += styleClass.className_ + "-500/20 ";
+        data += styleClass.className_ + "-500";
     }
     data += "\n ";
     for(auto styleClass : background_color_from.styleClasses_)

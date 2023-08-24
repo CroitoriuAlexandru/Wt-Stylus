@@ -17,7 +17,7 @@ ElementClassEdditor::ElementClassEdditor()
 
     // sizingWidget_->collapse();
     // spacingWidget_->collapse();
-    backgroundWidget_->collapse();
+    // backgroundWidget_->collapse();
     effectsWidget_->collapse();
     transformsWidget_->collapse();
     layoutWidget_->collapse();
@@ -164,7 +164,7 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     bgData.bg_color_to = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_regex, classes);
     bgData.bg_color_to_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_step, classes);
     // std::cout << "\n --- bg color should be taken out \n at the moment classes <" << classes << ">\n";
-    bgData.bg_color_class = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_regex, classes);
+    bgData.bg_color = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_regex, classes);
     // std::cout << "\n --- bg color should be taken out \n at the moment classes <" << classes << ">\n";
 
     bgData.bg_attachment = findAndRemoveMatche(tailwindConfig_->backgrounds.background_attachment_regex, classes);
@@ -240,12 +240,15 @@ std::vector<std::string> ElementClassEdditor::findAndRemoveMatches(std::regex re
     size_t lastPos = 0;
     while (it != end) {
         result += str.substr(lastPos, it->position() - lastPos);
-        matches.push_back(it->str()); // Store deleted value in vector
+        auto match = it->str();
+        if(match == ""){ match = "none"; }
+        matches.push_back(match); // Store deleted value in vector
         lastPos = it->position() + it->length();
         ++it;
     }
     // remove padding classes from classes string
     str = result + str.substr(lastPos, str.length() - lastPos);
+
     return matches;
 }
 std::vector<std::string> ElementClassEdditor::findAndRemoveMatches(boost::regex regex, std::string& str) {
@@ -258,7 +261,9 @@ std::vector<std::string> ElementClassEdditor::findAndRemoveMatches(boost::regex 
     size_t lastPos = 0;
     while (it != end) {
         result += str.substr(lastPos, it->position() - lastPos);
-        matches.push_back(it->str()); // Store deleted value in vector
+        auto match = it->str();
+        if(match == ""){ match = "none"; }
+        matches.push_back(match); // Store deleted value in vector
         lastPos = it->position() + it->length();
         ++it;
     }
@@ -286,6 +291,7 @@ std::string ElementClassEdditor::findAndRemoveMatche(std::regex regex, std::stri
         str = result + str.substr(lastPos, str.length() - lastPos);
         // clean start whitespace from match
         match = std::regex_replace(match, std::regex("^\\s+"), "");
+        if(match == ""){ match = "none"; }
         return match;
 }
 std::string ElementClassEdditor::findAndRemoveMatche(boost::regex regex, std::string& str) {
@@ -306,5 +312,6 @@ std::string ElementClassEdditor::findAndRemoveMatche(boost::regex regex, std::st
     str = result + str.substr(lastPos, str.length() - lastPos);
     // clean start whitespace from match
     match = boost::regex_replace(match, boost::regex("^\\s+"), "");
+    if(match == ""){ match = "none"; }
     return match;
 }

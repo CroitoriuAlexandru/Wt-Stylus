@@ -14,6 +14,7 @@ void StylusEdditor::createKeybordShortcuts()
 {
 
 	Wt::WApplication::instance()->globalKeyWentDown().connect(this, [=](Wt::WKeyEvent e){
+
 		if(e.key() == Wt::Key::Key_7){
 			sidebar_left_hamburger->clicked().emit(Wt::WMouseEvent());
 		}
@@ -265,14 +266,14 @@ void StylusEdditor::createSearchDialog()
 	
 		}else if (text[0] == '!'){
 			text = text.substr(4);
-			std::cout << "\n\n text: <" << text << ">\n\n";
+			std::cout << "\n text: <" << text << ">\n";
 			auto pos = text.find("|");
 			std::string styleCathegory = text.substr(0, pos-1);
 			pos = text.find("|");
 			std::string styleClass = text.substr(pos + 2);
 
-			std::cout << "\n\n styleCathegory: <" << styleCathegory << ">\n\n";
-			std::cout << "\n\n styleClass: <" << styleClass << ">\n\n";
+			std::cout << "\n styleCathegory: <" << styleCathegory << ">\n";
+			std::cout << "\n styleClass: <" << styleClass << ">\n";
 			if(styleCathegory.compare("spacing") == 0){
 				if(styleClass.compare("reset") == 0){
 					elementClassEdditor_->spacingWidget_->resetStyles();
@@ -341,12 +342,29 @@ void StylusEdditor::createSearchDialog()
 				elementClassEdditor_->sizingWidget_->styleChanged().emit();
 			}else if (styleCathegory.compare("backgrounds") == 0){
 				if(styleClass.compare("reset") == 0){
+					std::cout << "\n\n background reset \n\n";
 					elementClassEdditor_->backgroundWidget_->resetStyles();
-				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_color_regex)){
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_image_regex)){
+					std::cout << "\n\n background IMAGE is goin to be changed \n\n";
 					int gradient_index = elementClassEdditor_->backgroundWidget_->getIndexOfStringInVector(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_image.styleClasses_);
-					if(gradient_index != -1){
+					if(gradient_index != 0){
 						elementClassEdditor_->backgroundWidget_->gradient_group->button(gradient_index)->setChecked(true);
 					}
+					// background_color_regex
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_color_regex)){
+					std::cout << "\n\n background COLOR is goin to be changed \n\n";
+					elementClassEdditor_->backgroundWidget_->bg_color_widget->setValue(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_color_from_regex)){
+					std::cout << "\n\n background COLOR FROM is goin to be changed \n\n";
+					elementClassEdditor_->backgroundWidget_->bg_color_from_widget->setValue(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_color_via_regex)){
+					std::cout << "\n\n background COLOR VIA is goin to be changed \n\n";
+					elementClassEdditor_->backgroundWidget_->bg_color_via_widget->setValue(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_color_to_regex)){
+					std::cout << "\n\n background COLOR TO is goin to be changed \n\n";
+					elementClassEdditor_->backgroundWidget_->bg_color_to_widget->setValue(styleClass);
+				}else {
+					std::cout << "\n\n class not changed \n\n";
 				}
 			}
 		}
@@ -420,32 +438,30 @@ void StylusEdditor::setSearchOptions(Wt::WSuggestionPopup *sp, Wt::WDialog *dial
 		}
 
 		sp->addSuggestion("! | backgrounds | reset");
-		for(int i = 0; i < backgrounds_data.size(); i++){
-			auto backgroundsData = backgrounds_data[i];
-			if(backgroundsData.compare("backgrounds | none") == 0){
-				backgroundsData = backgrounds_data[i+1];
-				auto pos = backgroundsData.find_last_of(" | ");
-				backgroundsData = backgroundsData.substr(0, pos);
-				std::string text = "! | " + backgroundsData + "-res";
-				sp->addSuggestion(text);
-			}else {
-				sp->addSuggestion("! | " + backgroundsData);
-			}
+		sp->addSuggestion("! | backgrounds | bg-color-res");
+		sp->addSuggestion("! | backgrounds | from-color-res");
+		sp->addSuggestion("! | backgrounds | via-color-res");
+		sp->addSuggestion("! | backgrounds | to-color-res");
+
+		for(auto color : elementClassEdditor_->backgroundWidget_->bg_color_widget->colors_vector){
+			if(color.compare("none") == 0) continue;
+			sp->addSuggestion("! | backgrounds | " + color);
 		}
+		for(auto color : elementClassEdditor_->backgroundWidget_->bg_color_from_widget->colors_vector){
+			if(color.compare("none") == 0) continue;
+			sp->addSuggestion("! | backgrounds | " + color);
+		}
+		for(auto color : elementClassEdditor_->backgroundWidget_->bg_color_via_widget->colors_vector){
+			if(color.compare("none") == 0) continue;
+			sp->addSuggestion("! | backgrounds | " + color);
+		}
+		for(auto color : elementClassEdditor_->backgroundWidget_->bg_color_to_widget->colors_vector){
+			if(color.compare("none") == 0) continue;
+			sp->addSuggestion("! | backgrounds | " + color);
+		}
+
 	}else if(searchOption == SearchOption::Focus){
 
-	}else if(searchOption == SearchOption::ColorIntensity){
-		auto intensity_variants = elementClassEdditor_->tailwindConfig_->color_intensity_VARIANTS;
-		auto currentText = lineEdit->text().toUTF8();
-		for(auto& variant : intensity_variants){
-			sp->addSuggestion("! | backgrounds | " + currentText +"-"+ variant);
-		}
-	}else if(searchOption == SearchOption::ColorOpacity){
-		auto opacity_variants = elementClassEdditor_->tailwindConfig_->color_opacity_VARIANTS;
-		auto currentText = lineEdit->text().toUTF8();
-		for(auto& variant : opacity_variants){
-			sp->addSuggestion("! | backgrounds | " + currentText +"-"+ variant);
-		}
 	}
 	
 }
