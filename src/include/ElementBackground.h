@@ -4,9 +4,7 @@
 #include "ComboBoxes.h"
 #include <Wt/WDialog.h>
 #include <Wt/WPanel.h>
-#include <Wt/WGroupBox.h>
-#include <Wt/WButtonGroup.h>
-#include <Wt/WRadioButton.h>
+
 
 struct BackgroundData
 {
@@ -55,18 +53,12 @@ public:
 	StyleClassComboBox *comboBox_position;
 	StyleClassComboBox *comboBox_repeat;
 	StyleClassComboBox *comboBox_size;
-	StyleClassComboBox *comboBox_image;
-	ColorsComboBox *comboBox_color;
-
-	ColorsComboBox *comboBox_color_from;
-	ColorsComboBox *comboBox_color_via;
-	ColorsComboBox *comboBox_color_to;
+	ColorSelecionWidget *colors_widget;
 
 	std::shared_ptr<Wt::WButtonGroup> gradient_group;
-	std::shared_ptr<Wt::WButtonGroup> gradient_step_group;
-	std::shared_ptr<Wt::WButtonGroup> color_group;
+	// std::shared_ptr<Wt::WButtonGroup> gradient_step_group;
+	int getIndexOfStringInVector(std::string str, std::vector<StyleClass> vec);
 private:
-	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
 	void setCustomTestValues();
 	
 	std::shared_ptr<Config> tailwindConfig_;

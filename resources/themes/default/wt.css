@@ -528,11 +528,11 @@ span.Wt-disabled, fieldset.Wt-disabled legend {
   cursor: pointer;
   background: url(slider-thumb-h.gif) no-repeat scroll center bottom;
 }
-
+/* 
 .Wt-slider-v .handle {
   cursor: pointer;
   background: url(slider-thumb-v.gif) no-repeat scroll right center;
-}
+} */
 
 /*
  * WSlider - disabled

@@ -343,7 +343,10 @@ void StylusEdditor::createSearchDialog()
 				if(styleClass.compare("reset") == 0){
 					elementClassEdditor_->backgroundWidget_->resetStyles();
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_color_regex)){
-					elementClassEdditor_->backgroundWidget_->comboBox_color->setValue(styleClass);
+					int gradient_index = elementClassEdditor_->backgroundWidget_->getIndexOfStringInVector(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_image.styleClasses_);
+					if(gradient_index != -1){
+						elementClassEdditor_->backgroundWidget_->gradient_group->button(gradient_index)->setChecked(true);
+					}
 				}
 			}
 		}
@@ -450,13 +453,15 @@ void StylusEdditor::setSearchOptions(Wt::WSuggestionPopup *sp, Wt::WDialog *dial
 
 StylusEdditor::StylusEdditor(std::string templatesPath)
 	:	WTemplate(tr("stylus")),
-	sidebar_left(bindWidget("sidebar-left", std::make_unique<Wt::WTemplate>(Wt::WString::tr("sidebar-left")))),
-	sidebar_right(bindWidget("sidebar-right", std::make_unique<Wt::WTemplate>(Wt::WString::tr("sidebar-right")))),
-	menu_bar(bindWidget("menu-bar", std::make_unique<Wt::WTemplate>(Wt::WString::tr("menu-bar")))),
-	template_view(bindWidget("template-view", std::make_unique<Wt::WTemplate>(Wt::WString::tr("template-view")))),
-	stylusState_(std::make_shared<StylusState>()),
 	xml_file_path(templatesPath)
 {
+	stylusState_ = std::make_shared<StylusState>();
+	sidebar_left = bindWidget("sidebar-left", std::make_unique<Wt::WTemplate>(Wt::WString::tr("sidebar-left")));
+	sidebar_right = bindWidget("sidebar-right", std::make_unique<Wt::WTemplate>(Wt::WString::tr("sidebar-right")));
+	
+	menu_bar = bindWidget("menu-bar", std::make_unique<Wt::WTemplate>(Wt::WString::tr("menu-bar")));
+	template_view = bindWidget("template-view", std::make_unique<Wt::WTemplate>(Wt::WString::tr("template-view")));
+
 	// templates widget
 	stylus_templates_ = sidebar_left->bindWidget("folder-templates-view", std::make_unique<StylusTemplatesWidget>(templatesPath, stylusState_));
 	sidebar_left_hamburger = template_view->bindWidget("toggle-sidebar-left", std::make_unique<Wt::WTemplate>(Wt::WString::tr("hamburger-menu")));

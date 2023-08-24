@@ -11,6 +11,11 @@
 #include <string>
 #include <regex>
 
+#include <Wt/WGroupBox.h>
+#include <Wt/WButtonGroup.h>
+#include <Wt/WRadioButton.h>
+#include <Wt/WSlider.h>
+
 #include <Wt/WString.h>
 #include <Wt/WLineEdit.h>
 #include "../../TailwindConfig/src/include/Config.h"
@@ -50,21 +55,21 @@ private:
 
 
 
-class ColorsComboBox : public Wt::WContainerWidget
+class ColorSelecionWidget : public Wt::WContainerWidget
 {
 public:
-	ColorsComboBox(ProprietyColor proprietyColor);
+	ColorSelecionWidget(ProprietyColor proprietyColor, std::string title = "title not set");
 	void setCustomValueString(std::string custom_start){ custom_start_ = custom_start; };
 
 	std::string getValue();
 	void setValue(std::string className = "none");
 
 	std::string custom_start_;
-	Wt::WText *title;
 
-	StyleClassComboBox *comboBox_color;
-	StyleClassComboBox* comboBox_intensity;
-	StyleClassComboBox* comboBox_opacity;
+	std::shared_ptr<Wt::WButtonGroup> colors_group;
+	Wt::WSlider *opacity_slider;
+	std::vector<std::string> colors_vector = {};
+	int getIndexOfStringInVector(std::string str, std::vector<std::string> vec);
 
 	Wt::Signal<>& classChanged() { return classChanged_; }
 private:

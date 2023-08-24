@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="? none ">siblings before</div>
+        <div class="h-screen"><div class="">child before</div>
+        </div>
         <div class=""><div class="">child before</div>
             <div class="">child before</div>
             <div class="">child after</div>

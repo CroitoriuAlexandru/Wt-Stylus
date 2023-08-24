@@ -42,3 +42,64 @@
     border-radius: 14px;
     border: 3px solid var(--primary);
 }
+
+
+/*
+ * WSlider
+ */
+ .Wt-slider-h .Wt-slider-bg {
+  background: url(sliderbg-h.png) repeat-x scroll left center;
+  margin: 0px 5px;
+}
+
+.Wt-slider-v .Wt-slider-bg {
+  background: url(sliderbg-v.png) repeat-y scroll center top;
+  margin: 5px 0px;
+}
+
+.Wt-slider-h .Wt-w {
+  position: absolute;
+  left: 0px;
+  width: 5px;
+  top: 0px;
+  bottom: 0px;
+  background: url(../icons/sliderbg-hw.png) no-repeat scroll left center;
+}
+
+.Wt-slider-h .Wt-e {
+  position: absolute;
+  right: 0px;
+  width: 5px;
+  top: 0px;
+  bottom: 0px;
+  background: url(../icons/sliderbg-vw.png) no-repeat scroll center top;
+  background: url(../icons/sliderbg-he.png) no-repeat scroll left center;
+}
+
+.Wt-slider-v .Wt-w {
+  position: absolute;
+  left: 0px;
+  height: 5px;
+  top: 0px;
+  right: 0px;
+  background: url(../icons/sliderbg-vw.png) no-repeat scroll center top;
+}
+
+.Wt-slider-v .Wt-e {
+  position: absolute;
+  left: 0px;
+  height: 5px;
+  right: 0px;
+  bottom: 0px;
+  background: url(../icons/sliderbg-ve.png) no-repeat scroll center top;
+}
+
+.Wt-slider-h .handle {
+  cursor: pointer;
+  background: url(../icons/slider-thumb.png) no-repeat scroll center;
+}
+
+.Wt-slider-v .handle {
+  cursor: pointer;
+  background: url(../icons/slider-thumb.png) no-repeat scroll center;
+}
