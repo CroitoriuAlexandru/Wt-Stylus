@@ -47,6 +47,9 @@ public:
 	std::string getStyles();
 	void resetStyles();
 	
+	void setGradientColor(std::string className);
+	void setColor(std::string className);
+
 	ColorSelecionWidget *bg_color_widget;
 	ColorSelecionWidget *bg_color_from_widget;
 	ColorSelecionWidget *bg_color_via_widget;

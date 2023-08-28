@@ -126,64 +126,75 @@ Backgrounds::Backgrounds(   std::vector<std::string> colors_default_variants,
 std::vector<std::string> Backgrounds::search_data()
 {
     std::vector<std::string> data = {"backgrounds | reset"};
+    data.push_back("backgrounds | bg-gradient-res");
     for(auto styleClass : background_attachment.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-attachment-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_clip.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-clip-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color.styleClasses_)
     {
-        if(styleClass.className_ == "none"){
-            data.push_back("backgrounds | " + std::string("bg-res"));
-            continue;
-        }
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-color-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color_from.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-color-from-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color_via.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-color-via-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_color_to.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-color-to-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_origin.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-origin-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_position.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-position-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_repeat.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-repeat-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_size.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-size-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_image.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("bg-image-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : gradient_stops_from.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("from-stop-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : gradient_stops_via.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("via-stop-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : gradient_stops_to.styleClasses_)
     {
+        if(styleClass.className_ == "none"){ data.push_back("backgrounds | " + std::string("to-stop-res")); continue;}
         data.push_back("backgrounds | " + styleClass.className_);
     }
 return data;
@@ -217,7 +228,7 @@ std::string Backgrounds::backgroundColorData()
     std::string data = " ";
     for(auto styleClass : background_color.styleClasses_)
     {
-        data += styleClass.className_ + "-500";
+        data += styleClass.className_ + "- ";
     }
     data += "\n ";
     for(auto styleClass : background_color_from.styleClasses_)

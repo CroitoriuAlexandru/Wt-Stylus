@@ -204,24 +204,9 @@ std::vector<std::string> findAndRemoveMatches(boost::regex regex, std::string& s
     return matches;
 }
 
-void removeNone(std::vector<StyleClass>& vec){
-    for(int i = 0; i < vec.size(); i++){
-        if(vec[i].className_.compare("none") == 0){
-            vec.erase(vec.begin() + i);
-            break;
-        }
-    }
-}
-
-
-int main() {
-    std::ofstream output_file("tailwindClasses.txt", std::ios::trunc);
-    Config config = Config();
-    std::string configData = getConfigData(config);
-
-
-
-    // Accesibility
+void findAndRemoveAll(Config& config, std::string& configData)
+{
+ // Accesibility
     findAndRemoveMatches(config.accessibility.screen_readers_regex, configData);
 
     // Svg
@@ -309,10 +294,10 @@ int main() {
     findAndRemoveMatches(config.borders.border_style_regex, configData);
     findAndRemoveMatches(config.borders.border_radius_regex, configData);
 
-    // Backgrounds
-    findAndRemoveMatches(config.backgrounds.background_color_to_step, configData);
-    findAndRemoveMatches(config.backgrounds.background_color_via_step, configData);
-    findAndRemoveMatches(config.backgrounds.background_color_from_step, configData);
+    // // Backgrounds
+    // findAndRemoveMatches(config.backgrounds.background_color_to_step, configData);
+    // findAndRemoveMatches(config.backgrounds.background_color_via_step, configData);
+    // findAndRemoveMatches(config.backgrounds.background_color_from_step, configData);
 
     findAndRemoveMatches(config.backgrounds.background_color_regex, configData);
     findAndRemoveMatches(config.backgrounds.background_color_to_regex, configData);
@@ -422,14 +407,23 @@ int main() {
     findAndRemoveMatches(config.layout.columns_regex, configData);
     findAndRemoveMatches(config.layout.container_regex, configData);
     findAndRemoveMatches(config.layout.aspect_ratio_regex, configData);
+}
 
 
-    // std::cout << config.backgrounds.backgroundColorData();
+int main() {
+    std::ofstream output_file("tailwindClasses.txt", std::ios::trunc);
+    Config config = Config();
+    std::string configData = getConfigData(config);
+    findAndRemoveAll(config, configData);
 
-    // auto sizing_search_data = config.backgrounds.search_data();
-    // for(auto data : sizing_search_data){
-    //     std::cout << "\n <" << data << ">";
-    // }
+    // Remove "none" occurrences
+    boost::regex none_regex("\\bnone\\b");
+    configData = boost::regex_replace(configData, none_regex, "");
+
+    // Remove newlines with no words
+    boost::regex empty_line_regex("\\n\\s*\\n");
+    configData = boost::regex_replace(configData, empty_line_regex, "");
+    
 
     std::cout << configData << std::endl;
     if(output_file.is_open()){
@@ -442,31 +436,6 @@ int main() {
     return 0;
 }
 
-
-
-
-// TEST_CASE("Accesibility") {
-//     // Accesibility
-//     auto matches = findAndRemoveMatches(config.accessibility.screen_readers_regex, configData);
-//     // remove the first element of the vector because it is none
-//     auto screen_readers = config.accessibility.screen_readers.styleClasses_;
-//     removeNone(screen_readers);
-//     screen_readers.push_back(StyleClass("blank", ""));
-//     for(int i = 0; i < matches.size(); i++){
-//         std::cout << screen_readers[screen_readers.size()-1].className_ << std::endl;
-//         CHECK(matches[i] == screen_readers[i].className_);
-//     }
-// }
-
-// TEST_CASE("Layout") {
-//     auto matches = findAndRemoveMatches(config.layout.aspect_ratio_regex, configData);
-//     // remove the first element of the vector because it is none
-//     auto aspect_ratio = config.layout.aspect_ratio.styleClasses_;
-//     removeNone(aspect_ratio);
-//     for(int i = 0; i < matches.size()+1; i++){
-//         CHECK(matches[i] == aspect_ratio[i].className_);
-//     }
-// }
 
 
 

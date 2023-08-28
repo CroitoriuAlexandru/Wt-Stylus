@@ -18,3 +18,4 @@ ctrl + d = Delete Node
 ctrl + z = select template
 ctrl + x = select Style
 ctrl + c = select ... still thinking
+

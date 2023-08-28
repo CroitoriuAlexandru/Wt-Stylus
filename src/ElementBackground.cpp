@@ -187,34 +187,14 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwin
 				bg_color_to_widget->show();
 				break;
 		}
-		styleChanged_.emit();
 	});
 
 
 	gradient_group->checkedChanged().connect(this, [=](){
 		if(gradient_group->checkedId() > 1){
 			from_via_to_wrapper->show();
-			bg_color_widget->hide();
-			switch(gradient_step_group->checkedId()){
-				case 0:
-					bg_color_from_widget->show();
-					bg_color_via_widget->hide();
-					bg_color_to_widget->hide();
-					break;
-				case 1:
-					bg_color_from_widget->hide();
-					bg_color_via_widget->show();
-					bg_color_to_widget->hide();
-					break;
-				case 2:
-					bg_color_from_widget->hide();
-					bg_color_via_widget->hide();
-					bg_color_to_widget->show();
-					break;
-			}
-
+			gradient_step_group->checkedChanged().emit(gradient_step_group->checkedButton());
 		}else {
-			bg_color_widget->show();
 			bg_color_from_widget->hide();
 			bg_color_via_widget->hide();
 			bg_color_to_widget->hide();
@@ -262,60 +242,56 @@ int ElementBackgroundWidget::getIndexOfStringInVector(std::string str, std::vect
 	return 0;
 }
 
+void ElementBackgroundWidget::setGradientColor(std::string className)
+{
+	// get id of the gradient
+	int gradientIndex = getIndexOfStringInVector(className, tailwindConfig_->backgrounds.background_image.styleClasses_);
+	if(gradientIndex == 0) return;
+	expand();
+	gradient_group->button(gradientIndex)->setChecked(true);
+	gradient_group->checkedChanged().emit(gradient_group->checkedButton());
+}
+
+void ElementBackgroundWidget::setColor(std::string className)
+{
+	if(className.compare("none") == 0) return;
+	expand();
+	switch(className[0]){
+		case 'b':
+			bg_color_widget->setValue(className);
+			break;
+		case 'f':
+			bg_color_from_widget->setValue(className);
+			break;
+		case 'v':
+			bg_color_via_widget->setValue(className);
+			break;
+		case 't':
+			bg_color_to_widget->setValue(className);
+			break;
+	}
+}
 
 void ElementBackgroundWidget::setClasses(BackgroundData bgData)
 {
 	bool activeClasses = false;
 	resetStyles();
 
-	if(bgData.bg_image.compare("none") != 0 || bgData.bg_image == ""){
-		int gradientIndex = getIndexOfStringInVector(bgData.bg_image, tailwindConfig_->backgrounds.background_image.styleClasses_);
-		
-		if(gradientIndex > 1){
-			gradient_group->button(gradientIndex)->setChecked(true);
-			from_via_to_wrapper->show();
-			gradient_step_group->button(0)->setChecked(true);
-			bg_color_widget->hide();
-		}
-		
-		// show from via to widget depending on the gradient step radio
-		switch(gradient_step_group->checkedId()){
-			case 0:
-				bg_color_from_widget->show();
-				bg_color_via_widget->hide();
-				bg_color_to_widget->hide();
-				break;
-			case 1:
-				bg_color_from_widget->hide();
-				bg_color_via_widget->show();
-				bg_color_to_widget->hide();
-				break;
-			case 2:
-				bg_color_from_widget->hide();
-				bg_color_via_widget->hide();
-				bg_color_to_widget->show();
-				break;
-		}
-		activeClasses = true;
-	}
-	if(bgData.bg_color_from.compare("none") != 0){
-		bg_color_from_widget->setValue(bgData.bg_color_from);
-		gradient_step_group->button(0)->setChecked(true);
-	}
-	if(bgData.bg_color_via.compare("none") != 0){ bg_color_via_widget->setValue(bgData.bg_color_via); }
-	if(bgData.bg_color_to.compare("none") != 0){ bg_color_to_widget->setValue(bgData.bg_color_to); }
-	if(bgData.bg_color.compare("none") != 0){
-		std::cout << "bg color is not none and backgrounds panel should expand: " << bgData.bg_color << std::endl;
-		bg_color_widget->setValue(bgData.bg_color); 
-		activeClasses = true; 
-	}
+	setGradientColor(bgData.bg_image);
+	setColor(bgData.bg_color);
+	setColor(bgData.bg_color_from);
+	setColor(bgData.bg_color_via);\
+	setColor(bgData.bg_color_to);
+
 	// if(bgData.bg_attachment.compare("none") != 0){ 
 		// attachment_group->button(getIndexOfStringInVector(bgData.bg_attachment, tailwindConfig_->backgrounds.background_attachment.styleClasses_))->setChecked(true); activeClasses = true; 
 		// }
 	std::cout << "active classes:--------------------- " << activeClasses << std::endl;
-	if(activeClasses) expand();
-	else collapse();
+	// if(activeClasses) expand();
+	// else collapse();
 }
+
+
 
 void ElementBackgroundWidget::resetStyles()
 {
@@ -327,7 +303,6 @@ void ElementBackgroundWidget::resetStyles()
 	bg_color_via_widget->setValue("none");
 	bg_color_to_widget->setValue("none");
 	
-	bg_color_widget->show();
 	from_via_to_wrapper->hide();
 	bg_color_from_widget->hide();
 	bg_color_via_widget->hide();
