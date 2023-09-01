@@ -2,6 +2,7 @@
 #include "ElementSpacing.h"
 #include "ElementSizing.h"
 #include "ElementBackground.h"
+#include "ElementLayout.h"
 
 #include <Wt/WTemplate.h>
 #include <Wt/WSignal.h>
@@ -25,6 +26,7 @@ public:
     ElementBackgroundWidget *backgroundWidget_;
     ElementSpacingWidget *spacingWidget_;
     ElementSizingWidget *sizingWidget_;
+    ElementLayoutWidget *layoutWidget_;
 
 private:
     std::vector<std::string> findAndRemoveMatches(std::regex regex, std::string& str);
@@ -37,9 +39,9 @@ private:
     std::string backgroundClasses = "";
     std::string spacingClasses = "";
     std::string sizingClasses = "";
+    std::string layoutClasses = "";
     // std::string effectsClasses = "";
     // std::string transformsClasses = "";
-    // std::string layoutClasses = "";
     
     Wt::Signal<std::string> styleChanged_;
 

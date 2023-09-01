@@ -67,12 +67,12 @@
 
 	<!-- element class edditor               sidebar right -->
 	<message id="stylus-element-edditor">
+        ${layout-controls}
 		${sizing-controls}
 		${spacing-controls}
 		${background-controls}
         <!-- ${effects-controls} -->
         <!-- ${transforms-controls} -->
-        <!-- ${layout-controls} -->
 	</message>
 
 	<!-- folder templates view -->

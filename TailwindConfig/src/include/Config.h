@@ -20,7 +20,6 @@
 #include <string>
 #include <vector>
 
-
 namespace Tailwind {
 
     class Config
@@ -43,6 +42,8 @@ namespace Tailwind {
         Interactivity interactivity;
         Svg svg;
         Accessibility accessibility;
+
+        int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
     
     
 

@@ -57,3 +57,10 @@ Config::Config()
     accessibility = Accessibility();
 
 };
+
+int Config::getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec){
+	for(int index = 0; index < vec.size(); ++index){
+		if(vec[index].className_.compare(str) == 0) return index;
+	}
+	return 0;
+}

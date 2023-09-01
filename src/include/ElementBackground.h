@@ -58,7 +58,6 @@ public:
 	bool setRepeat(std::string className);
 	bool setSize(std::string className);
 private:
-	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
 	std::shared_ptr<Wt::WButtonGroup> gradient_group;
 	std::shared_ptr<Wt::WButtonGroup> attachment_group;
 	std::shared_ptr<Wt::WButtonGroup> clip_group;

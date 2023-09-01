@@ -13,19 +13,19 @@ ElementClassEdditor::ElementClassEdditor()
     sizingWidget_ = bindWidget("sizing-controls", std::make_unique<ElementSizingWidget>(tailwindConfig_));
     backgroundWidget_ = bindWidget("background-controls", std::make_unique<ElementBackgroundWidget>(tailwindConfig_));
     // transformsWidget_ = bindWidget("transforms-controls", std::make_unique<ElementTransformsWidget>(tailwindConfig_));
-    // layoutWidget_ = bindWidget("layout-controls", std::make_unique<ElementLayoutWidget>(tailwindConfig_));
+    layoutWidget_ = bindWidget("layout-controls", std::make_unique<ElementLayoutWidget>(tailwindConfig_));
 
-    // layoutWidget_->styleChanged().connect(this, [=](){
-    //     std::string newStyles = notFoundClasses + " ";
-    //     // layoutClasses = layoutWidget_->getStyles();
-    //     // if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
-    //     if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
-    //     if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
-    //     if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
-    //     // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
-    //     // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
-    //     styleChanged_.emit(newStyles);
-    // });
+    layoutWidget_->styleChanged().connect(this, [=](){
+        std::string newStyles = notFoundClasses + " ";
+        layoutClasses = layoutWidget_->getStyles();
+        if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
+        if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
+        if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
+        if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
+        // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
+        // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
+        styleChanged_.emit(newStyles);
+    });
 
     // transformsWidget_->styleChanged().connect(this, [=](){
     //     std::string newStyles = notFoundClasses + " ";
@@ -55,7 +55,7 @@ ElementClassEdditor::ElementClassEdditor()
     spacingWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
         spacingClasses = spacingWidget_->getStyles();
-        // if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
+        if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
         if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
         if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
         if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
@@ -67,7 +67,7 @@ ElementClassEdditor::ElementClassEdditor()
     sizingWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
         sizingClasses = sizingWidget_->getStyles();
-        // if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
+        if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
         if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
         if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
         if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
@@ -79,7 +79,7 @@ ElementClassEdditor::ElementClassEdditor()
     backgroundWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
         backgroundClasses = backgroundWidget_->getStyles();
-        // if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
+        if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
         if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
         if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
         if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
@@ -96,34 +96,27 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     classes = " " + classes + " ";
     std::cout << "\n\n classes : <" << classes << ">\n\n";
         
-    // LayoutData layout;
-    // layout.aspect_ratio = findAndRemoveMatche(tailwindConfig_->layout.aspect_ratio_regex, classes);
-    // if(findAndRemoveMatche(tailwindConfig_->layout.container_regex, classes) != ""){
-    //     layout.container = true;
-    // }
-    // layout.columns = findAndRemoveMatche(tailwindConfig_->layout.columns_regex, classes);
-    // layout.break_after = findAndRemoveMatche(tailwindConfig_->layout.break_after_regex, classes);
-    // layout.break_before = findAndRemoveMatche(tailwindConfig_->layout.break_before_regex, classes);
-    // layout.break_inside = findAndRemoveMatche(tailwindConfig_->layout.break_inside_regex, classes);
-    // layout.box_decoration_break = findAndRemoveMatche(tailwindConfig_->layout.box_decoration_break_regex, classes);
-    // layout.box_sizing = findAndRemoveMatche(tailwindConfig_->layout.box_sizing_regex, classes);
-    // layout.display = findAndRemoveMatche(tailwindConfig_->layout.display_regex, classes);
-    // layout.floats = findAndRemoveMatche(tailwindConfig_->layout.floats_regex, classes);
-    // layout.clear = findAndRemoveMatche(tailwindConfig_->layout.clear_regex, classes);
-    // layout.isolation = findAndRemoveMatche(tailwindConfig_->layout.isolation_regex, classes);
-    // layout.object_fit = findAndRemoveMatche(tailwindConfig_->layout.object_fit_regex, classes);
-    // layout.object_position = findAndRemoveMatche(tailwindConfig_->layout.object_position_regex, classes);
-    // layout.overflow = findAndRemoveMatches(tailwindConfig_->layout.overflow_regex, classes);
-    // layout.overscroll_behavior = findAndRemoveMatches(tailwindConfig_->layout.overscroll_behavior_regex, classes);
-    // std::cout << "\n\n classes : <" << classes << ">" << "\n\n";
-    // for(auto overscroll : layout.overscroll_behavior){
-        // std::cout << "\n\n overscroll : <" << overscroll << ">" << "\n\n";
-    // }
-    // layout.position = findAndRemoveMatche(tailwindConfig_->layout.position_regex, classes);
-    // layout.inset = findAndRemoveMatches(tailwindConfig_->layout.position_inset_regex, classes);
-    // layout.top_left_bottom_right = findAndRemoveMatches(tailwindConfig_->layout.position_sides_regex, classes);
-    // layout.visibility = findAndRemoveMatche(tailwindConfig_->layout.visibility_regex, classes);
-    // layout.z_index = findAndRemoveMatche(tailwindConfig_->layout.z_index_regex, classes);
+    LayoutData layout;
+    layout.aspect_ratio = findAndRemoveMatche(tailwindConfig_->layout.aspect_ratio_regex, classes);
+    layout.container = findAndRemoveMatche(tailwindConfig_->layout.container_regex, classes);
+    layout.columns = findAndRemoveMatche(tailwindConfig_->layout.columns_regex, classes);
+    layout.break_after = findAndRemoveMatche(tailwindConfig_->layout.break_after_regex, classes);
+    layout.break_before = findAndRemoveMatche(tailwindConfig_->layout.break_before_regex, classes);
+    layout.break_inside = findAndRemoveMatche(tailwindConfig_->layout.break_inside_regex, classes);
+    layout.box_decoration_break = findAndRemoveMatche(tailwindConfig_->layout.box_decoration_break_regex, classes);
+    layout.box_sizing = findAndRemoveMatche(tailwindConfig_->layout.box_sizing_regex, classes);
+    layout.display = findAndRemoveMatche(tailwindConfig_->layout.display_regex, classes);
+    layout.floats = findAndRemoveMatche(tailwindConfig_->layout.floats_regex, classes);
+    layout.clear = findAndRemoveMatche(tailwindConfig_->layout.clear_regex, classes);
+    layout.isolation = findAndRemoveMatche(tailwindConfig_->layout.isolation_regex, classes);
+    layout.object_fit = findAndRemoveMatche(tailwindConfig_->layout.object_fit_regex, classes);
+    layout.object_position = findAndRemoveMatche(tailwindConfig_->layout.object_position_regex, classes);
+    layout.overflow = findAndRemoveMatches(tailwindConfig_->layout.overflow_regex, classes);
+    layout.overscroll_behavior = findAndRemoveMatches(tailwindConfig_->layout.overscroll_behavior_regex, classes);
+    layout.position = findAndRemoveMatche(tailwindConfig_->layout.position_regex, classes);
+    layout.position_sides = findAndRemoveMatches(tailwindConfig_->layout.position_sides_regex, classes);
+    layout.visibility = findAndRemoveMatche(tailwindConfig_->layout.visibility_regex, classes);
+    layout.z_index = findAndRemoveMatche(tailwindConfig_->layout.z_index_regex, classes);  
 
 
     // TransformsData transforms;
@@ -157,7 +150,6 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     // bgData.color_to = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_regex, classes);
     // bgData.color_to_step = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_to_step, classes);
     // bgData.color_class = findAndRemoveMatche(tailwindConfig_->backgrounds.background_color_regex, classes);
-    std::cout << "\n\n classes : <" << classes << ">" << "\n\n";
     bgData.attachment = findAndRemoveMatche(tailwindConfig_->backgrounds.background_attachment_regex, classes);
     bgData.clip = findAndRemoveMatche(tailwindConfig_->backgrounds.background_clip_regex, classes);
     bgData.origin = findAndRemoveMatche(tailwindConfig_->backgrounds.background_origin_regex, classes);
@@ -178,14 +170,14 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     sizing.width = findAndRemoveMatche(tailwindConfig_->sizing.width_regex, classes);
     sizing.height = findAndRemoveMatche(tailwindConfig_->sizing.height_regex, classes);
 
-    // layoutWidget_->setClasses(layout);
+    layoutWidget_->setClasses(layout);
     spacingWidget_->setClasses(spacing);
     sizingWidget_->setClasses(sizing);
     backgroundWidget_->setClasses(bgData);
     // effectsWidget_->setClasses(effects);
     // transformsWidget_->setClasses(transforms);
 
-    // layoutClasses = layoutWidget_->getStyles();
+    layoutClasses = layoutWidget_->getStyles();
     spacingClasses = spacingWidget_->getStyles();
     sizingClasses = sizingWidget_->getStyles();
     backgroundClasses = backgroundWidget_->getStyles();
@@ -199,7 +191,7 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
 std::string ElementClassEdditor::getStyles()
 {
     std::string styles = "";
-    // styles += layoutWidget_->getStyles() + " ";
+    styles += layoutWidget_->getStyles() + " ";
     styles += backgroundWidget_->getStyles() + " ";
     styles += sizingWidget_->getStyles() + " ";
     styles += spacingWidget_->getStyles() + " ";
@@ -217,7 +209,7 @@ void ElementClassEdditor::resetStyles()
     spacingWidget_->resetStyles();
     // effectsWidget_->resetStyles();
     // transformsWidget_->resetStyles();
-    // layoutWidget_->resetStyles();
+    layoutWidget_->resetStyles();
 }
 
 std::vector<std::string> ElementClassEdditor::findAndRemoveMatches(std::regex regex, std::string& str) {

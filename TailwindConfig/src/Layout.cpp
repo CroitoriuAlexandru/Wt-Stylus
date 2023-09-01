@@ -14,7 +14,10 @@ Layout::Layout(std::vector<std::string> spacingScale)
     }, "https://tailwindcss.com/docs/aspect-ratio");
 
     // Container
-    container = Propriety({StyleClass("container", "None, sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)")}, "https://tailwindcss.com/docs/container");
+    container = Propriety({
+        StyleClass("none", ""),
+        StyleClass("container", "None, sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)")
+        }, "https://tailwindcss.com/docs/container");
 
     // Columns
     // auto|3xs|2xs|xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|12|11|10|9|8|7|6|5|4|3|2|1
@@ -206,105 +209,286 @@ Layout::Layout(std::vector<std::string> spacingScale)
     }
 };
 
+
 std::vector<std::string> Layout::search_data()
 {
-    std::vector<std::string> data = {};
-    for(auto styleClass : aspect_ratio.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+    std::vector<std::string> data = 
+    {
+        "layout | reset",
+    };
+
+    for(auto styleClass : aspect_ratio.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("aspect-ratio-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : container.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : container.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("container-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : columns.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : columns.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("columns-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : break_after.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : break_after.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("break-after-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : break_before.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : break_before.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("break-before-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : break_inside.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : break_inside.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("break-inside-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : box_decoration_break.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : box_decoration_break.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("box-decoration-break-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : box_sizing.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : box_sizing.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("box-sizing-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : display.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : display.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("display-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : floats.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : floats.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("floats-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : clear.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : clear.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("clear-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : isolation.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : isolation.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("isolation-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : object_fit.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : object_fit.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("object-fit-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : object_position.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : object_position.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("object-position-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : overflow.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : overflow.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("overflow-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : overflow_x.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : overflow_x.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("overflow-x-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : overflow_y.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : overflow_y.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("overflow-y-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : overscroll_behavior.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : overscroll_behavior.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("overscroll-behavior-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : overscroll_behavior_x.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : overscroll_behavior_x.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("overscroll-behavior-x-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : overscroll_behavior_y.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : overscroll_behavior_y.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("overscroll-behavior-y-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_inset.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position_inset.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-inset-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_inset_x.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position_inset_x.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-inset-x-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_inset_y.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position_inset_y.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-inset-y-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_top.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position_top.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-top-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_right.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position_right.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-right-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_bottom.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position_bottom.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-bottom-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_left.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : position_left.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("position-left-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_start.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : visibility.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("visibility-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : position_end.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
+
+    for(auto styleClass : z_index.styleClasses_)
+    {
+        if(styleClass.className_ == "none"){
+            data.push_back("layout | " + std::string("z-index-res"));
+            continue;
+        }
+        data.push_back("layout | " + styleClass.className_);
     }
-    for(auto styleClass : visibility.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
-    }
-    for(auto styleClass : z_index.styleClasses_){
-        data.push_back("layout/" + styleClass.className_);
-    }
+
+
+
     return data;
 }
 

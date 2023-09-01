@@ -140,12 +140,13 @@ ElementBackgroundWidget::ElementBackgroundWidget(std::shared_ptr<Config> tailwin
 	repeat_header->addWidget(std::make_unique<Wt::WText>("Repeat"));
 	size_header->addWidget(std::make_unique<Wt::WText>("Size"));
 
-	attachment_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass("ms-auto me-2");
-	clip_header->addWidget(std::make_unique<Wt::WText>("bg-clip-..."))->setStyleClass("ms-auto me-2");
-	origin_header->addWidget(std::make_unique<Wt::WText>("bg-origin-..."))->setStyleClass("ms-auto me-2");
-	position_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass("ms-auto me-2");
-	repeat_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass("ms-auto me-2");
-	size_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass("ms-auto me-2");
+	std::string class_indicator_classes = "ms-auto me-2";
+	attachment_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass(class_indicator_classes);
+	clip_header->addWidget(std::make_unique<Wt::WText>("bg-clip-..."))->setStyleClass(class_indicator_classes);
+	origin_header->addWidget(std::make_unique<Wt::WText>("bg-origin-..."))->setStyleClass(class_indicator_classes);
+	position_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass(class_indicator_classes);
+	repeat_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass(class_indicator_classes);
+	size_header->addWidget(std::make_unique<Wt::WText>("bg-..."))->setStyleClass(class_indicator_classes);
 
 	std::string body_classes = "flex flex-wrap items-center";
 	gradient_body->setStyleClass(body_classes);
@@ -419,12 +420,7 @@ std::string ElementBackgroundWidget::getStyles()
 	return elementClasses;
 }
 
-int ElementBackgroundWidget::getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec){
-	for(int index = 0; index < vec.size(); ++index){
-		if(vec[index].className_.compare(str) == 0) return index;
-	}
-	return 0;
-}
+
 
 
 void ElementBackgroundWidget::setClasses(BackgroundData bgData)
@@ -482,7 +478,7 @@ void ElementBackgroundWidget::setCustomTestValues()
 
 bool ElementBackgroundWidget::setGradient(std::string className)
 {
-	int gradientIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_image.styleClasses_);
+	int gradientIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_image.styleClasses_);
 	if(gradientIndex >= 0){
 		gradient_group->button(gradientIndex)->setChecked(true);
 		if(gradientIndex > 0) {
@@ -495,7 +491,7 @@ bool ElementBackgroundWidget::setGradient(std::string className)
 
 bool ElementBackgroundWidget::setAttachment(std::string className)
 {
-	int attachmentIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_attachment.styleClasses_);
+	int attachmentIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_attachment.styleClasses_);
 	if(attachmentIndex >= 0){
 		attachment_group->button(attachmentIndex)->setChecked(true);
 		if(attachmentIndex > 0) {
@@ -508,7 +504,7 @@ bool ElementBackgroundWidget::setAttachment(std::string className)
 
 bool ElementBackgroundWidget::setClip(std::string className)
 {
-	int clipIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_clip.styleClasses_);
+	int clipIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_clip.styleClasses_);
 	if(clipIndex >= 0){
 		clip_group->button(clipIndex)->setChecked(true);
 		if(clipIndex > 0) {
@@ -521,7 +517,7 @@ bool ElementBackgroundWidget::setClip(std::string className)
 
 bool ElementBackgroundWidget::setOrigin(std::string className)
 {
-	int originIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_origin.styleClasses_);
+	int originIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_origin.styleClasses_);
 	if(originIndex >= 0){
 		origin_group->button(originIndex)->setChecked(true);
 		if(originIndex > 0) {
@@ -534,7 +530,7 @@ bool ElementBackgroundWidget::setOrigin(std::string className)
 
 bool ElementBackgroundWidget::setPosition(std::string className)
 {
-	int positionIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_position.styleClasses_);
+	int positionIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_position.styleClasses_);
 	if(positionIndex >= 0){
 		position_group->button(positionIndex)->setChecked(true);
 		if(positionIndex > 0) {
@@ -547,7 +543,7 @@ bool ElementBackgroundWidget::setPosition(std::string className)
 
 bool ElementBackgroundWidget::setRepeat(std::string className)
 {
-	int repeatIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_repeat.styleClasses_);
+	int repeatIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_repeat.styleClasses_);
 	if(repeatIndex >= 0){
 		repeat_group->button(repeatIndex)->setChecked(true);
 		if(repeatIndex > 0) {
@@ -560,7 +556,7 @@ bool ElementBackgroundWidget::setRepeat(std::string className)
 
 bool ElementBackgroundWidget::setSize(std::string className)
 {
-	int sizeIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_size.styleClasses_);
+	int sizeIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_size.styleClasses_);
 	if(sizeIndex >= 0){
 		size_group->button(sizeIndex)->setChecked(true);
 		if(sizeIndex > 0) {
