@@ -25,21 +25,21 @@ namespace Tailwind {
         std::vector<std::string> search_data();
 
         
-        boost::regex order_regex = boost::regex("(?<=\n| )(!)?order-(12|11|10|9|8|7|6|5|4|3|2|1|none|last|first)(?!\\w|-)");
-        boost::regex basis_regex = boost::regex("(?<=\n| )(!)?basis-(full|auto|11\\/12|10\\/12|9\\/12|8\\/12|7\\/12|6\\/12|5\\/12|4\\/12|3\\/12|2\\/12|1\\/12|5\\/6|4\\/6|3\\/6|2\\/6|1\\/6|4\\/5|3\\/5|2\\/5|1\\/5|3\\/4|2\\/4|1\\/4|2\\/3|1\\/3|1\\/2|96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3.5|3|2.5|2|1.5|1|0.5|0|px)(?!\\w|-)");
-        boost::regex direction_regex = boost::regex("(?<=\n| )(!)?flex-(row-reverse|row|col-reverse|col)(?!\\w|-)");
-        boost::regex wrap_regex = boost::regex("(?<=\n| )(!)?flex-(wrap-reverse|wrap|nowrap)(?!\\w|-)");
-        boost::regex flex_regex = boost::regex("(?<=\n| )(!)?flex-(1|auto|initial|none)(?!\\w|-)");
-        boost::regex grow_regex = boost::regex("(?<=\n| )(!)?grow(-0)?(?!\\w|-)");
-        boost::regex shrink_regex = boost::regex("(?<=\n| )(!)?shrink(-0)?(?!\\w|-)");
+        boost::regex order_regex = boost::regex("(?<!\\S)(!)?order-(12|11|10|9|8|7|6|5|4|3|2|1|none|last|first)(?!\\w|-)");
+        boost::regex basis_regex = boost::regex("(?<!\\S)(!)?basis-(full|auto|11\\/12|10\\/12|9\\/12|8\\/12|7\\/12|6\\/12|5\\/12|4\\/12|3\\/12|2\\/12|1\\/12|5\\/6|4\\/6|3\\/6|2\\/6|1\\/6|4\\/5|3\\/5|2\\/5|1\\/5|3\\/4|2\\/4|1\\/4|2\\/3|1\\/3|1\\/2|96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3.5|3|2.5|2|1.5|1|0.5|0|px)(?!\\w|-)");
+        boost::regex direction_regex = boost::regex("(?<!\\S)(!)?flex-(row-reverse|row|col-reverse|col)(?!\\w|-)");
+        boost::regex wrap_regex = boost::regex("(?<!\\S)(!)?flex-(wrap-reverse|wrap|nowrap)(?!\\w|-)");
+        boost::regex flex_regex = boost::regex("(?<!\\S)(!)?flex-(1|auto|initial|none)(?!\\w|-)");
+        boost::regex grow_regex = boost::regex("(?<!\\S)(!)?grow(-0)?(?!\\w|-)");
+        boost::regex shrink_regex = boost::regex("(?<!\\S)(!)?shrink(-0)?(?!\\w|-)");
 
-        boost::regex justify_content_regex = boost::regex("(?<=\n| )(!)?justify-(normal|start|end|center|between|around|evenly|stretch)(?!\\w|-)");
-        boost::regex justify_items_regex = boost::regex("(?<=\n| )(!)?justify-items-(start|end|center|stretch)(?!\\w|-)");
-        boost::regex justify_self_regex = boost::regex("(?<=\n| )(!)?justify-self-(auto|start|end|center|stretch)(?!\\w|-)");
+        boost::regex justify_content_regex = boost::regex("(?<!\\S)(!)?justify-(normal|start|end|center|between|around|evenly|stretch)(?!\\w|-)");
+        boost::regex justify_items_regex = boost::regex("(?<!\\S)(!)?justify-items-(start|end|center|stretch)(?!\\w|-)");
+        boost::regex justify_self_regex = boost::regex("(?<!\\S)(!)?justify-self-(auto|start|end|center|stretch)(?!\\w|-)");
 
-        boost::regex align_content_regex = boost::regex("(?<=\n| )(!)?content-(normal|between|around|evenly|start|end|center|stretch|baseline)(?!\\w|-)");
-        boost::regex align_items_regex = boost::regex("(?<=\n| )(!)?items-(start|end|center|stretch|baseline)(?!\\w|-)");
-        boost::regex align_self_regex = boost::regex("(?<=\n| )(!)?self-(auto|start|end|center|stretch|baseline)(?!\\w|-)");
+        boost::regex align_content_regex = boost::regex("(?<!\\S)(!)?content-(normal|between|around|evenly|start|end|center|stretch|baseline)(?!\\w|-)");
+        boost::regex align_items_regex = boost::regex("(?<!\\S)(!)?items-(start|end|center|stretch|baseline)(?!\\w|-)");
+        boost::regex align_self_regex = boost::regex("(?<!\\S)(!)?self-(auto|start|end|center|stretch|baseline)(?!\\w|-)");
 
 
 

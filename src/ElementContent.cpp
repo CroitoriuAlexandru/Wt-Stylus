@@ -9,7 +9,6 @@ ElementContent::ElementContent()
 
     button_save = bindWidget("submit-btn", std::make_unique<Wt::WPushButton>("Save"));
     button_save->clicked().connect(this, &ElementContent::processChange);
-    button_save->setStyleClass(Wt::WString::tr("button-dark"));
 
     lineEdit_variableName = bindWidget("variable.name", std::make_unique<Wt::WLineEdit>());
     comboBox_folderName = bindWidget("folder.name", std::make_unique<Wt::WComboBox>());

@@ -69,15 +69,15 @@ Backgrounds::Backgrounds(   std::vector<std::string> colors_default_variants,
     // background position
     background_position = Propriety({
         StyleClass("none", ""),
-        StyleClass("bg-right-bottom", "background-position: right bottom;"),
+        StyleClass("bg-center", "background-position: center;"),
+        StyleClass("bg-left-top", "background-position: left top;"),
         StyleClass("bg-right-top", "background-position: right top;"),
         StyleClass("bg-left-bottom", "background-position: left bottom;"),
-        StyleClass("bg-left-top", "background-position: left top;"),
+        StyleClass("bg-right-bottom", "background-position: right bottom;"),
         StyleClass("bg-top", "background-position: top;"),
         StyleClass("bg-right", "background-position: right;"),
         StyleClass("bg-bottom", "background-position: bottom;"),
         StyleClass("bg-left", "background-position: left;"),
-        StyleClass("bg-center", "background-position: center;")
     }, "https://tailwindcss.com/docs/background-position");
 
     // background repeat
@@ -125,65 +125,65 @@ Backgrounds::Backgrounds(   std::vector<std::string> colors_default_variants,
 
 std::vector<std::string> Backgrounds::search_data()
 {
-    std::vector<std::string> data = {"backgrounds | reset"};
-    for(auto styleClass : background_attachment.styleClasses_)
+    std::vector<std::string> data = 
     {
-        data.push_back("backgrounds | " + styleClass.className_);
-    }
-    for(auto styleClass : background_clip.styleClasses_)
-    {
-        data.push_back("backgrounds | " + styleClass.className_);
-    }
-    for(auto styleClass : background_color.styleClasses_)
+        "backgrounds | reset",
+    };
+    for(auto styleClass : background_image.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("backgrounds | " + std::string("bg-res"));
+            data.push_back("backgrounds | " + std::string("bg-gradient-res"));
             continue;
         }
         data.push_back("backgrounds | " + styleClass.className_);
     }
-    for(auto styleClass : background_color_from.styleClasses_)
+
+    for(auto styleClass : background_attachment.styleClasses_)
     {
+        if(styleClass.className_ == "none"){
+            data.push_back("backgrounds | " + std::string("bg-attachment-res"));
+            continue;
+        }
         data.push_back("backgrounds | " + styleClass.className_);
     }
-    for(auto styleClass : background_color_via.styleClasses_)
+    for(auto styleClass : background_clip.styleClasses_)
     {
-        data.push_back("backgrounds | " + styleClass.className_);
-    }
-    for(auto styleClass : background_color_to.styleClasses_)
-    {
+        if(styleClass.className_ == "none"){
+            data.push_back("backgrounds | " + std::string("bg-clip-res"));
+            continue;
+        }
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_origin.styleClasses_)
     {
+        if(styleClass.className_ == "none"){
+            data.push_back("backgrounds | " + std::string("bg-origin-res"));
+            continue;
+        }
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_position.styleClasses_)
     {
+        if(styleClass.className_ == "none"){
+            data.push_back("backgrounds | " + std::string("bg-position-res"));
+            continue;
+        }
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_repeat.styleClasses_)
     {
+        if(styleClass.className_ == "none"){
+            data.push_back("backgrounds | " + std::string("bg-repeat-res"));
+            continue;
+        }
         data.push_back("backgrounds | " + styleClass.className_);
     }
     for(auto styleClass : background_size.styleClasses_)
     {
-        data.push_back("backgrounds | " + styleClass.className_);
-    }
-    for(auto styleClass : background_image.styleClasses_)
-    {
-        data.push_back("backgrounds | " + styleClass.className_);
-    }
-    for(auto styleClass : gradient_stops_from.styleClasses_)
-    {
-        data.push_back("backgrounds | " + styleClass.className_);
-    }
-    for(auto styleClass : gradient_stops_via.styleClasses_)
-    {
-        data.push_back("backgrounds | " + styleClass.className_);
-    }
-    for(auto styleClass : gradient_stops_to.styleClasses_)
-    {
+        if(styleClass.className_ == "none"){
+            data.push_back("backgrounds | " + std::string("bg-size-res"));
+            continue;
+        }
         data.push_back("backgrounds | " + styleClass.className_);
     }
 return data;

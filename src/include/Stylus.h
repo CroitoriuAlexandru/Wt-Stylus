@@ -50,8 +50,8 @@ private:
     Wt::WTemplate* menu_bar;
     Wt::WTemplate* template_view;
 
-    Wt::WTemplate* sidebar_left_hamburger;
-    Wt::WTemplate* sidebar_right_hamburger;
+    Wt::WPushButton* sidebar_left_hamburger;
+    Wt::WPushButton* sidebar_right_hamburger;
 
     ElementClassEdditor* elementClassEdditor_;
     StylusTemplatesWidget* stylus_templates_;
@@ -59,10 +59,10 @@ private:
 
     Wt::WTemplate* edditor_temp_;
     StylusTreeView* tree_view_;
-    Wt::WTextArea* edditor_classes_raw_twxtarea_;
 
     std::vector<TemplateData> templates_data_;
     Wt::WPushButton* prev_temp_btn_;
+    Wt::WPushButton* next_temp_btn_;
 
     std::shared_ptr<StylusState> stylusState_;
     

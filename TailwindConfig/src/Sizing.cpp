@@ -55,13 +55,6 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
         StyleClass("min-w-fit", "")
     }, "https://tailwindcss.com/docs/min-width");
 
-    // min-height
-    // StyleClass min_h_0 = StyleClass("min-h-0", "");
-    // StyleClass min_h_full = StyleClass("min-h-full", "");
-    // StyleClass min_h_screen = StyleClass("min-h-screen", "");
-    // StyleClass min_h_min = StyleClass("min-h-min", "");
-    // StyleClass min_h_max = StyleClass("min-h-max", "");
-    // StyleClass min_h_fit = StyleClass("min-h-fit", "");
     min_height = Propriety({
         StyleClass("none", ""),
         StyleClass("min-h-0", ""),
@@ -103,24 +96,44 @@ Sizing::Sizing(std::vector<std::string> sizing_variants)
 
 std::vector<std::string> Sizing::search_data()
 {
-    std::vector<std::string> data = {};
-    for(auto width_class : width.styleClasses_){
-        data.push_back("sizing | " + width_class.className_);
+    std::vector<std::string> data = {
+        "sizing | reset"
+    };
+    for(auto styleClass : width.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("sizing | w-res");
+        }
+        data.push_back("sizing | " + styleClass.className_);
     }
-    for(auto min_width_class : min_width.styleClasses_){
-        data.push_back("sizing | " + min_width_class.className_);
+    for(auto styleClass : min_width.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("sizing | min-w-res");
+        }
+        data.push_back("sizing | " + styleClass.className_);
     }
-    for(auto max_width_class : max_width.styleClasses_){
-        data.push_back("sizing | " + max_width_class.className_);
+    for(auto styleClass : max_width.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("sizing | max-w-res");
+        }
+        data.push_back("sizing | " + styleClass.className_);
     }
-    for(auto height_class : height.styleClasses_){
-        data.push_back("sizing | " + height_class.className_);
+    for(auto styleClass : height.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("sizing | h-res");
+        }
+        data.push_back("sizing | " + styleClass.className_);
     }
-    for(auto min_height_class : min_height.styleClasses_){
-        data.push_back("sizing | " + min_height_class.className_);
+    for(auto styleClass : min_height.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("sizing | min-h-res");
+        }
+        data.push_back("sizing | " + styleClass.className_);
     }
-    for(auto max_height_class : max_height.styleClasses_){
-        data.push_back("sizing | " + max_height_class.className_);
+    for(auto styleClass : max_height.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("sizing | max-h-res");
+        }
+        data.push_back("sizing | " + styleClass.className_);
     }
 return data;
 }

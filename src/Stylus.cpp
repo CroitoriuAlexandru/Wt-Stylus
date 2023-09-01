@@ -202,7 +202,7 @@ void StylusEdditor::createSearchDialog()
 	dialog->setModal(false);
 	dialog->setMovable(false);
 	dialog->setResizable(false);
-	dialog->setOffsets(100, Wt::Side::Top);
+	dialog->setOffsets(100, Wt::Side::Bottom);
 	dialog->setWidth(400);
 	dialog->setStyleClass("text-center !border-0 !bg-transparent !p-0 !m-0 !rounded-none !shadow-none ");
 	dialog->contents()->setStyleClass("max-w-full");
@@ -271,81 +271,162 @@ void StylusEdditor::createSearchDialog()
 			pos = text.find("|");
 			std::string styleClass = text.substr(pos + 2);
 
-			std::cout << "\n\n styleCathegory: <" << styleCathegory << ">\n\n";
-			std::cout << "\n\n styleClass: <" << styleClass << ">\n\n";
+			// if styleClass ends with -res reset thet style
+			std::string end = "";
+			if(styleClass.size() > 4) end = styleClass.substr(styleClass.size() - 4);
+
+			std::cout << "\n\n styleCathegory: <" << styleCathegory << ">\n";
+			std::cout << " styleClass: <" << styleClass << ">\n";
+			std::cout << " end: <" << end << ">\n\n";
+
 			if(styleCathegory.compare("spacing") == 0){
 				if(styleClass.compare("reset") == 0){
 					elementClassEdditor_->spacingWidget_->resetStyles();
 				}else if(styleClass.find("p-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->padding_all_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setPaddingAll("none");
+					else elementClassEdditor_->spacingWidget_->setPaddingAll(styleClass);
 				}else if(styleClass.find("py-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->padding_horizontal_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setPaddingY("none");
+					else elementClassEdditor_->spacingWidget_->setPaddingY(styleClass);
 				}else if(styleClass.find("px-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->padding_vertical_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setPaddingX("none");
+					else elementClassEdditor_->spacingWidget_->setPaddingX(styleClass);
 				}else if(styleClass.find("pt-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->padding_top_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setPaddingTop("none");
+					else elementClassEdditor_->spacingWidget_->setPaddingTop(styleClass);
 				}else if(styleClass.find("pr-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->padding_right_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setPaddingRight("none");
+					else elementClassEdditor_->spacingWidget_->setPaddingRight(styleClass);
 				}else if(styleClass.find("pb-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->padding_bottom_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setPaddingBottom("none");
+					else elementClassEdditor_->spacingWidget_->setPaddingBottom(styleClass);
 				}else if(styleClass.find("pl-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->padding_left_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setPaddingLeft("none");
+					else elementClassEdditor_->spacingWidget_->setPaddingLeft(styleClass);
 				}else if(styleClass.find("m-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->margin_all_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setMarginAll("none");
+					else elementClassEdditor_->spacingWidget_->setMarginAll(styleClass);
 				}else if(styleClass.find("my-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->margin_horizontal_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setMarginY("none");
+					else elementClassEdditor_->spacingWidget_->setMarginY(styleClass);
 				}else if(styleClass.find("mx-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->margin_vertical_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setMarginX("none");
+					else elementClassEdditor_->spacingWidget_->setMarginX(styleClass);
 				}else if(styleClass.find("mt-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->margin_top_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setMarginTop("none");
+					else elementClassEdditor_->spacingWidget_->setMarginTop(styleClass);
 				}else if(styleClass.find("mr-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->margin_right_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setMarginRight("none");
+					else elementClassEdditor_->spacingWidget_->setMarginRight(styleClass);
 				}else if(styleClass.find("mb-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->margin_bottom_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setMarginBottom("none");
+					else elementClassEdditor_->spacingWidget_->setMarginBottom(styleClass);
 				}else if(styleClass.find("ml-") != std::string::npos){
-					elementClassEdditor_->spacingWidget_->margin_left_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->spacingWidget_->setMarginLeft("none");
+					else elementClassEdditor_->spacingWidget_->setMarginLeft(styleClass);
 				}else if(styleClass.find("space-x-") != std::string::npos){
 					if(styleClass.find("reverse-res") != std::string::npos){
-						elementClassEdditor_->spacingWidget_->checkbox_space_x_reverse_->setChecked(false);
-					}else if(styleClass.find("reverse") != std::string::npos){
-						elementClassEdditor_->spacingWidget_->checkbox_space_x_reverse_->setChecked(true);
+						elementClassEdditor_->spacingWidget_->setSpaceXReverse(false);
+					}else if (styleClass.find("reverse") != std::string::npos){
+							elementClassEdditor_->spacingWidget_->setSpaceXReverse(true);
 					}else {
-						elementClassEdditor_->spacingWidget_->space_x_widget_->setValue(styleClass);
+						elementClassEdditor_->spacingWidget_->setSpaceX(styleClass);
 					}
-
 				}else if(styleClass.find("space-y-") != std::string::npos){
 					if(styleClass.find("reverse-res") != std::string::npos){
-						elementClassEdditor_->spacingWidget_->checkbox_space_y_reverse_->setChecked(false);
-					}else if(styleClass.find("reverse") != std::string::npos){
-						elementClassEdditor_->spacingWidget_->checkbox_space_y_reverse_->setChecked(true);
+						elementClassEdditor_->spacingWidget_->setSpaceYReverse(false);
+					}else if (styleClass.find("reverse") != std::string::npos){
+							elementClassEdditor_->spacingWidget_->setSpaceYReverse(true);
 					}else {
-						elementClassEdditor_->spacingWidget_->space_y_widget_->setValue(styleClass);
+						elementClassEdditor_->spacingWidget_->setSpaceY(styleClass);
 					}
+				}else {
+					std::cout << "\n\n ---------- command from S P A C I N G not valid for some reson ----------\n\n";
 				}
-				elementClassEdditor_->spacingWidget_->styleChanged().emit();
-			}else if(styleCathegory.compare("sizing") == 0){
+				elementClassEdditor_->spacingWidget_->styleChanged().emit(elementClassEdditor_->spacingWidget_->getStyles());
 				
-				if(styleClass.find("min-w-") != std::string::npos){
-					elementClassEdditor_->sizingWidget_->minWidth_widget_->setValue(styleClass);
+				
+				
+			}else if(styleCathegory.compare("sizing") == 0){
+				if(styleClass.compare("reset") == 0){
+					elementClassEdditor_->sizingWidget_->resetStyles();
+				}else if(styleClass.find("min-w-") != std::string::npos){
+					if(end.compare("-res") == 0) elementClassEdditor_->sizingWidget_->setWidth("none");
+					else elementClassEdditor_->sizingWidget_->setWidth(styleClass);
 				}else if(styleClass.find("min-h-") != std::string::npos){
-					elementClassEdditor_->sizingWidget_->minHeight_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->sizingWidget_->setHeight("none");
+					else elementClassEdditor_->sizingWidget_->setHeight(styleClass);					
 				}else if(styleClass.find("max-w-") != std::string::npos){
-					elementClassEdditor_->sizingWidget_->maxWidth_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->sizingWidget_->setMaxWidth("none");
+					else elementClassEdditor_->sizingWidget_->setMaxWidth(styleClass);
 				}else if(styleClass.find("max-h-") != std::string::npos){
-					elementClassEdditor_->sizingWidget_->maxHeight_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->sizingWidget_->setMaxHeight("none");
+					else elementClassEdditor_->sizingWidget_->setMaxHeight(styleClass);
 				}else if(styleClass.find("w-") != std::string::npos){
-					elementClassEdditor_->sizingWidget_->width_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->sizingWidget_->setWidth("none");
+					else elementClassEdditor_->sizingWidget_->setWidth(styleClass);					
 				}else if(styleClass.find("h-") != std::string::npos){
-					elementClassEdditor_->sizingWidget_->height_widget_->setValue(styleClass);
+					if(end.compare("-res") == 0) elementClassEdditor_->sizingWidget_->setHeight("none");
+					else elementClassEdditor_->sizingWidget_->setHeight(styleClass);
+				}else {
+					std::cout << "\n\n ---------- command from S I Z I N G not valid for some reson ----------\n\n";
 				}
-				elementClassEdditor_->sizingWidget_->styleChanged().emit();
+				elementClassEdditor_->sizingWidget_->styleChanged().emit(elementClassEdditor_->sizingWidget_->getStyles());
+				std::cout << "\n sizing classes <" << elementClassEdditor_->sizingWidget_->getStyles() << ">\n";
+				
+				
 			}else if (styleCathegory.compare("backgrounds") == 0){
 				if(styleClass.compare("reset") == 0){
+					std::cout << "\n reset backgrounds \n";
 					elementClassEdditor_->backgroundWidget_->resetStyles();
-				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_color_regex)){
-					elementClassEdditor_->backgroundWidget_->comboBox_color->setValue(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_image_regex)){
+					std::cout << "\n set background image \n";
+					elementClassEdditor_->backgroundWidget_->setGradient(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_attachment_regex)){
+					std::cout << "\n set background attachment \n";
+					elementClassEdditor_->backgroundWidget_->setAttachment(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_clip_regex)){
+					std::cout << "\n set background clip \n";
+					elementClassEdditor_->backgroundWidget_->setClip(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_origin_regex)){
+					std::cout << "\n set background origin \n";
+					elementClassEdditor_->backgroundWidget_->setOrigin(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_position_regex)){
+					std::cout << "\n set background position \n";
+					elementClassEdditor_->backgroundWidget_->setPosition(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_repeat_regex)){
+					std::cout << "\n set background repeat \n";
+					elementClassEdditor_->backgroundWidget_->setRepeat(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_size_regex)){
+					std::cout << "\n set background size \n";
+					elementClassEdditor_->backgroundWidget_->setSize(styleClass);
+				}else if (styleClass.compare("bg-gradient-res") == 0){
+					std::cout << "\n set background gradient \n";
+					elementClassEdditor_->backgroundWidget_->setGradient("none");
+				}else if (styleClass.compare("bg-attachment-res") == 0){
+					std::cout << "\n set background attachment \n";
+					elementClassEdditor_->backgroundWidget_->setAttachment("none");
+				}else if (styleClass.compare("bg-clip-res") == 0){
+					std::cout << "\n set background clip \n";
+					elementClassEdditor_->backgroundWidget_->setClip("none");
+				}else if (styleClass.compare("bg-origin-res") == 0){
+					std::cout << "\n set background origin \n";
+					elementClassEdditor_->backgroundWidget_->setOrigin("none");
+				}else if (styleClass.compare("bg-position-res") == 0){
+					std::cout << "\n set background position \n";
+					elementClassEdditor_->backgroundWidget_->setPosition("none");
+				}else if (styleClass.compare("bg-repeat-res") == 0){
+					std::cout << "\n set background repeat \n";
+					elementClassEdditor_->backgroundWidget_->setRepeat("none");
+				}else if (styleClass.compare("bg-size-res") == 0){
+					std::cout << "\n set background size \n";
+					elementClassEdditor_->backgroundWidget_->setSize("none");
+				}else {
+					std::cout << "\n\n ---------- command from B A C K G R O U N D S not valid for some reson ----------\n\n";
 				}
+				elementClassEdditor_->backgroundWidget_->styleChanged().emit(elementClassEdditor_->backgroundWidget_->getStyles());
 			}
+			
 		}
 		lineEdit->setText("");
 		lineEdit->setFocus(true);
@@ -362,10 +443,10 @@ void StylusEdditor::createSearchDialog()
 	setSearchOptions(sp, dialog, lineEdit, SearchOption::Classes);
 }
 
-
 void StylusEdditor::setSearchOptions(Wt::WSuggestionPopup *sp, Wt::WDialog *dialog, Wt::WLineEdit *lineEdit, SearchOption searchOption)
 {
 	sp->clearSuggestions();
+
 	if(searchOption == SearchOption::Folders){
 		dialog->setWindowTitle("Chose Template");
 		for(auto& folder : stylus_templates_->folders_data_){
@@ -382,69 +463,22 @@ void StylusEdditor::setSearchOptions(Wt::WSuggestionPopup *sp, Wt::WDialog *dial
 		auto spacing_data = elementClassEdditor_->tailwindConfig_->spacing.search_data();
 		auto backgrounds_data = elementClassEdditor_->tailwindConfig_->backgrounds.search_data();
 
-		sp->addSuggestion("! | sizing | reset");
-		for(int i = 0; i < sizing_data.size(); i++){
-			auto sizingData = sizing_data[i];
-			if(sizingData.compare("sizing | none") == 0){
-				sizingData = sizing_data[i+1];
-				auto pos = sizingData.find_last_of("-");
-				sizingData = sizingData.substr(0, pos);
-				std::string text = "! | " + sizingData + "-res";
-				sp->addSuggestion(text);
-			}else {
-				sp->addSuggestion("! | " + sizingData);
-			}
+		for(auto sizing : sizing_data){
+			sp->addSuggestion("! | " + sizing);
 		}
 
-		sp->addSuggestion("! | spacing | reset");
-		for(int i = 0; i < spacing_data.size(); i++){
-			auto spacingData = spacing_data[i];
-			if(spacingData.compare("spacing | none") == 0){
-				spacingData = spacing_data[i+1];
-				auto pos = spacingData.find_last_of("-");
-				spacingData = spacingData.substr(0, pos);
-				std::string text = "! | " + spacingData + "-res";
-				sp->addSuggestion(text);
-			}else if(spacingData.compare("spacing/space-x-reverse") == 0){
-				sp->addSuggestion("! | spacing/space-x-reverse-res");
-				sp->addSuggestion("! | " + spacingData);
-			}else if(spacingData.compare("spacing/space-y-reverse") == 0){
-				sp->addSuggestion("! | spacing/space-y-reverse-res");
-				sp->addSuggestion("! | " + spacingData);
-			}else{
-				sp->addSuggestion("! | " + spacingData);
-			}
+		for(auto spacing : spacing_data){
+			sp->addSuggestion("! | " + spacing);
 		}
 
-		sp->addSuggestion("! | backgrounds | reset");
-		for(int i = 0; i < backgrounds_data.size(); i++){
-			auto backgroundsData = backgrounds_data[i];
-			if(backgroundsData.compare("backgrounds | none") == 0){
-				backgroundsData = backgrounds_data[i+1];
-				auto pos = backgroundsData.find_last_of(" | ");
-				backgroundsData = backgroundsData.substr(0, pos);
-				std::string text = "! | " + backgroundsData + "-res";
-				sp->addSuggestion(text);
-			}else {
-				sp->addSuggestion("! | " + backgroundsData);
-			}
+		for(auto backgrounds : backgrounds_data){
+
+				sp->addSuggestion("! | " + backgrounds);
 		}
+
 	}else if(searchOption == SearchOption::Focus){
 
-	}else if(searchOption == SearchOption::ColorIntensity){
-		auto intensity_variants = elementClassEdditor_->tailwindConfig_->color_intensity_VARIANTS;
-		auto currentText = lineEdit->text().toUTF8();
-		for(auto& variant : intensity_variants){
-			sp->addSuggestion("! | backgrounds | " + currentText +"-"+ variant);
-		}
-	}else if(searchOption == SearchOption::ColorOpacity){
-		auto opacity_variants = elementClassEdditor_->tailwindConfig_->color_opacity_VARIANTS;
-		auto currentText = lineEdit->text().toUTF8();
-		for(auto& variant : opacity_variants){
-			sp->addSuggestion("! | backgrounds | " + currentText +"-"+ variant);
-		}
 	}
-	
 }
 
 
@@ -459,8 +493,12 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 {
 	// templates widget
 	stylus_templates_ = sidebar_left->bindWidget("folder-templates-view", std::make_unique<StylusTemplatesWidget>(templatesPath, stylusState_));
-	sidebar_left_hamburger = template_view->bindWidget("toggle-sidebar-left", std::make_unique<Wt::WTemplate>(Wt::WString::tr("hamburger-menu")));
-	sidebar_right_hamburger = template_view->bindWidget("toggle-sidebar-right", std::make_unique<Wt::WTemplate>(Wt::WString::tr("hamburger-menu")));
+	stylus_templates_->hide();
+	sidebar_left_hamburger = template_view->bindWidget("toggle-sidebar-left", std::make_unique<Wt::WPushButton>());
+	sidebar_right_hamburger = template_view->bindWidget("toggle-sidebar-right", std::make_unique<Wt::WPushButton>());
+	std::string hamburger_styles = "p-3 bg-cover bg-[url(resources/icons/hamburger.svg)]";
+	sidebar_left_hamburger->setStyleClass(hamburger_styles);
+	sidebar_right_hamburger->setStyleClass(hamburger_styles);
 
 	sidebar_left_hamburger->clicked().connect(this, [=](){
 		if(sidebar_left->hasStyleClass("-ml-[300px]")){
@@ -502,7 +540,6 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 	stylus_templates_->templateSelected().connect(this, &StylusEdditor::setTemplate);
 
 	prev_temp_btn_ = sidebar_left->bindWidget("prev-temp-controler", std::make_unique<Wt::WPushButton>("prev template"));
-    prev_temp_btn_->setStyleClass("block cursor-pointer rounded-lg border-0 p-1 bg-neutral-900 hover:bg-neutral-800");
 	prev_temp_btn_->disable();
 	prev_temp_btn_->clicked().connect(this, [=](){
 		if(templates_data_.size() > 1){
@@ -513,6 +550,10 @@ StylusEdditor::StylusEdditor(std::string templatesPath)
 		}
 	});
 
+	next_temp_btn_ = sidebar_left->bindWidget("next-temp-controler", std::make_unique<Wt::WPushButton>("next template"));
+	prev_temp_btn_->disable();
+	next_temp_btn_->disable();
+
 	createTitleBarControls();
 	createKeybordShortcuts();
 }
@@ -521,7 +562,8 @@ void StylusEdditor::createTitleBarControls()
 {
 	toggle_outline_checkbox = sidebar_left->bindWidget("toggle-outline-checkbox", std::make_unique<Wt::WCheckBox>());
 	auto theme_switcher_btn = sidebar_left->bindWidget("theme-switcher-btn", createThemeSwitcher());
-	
+	auto toggle_folder_tree_view = sidebar_left->bindWidget("toggle-files-tree-view", std::make_unique<Wt::WPushButton>("Folders"));
+
 	toggle_outline_checkbox->toggleStyleClass("?", true, true);
 
 	toggle_outline_checkbox->setChecked(true);
@@ -544,6 +586,25 @@ void StylusEdditor::createTitleBarControls()
 		}
 		updateFile();
 		updateResources();
+	});
+
+	toggle_folder_tree_view->clicked().connect(this, [=](){
+		std::cout << "\n\n toggle folder tree view \n\n";
+		if(stylus_templates_->isHidden()){
+			stylus_templates_->show();
+			toggle_folder_tree_view->setText("Tree");
+			tree_view_->hide();
+			prev_temp_btn_->hide();
+			next_temp_btn_->hide();
+			element_contents_->hide();
+		}else {
+			stylus_templates_->hide();
+			toggle_folder_tree_view->setText("Folders");
+			tree_view_->show();
+			prev_temp_btn_->show();
+			next_temp_btn_->show();
+			element_contents_->show();
+		}
 	});
 }
 

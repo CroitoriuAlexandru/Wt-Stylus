@@ -105,31 +105,136 @@ Spacing::Spacing(std::vector<std::string> spacing_variants)
 
 std::vector<std::string> Spacing::search_data()
 {
-    std::vector<std::string> data = {};
-    for(auto styleClass : margin.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : margin_x.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : margin_y.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : margin_top.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : margin_right.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : margin_bottom.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : margin_left.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    // for(auto styleClass : margin_start.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    // for(auto styleClass : margin_end.styleClasses_) data.push_back("spacing | " + styleClass.className_);
+    std::vector<std::string> data = {
+        "spacing | reset"
+    };
+    for(auto styleClass : margin.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | m-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : margin_x.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | mx-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : margin_y.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | my-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : margin_top.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | mt-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : margin_right.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | mr-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : margin_bottom.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | mb-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : margin_left.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | ml-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+ 
+    // padding
+    for(auto styleClass : padding.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | p-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_); 
+    }
+    for(auto styleClass : padding_x.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | px-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : padding_y.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | py-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : padding_top.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | pt-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : padding_right.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | pr-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : padding_bottom.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | pb-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : padding_left.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | pl-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+   
+    // space
+    for(auto styleClass : space_x.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | space-x-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    for(auto styleClass : space_y.styleClasses_){ 
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("spacing | space-y-res");
+            continue;
+        }
+        data.push_back("spacing | " + styleClass.className_);
+    }
 
-    for(auto styleClass : padding.styleClasses_) data.push_back("spacing | " + styleClass.className_); 
-    for(auto styleClass : padding_x.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : padding_y.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : padding_top.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : padding_right.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : padding_bottom.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : padding_left.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    // for(auto styleClass : padding_start.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    // for(auto styleClass : padding_end.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-
-    for(auto styleClass : space_x.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : space_y.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : space_x_reverse.styleClasses_) data.push_back("spacing | " + styleClass.className_);
-    for(auto styleClass : space_y_reverse.styleClasses_) data.push_back("spacing | " + styleClass.className_);
+    // reverse
+    data.push_back("spacing | space-x-reverse-res");
+    for(auto styleClass : space_x_reverse.styleClasses_){ 
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    data.push_back("spacing | space-y-reverse-res");
+    for(auto styleClass : space_y_reverse.styleClasses_){ 
+        data.push_back("spacing | " + styleClass.className_);
+    }
+    
 return data;
 }
 

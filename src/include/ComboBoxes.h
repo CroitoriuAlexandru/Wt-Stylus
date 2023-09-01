@@ -11,23 +11,23 @@
 #include <string>
 #include <regex>
 
+#include <Wt/WRadioButton.h>
+
 #include <Wt/WString.h>
 #include <Wt/WLineEdit.h>
 #include "../../TailwindConfig/src/include/Config.h"
 
 
 // this widget is used for margin, padding
-class StyleClassComboBox : public Wt::WContainerWidget
+class ComboBoxClassChanger : public Wt::WContainerWidget
 {
 public:
-    StyleClassComboBox(Propriety propriety);
+    ComboBoxClassChanger(Propriety propriety);
 
 	void setCustomValueString(std::string custom_start);
     std::string getValue();
-	// classType is default classes from tailwind p-1 or custom p-[10px]
 	void setValue(std::string className = "none");
-	Wt::Signal<>& classChanged() { return classChanged_; }
-	// void setOptions(Propriety propriety);
+	Wt::Signal<std::string>& classChanged() { return classChanged_; }
 	Wt::WTemplate *select_temp_;
 	void setCustom(bool custom);
 	void disable(bool disable);
@@ -42,36 +42,7 @@ public:
 private:
 	std::string defaultValue = "none";
 
-	// std::regex custom_option_regexp = std::regex("\\[\\S*\\]");
 	std::string custom_start_ = "none";
-	Wt::Signal<> classChanged_;
+	Wt::Signal<std::string> classChanged_;
 };
 
-
-
-
-class ColorsComboBox : public Wt::WContainerWidget
-{
-public:
-	ColorsComboBox(ProprietyColor proprietyColor);
-	void setCustomValueString(std::string custom_start){ custom_start_ = custom_start; };
-
-	std::string getValue();
-	void setValue(std::string className = "none");
-
-	std::string custom_start_;
-	Wt::WText *title;
-
-	StyleClassComboBox *comboBox_color;
-	StyleClassComboBox* comboBox_intensity;
-	StyleClassComboBox* comboBox_opacity;
-
-	Wt::Signal<>& classChanged() { return classChanged_; }
-private:
-
-	Wt::Signal<> classChanged_;
-
-	std::regex regex_custom_color =  std::regex("[!]?bg-\\[[\\S]*\\]");
-	std::regex regex_def_classes = std::regex("[!]?(bg|from|via|to)-(inherit|current|transparent|black|white)");
-
-};

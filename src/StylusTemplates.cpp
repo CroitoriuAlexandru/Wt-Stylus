@@ -4,7 +4,7 @@
 #include <Wt/WPushButton.h>
 #include <Wt/WText.h>
 #include <Wt/WPanel.h>
-#include <Wt/WLineEdit.h>
+#include <Wt/WLineEdit.h> 
 #include <Wt/WMenu.h>
 #include <Wt/WMenuItem.h>
 
@@ -116,16 +116,14 @@ std::unique_ptr<Wt::WPanel> StylusTemplatesWidget::createPanel(std::string title
 
 void StylusTemplatesWidget::setFilePanel(Wt::WPanel* panel, std::string folderName, XmlFileData fileData)
 {
-    auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(tr("svg.trash")));
-    delete_file_btn->setStyleClass("p-1 m-1 ms-auto");
-    delete_file_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+    auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(""));
+    delete_file_btn->setStyleClass("bg-[url(resources/icons/trash.svg)] !p-2 m-1 ms-auto bg-cover");
     delete_file_btn->doubleClicked().connect([=](){
         deleteFile(folderName, fileData.fileName);
     });
 
-    auto add_message_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(tr("svg.plus")));
-    add_message_btn->setStyleClass("p-1 m-1");
-    add_message_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+    auto add_message_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(""));
+    add_message_btn->setStyleClass("bg-[url(resources/icons/plus-colored.svg)] !p-2 m-1 ms-auto bg-cover");
     add_message_btn->doubleClicked().connect([=](){
         addMessageTemplate(folderName, fileData.fileName);
     });
@@ -140,14 +138,14 @@ void StylusTemplatesWidget::setFilePanel(Wt::WPanel* panel, std::string folderNa
         auto file_item = messages_display->addWidget(std::make_unique<Wt::WTemplate>(tr("stylus.templates.folder.item")));
         file_item->bindWidget("title", std::make_unique<Wt::WText>(message));
         
-        auto del_message_btn = file_item->bindWidget("svg.trash", std::make_unique<Wt::WPushButton>(tr("svg.trash")));
-        del_message_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+        auto del_message_btn = file_item->bindWidget("svg.trash", std::make_unique<Wt::WPushButton>(""));
+        del_message_btn->setStyleClass("bg-[url(resources/icons/trash.svg)] !p-2 m-1 ms-auto bg-cover");
         del_message_btn->doubleClicked().connect([=](){
             deleteMessageTemplate(folderName, fileData.fileName, message);
         });
 
-        auto open_edditor_btn = file_item->bindWidget("svg.pencil", std::make_unique<Wt::WPushButton>(tr("svg.pencil")));
-        open_edditor_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+        auto open_edditor_btn = file_item->bindWidget("svg.pencil", std::make_unique<Wt::WPushButton>());
+        open_edditor_btn->setStyleClass("bg-[url(resources/icons/pencil.svg)] !p-2 m-1 ms-auto bg-cover");
         open_edditor_btn->doubleClicked().connect([=](){
             
             auto fileName = fileData.fileName;

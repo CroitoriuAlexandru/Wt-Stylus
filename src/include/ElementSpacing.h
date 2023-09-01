@@ -18,38 +18,82 @@ public:
 	// margin and padding at the moment
 
 	void setClasses(SpacingData spacing);
-    Wt::Signal<>& styleChanged() { return styleChanged_; }
+    Wt::Signal<std::string>& styleChanged() { return styleChanged_; }
 	std::string getStyles();
 	void resetStyles();
 
-	StyleClassComboBox* margin_all_widget_;
-    StyleClassComboBox* margin_horizontal_widget_;
-    StyleClassComboBox* margin_vertical_widget_;
-    StyleClassComboBox* margin_top_widget_;
-    StyleClassComboBox* margin_right_widget_;
-    StyleClassComboBox* margin_bottom_widget_;
-    StyleClassComboBox* margin_left_widget_;
 
-    StyleClassComboBox* padding_all_widget_;
-    StyleClassComboBox* padding_horizontal_widget_;
-    StyleClassComboBox* padding_vertical_widget_;
-    StyleClassComboBox* padding_top_widget_;
-    StyleClassComboBox* padding_right_widget_;
-    StyleClassComboBox* padding_bottom_widget_;
-    StyleClassComboBox* padding_left_widget_;
+	bool setMarginAll(std::string className);
+	bool setMarginY(std::string className);
+	bool setMarginX(std::string className);
+	bool setMarginTop(std::string className);
+	bool setMarginRight(std::string className);
+	bool setMarginBottom(std::string className);
+	bool setMarginLeft(std::string className);
 
-	StyleClassComboBox* space_x_widget_;
-	StyleClassComboBox* space_y_widget_;
+	bool setPaddingAll(std::string className);
+	bool setPaddingY(std::string className);
+	bool setPaddingX(std::string className);
+	bool setPaddingTop(std::string className);
+	bool setPaddingRight(std::string className);
+	bool setPaddingBottom(std::string className);
+	bool setPaddingLeft(std::string className);
+	
+	bool setSpaceX(std::string className);
+	bool setSpaceY(std::string className);
+
+	bool setSpaceXReverse(bool reverse);
+	bool setSpaceYReverse(bool reverse);
+
+private:
+	ComboBoxClassChanger* margin_all_widget_;
+    ComboBoxClassChanger* margin_y_widget_;
+    ComboBoxClassChanger* margin_x_widget_;
+    ComboBoxClassChanger* margin_top_widget_;
+    ComboBoxClassChanger* margin_right_widget_;
+    ComboBoxClassChanger* margin_bottom_widget_;
+    ComboBoxClassChanger* margin_left_widget_;
+
+    ComboBoxClassChanger* padding_all_widget_;
+    ComboBoxClassChanger* padding_y_widget_;
+    ComboBoxClassChanger* padding_x_widget_;
+    ComboBoxClassChanger* padding_top_widget_;
+    ComboBoxClassChanger* padding_right_widget_;
+    ComboBoxClassChanger* padding_bottom_widget_;
+    ComboBoxClassChanger* padding_left_widget_;
+
+	ComboBoxClassChanger* space_x_widget_;
+	ComboBoxClassChanger* space_y_widget_;
 
 	Wt::WCheckBox* checkbox_space_x_reverse_;
 	Wt::WCheckBox* checkbox_space_y_reverse_;
-	
-private:
+
+
+	std::string margin_all_class = "none";
+	std::string margin_y_class = "none";
+	std::string margin_x_class = "none";
+	std::string margin_top_class = "none";
+	std::string margin_right_class = "none";
+	std::string margin_bottom_class = "none";
+	std::string margin_left_class = "none";
+
+	std::string padding_all_class = "none";
+	std::string padding_y_class = "none";
+	std::string padding_x_class = "none";
+	std::string padding_top_class = "none";
+	std::string padding_right_class = "none";
+	std::string padding_bottom_class = "none";
+	std::string padding_left_class = "none";
+
+	std::string space_x_class = "none";
+	std::string space_y_class = "none";
+
+
 	void setCustomTestValues();
 
 	std::shared_ptr<Config> tailwindConfig_;
 
-	Wt::Signal<> styleChanged_;
+	Wt::Signal<std::string> styleChanged_;
 
 	std::regex regex_custom_padding =  std::regex("p[x,y,l,r,t,b]?-\\[[\\S]*\\]"); 
 	std::regex regex_custom_margin =  std::regex("-?m[x,y,l,r,t,b]?-\\[[\\S]*\\]");

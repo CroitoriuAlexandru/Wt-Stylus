@@ -13,7 +13,7 @@ namespace Tailwind {
         std::vector<std::string> search_data();
 
         std::string screenReadersData();
-        boost::regex screen_readers_regex = boost::regex("(?<=\n| )(!)?(sr-only|not-sr-only)(?!\\w|-)");
+        boost::regex screen_readers_regex = boost::regex("(?<!\\S)(!)?(sr-only|not-sr-only)(?!\\w|-)");
     };
 
 };

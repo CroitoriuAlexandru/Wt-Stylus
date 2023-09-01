@@ -1,24 +1,78 @@
 #include "include/ElementSizing.h"
 #include <regex>
+#include <Wt/WPopupMenu.h>
+#include <Wt/WMenuItem.h>
+#include <Wt/WLink.h>
 
 ElementSizingWidget::ElementSizingWidget(std::shared_ptr<Config> tailwindConfig)
 	: tailwindConfig_(tailwindConfig)
 {
 	setStyleClass("min-w-fit max-w-[300px] !border-x-0 text-center !bg-neutral-700 !text-neutral-200 !border-neutral-900 px-1.5");
 	setTitle("Sizing");
-	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900");
+	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900 bg-neutral-800");
 	setCollapsible(true);
-
-	auto resetBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
-	auto testBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WText>());
-
-	std::string buttons_styles ="p-2 m-px bg-cover ";
 	
-	resetBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/refresh.svg)] !ml-auto");
-	testBtn->setStyleClass(buttons_styles + "bg-[url(resources/icons/experimental-glass.svg)] !mr-2");
+	auto popupMenu = std::make_unique<Wt::WPopupMenu>();
+	std::string menuItemsStyles = "p-2 m-1 hover:bg-neutral-800 hover:text-neutral-200";
+	popupMenu->addItem("Set test classes")->setStyleClass(menuItemsStyles);
+	popupMenu->addItem("Reset styles")->setStyleClass(menuItemsStyles);
+	popupMenu->addSeparator()->setStyleClass("border border-solid border-neutral-900");
 
-	resetBtn->clicked().connect([=](){ resetStyles(); styleChanged_.emit(); isCollapsed() ? expand() : collapse();});
-	testBtn->clicked().connect([=](){ setCustomTestValues(); styleChanged_.emit(); isCollapsed() ? expand() : collapse(); });
+	auto width_info = popupMenu->addItem("Info Width");
+	auto min_width_info = popupMenu->addItem("Info Min width");
+	auto max_width_info = popupMenu->addItem("Info Max width");
+	auto height_info = popupMenu->addItem("Info Height");
+	auto min_height_info = popupMenu->addItem("Info Min height");
+	auto max_height_info = popupMenu->addItem("Info Max height");
+
+	Wt::WLink width_link = Wt::WLink(tailwindConfig_->sizing.width.docsLink_);
+	Wt::WLink max_width_link = Wt::WLink(tailwindConfig_->sizing.max_width.docsLink_);
+	Wt::WLink min_width_link = Wt::WLink(tailwindConfig_->sizing.min_width.docsLink_);
+	Wt::WLink height_link = Wt::WLink(tailwindConfig_->sizing.height.docsLink_);
+	Wt::WLink max_height_link = Wt::WLink(tailwindConfig_->sizing.max_height.docsLink_);
+	Wt::WLink min_height_link = Wt::WLink(tailwindConfig_->sizing.min_height.docsLink_);
+
+	width_link.setTarget(Wt::LinkTarget::NewWindow);
+	max_width_link.setTarget(Wt::LinkTarget::NewWindow);
+	min_width_link.setTarget(Wt::LinkTarget::NewWindow);
+	height_link.setTarget(Wt::LinkTarget::NewWindow);
+	max_height_link.setTarget(Wt::LinkTarget::NewWindow);
+	min_height_link.setTarget(Wt::LinkTarget::NewWindow);
+
+	width_info->setLink(width_link);
+	max_width_info->setLink(max_width_link);
+	min_width_info->setLink(min_width_link);
+	height_info->setLink(height_link);
+	max_height_info->setLink(max_height_link);
+	min_height_info->setLink(min_height_link);
+
+	width_info->setStyleClass(menuItemsStyles);
+	max_width_info->setStyleClass(menuItemsStyles);
+	min_width_info->setStyleClass(menuItemsStyles);
+	height_info->setStyleClass(menuItemsStyles);
+	max_height_info->setStyleClass(menuItemsStyles);
+	min_height_info->setStyleClass(menuItemsStyles);
+
+	
+	popupMenu->setStyleClass("bg-neutral-700 text-neutral-200 border border-solid border-neutral-900");
+
+	popupMenu->triggered().connect(this, [=](Wt::WMenuItem *item) {
+		if(item->text().toUTF8().compare("Set test classes") == 0){
+			std::cout << "set test classes" << std::endl;
+			setCustomTestValues();
+			styleChanged_.emit(getStyles());
+		}else if(item->text().toUTF8().compare("Reset styles") == 0){
+			resetStyles();
+			styleChanged_.emit(getStyles());
+		}
+	});
+
+	auto popupBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>());
+	popupBtn->setStyleClass("p-3 bg-cover bg-[url(resources/icons/hamburger.svg)] !ml-auto mr-2 ");
+	popupBtn->setMenu(std::move(popupMenu));
+	
+	// prevent the click event from propagating to the parent because it is located in the title bar witch expands and collapse on click
+	popupBtn->clicked().preventPropagation();
 
 
 	auto centralWidget = setCentralWidget(std::make_unique<Wt::WContainerWidget>());
@@ -32,13 +86,13 @@ ElementSizingWidget::ElementSizingWidget(std::shared_ptr<Config> tailwindConfig)
 	width_wrapper->addWidget(std::make_unique<Wt::WText>("Width"))->setStyleClass("font-bold text-center text-neutral-400");
 	height_wrapper->addWidget(std::make_unique<Wt::WText>("Height"))->setStyleClass("font-bold text-center text-neutral-400");
 
-	width_widget_ = width_wrapper->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig_->sizing.width));
-	minWidth_widget_ = width_wrapper->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig_->sizing.min_width));
-	maxWidth_widget_ = width_wrapper->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig_->sizing.max_width));
+	width_widget_ = width_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig_->sizing.width));
+	minWidth_widget_ = width_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig_->sizing.min_width));
+	maxWidth_widget_ = width_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig_->sizing.max_width));
 
-	height_widget_ = height_wrapper->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig_->sizing.height));
-	minHeight_widget_ = height_wrapper->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig_->sizing.min_height));
-	maxHeight_widget_ = height_wrapper->addWidget(std::make_unique<StyleClassComboBox>(tailwindConfig_->sizing.max_height));
+	height_widget_ = height_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig_->sizing.height));
+	minHeight_widget_ = height_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig_->sizing.min_height));
+	maxHeight_widget_ = height_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig_->sizing.max_height));
 
 
 	// set regular expresion for custom value w-[10px]
@@ -51,16 +105,15 @@ ElementSizingWidget::ElementSizingWidget(std::shared_ptr<Config> tailwindConfig)
 	maxWidth_widget_->setCustomValueString("max-w-");
 	maxHeight_widget_->setCustomValueString("max-h-");
 
-
 	// signals for default classes for tailwind
-	width_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
-	height_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
+	width_widget_->classChanged().connect(this, [=](std::string className) { width_class = className; styleChanged_.emit(getStyles()); });
+	height_widget_->classChanged().connect(this, [=](std::string className) { height_class = className; styleChanged_.emit(getStyles()); });
 
-	minWidth_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
-	minHeight_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
+	minWidth_widget_->classChanged().connect(this, [=](std::string className) { minWidth_class = className; styleChanged_.emit(getStyles()); });
+	minHeight_widget_->classChanged().connect(this, [=](std::string className) { minHeight_class = className; styleChanged_.emit(getStyles()); });
 
-	maxWidth_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
-	maxHeight_widget_->classChanged().connect(this, [=]() { styleChanged_.emit(); });
+	maxWidth_widget_->classChanged().connect(this, [=](std::string className) { maxWidth_class = className; styleChanged_.emit(getStyles()); });
+	maxHeight_widget_->classChanged().connect(this, [=](std::string className) { maxHeight_class = className; styleChanged_.emit(getStyles()); });
 };
 
 std::string ElementSizingWidget::getStyles()
@@ -68,55 +121,127 @@ std::string ElementSizingWidget::getStyles()
 	bool activeClasses = false;
 	std::string elementClasses;
 
-	if(width_widget_->getValue().compare("none") != 0){ elementClasses += width_widget_->getValue() + " "; activeClasses = true; }
-	if(minWidth_widget_->getValue().compare("none") != 0){ elementClasses += minWidth_widget_->getValue() + " "; activeClasses = true; }
-	if(maxWidth_widget_->getValue().compare("none") != 0){ elementClasses += maxWidth_widget_->getValue() + " "; activeClasses = true; }
-	 
-	if(height_widget_->getValue().compare("none") != 0){ elementClasses += height_widget_->getValue() + " "; activeClasses = true; }
-	if(minHeight_widget_->getValue().compare("none") != 0){ elementClasses += minHeight_widget_->getValue() + " "; activeClasses = true; }
-	if(maxHeight_widget_->getValue().compare("none") != 0){ elementClasses += maxHeight_widget_->getValue() + " "; activeClasses = true; }
+	if(width_class.compare("none") != 0){ elementClasses += width_class + " "; activeClasses = true; }
+	if(minWidth_class.compare("none") != 0){ elementClasses += minWidth_class + " "; activeClasses = true; }
+	if(maxWidth_class.compare("none") != 0){ elementClasses += maxWidth_class + " "; activeClasses = true; }
+	
+	if(height_class.compare("none") != 0){ elementClasses += height_class + " "; activeClasses = true; }
+	if(minHeight_class.compare("none") != 0){ elementClasses += minHeight_class + " "; activeClasses = true; }
+	if(maxHeight_class.compare("none") != 0){ elementClasses += maxHeight_class + " "; activeClasses = true; }
 
-	if(activeClasses) expand();
-	else collapse();
+
+	if(activeClasses && isCollapsed()) expand();
 
 	return elementClasses;
 }
 
 void ElementSizingWidget::setClasses(SizingData sizing)
 {
-	bool activeClasses = false;
 	resetStyles();
-	// std::cout << "Element S I Z I N G Widget setStyleClasses -----------------------------------------\n";
+	bool activeClasses;
+	activeClasses = setWidth(sizing.width);
+	activeClasses = setHeight(sizing.height);
+	activeClasses = setMinWidth(sizing.minWidth);
+	activeClasses = setMinHeight(sizing.minHeight);
+	activeClasses = setMaxWidth(sizing.maxWidth);
+	activeClasses = setMaxHeight(sizing.maxHeight);
 
-	if(sizing.width.compare("none") != 0){ width_widget_->setValue(sizing.width); activeClasses = true; }
-	if(sizing.minWidth.compare("none") != 0){ minWidth_widget_->setValue(sizing.minWidth); activeClasses = true; }
-	if(sizing.maxWidth.compare("none") != 0){ maxWidth_widget_->setValue(sizing.maxWidth); activeClasses = true; }
-
-	if(sizing.height.compare("none") != 0){ height_widget_->setValue(sizing.height); activeClasses = true; }
-	if(sizing.minHeight.compare("none") != 0){ minHeight_widget_->setValue(sizing.minHeight); activeClasses = true; }
-	if(sizing.maxHeight.compare("none") != 0){ maxHeight_widget_->setValue(sizing.maxHeight); activeClasses = true; }
-	
-	if(activeClasses) expand(); 
-	else collapse();
+	if(!activeClasses) collapse();
 }
+
 
 void ElementSizingWidget::resetStyles()
 {
-	width_widget_->setValue("none");
-	minWidth_widget_->setValue("none");
-	maxWidth_widget_->setValue("none");
-
-	height_widget_->setValue("none");
-	minHeight_widget_->setValue("none");
-	maxHeight_widget_->setValue("none");
+	setWidth("none");
+	setHeight("none");
+	setMinWidth("none");
+	setMinHeight("none");
+	setMaxWidth("none");
+	setMaxHeight("none");
 }
 
 void ElementSizingWidget::setCustomTestValues()
 {
-	width_widget_->setValue("w-1/2");
-	minWidth_widget_->setValue("min-w-full");
-	maxWidth_widget_->setValue("max-w-[300px]");
-	height_widget_->setValue("h-1/2");
-	minHeight_widget_->setValue("min-h-full");
-	maxHeight_widget_->setValue("max-h-[300px]");
+	setWidth("w-1/2");
+	setHeight("h-1/2");
+	setMinWidth("min-w-full");
+	setMinHeight("min-h-full");
+	setMaxWidth("max-w-[300px]");
+	setMaxHeight("max-h-[300px]");
 }
+
+
+
+bool ElementSizingWidget::setWidth(std::string className)
+{
+
+	width_class = className;
+	width_widget_->setValue(width_class);
+
+	if(className.compare("none") == 0) return false;
+	else {
+		expand();
+		return true;
+	}
+}
+
+bool ElementSizingWidget::setHeight(std::string className)
+{
+	height_class = className;
+	height_widget_->setValue(height_class);
+
+	if(className.compare("none") == 0) return false;
+	else {
+		expand();
+		return true;
+	}
+}
+
+bool ElementSizingWidget::setMinWidth(std::string className)
+{
+	minWidth_class = className;
+	minWidth_widget_->setValue(minWidth_class);
+
+	if(className.compare("none") == 0) return false;
+	else {
+		expand();
+		return true;
+	}
+}
+
+bool ElementSizingWidget::setMinHeight(std::string className)
+{
+	minHeight_class = className;
+	minHeight_widget_->setValue(minHeight_class);
+
+	if(className.compare("none") == 0) return false;
+	else {
+		expand();
+		return true;
+	}
+}
+
+bool ElementSizingWidget::setMaxWidth(std::string className)
+{
+	maxWidth_class = className;
+	maxWidth_widget_->setValue(maxWidth_class);
+
+	if(className.compare("none") == 0) return false;
+	else {
+		expand();
+		return true;
+	}
+}
+
+bool ElementSizingWidget::setMaxHeight(std::string className)
+{
+	maxHeight_class = className;
+	maxHeight_widget_->setValue(maxHeight_class);
+
+	if(className.compare("none") == 0) return false;
+	else {
+		expand();
+		return true;
+	}
+}
+

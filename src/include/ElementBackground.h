@@ -11,28 +11,28 @@
 struct BackgroundData
 {
 	// bg-(fixed|local|scroll)
-	std::string bg_attachment = "none";
+	std::string attachment = "none";
 	// bg-clip-(border|padding|content|text)
-	std::string bg_clip = "none";
-	std::string bg_color_class = "none";
+	std::string clip = "none";
+	std::string color_class = "none";
 	// bg-origin-(border|padding|content)
-	std::string bg_origin = "none";
+	std::string origin = "none";
 	// bg-(bottom|center|left|left-bottom|left-top|right|right-bottom|right-top|top)
-	std::string bg_position = "none";
+	std::string position = "none";
 	// bg-(repeat|no-repeat|repeat-x|repeat-y|repeat-round|repeat-space)
-	std::string bg_repeat = "none";
+	std::string repeat = "none";
 	// bg-(auto|cover|contain)
-	std::string bg_size = "none";
+	std::string size = "none";
 	// bg-gradient-(to-t|to-tr|to-r|to-br|to-b|to-bl|to-l|to-tl)
-	std::string bg_image = "none";
+	std::string gradient = "none";
 
-	std::string bg_color_from = "none";
-	std::string bg_color_via = "none";
-	std::string bg_color_to = "none";
+	std::string color_from = "none";
+	std::string color_via = "none";
+	std::string color_to = "none";
 
-	std::string bg_color_from_step = "none";
-	std::string bg_color_via_step = "none";
-	std::string bg_color_to_step = "none";
+	std::string color_from_step = "none";
+	std::string color_via_step = "none";
+	std::string color_to_step = "none";
 
 };
 
@@ -45,38 +45,38 @@ public:
 
 
 	void setClasses(BackgroundData bgData);
-    Wt::Signal<>& styleChanged() { return styleChanged_; };
+    Wt::Signal<std::string>& styleChanged() { return styleChanged_; };
+	
 	std::string getStyles();
 	void resetStyles();
-	
-	StyleClassComboBox *comboBox_attachment;
-	StyleClassComboBox *comboBox_clip;
-	StyleClassComboBox *comboBox_origin;
-	StyleClassComboBox *comboBox_position;
-	StyleClassComboBox *comboBox_repeat;
-	StyleClassComboBox *comboBox_size;
-	StyleClassComboBox *comboBox_image;
-	ColorsComboBox *comboBox_color;
 
-	ColorsComboBox *comboBox_color_from;
-	ColorsComboBox *comboBox_color_via;
-	ColorsComboBox *comboBox_color_to;
-
-	std::shared_ptr<Wt::WButtonGroup> gradient_group;
-	std::shared_ptr<Wt::WButtonGroup> gradient_step_group;
-	std::shared_ptr<Wt::WButtonGroup> color_group;
+	bool setGradient(std::string className);
+	bool setAttachment(std::string className);
+	bool setClip(std::string className);
+	bool setOrigin(std::string className);
+	bool setPosition(std::string className);
+	bool setRepeat(std::string className);
+	bool setSize(std::string className);
 private:
 	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
+	std::shared_ptr<Wt::WButtonGroup> gradient_group;
+	std::shared_ptr<Wt::WButtonGroup> attachment_group;
+	std::shared_ptr<Wt::WButtonGroup> clip_group;
+	std::shared_ptr<Wt::WButtonGroup> origin_group;
+	std::shared_ptr<Wt::WButtonGroup> position_group;
+	std::shared_ptr<Wt::WButtonGroup> repeat_group;
+	std::shared_ptr<Wt::WButtonGroup> size_group;
+	std::string gradient_class = "none";
+	std::string attachment_class = "none";
+	std::string clip_class = "none";
+	std::string origin_class = "none";
+	std::string position_class = "none";
+	std::string repeat_class = "none";
+	std::string size_class = "none";
+	
 	void setCustomTestValues();
 	
 	std::shared_ptr<Config> tailwindConfig_;
 	
-	Wt::Signal<> styleChanged_;
-
-	// bg custom regexp
-	std::regex regex_custom_color =  std::regex("bg-\\[[\\S]*\\]");
-	// bg-(inherit|current|transparent|black|white)
-	std::regex regex_def_classes = std::regex("(bg|from|via|to)-(inherit|current|transparent|black|white)");
-	// bg-((slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)\/((100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0)|\[[\S]*\])[ ]((from|via|to)-(0|5|10|15|20|25|30|35|40|45|50|55|60|65|70|75|80|85|90|95|100)%)?)
-	std::regex regex_color_classes = std::regex("(bg|from|via|to)-((slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(950|900|800|700|600|500|400|300|200|150|100|50)\\/((100|95|90|85|80|75|70|65|60|55|50|45|40|35|30|25|20|15|10|5|0)|\\[[\\S]*\\]))");
+	Wt::Signal<std::string> styleChanged_;
 };
