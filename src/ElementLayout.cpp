@@ -44,6 +44,11 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 	setCollapsible(true);
 	auto centralWidget = setCentralWidget(std::make_unique<Wt::WContainerWidget>());
 
+	auto aspect_ratio_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.aspect_ratio, "Aspect ratio", "aspect-"));
+	aspect_ratio_widget_->classChanged().connect(this, [=](std::string className) { 
+		std::cout << "\n\n ------------ aspect_ratio changed " << className << "\n\n";
+	});
+
 	// popup widget
 	{
 		auto popupMenu = std::make_unique<Wt::WPopupMenu>();
@@ -554,7 +559,6 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 			btn->setText(style_class.className_.substr(4));
 		}
 		box_sizing_group->addButton(btn, index);
-		std::cout << "\n box sizyng style class <" << style_class.className_ << ">\n";
 	}
 
 	// display ComboBoxClassChanger
@@ -641,7 +645,7 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 	// overflow x buttons
 	for(int index = 0; index < tailwindConfig_->layout.overflow_x.styleClasses_.size(); ++index){
 		auto style_class = tailwindConfig_->layout.overflow.styleClasses_[index];
-		auto btn = overflow_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
+		auto btn = overflow_x_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
 		btn->setStyleClass(button_styles);
 		if(style_class.className_.compare("none") == 0){ 
 			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
@@ -651,8 +655,51 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 		overflow_x_group->addButton(btn, index);
 	}
 
+	// overflow y buttons
+	for(int index = 0; index < tailwindConfig_->layout.overflow_y.styleClasses_.size(); ++index){
+		auto style_class = tailwindConfig_->layout.overflow_y.styleClasses_[index];
+		auto btn = overflow_y_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
+		btn->setStyleClass(button_styles);
+		if(style_class.className_.compare("none") == 0){ 
+			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
+		}else {
+			btn->setText(style_class.className_.substr(9));
+		}
+		overflow_y_group->addButton(btn, index);
+	}
 
+	// // overscroll behavior buttons
+	// for(int index = 0; index < tailwindConfig_->layout.overscroll_behavior.styleClasses_.size(); ++index){
+	// 	auto style_class = tailwindConfig_->layout.overscroll_behavior.styleClasses_[index];
+	// 	auto btn = overscroll_behavior_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
+	// 	btn->setStyleClass(button_styles);
+	// 	if(style_class.className_.compare("none") != 0){ 
+	// 		btn->setText(style_class.className_.substr(15));
+	// 	}
+	// 	overscroll_behavior_group->addButton(btn, index);
+	// }
 
+	// // overscroll behavior x buttons
+	// for(int index = 0; index < tailwindConfig_->layout.overscroll_behavior_x.styleClasses_.size(); ++index){
+	// 	auto style_class = tailwindConfig_->layout.overscroll_behavior_x.styleClasses_[index];
+	// 	auto btn = overscroll_behavior_x_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
+	// 	btn->setStyleClass(button_styles);
+	// 	if(style_class.className_.compare("none") != 0){ 
+	// 		btn->setText(style_class.className_.substr(17));
+	// 	}
+	// 	overscroll_behavior_x_group->addButton(btn, index);
+	// }
+
+	// // overscroll behavior y buttons
+	// for(int index = 0; index < tailwindConfig_->layout.overscroll_behavior_y.styleClasses_.size(); ++index){
+	// 	auto style_class = tailwindConfig_->layout.overscroll_behavior_y.styleClasses_[index];
+	// 	auto btn = overscroll_behavior_y_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
+	// 	btn->setStyleClass(button_styles);
+	// 	if(style_class.className_.compare("mome") != 0){ 
+	// 		btn->setText(style_class.className_.substr(17));
+	// 	}
+	// 	overscroll_behavior_y_group->addButton(btn, index);
+	// }
 	
 	// gradient_group->button(0)->setChecked(true);
 	// attachment_group->button(0)->setChecked(true);

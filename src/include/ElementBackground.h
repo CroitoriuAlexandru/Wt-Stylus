@@ -1,7 +1,7 @@
 #include <Wt/WTemplate.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WComboBox.h>
-#include "ComboBoxes.h"
+#include "ComboBoxClassChanger.h"
 #include <Wt/WDialog.h>
 #include <Wt/WPanel.h>
 #include <Wt/WGroupBox.h>

@@ -1,7 +1,10 @@
 #include <Wt/WTemplate.h>
 #include <Wt/WContainerWidget.h>
 #include <Wt/WComboBox.h>
-#include "ComboBoxes.h"
+
+#include "ComboBoxClassChanger.h"
+#include "SelectionGroupClassChanger.h"
+
 #include <Wt/WDialog.h>
 #include <Wt/WPanel.h>
 #include <Wt/WGroupBox.h>
@@ -83,6 +86,8 @@ public:
 
 private:
 	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
+	// SelectionGroupClassChanger *aspect_ratio_widget_;
+	
 	std::shared_ptr<Wt::WButtonGroup> aspect_ratio_group;
 	std::shared_ptr<Wt::WButtonGroup> container_group;
 	std::shared_ptr<Wt::WButtonGroup> columns_group;
