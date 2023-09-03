@@ -78,46 +78,75 @@ public:
 	bool setPositionRight(std::string className);
 	bool setPositionBottom(std::string className);
 	bool setPositionLeft(std::string className);
-	bool setPositionStart(std::string className);
-	bool setPositionEnd(std::string className);
 	bool setVisibility(std::string className);
 	bool setZIndex(std::string className);
 
 
 private:
 	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
-	// SelectionGroupClassChanger *aspect_ratio_widget_;
-	
-	std::shared_ptr<Wt::WButtonGroup> aspect_ratio_group;
-	std::shared_ptr<Wt::WButtonGroup> container_group;
-	std::shared_ptr<Wt::WButtonGroup> columns_group;
-	std::shared_ptr<Wt::WButtonGroup> break_after_group;
-	std::shared_ptr<Wt::WButtonGroup> break_before_group;
-	std::shared_ptr<Wt::WButtonGroup> break_inside_group;
-	std::shared_ptr<Wt::WButtonGroup> box_decoration_break_group;
-	std::shared_ptr<Wt::WButtonGroup> box_sizing_group;
+	SelectionGroupClassChanger *aspect_ratio_widget_;
+	SelectionGroupClassChanger *container_widget_;
+	SelectionGroupClassChanger *columns_widget_;
+	SelectionGroupClassChanger *break_after_widget_;
+	SelectionGroupClassChanger *break_before_widget_;
+	SelectionGroupClassChanger *break_inside_widget_;
+	SelectionGroupClassChanger *box_decoration_break_widget_;
+	SelectionGroupClassChanger *box_sizing_widget_;
+	SelectionGroupClassChanger *floats_widget_;
+	SelectionGroupClassChanger *clear_widget_;
+	SelectionGroupClassChanger *isolation_widget_;
+	SelectionGroupClassChanger *object_fit_widget_;
+	SelectionGroupClassChanger *object_position_widget_;
+	SelectionGroupClassChanger *overflow_widget_;
+	SelectionGroupClassChanger *overflow_x_widget_;
+	SelectionGroupClassChanger *overflow_y_widget_;
+	SelectionGroupClassChanger *overscroll_behavior_widget_;
+	SelectionGroupClassChanger *overscroll_behavior_x_widget_;
+	SelectionGroupClassChanger *overscroll_behavior_y_widget_;
+	SelectionGroupClassChanger *position_widget_;
+	ComboBoxClassChanger *position_inset_widget_;
+	ComboBoxClassChanger *position_inset_x_widget_;
+	ComboBoxClassChanger *position_inset_y_widget_;
+	ComboBoxClassChanger *position_top_widget_;
+	ComboBoxClassChanger *position_right_widget_;
+	ComboBoxClassChanger *position_bottom_widget_;
+	ComboBoxClassChanger *position_left_widget_;
+	SelectionGroupClassChanger *visibility_widget_;
+	SelectionGroupClassChanger *z_index_widget_;
 	ComboBoxClassChanger* display_widget_;
-	std::shared_ptr<Wt::WButtonGroup> floats_group;
-	std::shared_ptr<Wt::WButtonGroup> clear_group;
-	std::shared_ptr<Wt::WButtonGroup> isolation_group;
-	std::shared_ptr<Wt::WButtonGroup> object_fit_group;
-	std::shared_ptr<Wt::WButtonGroup> object_position_group;
-	std::shared_ptr<Wt::WButtonGroup> overflow_group;
-	std::shared_ptr<Wt::WButtonGroup> overflow_x_group;
-	std::shared_ptr<Wt::WButtonGroup> overflow_y_group;
-	std::shared_ptr<Wt::WButtonGroup> overscroll_behavior_group;
-	std::shared_ptr<Wt::WButtonGroup> overscroll_behavior_x_group;
-	std::shared_ptr<Wt::WButtonGroup> overscroll_behavior_y_group;
-	std::shared_ptr<Wt::WButtonGroup> position_group;
-	std::shared_ptr<Wt::WButtonGroup> position_inset_group;
-	std::shared_ptr<Wt::WButtonGroup> position_inset_x_group;
-	std::shared_ptr<Wt::WButtonGroup> position_inset_y_group;
-	std::shared_ptr<Wt::WButtonGroup> position_top_group;
-	std::shared_ptr<Wt::WButtonGroup> position_right_group;
-	std::shared_ptr<Wt::WButtonGroup> position_bottom_group;
-	std::shared_ptr<Wt::WButtonGroup> position_left_group;
-	std::shared_ptr<Wt::WButtonGroup> visibility_group;
-	std::shared_ptr<Wt::WButtonGroup> z_index_group;
+
+	std::string aspect_ratio_class = "none";
+	std::string container_class = "none";
+	std::string columns_class = "none";
+	std::string break_after_class = "none";
+	std::string break_before_class = "none";
+	std::string break_inside_class = "none";
+	std::string box_decoration_break_class = "none";
+	std::string box_sizing_class = "none";
+	std::string display_class = "none";
+	std::string floats_class = "none";
+	std::string clear_class = "none";
+	std::string isolation_class = "none";
+	std::string object_fit_class = "none";
+	std::string object_position_class = "none";
+	std::string overflow_class = "none";
+	std::string overflow_x_class = "none";
+	std::string overflow_y_class = "none";
+	std::string overscroll_behavior_class = "none";
+	std::string overscroll_behavior_x_class = "none";
+	std::string overscroll_behavior_y_class = "none";
+	std::string position_class = "none";
+	std::string position_inset_class = "none";
+	std::string position_inset_x_class = "none";
+	std::string position_inset_y_class = "none";
+	std::string position_top_class = "none";
+	std::string position_right_class = "none";
+	std::string position_bottom_class = "none";
+	std::string position_left_class = "none";
+	std::string visibility_class = "none";
+	std::string z_index_class = "none";
+
+
 
 	void setCustomTestValues();
 	

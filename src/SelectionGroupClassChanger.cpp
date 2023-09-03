@@ -98,7 +98,7 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 	content = addWidget(std::make_unique<Wt::WContainerWidget>());
 
 	setStyleClass("flex flex-col border border-solid pb-1 border-neutral-900");
-	titleBar->setStyleClass("flex items-center font-bold text-neutral-400");
+	titleBar->setStyleClass("flex items-center font-bold text-neutral-400 text-sm");
 	content->setStyleClass("flex flex-wrap items-center");
 
 	titleBar->addWidget(std::make_unique<Wt::WText>(title));
@@ -118,7 +118,7 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 
 	// set styles
 	btn_reset_->setStyleClass("mr-auto hover:bg-neutral-800 text-center p-0.5 cursor-pointer");
-	checkBox_custom_value_->setStyleClass("hover:bg-neutral-800 text-center p-0.5 [&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-95 rounded-md font-bold");
+	checkBox_custom_value_->setStyleClass("hover:bg-neutral-800 text-center p-0.5 [&>input]:hidden [&>span]:px-1 [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-95 rounded-md font-bold");
 	
 	checkbox_important_->setStyleClass("ml-auto hover:bg-neutral-800 text-center p-0.5 [&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-950 rounded-md font-bold");
 	lineEdit_custom_value_->setStyleClass("px-1 w-full grow rounded-md h-full bg-neutral-800 text-center appearance-none hover:bg-neutral-900 min-w-[70px]");
@@ -126,9 +126,11 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 
 	std::string button_styles = 
 	R"(
-		flex w-fit h-fit cursor-pointer m-px p-px text-neutral-950 font-bold 
+		flex w-fit h-fit cursor-pointer m-px p-px text-neutral-950 font-bold text-xs
 		[&>span]:bg-cover [&>input]:hidden [&>span]:m-px [&>span]:rounded-md [&>span]:px-1
-		[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400
+		[&>span]:bg-neutral-300 
+		[&>span]:hover:bg-neutral-800 [&>span]:hover:text-neutral-50  
+		[&>input:checked_+_span]:bg-neutral-800 [&>input:checked_+_span]:text-neutral-50 [&>input:checked_+_span]:ring
 	)";
 
 	if(classRepeatName.compare("") != 0){
@@ -153,7 +155,7 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 			auto btn = content->addWidget(std::make_unique<Wt::WRadioButton>(""));
 			btn->setStyleClass(button_styles);
 			if(styleClass.className_.compare("none") == 0){
-				btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
+				btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2");
 			}else {
 				btn->setText(styleClass.className_);
                 
@@ -211,17 +213,9 @@ return selectedClass;
 
 void SelectionGroupClassChanger::setValue(std::string className)
 {
-	// if(className.compare("70") == 0)
-	// 	{	
-	// 		std::cout << "\n\n recived value : <" << className << ">\n\n";
-	// 		std::cout << "\n\n index of value: <" << comboBox_class->findText(className, Wt::MatchFlag::StringExactly) << ">\n\n";
-	// 		std::cout << "\n\n value of index: <" << comboBox_class->itemText(comboBox_class->findText(className, Wt::MatchFlag::StringExactly)) << ">\n\n";
-	// 	}
-	//  this is used by the search to reset styles to the default value 
 	std::string reset = "res";
 	if(className.compare("") == 0 || className.compare("none") == 0 || className.substr(className.length() - reset.length()) == reset)
-	{
-        
+	{   
         auto index = getIndesOfStringInVector(defaultValue, propriety_.styleClasses_);
 		group_->setSelectedButtonIndex(index);
 
@@ -230,10 +224,8 @@ void SelectionGroupClassChanger::setValue(std::string className)
 		if(custom_start_.compare("none") != 0){
 			setCustom(false);
 		}
-		toggleStyleClass("bg-neutral-900", false);
 		return;
 	}
-	toggleStyleClass("bg-neutral-900", true);
 	// check for ! at the start of the class
 	if(className.find("!") != std::string::npos){
 		// std::cout << "\n\n important value :" << className << "\n\n";
@@ -264,13 +256,9 @@ void SelectionGroupClassChanger::setValue(std::string className)
 		// std::cout << "\n\n default value :" << className << "\n\n";
 		checkBox_custom_value_->setChecked(false);
 		checkBox_custom_value_->clicked().emit(Wt::WMouseEvent());
-        auto index = getIndesOfStringInVector(defaultValue, propriety_.styleClasses_);
+        auto index = getIndesOfStringInVector(className, propriety_.styleClasses_);
 		group_->setSelectedButtonIndex(index);
-        
-        
-        
-		// comboBox_class->setCurrentIndex(comboBox_class->findText(className, Wt::MatchFlag::StringExactly));
-		
+
 	}
 }
 
@@ -295,7 +283,6 @@ void SelectionGroupClassChanger::disable(bool disable)
 	// 	lineEdit_custom_value_->enable();
 	// }
 }
-
 
 
 

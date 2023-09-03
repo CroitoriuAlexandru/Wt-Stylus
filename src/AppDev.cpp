@@ -1,12 +1,9 @@
 #include "include/AppDev.h"
 
-std::vector<std::string> getWidgets(std::string messageId)
+std::vector<std::string> getWidgets(Wt::WString text)
 {
     std::vector<std::string> tempVariables;
     std::regex template_pattern = std::regex("[\\w\\-.]+[ ]?(class=\"[^\"]*\")+[ ]?(folderName=\"[^\"]*\")+[ ]?(fileName=\"[^\"]*\")+[ ]?(messageId=\"[^\"]*\")+[ ]?(widgetType=\"[^\"]*\")");
-    
-    auto text = Wt::WString::tr(messageId);
-    // get the template variables
     
     auto pos = text.toUTF8().find("${");
     auto pos2 = text.toUTF8().find("}");
@@ -30,10 +27,11 @@ std::vector<std::string> getWidgets(std::string messageId)
     return tempVariables;
 }
 
-AppDev::AppDev(std::string templateId)
-    : WTemplate(tr(templateId))
+AppDev::AppDev(Wt::WString templateString)
+    : WTemplate(templateString)
 {
-    auto tempVariables = getWidgets(templateId);
+
+    auto tempVariables = getWidgets(templateString);
     // std::cout << "\n\n";
     for(auto variable : tempVariables){
         std::string variableName = variable.substr(0, variable.find(" "));

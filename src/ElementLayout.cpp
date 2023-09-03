@@ -5,36 +5,7 @@
 #include <Wt/WMenuItem.h>
 
 ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
-	: tailwindConfig_(tailwindConfig),
-	aspect_ratio_group(std::make_unique<Wt::WButtonGroup>()),
-	container_group(std::make_unique<Wt::WButtonGroup>()),
-	columns_group(std::make_unique<Wt::WButtonGroup>()),
-	break_after_group(std::make_unique<Wt::WButtonGroup>()),
-	break_before_group(std::make_unique<Wt::WButtonGroup>()),
-	break_inside_group(std::make_unique<Wt::WButtonGroup>()),
-	box_decoration_break_group(std::make_unique<Wt::WButtonGroup>()),
-	box_sizing_group(std::make_unique<Wt::WButtonGroup>()),
-	floats_group(std::make_unique<Wt::WButtonGroup>()),
-	clear_group(std::make_unique<Wt::WButtonGroup>()),
-	isolation_group(std::make_unique<Wt::WButtonGroup>()),
-	object_fit_group(std::make_unique<Wt::WButtonGroup>()),
-	object_position_group(std::make_unique<Wt::WButtonGroup>()),
-	overflow_group(std::make_unique<Wt::WButtonGroup>()),
-	overflow_x_group(std::make_unique<Wt::WButtonGroup>()),
-	overflow_y_group(std::make_unique<Wt::WButtonGroup>()),
-	overscroll_behavior_group(std::make_unique<Wt::WButtonGroup>()),
-	overscroll_behavior_x_group(std::make_unique<Wt::WButtonGroup>()),
-	overscroll_behavior_y_group(std::make_unique<Wt::WButtonGroup>()),
-	position_group(std::make_unique<Wt::WButtonGroup>()),
-	position_inset_group(std::make_unique<Wt::WButtonGroup>()),
-	position_inset_x_group(std::make_unique<Wt::WButtonGroup>()),
-	position_inset_y_group(std::make_unique<Wt::WButtonGroup>()),
-	position_top_group(std::make_unique<Wt::WButtonGroup>()),
-	position_right_group(std::make_unique<Wt::WButtonGroup>()),
-	position_bottom_group(std::make_unique<Wt::WButtonGroup>()),
-	position_left_group(std::make_unique<Wt::WButtonGroup>()),
-	visibility_group(std::make_unique<Wt::WButtonGroup>()),
-	z_index_group(std::make_unique<Wt::WButtonGroup>())
+	: tailwindConfig_(tailwindConfig)
 {
 
 
@@ -43,11 +14,7 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 	titleBarWidget()->setStyleClass("flex items-center space-x-3 !border-b border-solid border-neutral-900 bg-neutral-800 ");
 	setCollapsible(true);
 	auto centralWidget = setCentralWidget(std::make_unique<Wt::WContainerWidget>());
-
-	auto aspect_ratio_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.aspect_ratio, "Aspect ratio", "aspect-"));
-	aspect_ratio_widget_->classChanged().connect(this, [=](std::string className) { 
-		std::cout << "\n\n ------------ aspect_ratio changed " << className << "\n\n";
-	});
+	centralWidget->setStyleClass("flex flex-col w-full max-w-[300px]");
 
 	// popup widget
 	{
@@ -191,567 +158,103 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 		popupBtn->clicked().preventPropagation();
 	}
 
+	std::cout << "\n\nlayout\n\n";
 
+	aspect_ratio_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.aspect_ratio, "Aspect ratio", "aspect-"));
+	container_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.container, "Container", ""));
+	columns_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.columns, "Columns", "columns-"));
+	break_after_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_after, "Break after", "break-after-"));
+	break_before_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_before, "Break before", "break-before-"));
+	break_inside_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_inside, "Break inside", "break-inside-"));
+	box_decoration_break_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_decoration_break, "Box decoration break", "box-decoration-"));
+	box_sizing_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_sizing, "Box sizing", "box-"));
+	floats_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.floats, "Floats", "float-"));
+	clear_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.clear, "Clear", "clear-"));
+	isolation_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.isolation, "Isolation", ""));
+	object_fit_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_fit, "Object fit", "object-"));
+	object_position_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_position, "Object position", "object-"));
+	overflow_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow, "Overflow", "overflow-"));
+	overflow_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_x, "Overflow x", "overflow-x-"));
+	overflow_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_y, "Overflow y", "overflow-y-"));
+	overscroll_behavior_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior, "Overscroll behavior", "overscroll-"));
+	overscroll_behavior_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_x, "Overscroll behavior x", "overscroll-x-"));
+	overscroll_behavior_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_y, "Overscroll behavior y", "overscroll-y-"));
+	
+	visibility_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.visibility, "Visibility", ""));
+	z_index_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.z_index, "Z index", "z-"));
 
-	centralWidget->setStyleClass("flex flex-col w-full max-w-[300px]");
-
-	auto aspect_ratio_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto container_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto columns_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_after_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_before_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_inside_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto box_decoration_break_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto box_sizing_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
 	auto display_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto floats_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto clear_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto isolation_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto object_fit_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto object_position_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_x_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_y_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_x_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_y_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_x_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_y_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_top_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_right_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_bottom_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_left_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_start_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_end_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto visibility_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto z_index_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	display_wrapper->addWidget(std::make_unique<Wt::WText>("Display"))->setStyleClass("font-bold text-neutral-400");
+	display_widget_ = display_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.display));
 
-	auto aspect_ratio_header = aspect_ratio_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto container_header = container_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto columns_header = columns_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_after_header = break_after_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_before_header = break_before_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_inside_header = break_inside_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto box_decoration_break_header = box_decoration_break_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto box_sizing_header = box_sizing_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto display_header = display_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto floats_header = floats_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto clear_header = clear_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto isolation_header = isolation_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto object_fit_header = object_fit_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto object_position_header = object_position_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_header = overflow_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_x_header = overflow_x_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_y_header = overflow_y_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_header = overscroll_behavior_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_x_header = overscroll_behavior_x_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_y_header = overscroll_behavior_y_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_header = position_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_header = position_inset_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_x_header = position_inset_x_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_y_header = position_inset_y_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_top_header = position_top_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_right_header = position_right_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_bottom_header = position_bottom_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_left_header = position_left_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto visibility_header = visibility_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto z_index_header = z_index_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+	{
+		position_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.position, "Position", ""));
 
-	auto aspect_ratio_body = aspect_ratio_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto container_body = container_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto columns_body = columns_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_after_body = break_after_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_before_body = break_before_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto break_inside_body = break_inside_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto box_decoration_break_body = box_decoration_break_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto box_sizing_body = box_sizing_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto display_body = display_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto floats_body = floats_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto clear_body = clear_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto isolation_body = isolation_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto object_fit_body = object_fit_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto object_position_body = object_position_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_body = overflow_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_x_body = overflow_x_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overflow_y_body = overflow_y_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_body = overscroll_behavior_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_x_body = overscroll_behavior_x_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto overscroll_behavior_y_body = overscroll_behavior_y_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_body = position_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_body = position_inset_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_x_body = position_inset_x_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_inset_y_body = position_inset_y_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_top_body = position_top_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_right_body = position_right_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_bottom_body = position_bottom_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto position_left_body = position_left_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto visibility_body = visibility_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
-	auto z_index_body = z_index_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto positions_container = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+		positions_container->addWidget(std::make_unique<Wt::WText>("Inset"))->setStyleClass("font-bold text-neutral-400");
+		position_inset_widget_ = positions_container->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_inset));
+		auto inset_x_y_wrapper = positions_container->addWidget(std::make_unique<Wt::WContainerWidget>());
+		
+		position_inset_x_widget_ = inset_x_y_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_inset_x));
+		position_inset_y_widget_ = inset_x_y_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_inset_y));
+		
+		auto directions_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto direction_top_wrapper = directions_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto direction_left_right_wrapper = directions_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
+		auto direction_bottom_wrapper = directions_wrapper->addWidget(std::make_unique<Wt::WContainerWidget>());
 
-	std::string wrapper_classes = "flex flex-col border border-solid pb-1 border-neutral-900";
-	aspect_ratio_wrapper->setStyleClass(wrapper_classes);
-	container_wrapper->setStyleClass(wrapper_classes);
-	columns_wrapper->setStyleClass(wrapper_classes);
-	break_after_wrapper->setStyleClass(wrapper_classes);
-	break_before_wrapper->setStyleClass(wrapper_classes);
-	break_inside_wrapper->setStyleClass(wrapper_classes);
-	box_decoration_break_wrapper->setStyleClass(wrapper_classes);
-	box_sizing_wrapper->setStyleClass(wrapper_classes);
-	display_wrapper->setStyleClass(wrapper_classes);
-	floats_wrapper->setStyleClass(wrapper_classes);
-	clear_wrapper->setStyleClass(wrapper_classes);
-	isolation_wrapper->setStyleClass(wrapper_classes);
-	object_fit_wrapper->setStyleClass(wrapper_classes);
-	object_position_wrapper->setStyleClass(wrapper_classes);
-	overflow_wrapper->setStyleClass(wrapper_classes);
-	overflow_x_wrapper->setStyleClass(wrapper_classes);
-	overflow_y_wrapper->setStyleClass(wrapper_classes);
-	overscroll_behavior_wrapper->setStyleClass(wrapper_classes);
-	overscroll_behavior_x_wrapper->setStyleClass(wrapper_classes);
-	overscroll_behavior_y_wrapper->setStyleClass(wrapper_classes);
-	position_wrapper->setStyleClass(wrapper_classes);
-	position_inset_wrapper->setStyleClass(wrapper_classes);
-	position_inset_x_wrapper->setStyleClass(wrapper_classes);
-	position_inset_y_wrapper->setStyleClass(wrapper_classes);
-	position_top_wrapper->setStyleClass(wrapper_classes);
-	position_right_wrapper->setStyleClass(wrapper_classes);
-	position_bottom_wrapper->setStyleClass(wrapper_classes);
-	position_left_wrapper->setStyleClass(wrapper_classes);
-	visibility_wrapper->setStyleClass(wrapper_classes);
-	z_index_wrapper->setStyleClass(wrapper_classes);
+		position_top_widget_ = direction_top_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_top));
+		position_left_widget_ = direction_left_right_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_left));
+		position_right_widget_ = direction_left_right_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_right));
+		position_bottom_widget_ = direction_bottom_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_bottom));
+		
+		
+		positions_container->setStyleClass("");
+		inset_x_y_wrapper->setStyleClass("flex");
+		directions_wrapper->setStyleClass("my-6 mx-auto px-4 min-h-[90px] w-4/5  border-[4px] border-dashed border-neutral-600 flex flex-col justify-between items-stretch");
+		direction_top_wrapper->setStyleClass("flex mb-1 flex-col w-fit mx-auto ");
+		direction_left_right_wrapper->setStyleClass("mb-1 flex justify-between -mx-12 space-x-6");
+		direction_bottom_wrapper->setStyleClass("flex flex-col w-fit mx-auto ");
+
+		position_inset_widget_->setCustomValueString("inset-");
+		position_inset_x_widget_->setCustomValueString("inset-x-");
+		position_inset_y_widget_->setCustomValueString("inset-y-");
+		position_top_widget_->setCustomValueString("top-");
+		position_left_widget_->setCustomValueString("left-");
+		position_right_widget_->setCustomValueString("right-");
+		position_bottom_widget_->setCustomValueString("bottom-");
+
+	}
 	
-	std::string header_classes = "flex font-bold text-neutral-400";
-	aspect_ratio_header->setStyleClass(header_classes);
-	container_header->setStyleClass(header_classes);
-	columns_header->setStyleClass(header_classes);
-	break_after_header->setStyleClass(header_classes);
-	break_before_header->setStyleClass(header_classes);
-	break_inside_header->setStyleClass(header_classes);
-	box_decoration_break_header->setStyleClass(header_classes);
-	box_sizing_header->setStyleClass(header_classes);
-	display_header->setStyleClass(header_classes);
-	floats_header->setStyleClass(header_classes);
-	clear_header->setStyleClass(header_classes);
-	isolation_header->setStyleClass(header_classes);
-	object_fit_header->setStyleClass(header_classes);
-	object_position_header->setStyleClass(header_classes);
-	overflow_header->setStyleClass(header_classes);
-	overflow_x_header->setStyleClass(header_classes);
-	overflow_y_header->setStyleClass(header_classes);
-	overscroll_behavior_header->setStyleClass(header_classes);
-	overscroll_behavior_x_header->setStyleClass(header_classes);
-	overscroll_behavior_y_header->setStyleClass(header_classes);
-	position_header->setStyleClass(header_classes);
-	position_inset_header->setStyleClass(header_classes);
-	position_inset_x_header->setStyleClass(header_classes);
-	position_inset_y_header->setStyleClass(header_classes);
-	position_top_header->setStyleClass(header_classes);
-	position_right_header->setStyleClass(header_classes);
-	position_bottom_header->setStyleClass(header_classes);
-	position_left_header->setStyleClass(header_classes);
-	visibility_header->setStyleClass(header_classes);
-	z_index_header->setStyleClass(header_classes);
-
-	aspect_ratio_header->addWidget(std::make_unique<Wt::WText>("Aspect ratio"));
-	container_header->addWidget(std::make_unique<Wt::WText>("Container"));
-	columns_header->addWidget(std::make_unique<Wt::WText>("Columns"));
-	break_after_header->addWidget(std::make_unique<Wt::WText>("Break after"));
-	break_before_header->addWidget(std::make_unique<Wt::WText>("Break before"));
-	break_inside_header->addWidget(std::make_unique<Wt::WText>("Break inside"));
-	box_decoration_break_header->addWidget(std::make_unique<Wt::WText>("Box decoration break"));
-	box_sizing_header->addWidget(std::make_unique<Wt::WText>("Box sizing"));
-	display_header->addWidget(std::make_unique<Wt::WText>("Display"));
-	floats_header->addWidget(std::make_unique<Wt::WText>("Floats"));
-	clear_header->addWidget(std::make_unique<Wt::WText>("Clear"));
-	isolation_header->addWidget(std::make_unique<Wt::WText>("Isolation"));
-	object_fit_header->addWidget(std::make_unique<Wt::WText>("Object fit"));
-	object_position_header->addWidget(std::make_unique<Wt::WText>("Object position"));
-	overflow_header->addWidget(std::make_unique<Wt::WText>("Overflow"));
-	overflow_x_header->addWidget(std::make_unique<Wt::WText>("Overflow x"));
-	overflow_y_header->addWidget(std::make_unique<Wt::WText>("Overflow y"));
-	overscroll_behavior_header->addWidget(std::make_unique<Wt::WText>("Overscroll behavior"));
-	overscroll_behavior_x_header->addWidget(std::make_unique<Wt::WText>("Overscroll behavior x"));
-	overscroll_behavior_y_header->addWidget(std::make_unique<Wt::WText>("Overscroll behavior y"));
-	position_header->addWidget(std::make_unique<Wt::WText>("Position"));
-	position_inset_header->addWidget(std::make_unique<Wt::WText>("Position inset"));
-	position_inset_x_header->addWidget(std::make_unique<Wt::WText>("Position inset x"));
-	position_inset_y_header->addWidget(std::make_unique<Wt::WText>("Position inset y"));
-	position_top_header->addWidget(std::make_unique<Wt::WText>("Position top"));
-	position_right_header->addWidget(std::make_unique<Wt::WText>("Position right"));
-	position_bottom_header->addWidget(std::make_unique<Wt::WText>("Position bottom"));
-	position_left_header->addWidget(std::make_unique<Wt::WText>("Position left"));
-	visibility_header->addWidget(std::make_unique<Wt::WText>("Visibility"));
-	z_index_header->addWidget(std::make_unique<Wt::WText>("Z index"));
-
-
-	std::string class_indicator_classes = "ms-auto me-2";
-	aspect_ratio_header->addWidget(std::make_unique<Wt::WText>("aspect-"))->setStyleClass(class_indicator_classes);;
-	container_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	columns_header->addWidget(std::make_unique<Wt::WText>("columns-"))->setStyleClass(class_indicator_classes);;
-	break_after_header->addWidget(std::make_unique<Wt::WText>("break-after-"))->setStyleClass(class_indicator_classes);;
-	break_before_header->addWidget(std::make_unique<Wt::WText>("break-before-"))->setStyleClass(class_indicator_classes);;
-	break_inside_header->addWidget(std::make_unique<Wt::WText>("break-inside-"))->setStyleClass(class_indicator_classes);;
-	box_decoration_break_header->addWidget(std::make_unique<Wt::WText>("box-decoration-"))->setStyleClass(class_indicator_classes + " text-sm");;
-	box_sizing_header->addWidget(std::make_unique<Wt::WText>("box-"))->setStyleClass(class_indicator_classes);;
-	display_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	floats_header->addWidget(std::make_unique<Wt::WText>("float-"))->setStyleClass(class_indicator_classes);;
-	clear_header->addWidget(std::make_unique<Wt::WText>("clear-"))->setStyleClass(class_indicator_classes);;
-	isolation_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	object_fit_header->addWidget(std::make_unique<Wt::WText>("object-"))->setStyleClass(class_indicator_classes);;
-	object_position_header->addWidget(std::make_unique<Wt::WText>("object-"))->setStyleClass(class_indicator_classes);;
-	overflow_header->addWidget(std::make_unique<Wt::WText>("overflow-"))->setStyleClass(class_indicator_classes);;
-	overflow_x_header->addWidget(std::make_unique<Wt::WText>("overflow-x-"))->setStyleClass(class_indicator_classes);;
-	overflow_y_header->addWidget(std::make_unique<Wt::WText>("overflow-y-"))->setStyleClass(class_indicator_classes);;
-	overscroll_behavior_header->addWidget(std::make_unique<Wt::WText>("overscroll-"))->setStyleClass(class_indicator_classes);;
-	overscroll_behavior_x_header->addWidget(std::make_unique<Wt::WText>("overscroll-x-"))->setStyleClass(class_indicator_classes);;
-	overscroll_behavior_y_header->addWidget(std::make_unique<Wt::WText>("overscroll-y-"))->setStyleClass(class_indicator_classes);;
-	position_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	position_inset_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	position_inset_x_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	position_inset_y_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	position_top_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	position_right_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	position_bottom_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	position_left_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	visibility_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-	z_index_header->addWidget(std::make_unique<Wt::WText>(""))->setStyleClass(class_indicator_classes);;
-
-	std::string body_classes = "flex flex-wrap items-center";
-	aspect_ratio_body->setStyleClass(body_classes);
-	container_body->setStyleClass(body_classes);
-	columns_body->setStyleClass(body_classes);
-	break_after_body->setStyleClass(body_classes);
-	break_before_body->setStyleClass(body_classes);
-	break_inside_body->setStyleClass(body_classes);
-	box_decoration_break_body->setStyleClass(body_classes);
-	box_sizing_body->setStyleClass(body_classes);
-	display_body->setStyleClass(body_classes);
-	floats_body->setStyleClass(body_classes);
-	clear_body->setStyleClass(body_classes);
-	isolation_body->setStyleClass(body_classes);
-	object_fit_body->setStyleClass(body_classes);
-	object_position_body->setStyleClass(body_classes);
-	overflow_body->setStyleClass(body_classes);
-	overflow_x_body->setStyleClass(body_classes);
-	overflow_y_body->setStyleClass(body_classes);
-	overscroll_behavior_body->setStyleClass(body_classes);
-	overscroll_behavior_x_body->setStyleClass(body_classes);
-	overscroll_behavior_y_body->setStyleClass(body_classes);
-	position_body->setStyleClass(body_classes);
-	position_inset_body->setStyleClass(body_classes);
-	position_inset_x_body->setStyleClass(body_classes);
-	position_inset_y_body->setStyleClass(body_classes);
-	position_top_body->setStyleClass(body_classes);
-	position_right_body->setStyleClass(body_classes);
-	position_bottom_body->setStyleClass(body_classes);
-	position_left_body->setStyleClass(body_classes);
-	visibility_body->setStyleClass(body_classes);
-	z_index_body->setStyleClass(body_classes);
-
-	std::string button_styles = 
-	R"(
-		flex w-fit h-fit cursor-pointer m-px p-px text-neutral-950 font-bold 
-		[&>span]:bg-cover [&>input]:hidden [&>span]:m-px [&>span]:rounded-md [&>span]:px-1
-		[&>span]:bg-neutral-500 [&>span]:hover:bg-neutral-400 [&>input:checked_+_span]:bg-neutral-400
-	)";
-
-	// aspect ratio buttons
-	for(int index = 0; index < tailwindConfig_->layout.aspect_ratio.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.aspect_ratio.styleClasses_[index];
-		auto btn = aspect_ratio_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(7));
-		}
-		aspect_ratio_group->addButton(btn, index);
-	}
-
-	// container buttons
-	for(int index = 0; index < tailwindConfig_->layout.container.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.container.styleClasses_[index];
-		auto btn = container_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_);
-		}
-		container_group->addButton(btn, index);
-	}
-
-	// columns buttons
-	for(int index = 0; index < tailwindConfig_->layout.columns.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.columns.styleClasses_[index];
-		auto btn = columns_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(8));
-		}
-		columns_group->addButton(btn, index);
-	}
-
-	// break after buttons
-	for(int index = 0; index < tailwindConfig_->layout.break_after.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.break_after.styleClasses_[index];
-		auto btn = break_after_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else{
-			btn->setText(style_class.className_.substr(12));
-		}
-		break_after_group->addButton(btn, index);
-	}
-
-	// break before buttons
-	for(int index = 0; index < tailwindConfig_->layout.break_before.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.break_before.styleClasses_[index];
-		auto btn = break_before_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else{
-			btn->setText(style_class.className_.substr(13));
-		}
-		break_before_group->addButton(btn, index);
-	}
-
-	// break inside buttons
-	for(int index = 0; index < tailwindConfig_->layout.break_inside.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.break_inside.styleClasses_[index];
-		auto btn = break_inside_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else{
-			btn->setText(style_class.className_.substr(13));
-		}
-		break_inside_group->addButton(btn, index);
-	}
-
-	// box decoration break buttons
-	for(int index = 0; index < tailwindConfig_->layout.box_decoration_break.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.box_decoration_break.styleClasses_[index];
-		auto btn = box_decoration_break_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else{
-			btn->setText(style_class.className_.substr(15));
-		}
-		box_decoration_break_group->addButton(btn, index);
-	}
-
-	// box sizing buttons
-	for(int index = 0; index < tailwindConfig_->layout.box_sizing.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.box_sizing.styleClasses_[index];
-		auto btn = box_sizing_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(4));
-		}
-		box_sizing_group->addButton(btn, index);
-	}
-
-	// display ComboBoxClassChanger
-	display_widget_ = display_body->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig_->layout.display));
-
-	// floats buttons
-	for(int index = 0; index < tailwindConfig_->layout.floats.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.floats.styleClasses_[index];
-		auto btn = floats_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(6));
-		}
-		floats_group->addButton(btn, index);
-	}
-
-	// clear buttons
-	for(int index = 0; index < tailwindConfig_->layout.clear.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.clear.styleClasses_[index];
-		auto btn = clear_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(6));
-		}
-		clear_group->addButton(btn, index);
-	}
-
-	// isolation buttons
-	for(int index = 0; index < tailwindConfig_->layout.isolation.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.isolation.styleClasses_[index];
-		auto btn = isolation_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_);
-		}
-		isolation_group->addButton(btn, index);
-	}
-
-	// object fit buttons
-	for(int index = 0; index < tailwindConfig_->layout.object_fit.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.object_fit.styleClasses_[index];
-		auto btn = object_fit_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(7));
-		}
-		object_fit_group->addButton(btn, index);
-	}
-
-	// object position buttons
-	for(int index = 0; index < tailwindConfig_->layout.object_position.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.object_position.styleClasses_[index];
-		auto btn = object_position_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){ 
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(7));
-		}
-		object_position_group->addButton(btn, index);
-	}
-
-	// overflow buttons
-	for(int index = 0; index < tailwindConfig_->layout.overflow.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.overflow.styleClasses_[index];
-		auto btn = overflow_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){ 
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(9));
-		}
-		overflow_group->addButton(btn, index);
-	}
-
-	// overflow x buttons
-	for(int index = 0; index < tailwindConfig_->layout.overflow_x.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.overflow.styleClasses_[index];
-		auto btn = overflow_x_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){ 
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(9));
-		}
-		overflow_x_group->addButton(btn, index);
-	}
-
-	// overflow y buttons
-	for(int index = 0; index < tailwindConfig_->layout.overflow_y.styleClasses_.size(); ++index){
-		auto style_class = tailwindConfig_->layout.overflow_y.styleClasses_[index];
-		auto btn = overflow_y_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-		btn->setStyleClass(button_styles);
-		if(style_class.className_.compare("none") == 0){ 
-			btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
-		}else {
-			btn->setText(style_class.className_.substr(9));
-		}
-		overflow_y_group->addButton(btn, index);
-	}
-
-	// // overscroll behavior buttons
-	// for(int index = 0; index < tailwindConfig_->layout.overscroll_behavior.styleClasses_.size(); ++index){
-	// 	auto style_class = tailwindConfig_->layout.overscroll_behavior.styleClasses_[index];
-	// 	auto btn = overscroll_behavior_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-	// 	btn->setStyleClass(button_styles);
-	// 	if(style_class.className_.compare("none") != 0){ 
-	// 		btn->setText(style_class.className_.substr(15));
-	// 	}
-	// 	overscroll_behavior_group->addButton(btn, index);
-	// }
-
-	// // overscroll behavior x buttons
-	// for(int index = 0; index < tailwindConfig_->layout.overscroll_behavior_x.styleClasses_.size(); ++index){
-	// 	auto style_class = tailwindConfig_->layout.overscroll_behavior_x.styleClasses_[index];
-	// 	auto btn = overscroll_behavior_x_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-	// 	btn->setStyleClass(button_styles);
-	// 	if(style_class.className_.compare("none") != 0){ 
-	// 		btn->setText(style_class.className_.substr(17));
-	// 	}
-	// 	overscroll_behavior_x_group->addButton(btn, index);
-	// }
-
-	// // overscroll behavior y buttons
-	// for(int index = 0; index < tailwindConfig_->layout.overscroll_behavior_y.styleClasses_.size(); ++index){
-	// 	auto style_class = tailwindConfig_->layout.overscroll_behavior_y.styleClasses_[index];
-	// 	auto btn = overscroll_behavior_y_body->addWidget(std::make_unique<Wt::WRadioButton>(""));
-	// 	btn->setStyleClass(button_styles);
-	// 	if(style_class.className_.compare("mome") != 0){ 
-	// 		btn->setText(style_class.className_.substr(17));
-	// 	}
-	// 	overscroll_behavior_y_group->addButton(btn, index);
-	// }
-	
-	// gradient_group->button(0)->setChecked(true);
-	// attachment_group->button(0)->setChecked(true);
-	// clip_group->button(0)->setChecked(true);
-	// origin_group->button(0)->setChecked(true);
-	// position_group->button(0)->setChecked(true);
-	// repeat_group->button(0)->setChecked(true);
-	// size_group->button(0)->setChecked(true);
-
-	// gradient_group->checkedChanged().connect(this, [=](){ 
-	// 	int id = gradient_group->checkedId();
-	// 	gradient_class = tailwindConfig_->backgrounds.background_image.styleClasses_[id].className_;
-	// 	std::cout << "gradient_class: " << gradient_class << std::endl;
-	// 	styleChanged_.emit(getStyles()); 
-	// });
-	// attachment_group->checkedChanged().connect(this, [=](){ 
-	// 	int id = attachment_group->checkedId();
-	// 	attachment_class = tailwindConfig_->backgrounds.background_attachment.styleClasses_[id].className_;
-	// 	std::cout << "attachment_class: " << attachment_class << std::endl;
-	// 	styleChanged_.emit(getStyles()); 
-	// });
-	// clip_group->checkedChanged().connect(this, [=](){ 
-	// 	int id = clip_group->checkedId();
-	// 	clip_class = tailwindConfig_->backgrounds.background_clip.styleClasses_[id].className_;
-	// 	std::cout << "clip_class: " << clip_class << std::endl;
-	// 	styleChanged_.emit(getStyles()); 
-	// });
-	// origin_group->checkedChanged().connect(this, [=](){ 
-	// 	int id = origin_group->checkedId();
-	// 	origin_class = tailwindConfig_->backgrounds.background_origin.styleClasses_[id].className_;
-	// 	std::cout << "origin_class: " << origin_class << std::endl;
-	// 	styleChanged_.emit(getStyles()); 
-	// });
-	// position_group->checkedChanged().connect(this, [=](){ 
-	// 	int id = position_group->checkedId();
-	// 	position_class = tailwindConfig_->backgrounds.background_position.styleClasses_[id].className_;
-	// 	std::cout << "position_class: " << position_class << std::endl;
-	// 	styleChanged_.emit(getStyles()); 
-	// });
-	// repeat_group->checkedChanged().connect(this, [=](){ 
-	// 	int id = repeat_group->checkedId();
-	// 	repeat_class = tailwindConfig_->backgrounds.background_repeat.styleClasses_[id].className_;
-	// 	std::cout << "repeat_class: " << repeat_class << std::endl;
-	// 	styleChanged_.emit(getStyles()); 
-	// });
-	// size_group->checkedChanged().connect(this, [=](){ 
-	// 	int id = size_group->checkedId();
-	// 	size_class = tailwindConfig_->backgrounds.background_size.styleClasses_[id].className_;
-	// 	std::cout << "size_class: " << size_class << std::endl;
-	// 	styleChanged_.emit(getStyles()); 
-	// });
-
+	// signals
+	display_widget_->classChanged().connect(this, [=](std::string className) { display_class = className;styleChanged_.emit(getStyles()); });
+	aspect_ratio_widget_->classChanged().connect(this, [=](std::string className) { aspect_ratio_class = className;styleChanged_.emit(getStyles()); });
+	container_widget_->classChanged().connect(this, [=](std::string className) { container_class = className;styleChanged_.emit(getStyles()); });
+	columns_widget_->classChanged().connect(this, [=](std::string className) { columns_class = className;styleChanged_.emit(getStyles()); });
+	break_after_widget_->classChanged().connect(this, [=](std::string className) { break_after_class = className;styleChanged_.emit(getStyles()); });
+	break_before_widget_->classChanged().connect(this, [=](std::string className) { break_before_class = className;styleChanged_.emit(getStyles()); });
+	break_inside_widget_->classChanged().connect(this, [=](std::string className) { break_inside_class = className;styleChanged_.emit(getStyles()); });
+	box_decoration_break_widget_->classChanged().connect(this, [=](std::string className) { box_decoration_break_class = className;styleChanged_.emit(getStyles()); });
+	box_sizing_widget_->classChanged().connect(this, [=](std::string className) { box_sizing_class = className;styleChanged_.emit(getStyles()); });
+	floats_widget_->classChanged().connect(this, [=](std::string className) { floats_class = className;styleChanged_.emit(getStyles()); });
+	clear_widget_->classChanged().connect(this, [=](std::string className) { clear_class = className;styleChanged_.emit(getStyles()); });
+	isolation_widget_->classChanged().connect(this, [=](std::string className) { isolation_class = className;styleChanged_.emit(getStyles()); });
+	object_fit_widget_->classChanged().connect(this, [=](std::string className) { object_fit_class = className;styleChanged_.emit(getStyles()); });
+	object_position_widget_->classChanged().connect(this, [=](std::string className) { object_position_class = className;styleChanged_.emit(getStyles()); });
+	overflow_widget_->classChanged().connect(this, [=](std::string className) { overflow_class = className;styleChanged_.emit(getStyles()); });
+	overflow_x_widget_->classChanged().connect(this, [=](std::string className) { overflow_x_class = className;styleChanged_.emit(getStyles()); });
+	overflow_y_widget_->classChanged().connect(this, [=](std::string className) { overflow_y_class = className;styleChanged_.emit(getStyles()); });
+	overscroll_behavior_widget_->classChanged().connect(this, [=](std::string className) { overscroll_behavior_class = className;styleChanged_.emit(getStyles()); });
+	position_widget_->classChanged().connect(this, [=](std::string className) { position_class = className;styleChanged_.emit(getStyles()); });
+	position_inset_widget_->classChanged().connect(this, [=](std::string className) { position_inset_class = className;styleChanged_.emit(getStyles()); });
+	position_inset_x_widget_->classChanged().connect(this, [=](std::string className) { position_inset_x_class = className;styleChanged_.emit(getStyles()); });
+	position_inset_y_widget_->classChanged().connect(this, [=](std::string className) { position_inset_y_class = className;styleChanged_.emit(getStyles()); });
+	position_top_widget_->classChanged().connect(this, [=](std::string className) { position_top_class = className;styleChanged_.emit(getStyles()); });
+	position_right_widget_->classChanged().connect(this, [=](std::string className) { position_right_class = className;styleChanged_.emit(getStyles()); });
+	position_bottom_widget_->classChanged().connect(this, [=](std::string className) { position_bottom_class = className;styleChanged_.emit(getStyles()); });
+	position_left_widget_->classChanged().connect(this, [=](std::string className) { position_left_class = className;styleChanged_.emit(getStyles()); });
+	visibility_widget_->classChanged().connect(this, [=](std::string className) { visibility_class = className;styleChanged_.emit(getStyles()); });
+	z_index_widget_->classChanged().connect(this, [=](std::string className) { z_index_class = className;styleChanged_.emit(getStyles()); });
 
 };
 
@@ -760,183 +263,515 @@ std::string ElementLayoutWidget::getStyles()
 	bool activeClasses = false;
 	std::string elementClasses;
 
-	// if(gradient_class.compare("none") != 0){
-	// 	activeClasses = true; 
-	// 	elementClasses += gradient_class + " ";
-	// }
-	// if(attachment_class.compare("none") != 0){
-	// 	activeClasses = true; 
-	// 	elementClasses += attachment_class + " ";
-	// }
-	// if(clip_class.compare("none") != 0){
-	// 	activeClasses = true; 
-	// 	elementClasses += clip_class + " ";
-	// }
-	// if(origin_class.compare("none") != 0){
-	// 	activeClasses = true; 
-	// 	elementClasses += origin_class + " ";
-	// }
-	// if(position_class.compare("none") != 0){
-	// 	activeClasses = true; 
-	// 	elementClasses += position_class + " ";
-	// }
-	// if(repeat_class.compare("none") != 0){
-	// 	activeClasses = true; 
-	// 	elementClasses += repeat_class + " ";
-	// }
-	// if(size_class.compare("none") != 0){
-	// 	activeClasses = true; 
-	// 	elementClasses += size_class + " ";
-	// }
+	if(aspect_ratio_class.compare("none") != 0){ activeClasses = true; elementClasses += aspect_ratio_class + " "; }
+	if(container_class.compare("none") != 0){ activeClasses = true; elementClasses += container_class + " "; }
+	if(columns_class.compare("none") != 0){ activeClasses = true; elementClasses += columns_class + " "; }
+	if(break_after_class.compare("none") != 0){ activeClasses = true; elementClasses += break_after_class + " "; }
+	if(break_before_class.compare("none") != 0){ activeClasses = true; elementClasses += break_before_class + " "; }
+	if(break_inside_class.compare("none") != 0){ activeClasses = true; elementClasses += break_inside_class + " "; }
+	if(box_decoration_break_class.compare("none") != 0){ activeClasses = true; elementClasses += box_decoration_break_class + " "; }
+	if(box_sizing_class.compare("none") != 0){ activeClasses = true; elementClasses += box_sizing_class + " "; }
+	if(floats_class.compare("none") != 0){ activeClasses = true; elementClasses += floats_class + " "; }
+	if(clear_class.compare("none") != 0){ activeClasses = true; elementClasses += clear_class + " "; }
+	if(isolation_class.compare("none") != 0){ activeClasses = true; elementClasses += isolation_class + " "; }
+	if(object_fit_class.compare("none") != 0){ activeClasses = true; elementClasses += object_fit_class + " "; }
+	if(object_position_class.compare("none") != 0){ activeClasses = true; elementClasses += object_position_class + " "; }
+	if(overflow_class.compare("none") != 0){ activeClasses = true; elementClasses += overflow_class + " "; }
+	if(overflow_x_class.compare("none") != 0){ activeClasses = true; elementClasses += overflow_x_class + " "; }
+	if(overflow_y_class.compare("none") != 0){ activeClasses = true; elementClasses += overflow_y_class + " "; }
+	if(overscroll_behavior_class.compare("none") != 0){ activeClasses = true; elementClasses += overscroll_behavior_class + " "; }
+	if(position_class.compare("none") != 0){ activeClasses = true; elementClasses += position_class + " "; }
+	if(position_inset_class.compare("none") != 0){ activeClasses = true; elementClasses += position_inset_class + " "; }
+	if(position_inset_x_class.compare("none") != 0){ activeClasses = true; elementClasses += position_inset_x_class + " "; }
+	if(position_inset_y_class.compare("none") != 0){ activeClasses = true; elementClasses += position_inset_y_class + " "; }
+	if(position_top_class.compare("none") != 0){ activeClasses = true; elementClasses += position_top_class + " "; }
+	if(position_right_class.compare("none") != 0){ activeClasses = true; elementClasses += position_right_class + " "; }
+	if(position_bottom_class.compare("none") != 0){ activeClasses = true; elementClasses += position_bottom_class + " "; }
+	if(position_left_class.compare("none") != 0){ activeClasses = true; elementClasses += position_left_class + " "; }
+	if(visibility_class.compare("none") != 0){ activeClasses = true; elementClasses += visibility_class + " "; }
+	if(z_index_class.compare("none") != 0){ activeClasses = true; elementClasses += z_index_class + " "; }
+	if(display_class.compare("none") != 0){ activeClasses = true; elementClasses += display_class + " "; }
 
 
 	if(activeClasses) expand();
-
 	return elementClasses;
 }
 
-
-
 void ElementLayoutWidget::setClasses(LayoutData layoutData)
 {
-	// resetStyles();
-	// bool activeClasses;
-	// activeClasses = setGradient(bgData. gradient);
-	// activeClasses = setAttachment(bgData.attachment);
-	// activeClasses = setClip(bgData.clip);
-	// activeClasses = setOrigin(bgData.origin);
-	// activeClasses = setPosition(bgData.position);
-	// activeClasses = setRepeat(bgData.repeat);
-	// activeClasses = setSize(bgData.size);
+	resetStyles();
+	bool activeClasses = false;
+
+	std::cout << "\n ---------------layout aspect ratio <" << layoutData.aspect_ratio << ">\n";
+
+
+	activeClasses = setDisplay(layoutData.display);
+	activeClasses = setAspectRatio(layoutData.aspect_ratio);
+	activeClasses = setContainer(layoutData.container);
+	activeClasses = setColumns(layoutData.columns);
+	activeClasses = setBreakAfter(layoutData.break_after);
+	activeClasses = setBreakBefore(layoutData.break_before);
+	activeClasses = setBreakInside(layoutData.break_inside);
+	activeClasses = setBoxDecorationBreak(layoutData.box_decoration_break);
+	activeClasses = setBoxSizing(layoutData.box_sizing);
+	activeClasses = setFloats(layoutData.floats);
+	activeClasses = setClear(layoutData.clear);
+	activeClasses = setIsolation(layoutData.isolation);
+	activeClasses = setObjectFit(layoutData.object_fit);
+	activeClasses = setObjectPosition(layoutData.object_position);
+
+	for(auto className : layoutData.overflow){
+		if(className.find("-x-") != std::string::npos){
+			activeClasses = setOverflowX(className);
+		}else if (className.find("-y-") != std::string::npos){
+			activeClasses = setOverflowY(className);
+		}else {
+			activeClasses = setOverflow(className);
+		}
+	}
+
+	for(auto className : layoutData.overscroll_behavior){
+		if(className.find("-x-") != std::string::npos){
+			activeClasses = setOverscrollBehaviorX(className);
+		}else if (className.find("-y-") != std::string::npos){
+			activeClasses = setOverscrollBehaviorY(className);
+		}else {
+			activeClasses = setOverscrollBehavior(className);
+		}
+	}
+
+	activeClasses = setPosition(layoutData.position);
+	
+	for(auto className : layoutData.position_sides){
+		if(className.find("inset-") != std::string::npos){
+			if(className.find("-x-") != std::string::npos) activeClasses = setPositionInsetX(className);
+			else if(className.find("-y-") != std::string::npos) activeClasses = setPositionInsetY(className);
+			else activeClasses = setPositionInset(className);
+		}else if (className.find("top-") != std::string::npos){
+			activeClasses = setPositionTop(className);
+		}else if (className.find("right-") != std::string::npos){
+			activeClasses = setPositionRight(className);
+		}else if (className.find("bottom-") != std::string::npos){
+			activeClasses = setPositionBottom(className);
+		}else if (className.find("left-") != std::string::npos){
+			activeClasses = setPositionLeft(className);
+		}
+
+		activeClasses = setVisibility(layoutData.visibility);
+		activeClasses = setZIndex(layoutData.z_index);
+	}
+
+	std::cout << "\n aspecty ratio index <" << tailwindConfig_->getIndesOfStringInVector(layoutData.aspect_ratio, tailwindConfig_->layout.aspect_ratio.styleClasses_) << ">\n";
 
 	// if(!activeClasses) collapse();
+	// expand();
 }
 
 void ElementLayoutWidget::resetStyles()
 {
-	// gradient_group->setCheckedButton(gradient_group->button(0));
-	// attachment_group->setCheckedButton(attachment_group->button(0));
-	// clip_group->setCheckedButton(clip_group->button(0));
-	// origin_group->setCheckedButton(origin_group->button(0));
-	// position_group->setCheckedButton(position_group->button(0));
-	// repeat_group->setCheckedButton(repeat_group->button(0));
-	// size_group->setCheckedButton(size_group->button(0));
+	aspect_ratio_widget_->setValue("none");
+	container_widget_->setValue("none");
+	columns_widget_->setValue("none");
+	break_after_widget_->setValue("none");
+	break_before_widget_->setValue("none");
+	break_inside_widget_->setValue("none");
+	box_decoration_break_widget_->setValue("none");
+	box_sizing_widget_->setValue("none");
+	floats_widget_->setValue("none");
+	clear_widget_->setValue("none");
+	isolation_widget_->setValue("none");
+	object_fit_widget_->setValue("none");
+	object_position_widget_->setValue("none");
+	overflow_widget_->setValue("none");
+	overflow_x_widget_->setValue("none");
+	overflow_y_widget_->setValue("none");
+	overscroll_behavior_widget_->setValue("none");
+	overscroll_behavior_x_widget_->setValue("none");
+	overscroll_behavior_y_widget_->setValue("none");
+	position_widget_->setValue("none");
+	position_inset_widget_->setValue("none");
+	position_inset_x_widget_->setValue("none");
+	position_inset_y_widget_->setValue("none");
+	position_top_widget_->setValue("none");
+	position_right_widget_->setValue("none");
+	position_bottom_widget_->setValue("none");
+	position_left_widget_->setValue("none");
+	visibility_widget_->setValue("none");
+	z_index_widget_->setValue("none");
+	display_widget_->setValue("none");
 
-	// gradient_class = "none";
-	// attachment_class = "none";
-	// clip_class = "none";
-	// origin_class = "none";
-	// position_class = "none";
-	// repeat_class = "none";
-	// size_class = "none";
+	aspect_ratio_class = "none";
+	container_class = "none";
+	columns_class = "none";
+	break_after_class = "none";
+	break_before_class = "none";
+	break_inside_class = "none";
+	box_decoration_break_class = "none";
+	box_sizing_class = "none";
+	floats_class = "none";
+	clear_class = "none";
+	isolation_class = "none";
+	object_fit_class = "none";
+	object_position_class = "none";
+	overflow_class = "none";
+	overflow_x_class = "none";
+	overflow_y_class = "none";
+	overscroll_behavior_class = "none";
+	overscroll_behavior_x_class = "none";
+	overscroll_behavior_y_class = "none";
+	position_class = "none";
+	position_inset_class = "none";
+	position_inset_x_class = "none";
+	position_inset_y_class = "none";
+	position_top_class = "none";
+	position_right_class = "none";
+	position_bottom_class = "none";
+	position_left_class = "none";
+	visibility_class = "none";
+	z_index_class = "none";
+	display_class = "none";
+
+
 }
 
 void ElementLayoutWidget::setCustomTestValues()
 {
-	// gradient_group->setCheckedButton(gradient_group->button(3));
-	// attachment_group->setCheckedButton(attachment_group->button(3));
-	// clip_group->setCheckedButton(clip_group->button(3));
-	// origin_group->setCheckedButton(origin_group->button(3));
-	// position_group->setCheckedButton(position_group->button(3));
-	// repeat_group->setCheckedButton(repeat_group->button(3));
-	// size_group->setCheckedButton(size_group->button(3));
 
-	// gradient_group->checkedChanged().emit(gradient_group->checkedButton());
-	// attachment_group->checkedChanged().emit(attachment_group->checkedButton());
-	// clip_group->checkedChanged().emit(clip_group->checkedButton());
-	// origin_group->checkedChanged().emit(origin_group->checkedButton());
-	// position_group->checkedChanged().emit(position_group->checkedButton());
-	// repeat_group->checkedChanged().emit(repeat_group->checkedButton());
-	// size_group->checkedChanged().emit(size_group->checkedButton());
 }
 
-// bool ElementLayoutWidget::setGradient(std::string className)
-// {
-// 	int gradientIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_image.styleClasses_);
-// 	if(gradientIndex >= 0){
-// 		gradient_group->button(gradientIndex)->setChecked(true);
-// 		if(gradientIndex > 0) {
-// 			expand();
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// }
 
-// bool ElementLayoutWidget::setAttachment(std::string className)
-// {
-// 	int attachmentIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_attachment.styleClasses_);
-// 	if(attachmentIndex >= 0){
-// 		attachment_group->button(attachmentIndex)->setChecked(true);
-// 		if(attachmentIndex > 0) {
-// 			expand();
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// }
 
-// bool ElementLayoutWidget::setClip(std::string className)
-// {
-// 	int clipIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_clip.styleClasses_);
-// 	if(clipIndex >= 0){
-// 		clip_group->button(clipIndex)->setChecked(true);
-// 		if(clipIndex > 0) {
-// 			expand();
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// }
+bool ElementLayoutWidget::setAspectRatio(std::string className)
+{
+	int aspectRatioIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.aspect_ratio.styleClasses_);
+	if(aspectRatioIndex >= 0){
+		std::cout << "\naspect ration index bigger then 0\n";
+		aspect_ratio_widget_->setValue(className);
+		std::cout << "\n aspect ratio group checked button index = " << aspect_ratio_widget_->group_->selectedButtonIndex() << "\n";
+		if(aspectRatioIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
 
-// bool ElementLayoutWidget::setOrigin(std::string className)
-// {
-// 	int originIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_origin.styleClasses_);
-// 	if(originIndex >= 0){
-// 		origin_group->button(originIndex)->setChecked(true);
-// 		if(originIndex > 0) {
-// 			expand();
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// }
+bool ElementLayoutWidget::setContainer(std::string className)
+{
+	int containerIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.container.styleClasses_);
+	if(containerIndex >= 0){
+		container_widget_->setValue(className);
+		if(containerIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
 
-// bool ElementLayoutWidget::setPosition(std::string className)
-// {
-// 	int positionIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_position.styleClasses_);
-// 	if(positionIndex >= 0){
-// 		position_group->button(positionIndex)->setChecked(true);
-// 		if(positionIndex > 0) {
-// 			expand();
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// }
+bool ElementLayoutWidget::setColumns(std::string className)
+{
+	int columnsIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.columns.styleClasses_);
+	if(columnsIndex >= 0){
+		columns_widget_->setValue(className);
+		if(columnsIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
 
-// bool ElementLayoutWidget::setRepeat(std::string className)
-// {
-// 	int repeatIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_repeat.styleClasses_);
-// 	if(repeatIndex >= 0){
-// 		repeat_group->button(repeatIndex)->setChecked(true);
-// 		if(repeatIndex > 0) {
-// 			expand();
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// }
+bool ElementLayoutWidget::setBreakAfter(std::string className)
+{
+	int breakAfterIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_after.styleClasses_);
+	if(breakAfterIndex >= 0){
+		break_after_widget_->setValue(className);
+		if(breakAfterIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
 
-// bool ElementLayoutWidget::setSize(std::string className)
-// {
-// 	int sizeIndex = getIndesOfStringInVector(className, tailwindConfig_->backgrounds.background_size.styleClasses_);
-// 	if(sizeIndex >= 0){
-// 		size_group->button(sizeIndex)->setChecked(true);
-// 		if(sizeIndex > 0) {
-// 			expand();
-// 			return true;
-// 		}
-// 	}
-// 	return false;
-// }
+bool ElementLayoutWidget::setBreakBefore(std::string className)
+{
+	int breakBeforeIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_before.styleClasses_);
+	if(breakBeforeIndex >= 0){
+		break_before_widget_->setValue(className);
+		if(breakBeforeIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setBreakInside(std::string className)
+{
+	int breakInsideIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_inside.styleClasses_);
+	if(breakInsideIndex >= 0){
+		break_inside_widget_->setValue(className);
+		if(breakInsideIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setBoxDecorationBreak(std::string className)
+{
+	int boxDecorationBreakIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.box_decoration_break.styleClasses_);
+	if(boxDecorationBreakIndex >= 0){
+		box_decoration_break_widget_->setValue(className);
+		if(boxDecorationBreakIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setBoxSizing(std::string className)
+{
+	int boxSizingIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.box_sizing.styleClasses_);
+	if(boxSizingIndex >= 0){
+		box_sizing_widget_->setValue(className);
+		if(boxSizingIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setFloats(std::string className)
+{
+	int floatsIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.floats.styleClasses_);
+	if(floatsIndex >= 0){
+		floats_widget_->setValue(className);
+		if(floatsIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setClear(std::string className)
+{
+	int clearIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.clear.styleClasses_);
+	if(clearIndex >= 0){
+		clear_widget_->setValue(className);
+		if(clearIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setIsolation(std::string className)
+{
+	int isolationIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.isolation.styleClasses_);
+	if(isolationIndex >= 0){
+		isolation_widget_->setValue(className);
+		if(isolationIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setObjectFit(std::string className)
+{
+	int objectFitIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.object_fit.styleClasses_);
+	if(objectFitIndex >= 0){
+		object_fit_widget_->setValue(className);
+		if(objectFitIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setObjectPosition(std::string className)
+{
+	int objectPositionIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.object_position.styleClasses_);
+	if(objectPositionIndex >= 0){
+		object_position_widget_->setValue(className);
+		if(objectPositionIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setOverflow(std::string className)
+{
+	int overflowIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow.styleClasses_);
+	if(overflowIndex >= 0){
+		overflow_widget_->setValue(className);
+		if(overflowIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setOverflowX(std::string className)
+{
+	int overflowXIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow_x.styleClasses_);
+	if(overflowXIndex >= 0){
+		overflow_x_widget_->setValue(className);
+		if(overflowXIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setOverflowY(std::string className)
+{
+	int overflowYIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow_y.styleClasses_);
+	if(overflowYIndex >= 0){
+		overflow_y_widget_->setValue(className);
+		if(overflowYIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setOverscrollBehavior(std::string className)
+{
+	int overscrollBehaviorIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior.styleClasses_);
+	if(overscrollBehaviorIndex >= 0){
+		overscroll_behavior_widget_->setValue(className);
+		if(overscrollBehaviorIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setOverscrollBehaviorX(std::string className)
+{
+	int overscrollBehaviorXIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior_x.styleClasses_);
+	if(overscrollBehaviorXIndex >= 0){
+		overscroll_behavior_x_widget_->setValue(className);
+		if(overscrollBehaviorXIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setOverscrollBehaviorY(std::string className)
+{
+	int overscrollBehaviorYIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior_y.styleClasses_);
+	if(overscrollBehaviorYIndex >= 0){
+		overscroll_behavior_y_widget_->setValue(className);
+		if(overscrollBehaviorYIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setPosition(std::string className)
+{
+	int positionIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.position.styleClasses_);
+	if(positionIndex >= 0){
+		position_widget_->setValue(className);
+		if(positionIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ElementLayoutWidget::setVisibility(std::string className)
+{
+	int visibilityIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.visibility.styleClasses_);
+	if(visibilityIndex >= 0){
+		visibility_widget_->setValue(className);
+		if(visibilityIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ElementLayoutWidget::setZIndex(std::string className)
+{
+	int zIndexIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.z_index.styleClasses_);
+	if(zIndexIndex >= 0){
+		z_index_widget_->setValue(className);
+		if(zIndexIndex > 0) {
+			expand();
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
+bool ElementLayoutWidget::setPositionInset(std::string className)
+{
+	return false;
+}
+
+bool ElementLayoutWidget::setPositionInsetX(std::string className)
+{
+
+	return false;
+}
+
+bool ElementLayoutWidget::setPositionInsetY(std::string className)
+{
+
+	return false;
+}
+
+bool ElementLayoutWidget::setPositionTop(std::string className)
+{
+
+	return false;
+}
+
+bool ElementLayoutWidget::setPositionRight(std::string className)
+{
+	return false;
+	
+}
+
+bool ElementLayoutWidget::setPositionBottom(std::string className)
+{
+	return false;
+}
+
+bool ElementLayoutWidget::setPositionLeft(std::string className)
+{
+	return false;
+}
+bool ElementLayoutWidget::setDisplay(std::string className)
+{
+	
+	return false;
+}

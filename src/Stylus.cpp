@@ -480,7 +480,7 @@ void StylusEdditor::setSearchOptions(Wt::WSuggestionPopup *sp, Wt::WDialog *dial
 
 	}
 }
-
+ 
 
 StylusEdditor::StylusEdditor(std::string templatesPath)
 	:	WTemplate(tr("stylus")),
@@ -610,7 +610,7 @@ void StylusEdditor::createTitleBarControls()
 
 void StylusEdditor::createDevApp()
 {
-		template_view->bindWidget("app-dev-template", std::make_unique<AppDev>(stylusState_->selectedTemplate->ToElement()->Attribute("id")));
+		template_view->bindWidget("app-dev-template", std::make_unique<AppDev>(tr(stylusState_->selectedTemplate->ToElement()->Attribute("id"))));
 }
 
 void StylusEdditor::setTemplate(std::string folderName, std::string fileName, std::string messageId, std::string widgetType, bool insideTemplate)
@@ -821,7 +821,8 @@ void StylusEdditor::updateResources()
 	// std::cout << "\nStylusEdditor::updateResources";
 	auto app  = Wt::WApplication::instance();
 	app->messageResourceBundle().keys("");
-	app->refresh();
+	// app->refresh();
+	createDevApp();
 }
 
 std::string StylusEdditor::cleanStringStartEnd(const std::string& input)

@@ -6,7 +6,7 @@
 #include <string>
 
 // this gets a template message id and returns all of his variables
-std::vector<std::string> getWidgets(std::string messageId, std::regex template_pattern);
+std::vector<std::string> getWidgets(Wt::WString text);
 
 
 // this datastructure is for all the children or children of children
@@ -19,7 +19,7 @@ struct WidgetData {
 class AppDev : public Wt::WTemplate
 {
 public:
-    AppDev(std::string templateId);
+    AppDev(Wt::WString templateString);
 private:
     WidgetData widgetData_;
 
