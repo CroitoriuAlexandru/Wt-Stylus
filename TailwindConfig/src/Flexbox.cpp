@@ -32,22 +32,22 @@ Flexbox::Flexbox(std::vector<std::string> spacing_variants)
     // direction
     direction = Propriety({
         StyleClass("none", ""),
+        StyleClass("flex-col", "flex-direction: column;"),
+        StyleClass("flex-row", "flex-direction: row;"),
         StyleClass("flex-row-reverse", "flex-direction: row-reverse;"),
         StyleClass("flex-col-reverse", "flex-direction: column-reverse;"),
-        StyleClass("flex-col", "flex-direction: column;"),
-        StyleClass("flex-row", "flex-direction: row;")
     }, "https://tailwindcss.com/docs/flex-direction");
 
     // wrap
     wrap = Propriety({
         StyleClass("none", ""),
-        StyleClass("flex-wrap-reverse", "flex-wrap: wrap-reverse;"),
         StyleClass("flex-wrap", "flex-wrap: wrap;"),
+        StyleClass("flex-wrap-reverse", "flex-wrap: wrap-reverse;"),
         StyleClass("flex-nowrap", "flex-wrap: nowrap;")
     }, "https://tailwindcss.com/docs/flex-wrap");
 
     // flex
-    flex = Propriety({
+    grow_skrink = Propriety({
         StyleClass("none", ""),
         StyleClass("flex-1", "flex: 1 1 0%;"),
         StyleClass("flex-auto", "flex: 1 1 auto;"),
@@ -58,15 +58,15 @@ Flexbox::Flexbox(std::vector<std::string> spacing_variants)
     // grow
     grow = Propriety({
         StyleClass("none", ""),
+        StyleClass("grow", "flex-grow: 1;"),
         StyleClass("grow-0", "flex-grow: 0;"),
-        StyleClass("grow", "flex-grow: 1;")
     }, "https://tailwindcss.com/docs/flex-grow");
 
     // shrink
     shrink = Propriety({
         StyleClass("none", ""),
+        StyleClass("shrink", "flex-shrink: 1;"),
         StyleClass("shrink-0", "flex-shrink: 0;"),
-        StyleClass("shrink", "flex-shrink: 1;")
     }, "https://tailwindcss.com/docs/flex-shrink");
 
     // place content
@@ -76,13 +76,16 @@ Flexbox::Flexbox(std::vector<std::string> spacing_variants)
     std::vector<std::string> self_variants = {"auto", "start", "end", "center", "stretch"};
     justify_content = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/justify-content");
     align_content = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/align-content");
+    place_content = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/place-content");
 
     justify_items = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/justify-items");
     align_items = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/align-items");
+    place_items = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/place-items");
 
     justify_self = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/justify-self");
     align_self = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/align-self");
-   
+    place_self = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/place-self");
+
 
     // there are some extra style classes forsome proprieties 
     StyleClass justify_normal = StyleClass("justify-normal", "justify-content: normal;");
@@ -90,24 +93,31 @@ Flexbox::Flexbox(std::vector<std::string> spacing_variants)
     StyleClass content_baseline = StyleClass("content-baseline", "align-content: baseline;");
     StyleClass items_baseline = StyleClass("items-baseline", "align-items: baseline;");
     StyleClass self_baseline = StyleClass("self-baseline", "align-self: baseline;");
+    StyleClass place_content_baseline = StyleClass("place-content-baseline", "place-content: baseline;");
+    StyleClass place_items_baseline = StyleClass("place-items-baseline", "place-items: baseline;");
 
     justify_content.styleClasses_.push_back(justify_normal);
     align_content.styleClasses_.push_back(content_normal);
     for(auto size : content_variants) {
         justify_content.styleClasses_.push_back(StyleClass("justify-" + size, "justify-content: " + size + ";"));
         align_content.styleClasses_.push_back(StyleClass("content-" + size, "align-content: " + size + ";"));
+        place_content.styleClasses_.push_back(StyleClass("place-content-" + size, "place-content: " + size + ";"));
     }
     align_content.styleClasses_.push_back(content_baseline);
+    place_content.styleClasses_.push_back(place_content_baseline);
 
     for(auto size : items_variants) {
         justify_items.styleClasses_.push_back(StyleClass("justify-items-" + size, "justify-items: " + size + ";"));
         align_items.styleClasses_.push_back(StyleClass("items-" + size, "align-items: " + size + ";"));
+        place_items.styleClasses_.push_back(StyleClass("place-items-" + size, "place-items: " + size + ";"));
     }
     align_items.styleClasses_.push_back(items_baseline);
+    place_items.styleClasses_.push_back(place_items_baseline);
 
     for(auto size : self_variants) {
         justify_self.styleClasses_.push_back(StyleClass("justify-self-" + size, "justify-self: " + size + ";"));
         align_self.styleClasses_.push_back(StyleClass("self-" + size, "align-self: " + size + ";"));
+        place_self.styleClasses_.push_back(StyleClass("place-self-" + size, "place-self: " + size + ";"));
     }
     align_self.styleClasses_.push_back(self_baseline);
 
@@ -117,44 +127,105 @@ Flexbox::Flexbox(std::vector<std::string> spacing_variants)
 
 std::vector<std::string> Flexbox::search_data()
 {
-    std::vector<std::string> data = {};
-    for(auto styleClass : basis.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    std::vector<std::string> data = {
+        "flex | reset"
+    };
+    for(auto styleClass : order.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex-&-grid | order-res");
+        }
+        data.push_back("flex-&-grid | " + styleClass.className_);
     }
-    for(auto styleClass : direction.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : basis.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | basis-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : wrap.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : direction.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | flex-direction-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : flex.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : wrap.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | flex-wrap-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : grow.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : grow_skrink.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | flex-grow-shrink-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : shrink.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : grow.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | grow-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : justify_content.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : shrink.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | shrink-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : justify_items.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : justify_content.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | justify-content-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : justify_self.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : justify_items.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | justify-items-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : align_content.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : justify_self.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | justify-self-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : align_items.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : align_content.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | align-content-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-    for(auto styleClass : align_self.styleClasses_) {
-        data.push_back("flex/" + styleClass.className_);
+    for(auto styleClass : align_items.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | align-items-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
     }
-
+    for(auto styleClass : align_self.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | align-self-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
+    }
+    for(auto styleClass : place_content.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | place-content-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
+    }
+    for(auto styleClass : place_items.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | place-items-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
+    }
+    for(auto styleClass : place_self.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("flex | place-self-res");
+        }
+        data.push_back("flex | " + styleClass.className_);
+    }
 return data;
 }
 
@@ -188,7 +259,7 @@ std::string Flexbox::wrapData() {
 
 std::string Flexbox::flexData() {
     std::string data = " ";
-    for(auto styleClass : flex.styleClasses_) {
+    for(auto styleClass : grow_skrink.styleClasses_) {
         data += styleClass.className_ + " ";
     }
     data += "\n ";

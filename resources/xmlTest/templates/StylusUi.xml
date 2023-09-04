@@ -4,8 +4,8 @@
 
     <message id="tooltip-styleClasses">
         <div class="bg-neutral-50 text-center rounded-lg">
-            <div class="text-lg font-bold border-b border-solid whitespace-nowrap">{2}</div>
-            <div class="text-lg font-semibold">{1}</div>
+            <div class="text-lg font-bold border-b border-solid whitespace-nowrap">{1}</div>
+            <div class="text-lg font-semibold">{2}</div>
         </div>
     </message>
 
@@ -67,6 +67,7 @@
 
 	<!-- element class edditor               sidebar right -->
 	<message id="stylus-element-edditor">
+		${flex-and-grid-controls}
         ${layout-controls}
 		${sizing-controls}
 		${spacing-controls}
@@ -133,12 +134,12 @@
     </message>
 
 	<!-- hamburger menu -->
-	<message id="hamburger-menu">
+	<!-- <message id="hamburger-menu">
 		<button class="inline-block z-50 p-1 space-y-1 border border-solid rounded-md bg-neutral-600">
 			<div class="w-4 h-0.5 bg-neutral-400"></div>
 			<div class="w-4 h-0.5 bg-neutral-400"></div>
 			<div class="w-4 h-0.5 bg-neutral-400"></div>
 		  </button>
-	</message>
+	</message> -->
 
 </messages>

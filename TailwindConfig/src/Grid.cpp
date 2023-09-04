@@ -22,6 +22,7 @@ Grid::Grid(std::vector<std::string> spacing_variants)
     std::vector<std::string> grid_template_rows_variants = {"none", "6", "5", "4", "3", "2", "1"};
 
     grid_template_columns = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/grid-template-columns");
+    grid_template_rows = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/grid-template-rows");
 
     for(auto size : grid_template_columns_variants) {
         grid_template_columns.styleClasses_.push_back(StyleClass("grid-cols-" + size, ""));
@@ -34,6 +35,7 @@ Grid::Grid(std::vector<std::string> spacing_variants)
     std::vector<std::string> grid_span_start_end_variants = {"auto", "13", "12", "11", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"};
     StyleClass grid_col_span_full = StyleClass("col-span-full", "grid-column: 1 / -1;");
     StyleClass grid_row_span_full = StyleClass("row-span-full", "grid-row: 1 / -1;");
+
     grid_cols_start = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/grid-column");
     grid_cols_span = Propriety({StyleClass("none", ""), grid_col_span_full}, "https://tailwindcss.com/docs/grid-column");
     grid_cols_end = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/grid-column");
@@ -134,61 +136,88 @@ Grid::Grid(std::vector<std::string> spacing_variants)
 
 std::vector<std::string> Grid::search_data()
 {
-    std::vector<std::string> data = {};
-    for(auto styleClass : order.styleClasses_) {
-        data.push_back("flex/grid/" + styleClass.className_);
+    std::vector<std::string> data = {
+        "grid | reset"
+    };
+    for(auto styleClass : grid_template_columns.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | grid-cols-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_template_columns.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_cols_start.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | col-start-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_template_rows.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_cols_span.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | col-span-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_cols_start.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_cols_end.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | col-end-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_cols_span.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_template_rows.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | grid-rows-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_cols_end.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_rows_start.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | row-start-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_rows_start.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_rows_span.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | row-span-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_rows_span.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_rows_end.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | row-end-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_rows_end.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_auto_flow.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | grid-flow-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_auto_flow.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_auto_columns.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | auto-cols-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_auto_columns.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : grid_auto_rows.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | auto-rows-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : grid_auto_rows.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : gap.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | gap-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : gap.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
+    for(auto styleClass : gap_x.styleClasses_){
+        if(styleClass.className_.compare("none") == 0){
+            data.push_back("grid | gap-x-res");
+        }
+        data.push_back("grid | " + styleClass.className_);
     }
-    for(auto styleClass : gap_x.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
-    }
-    for(auto styleClass : gap_y.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
-    }
-    for(auto styleClass : place_content.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
-    }
-    for(auto styleClass : place_items.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
-    }
-    for(auto styleClass : place_self.styleClasses_) {
-        data.push_back("grid/" + styleClass.className_);
-    }
+
 
 return data;
 }

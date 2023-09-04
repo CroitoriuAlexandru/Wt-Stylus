@@ -95,6 +95,8 @@ ComboBoxClassChanger::ComboBoxClassChanger(Propriety propriety)
 	: Wt::WContainerWidget()
 {
 	setStyleClass("flex justify-betwen items-center w-full text-sm py-0.5 rounded-sm");
+
+	// setToolTip(Wt::WString().tr("tooltip-styleClasses").arg("first argument").arg("seccond argument"), Wt::TextFormat::UnsafeXHTML);
 	
 	checkbox_important_ = addWidget(std::make_unique<Wt::WCheckBox>("!"));
 	comboBox_class = addWidget(std::make_unique<Wt::WComboBox>());
@@ -219,15 +221,10 @@ return selectedClass;
 
 void ComboBoxClassChanger::setValue(std::string className)
 {
-	// if(className.compare("70") == 0)
-	// 	{	
-	// 		std::cout << "\n\n recived value : <" << className << ">\n\n";
-	// 		std::cout << "\n\n index of value: <" << comboBox_class->findText(className, Wt::MatchFlag::StringExactly) << ">\n\n";
-	// 		std::cout << "\n\n value of index: <" << comboBox_class->itemText(comboBox_class->findText(className, Wt::MatchFlag::StringExactly)) << ">\n\n";
-	// 	}
-	//  this is used by the search to reset styles to the default value 
-	std::string reset = "res";
-	if(className.compare("") == 0 || className.compare("none") == 0 || className.substr(className.length() - reset.length()) == reset)
+	if(className.compare("flex") == 0){
+		std::cout << "\n\n flex value :" << className << "\n\n";
+	}
+	if(className.compare("") == 0 || className.compare("none") == 0)
 	{
 		comboBox_class->setCurrentIndex(comboBox_class->findText(defaultValue, Wt::MatchFlag::StringExactly));
 		checkbox_important_->setChecked(false);
@@ -266,14 +263,69 @@ void ComboBoxClassChanger::setValue(std::string className)
 		}
 
 	}else {
-		// std::cout << "\n\n default value :" << className << "\n\n";
+		std::cout << "\n\n className :" << className << "\n\n";
 		checkBox_custom_value_->setChecked(false);
 		checkBox_custom_value_->clicked().emit(Wt::WMouseEvent());
 		comboBox_class->setCurrentIndex(comboBox_class->findText(className, Wt::MatchFlag::StringExactly));
 		
 	}
 }
+// void ComboBoxClassChanger::setValue(std::string className)
+// {
+// 	// if(className.compare("70") == 0)
+// 	// 	{	
+// 	// 		std::cout << "\n\n recived value : <" << className << ">\n\n";
+// 	// 		std::cout << "\n\n index of value: <" << comboBox_class->findText(className, Wt::MatchFlag::StringExactly) << ">\n\n";
+// 	// 		std::cout << "\n\n value of index: <" << comboBox_class->itemText(comboBox_class->findText(className, Wt::MatchFlag::StringExactly)) << ">\n\n";
+// 	// 	}
+// 	//  this is used by the search to reset styles to the default value 
+// 	std::string reset = "res";
+// 	if(className.compare("") == 0 || className.compare("none") == 0 || className.substr(className.length() - reset.length()) == reset)
+// 	{
+// 		comboBox_class->setCurrentIndex(comboBox_class->findText(defaultValue, Wt::MatchFlag::StringExactly));
+// 		checkbox_important_->setChecked(false);
+// 		checkbox_important_->toggleStyleClass("text-red-500", false, true);
+// 		if(custom_start_.compare("none") != 0){
+// 			setCustom(false);
+// 		}
+// 		toggleStyleClass("bg-neutral-900", false);
+// 		return;
+// 	}
+// 	toggleStyleClass("bg-neutral-900", true);
+// 	// check for ! at the start of the class
+// 	if(className.find("!") != std::string::npos){
+// 		// std::cout << "\n\n important value :" << className << "\n\n";
+// 		checkbox_important_->setChecked(true);
+// 		// comboBox_class->checkbox_important_->clicked().emit(Wt::WMouseEvent());
+// 		className = className.substr(1, className.length()-1);
+// 		checkbox_important_->toggleStyleClass("text-red-500", true);
+// 	}
 
+
+// 	if(className.find("]") != std::string::npos) {
+// 		// std::cout << "\n\n custom value :" << className << "\n\n";
+// 		checkBox_custom_value_->setChecked(true);
+// 		checkBox_custom_value_->clicked().emit(Wt::WMouseEvent());
+// 		// find the next '[' position in className
+// 		int pos = className.find("[");
+// 		if(pos != std::string::npos){
+// 			// find the next ']' position in className
+// 			int pos2 = className.find("]");
+// 			if(pos2 != std::string::npos){
+// 				// get the value between '[' and ']'
+// 				std::string value = className.substr(pos+1, pos2-pos-1);
+// 				lineEdit_custom_value_->setText(value);
+// 			}
+// 		}
+
+// 	}else {
+// 		// std::cout << "\n\n default value :" << className << "\n\n";
+// 		checkBox_custom_value_->setChecked(false);
+// 		checkBox_custom_value_->clicked().emit(Wt::WMouseEvent());
+// 		comboBox_class->setCurrentIndex(comboBox_class->findText(className, Wt::MatchFlag::StringExactly));
+		
+// 	}
+// }
 void ComboBoxClassChanger::disable(bool disable)
 {
 	if(disable)

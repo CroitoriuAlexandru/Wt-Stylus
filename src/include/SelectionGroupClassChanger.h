@@ -43,7 +43,9 @@ public:
 
 	Wt::Signal<std::string>& classChanged() { return classChanged_; }
     int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
+	void setTitle(std::string title){ widget_title->setText(title); };
 private:
+	Wt::WText* widget_title;
 	Propriety propriety_;
 	std::string defaultValue = "none";
 

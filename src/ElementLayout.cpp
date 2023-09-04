@@ -157,36 +157,12 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 		// prevent the click event from propagating to the parent because it is located in the title bar witch expands and collapse on click
 		popupBtn->clicked().preventPropagation();
 	}
-
-	std::cout << "\n\nlayout\n\n";
-
-	aspect_ratio_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.aspect_ratio, "Aspect ratio", "aspect-"));
-	container_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.container, "Container", ""));
-	columns_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.columns, "Columns", "columns-"));
-	break_after_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_after, "Break after", "break-after-"));
-	break_before_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_before, "Break before", "break-before-"));
-	break_inside_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_inside, "Break inside", "break-inside-"));
-	box_decoration_break_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_decoration_break, "Box decoration break", "box-decoration-"));
-	box_sizing_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_sizing, "Box sizing", "box-"));
-	floats_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.floats, "Floats", "float-"));
-	clear_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.clear, "Clear", "clear-"));
-	isolation_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.isolation, "Isolation", ""));
-	object_fit_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_fit, "Object fit", "object-"));
-	object_position_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_position, "Object position", "object-"));
-	overflow_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow, "Overflow", "overflow-"));
-	overflow_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_x, "Overflow x", "overflow-x-"));
-	overflow_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_y, "Overflow y", "overflow-y-"));
-	overscroll_behavior_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior, "Overscroll behavior", "overscroll-"));
-	overscroll_behavior_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_x, "Overscroll behavior x", "overscroll-x-"));
-	overscroll_behavior_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_y, "Overscroll behavior y", "overscroll-y-"));
 	
-	visibility_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.visibility, "Visibility", ""));
-	z_index_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.z_index, "Z index", "z-"));
-
+	
 	auto display_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	display_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
 	display_wrapper->addWidget(std::make_unique<Wt::WText>("Display"))->setStyleClass("font-bold text-neutral-400");
 	display_widget_ = display_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.display));
-
 	{
 		position_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.position, "Position", ""));
 
@@ -211,10 +187,10 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 		
 		positions_container->setStyleClass("");
 		inset_x_y_wrapper->setStyleClass("flex");
-		directions_wrapper->setStyleClass("my-6 mx-auto px-4 min-h-[90px] w-4/5  border-[4px] border-dashed border-neutral-600 flex flex-col justify-between items-stretch");
-		direction_top_wrapper->setStyleClass("flex mb-1 flex-col w-fit mx-auto ");
+		directions_wrapper->setStyleClass("my-3 mx-auto px-4 min-h-[90px] w-4/5  border-[4px] border-dashed border-neutral-600 flex flex-col justify-between items-stretch");
+		direction_top_wrapper->setStyleClass("flex mb-1 flex-col w-fit mx-auto -mt-3");
 		direction_left_right_wrapper->setStyleClass("mb-1 flex justify-between -mx-12 space-x-6");
-		direction_bottom_wrapper->setStyleClass("flex flex-col w-fit mx-auto ");
+		direction_bottom_wrapper->setStyleClass("flex flex-col w-fit mx-auto -mb-3");
 
 		position_inset_widget_->setCustomValueString("inset-");
 		position_inset_x_widget_->setCustomValueString("inset-x-");
@@ -225,6 +201,32 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 		position_bottom_widget_->setCustomValueString("bottom-");
 
 	}
+
+	columns_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.columns, "Columns", "columns-"));
+	container_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.container, "Container", ""));
+	aspect_ratio_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.aspect_ratio, "Aspect ratio", "aspect-"));
+	break_after_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_after, "Break after", "break-after-"));
+	break_before_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_before, "Break before", "break-before-"));
+	break_inside_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_inside, "Break inside", "break-inside-"));
+	box_decoration_break_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_decoration_break, "Box decoration break", "box-decoration-"));
+	box_sizing_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_sizing, "Box sizing", "box-"));
+	floats_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.floats, "Floats", "float-"));
+	clear_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.clear, "Clear", "clear-"));
+	isolation_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.isolation, "Isolation", ""));
+	object_fit_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_fit, "Object fit", "object-"));
+	object_position_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_position, "Object position", "object-"));
+	overflow_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow, "Overflow", "overflow-"));
+	overflow_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_x, "Overflow x", "overflow-x-"));
+	overflow_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_y, "Overflow y", "overflow-y-"));
+	overscroll_behavior_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior, "Overscroll behavior", "overscroll-"));
+	overscroll_behavior_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_x, "Overscroll behavior x", "overscroll-x-"));
+	overscroll_behavior_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_y, "Overscroll behavior y", "overscroll-y-"));
+	
+	visibility_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.visibility, "Visibility", ""));
+	z_index_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.z_index, "Z index", "z-"));
+
+	object_fit_widget_->setTitle("object- (fit)");
+	object_position_widget_->setTitle("object- (position)");
 	
 	// signals
 	display_widget_->classChanged().connect(this, [=](std::string className) { display_class = className;styleChanged_.emit(getStyles()); });
@@ -301,10 +303,7 @@ void ElementLayoutWidget::setClasses(LayoutData layoutData)
 {
 	resetStyles();
 	bool activeClasses = false;
-
-	std::cout << "\n ---------------layout aspect ratio <" << layoutData.aspect_ratio << ">\n";
-
-
+	std::cout << " layout display: " << layoutData.display << "\n";
 	activeClasses = setDisplay(layoutData.display);
 	activeClasses = setAspectRatio(layoutData.aspect_ratio);
 	activeClasses = setContainer(layoutData.container);
@@ -342,12 +341,18 @@ void ElementLayoutWidget::setClasses(LayoutData layoutData)
 
 	activeClasses = setPosition(layoutData.position);
 	
+	for(auto className : layoutData.position_inset){
+		if (className.find("-x-") != std::string::npos){
+			activeClasses = setPositionInsetX(className);
+		}else if (className.find("-y-") != std::string::npos){
+			activeClasses = setPositionInsetY(className);
+		}else {
+			activeClasses = setPositionInset(className);
+		}
+	}
+
 	for(auto className : layoutData.position_sides){
-		if(className.find("inset-") != std::string::npos){
-			if(className.find("-x-") != std::string::npos) activeClasses = setPositionInsetX(className);
-			else if(className.find("-y-") != std::string::npos) activeClasses = setPositionInsetY(className);
-			else activeClasses = setPositionInset(className);
-		}else if (className.find("top-") != std::string::npos){
+		if (className.find("top-") != std::string::npos){
 			activeClasses = setPositionTop(className);
 		}else if (className.find("right-") != std::string::npos){
 			activeClasses = setPositionRight(className);
@@ -361,10 +366,7 @@ void ElementLayoutWidget::setClasses(LayoutData layoutData)
 		activeClasses = setZIndex(layoutData.z_index);
 	}
 
-	std::cout << "\n aspecty ratio index <" << tailwindConfig_->getIndesOfStringInVector(layoutData.aspect_ratio, tailwindConfig_->layout.aspect_ratio.styleClasses_) << ">\n";
-
-	// if(!activeClasses) collapse();
-	// expand();
+	collapse();
 }
 
 void ElementLayoutWidget::resetStyles()
@@ -436,258 +438,46 @@ void ElementLayoutWidget::resetStyles()
 
 void ElementLayoutWidget::setCustomTestValues()
 {
+	setDisplay("block");
+	setAspectRatio("aspect-nonauto");
+	setContainer("container");
+	setColumns("columns-3");
+	setBreakAfter("break-after-avoid");
+	setBreakBefore("break-before-auto");
+	setBreakInside("break-inside-avoid");
+	setBoxDecorationBreak("box-decoration-clone");
+	setBoxSizing("box-border");
+	setFloats("float-right");
+	setClear("clear-both");
+	setIsolation("isolate");
+	setObjectFit("object-contain");
+	setObjectPosition("object-bottom");
+	setOverflow("overflow-auto");
+	setOverflowX("overflow-x-auto");
+	setOverflowY("overflow-y-auto");
+	setOverscrollBehavior("overscroll-auto");
+	setOverscrollBehaviorX("overscroll-x-auto");
+	setOverscrollBehaviorY("overscroll-y-auto");
+	setPosition("absolute");
+	setPositionInset("inset-0");
+	setPositionInsetX("inset-x-0");
+	setPositionInsetY("inset-y-0");
+	setPositionTop("top-0");
+	setPositionRight("right-0");
+	setPositionBottom("bottom-0");
+	setPositionLeft("left-0");
+	setVisibility("visible");
+	setZIndex("z-0");
+
 
 }
 
-
-
-bool ElementLayoutWidget::setAspectRatio(std::string className)
+bool ElementLayoutWidget::setDisplay(std::string className)
 {
-	int aspectRatioIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.aspect_ratio.styleClasses_);
-	if(aspectRatioIndex >= 0){
-		std::cout << "\naspect ration index bigger then 0\n";
-		aspect_ratio_widget_->setValue(className);
-		std::cout << "\n aspect ratio group checked button index = " << aspect_ratio_widget_->group_->selectedButtonIndex() << "\n";
-		if(aspectRatioIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setContainer(std::string className)
-{
-	int containerIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.container.styleClasses_);
-	if(containerIndex >= 0){
-		container_widget_->setValue(className);
-		if(containerIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setColumns(std::string className)
-{
-	int columnsIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.columns.styleClasses_);
-	if(columnsIndex >= 0){
-		columns_widget_->setValue(className);
-		if(columnsIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setBreakAfter(std::string className)
-{
-	int breakAfterIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_after.styleClasses_);
-	if(breakAfterIndex >= 0){
-		break_after_widget_->setValue(className);
-		if(breakAfterIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setBreakBefore(std::string className)
-{
-	int breakBeforeIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_before.styleClasses_);
-	if(breakBeforeIndex >= 0){
-		break_before_widget_->setValue(className);
-		if(breakBeforeIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setBreakInside(std::string className)
-{
-	int breakInsideIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_inside.styleClasses_);
-	if(breakInsideIndex >= 0){
-		break_inside_widget_->setValue(className);
-		if(breakInsideIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setBoxDecorationBreak(std::string className)
-{
-	int boxDecorationBreakIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.box_decoration_break.styleClasses_);
-	if(boxDecorationBreakIndex >= 0){
-		box_decoration_break_widget_->setValue(className);
-		if(boxDecorationBreakIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setBoxSizing(std::string className)
-{
-	int boxSizingIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.box_sizing.styleClasses_);
-	if(boxSizingIndex >= 0){
-		box_sizing_widget_->setValue(className);
-		if(boxSizingIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setFloats(std::string className)
-{
-	int floatsIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.floats.styleClasses_);
-	if(floatsIndex >= 0){
-		floats_widget_->setValue(className);
-		if(floatsIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setClear(std::string className)
-{
-	int clearIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.clear.styleClasses_);
-	if(clearIndex >= 0){
-		clear_widget_->setValue(className);
-		if(clearIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setIsolation(std::string className)
-{
-	int isolationIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.isolation.styleClasses_);
-	if(isolationIndex >= 0){
-		isolation_widget_->setValue(className);
-		if(isolationIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setObjectFit(std::string className)
-{
-	int objectFitIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.object_fit.styleClasses_);
-	if(objectFitIndex >= 0){
-		object_fit_widget_->setValue(className);
-		if(objectFitIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setObjectPosition(std::string className)
-{
-	int objectPositionIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.object_position.styleClasses_);
-	if(objectPositionIndex >= 0){
-		object_position_widget_->setValue(className);
-		if(objectPositionIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setOverflow(std::string className)
-{
-	int overflowIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow.styleClasses_);
-	if(overflowIndex >= 0){
-		overflow_widget_->setValue(className);
-		if(overflowIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setOverflowX(std::string className)
-{
-	int overflowXIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow_x.styleClasses_);
-	if(overflowXIndex >= 0){
-		overflow_x_widget_->setValue(className);
-		if(overflowXIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setOverflowY(std::string className)
-{
-	int overflowYIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow_y.styleClasses_);
-	if(overflowYIndex >= 0){
-		overflow_y_widget_->setValue(className);
-		if(overflowYIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setOverscrollBehavior(std::string className)
-{
-	int overscrollBehaviorIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior.styleClasses_);
-	if(overscrollBehaviorIndex >= 0){
-		overscroll_behavior_widget_->setValue(className);
-		if(overscrollBehaviorIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setOverscrollBehaviorX(std::string className)
-{
-	int overscrollBehaviorXIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior_x.styleClasses_);
-	if(overscrollBehaviorXIndex >= 0){
-		overscroll_behavior_x_widget_->setValue(className);
-		if(overscrollBehaviorXIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ElementLayoutWidget::setOverscrollBehaviorY(std::string className)
-{
-	int overscrollBehaviorYIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior_y.styleClasses_);
-	if(overscrollBehaviorYIndex >= 0){
-		overscroll_behavior_y_widget_->setValue(className);
-		if(overscrollBehaviorYIndex > 0) {
-			expand();
-			return true;
-		}
-	}
-	return false;
+	display_widget_->setValue(className);
+	display_class = display_widget_->getValue();
+	if(className.compare("none") == 0) return false;
+	else { expand(); return true; }
 }
 
 bool ElementLayoutWidget::setPosition(std::string className)
@@ -695,26 +485,310 @@ bool ElementLayoutWidget::setPosition(std::string className)
 	int positionIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.position.styleClasses_);
 	if(positionIndex >= 0){
 		position_widget_->setValue(className);
-		if(positionIndex > 0) {
-			expand();
-			return true;
-		}
+		position_class = position_widget_->getValue();
+		if(position_class.compare("none") == 0) return false;
+		else { expand(); return true; }
 	}
-	return false;
+return false;
 }
 
+bool ElementLayoutWidget::setPositionInset(std::string className)
+{
+
+	position_inset_widget_->setValue(className);
+	position_inset_class = position_inset_widget_->getValue();
+	std::cout << "position_inset_class: " << position_inset_class << std::endl;
+	if(position_inset_class.compare("none") == 0) return false;
+	else { expand(); return true; }
+}
+
+bool ElementLayoutWidget::setPositionInsetX(std::string className)
+{
+	position_inset_x_widget_->setValue(className);
+	position_inset_x_class = position_inset_x_widget_->getValue();
+	if(position_inset_x_class.compare("none") == 0) return false;
+	else { expand(); return true; }
+}
+
+bool ElementLayoutWidget::setPositionInsetY(std::string className)
+{
+	position_inset_y_widget_->setValue(className);
+	position_inset_y_class = position_inset_y_widget_->getValue();
+	if(position_inset_y_class.compare("none") == 0) return false;
+	else { expand(); return true; }
+}
+
+bool ElementLayoutWidget::setPositionTop(std::string className)
+{
+	std::cout << "position_top_class: " << position_top_class << std::endl;
+	position_top_widget_->setValue(className);
+	position_top_class = position_top_widget_->getValue();
+	if(position_top_class.compare("none") == 0) return false;
+	else { expand(); return true; }
+}
+
+bool ElementLayoutWidget::setPositionRight(std::string className)
+{	
+	position_right_widget_->setValue(className);
+	position_right_class = position_right_widget_->getValue();
+	if(position_right_class.compare("none") == 0) return false;
+	else { expand(); return true; }
+}
+
+bool ElementLayoutWidget::setPositionBottom(std::string className)
+{	
+	position_bottom_widget_->setValue(className);
+	position_bottom_class = position_bottom_widget_->getValue();
+	if(position_bottom_class.compare("none") == 0) return false;
+	else { expand(); return true; }
+}
+
+bool ElementLayoutWidget::setPositionLeft(std::string className)
+{	
+	position_left_widget_->setValue(className);
+	position_left_class = position_left_widget_->getValue();
+	if(position_left_class.compare("none") == 0) return false;
+	else { expand(); return true; }
+}
+
+bool ElementLayoutWidget::setAspectRatio(std::string className)
+{
+	int aspectRatioIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.aspect_ratio.styleClasses_);
+	if(aspectRatioIndex >= 0){
+		aspect_ratio_widget_->setValue(className);
+		aspect_ratio_class = aspect_ratio_widget_->getValue();
+		if(aspect_ratio_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setContainer(std::string className)
+{
+	int containerIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.container.styleClasses_);
+	if(containerIndex >= 0){
+		container_widget_->setValue(className);
+		container_class = container_widget_->getValue();
+		if(container_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setColumns(std::string className)
+{
+	int columnsIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.columns.styleClasses_);
+	if(columnsIndex >= 0){
+		columns_widget_->setValue(className);
+		columns_class = columns_widget_->getValue();
+		if(columns_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setBreakAfter(std::string className)
+{
+	int breakAfterIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_after.styleClasses_);
+	if(breakAfterIndex >= 0){
+		break_after_widget_->setValue(className);
+		break_after_class = break_after_widget_->getValue();
+		if(break_after_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setBreakBefore(std::string className)
+{
+	int breakBeforeIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_before.styleClasses_);
+	if(breakBeforeIndex >= 0){
+		break_before_widget_->setValue(className);
+		break_before_class = break_before_widget_->getValue();
+		if(break_before_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setBreakInside(std::string className)
+{
+	int breakInsideIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.break_inside.styleClasses_);
+	if(breakInsideIndex >= 0){
+		break_inside_widget_->setValue(className);
+		break_inside_class = break_inside_widget_->getValue();
+		if(break_inside_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setBoxDecorationBreak(std::string className)
+{
+	int boxDecorationBreakIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.box_decoration_break.styleClasses_);
+	if(boxDecorationBreakIndex >= 0){
+		box_decoration_break_widget_->setValue(className);
+		box_decoration_break_class = box_decoration_break_widget_->getValue();
+		if(box_decoration_break_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setBoxSizing(std::string className)
+{
+	int boxSizingIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.box_sizing.styleClasses_);
+	if(boxSizingIndex >= 0){
+		box_sizing_widget_->setValue(className);
+		box_sizing_class = box_sizing_widget_->getValue();
+		if(box_sizing_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setFloats(std::string className)
+{
+	int floatsIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.floats.styleClasses_);
+	if(floatsIndex >= 0){
+		floats_widget_->setValue(className);
+		floats_class = floats_widget_->getValue();
+		if(floats_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setClear(std::string className)
+{
+	int clearIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.clear.styleClasses_);
+	if(clearIndex >= 0){
+		clear_widget_->setValue(className);
+		clear_class = clear_widget_->getValue();
+		if(clear_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setIsolation(std::string className)
+{
+	int isolationIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.isolation.styleClasses_);
+	if(isolationIndex >= 0){
+		isolation_widget_->setValue(className);
+		isolation_class = isolation_widget_->getValue();
+		if(isolation_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setObjectFit(std::string className)
+{
+	int objectFitIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.object_fit.styleClasses_);
+	if(objectFitIndex >= 0){
+		object_fit_widget_->setValue(className);
+		object_fit_class = object_fit_widget_->getValue();
+		if(object_fit_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setObjectPosition(std::string className)
+{
+	int objectPositionIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.object_position.styleClasses_);
+	if(objectPositionIndex >= 0){
+		object_position_widget_->setValue(className);
+		object_position_class = object_position_widget_->getValue();
+		if(object_position_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setOverflow(std::string className)
+{
+	int overflowIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow.styleClasses_);
+	if(overflowIndex >= 0){
+		overflow_widget_->setValue(className);
+		overflow_class = overflow_widget_->getValue();
+		if(overflow_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setOverflowX(std::string className)
+{
+	int overflowXIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow_x.styleClasses_);
+	if(overflowXIndex >= 0){
+		overflow_x_widget_->setValue(className);
+		overflow_x_class = overflow_x_widget_->getValue();
+		if(overflow_x_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setOverflowY(std::string className)
+{
+	int overflowYIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overflow_y.styleClasses_);
+	if(overflowYIndex >= 0){
+		overflow_y_widget_->setValue(className);
+		overflow_y_class = overflow_y_widget_->getValue();
+		if(overflow_y_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setOverscrollBehavior(std::string className)
+{
+	int overscrollBehaviorIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior.styleClasses_);
+	if(overscrollBehaviorIndex >= 0){
+		overscroll_behavior_widget_->setValue(className);
+		overscroll_behavior_class = overscroll_behavior_widget_->getValue();
+		if(overscroll_behavior_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setOverscrollBehaviorX(std::string className)
+{
+	int overscrollBehaviorXIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior_x.styleClasses_);
+	if(overscrollBehaviorXIndex >= 0){
+		overscroll_behavior_x_widget_->setValue(className);
+		overscroll_behavior_x_class = overscroll_behavior_x_widget_->getValue();
+		if(overscroll_behavior_x_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
+
+bool ElementLayoutWidget::setOverscrollBehaviorY(std::string className)
+{
+	int overscrollBehaviorYIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.overscroll_behavior_y.styleClasses_);
+	if(overscrollBehaviorYIndex >= 0){
+		overscroll_behavior_y_widget_->setValue(className);
+		overscroll_behavior_y_class = overscroll_behavior_y_widget_->getValue();
+		if(overscroll_behavior_y_class.compare("none") == 0) return false;
+		else { expand(); return true; }
+	}
+return false;
+}
 
 bool ElementLayoutWidget::setVisibility(std::string className)
 {
 	int visibilityIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.visibility.styleClasses_);
 	if(visibilityIndex >= 0){
 		visibility_widget_->setValue(className);
-		if(visibilityIndex > 0) {
-			expand();
-			return true;
-		}
+		visibility_class = visibility_widget_->getValue();
+		if(visibility_class.compare("none") == 0) return false;
+		else { expand(); return true; }
 	}
-	return false;
+return false;
 }
 
 bool ElementLayoutWidget::setZIndex(std::string className)
@@ -722,56 +796,10 @@ bool ElementLayoutWidget::setZIndex(std::string className)
 	int zIndexIndex = tailwindConfig_->getIndesOfStringInVector(className, tailwindConfig_->layout.z_index.styleClasses_);
 	if(zIndexIndex >= 0){
 		z_index_widget_->setValue(className);
-		if(zIndexIndex > 0) {
-			expand();
-			return true;
-		}
+		z_index_class = z_index_widget_->getValue();
+		if(z_index_class.compare("none") == 0) return false;
+		else { expand(); return true; }
 	}
-	return false;
+return false;
 }
 
-
-
-bool ElementLayoutWidget::setPositionInset(std::string className)
-{
-	return false;
-}
-
-bool ElementLayoutWidget::setPositionInsetX(std::string className)
-{
-
-	return false;
-}
-
-bool ElementLayoutWidget::setPositionInsetY(std::string className)
-{
-
-	return false;
-}
-
-bool ElementLayoutWidget::setPositionTop(std::string className)
-{
-
-	return false;
-}
-
-bool ElementLayoutWidget::setPositionRight(std::string className)
-{
-	return false;
-	
-}
-
-bool ElementLayoutWidget::setPositionBottom(std::string className)
-{
-	return false;
-}
-
-bool ElementLayoutWidget::setPositionLeft(std::string className)
-{
-	return false;
-}
-bool ElementLayoutWidget::setDisplay(std::string className)
-{
-	
-	return false;
-}

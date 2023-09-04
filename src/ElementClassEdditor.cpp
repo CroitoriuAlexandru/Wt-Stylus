@@ -8,83 +8,70 @@ ElementClassEdditor::ElementClassEdditor()
 {
     tailwindConfig_ = std::make_shared<Config>();
 
-    // effectsWidget_ = bindWidget("effects-controls", std::make_unique<ElementEffectsWidget>(tailwindConfig_));
+    flexAndGridWidget_ = bindWidget("flex-and-grid-controls", std::make_unique<ElementFlexAndGridWidget>(tailwindConfig_));
     spacingWidget_ = bindWidget("spacing-controls", std::make_unique<ElementSpacingWidget>(tailwindConfig_));
     sizingWidget_ = bindWidget("sizing-controls", std::make_unique<ElementSizingWidget>(tailwindConfig_));
     backgroundWidget_ = bindWidget("background-controls", std::make_unique<ElementBackgroundWidget>(tailwindConfig_));
-    // transformsWidget_ = bindWidget("transforms-controls", std::make_unique<ElementTransformsWidget>(tailwindConfig_));
     layoutWidget_ = bindWidget("layout-controls", std::make_unique<ElementLayoutWidget>(tailwindConfig_));
+
+
+
+    flexAndGridWidget_->styleChanged().connect(this, [=](){
+        std::string newStyles = notFoundClasses + " ";
+        flexAndGridClasses = flexAndGridWidget_->getStyles();
+        if(flexAndGridClasses != ""){ newStyles += flexAndGridClasses + " "; }
+        if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
+        if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
+        if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
+        if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
+        styleChanged_.emit(newStyles);
+    });
 
     layoutWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
         layoutClasses = layoutWidget_->getStyles();
+        if(flexAndGridClasses != ""){ newStyles += flexAndGridClasses + " "; }
         if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
         if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
         if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
         if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
-        // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
-        // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
         styleChanged_.emit(newStyles);
+
+
+        // send display value to flexAndGridWidget to change layout
+        flexAndGridWidget_->setDisplayLayout(layoutWidget_->display_widget_->getValue());
     });
-
-    // transformsWidget_->styleChanged().connect(this, [=](){
-    //     std::string newStyles = notFoundClasses + " ";
-    //     // transformsClasses = transformsWidget_->getStyles();
-    //     // if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
-    //     if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
-    //     if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
-    //     if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
-    //     // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
-    //     // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
-    //     styleChanged_.emit(newStyles);
-    // });
-
-    // effectsWidget_->styleChanged().connect(this, [=](){
-    //     std::string newStyles = notFoundClasses + " ";
-    //     // effectsClasses = effectsWidget_->getStyles();
-    //     // if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
-    //     if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
-    //     if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
-    //     if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
-    //     // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
-    //     // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
-    //     styleChanged_.emit(newStyles);
-    // });
-
 
     spacingWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
         spacingClasses = spacingWidget_->getStyles();
+        if(flexAndGridClasses != ""){ newStyles += flexAndGridClasses + " "; }
         if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
         if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
         if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
         if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
-        // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
-        // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
         styleChanged_.emit(newStyles);
     });
 
     sizingWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
         sizingClasses = sizingWidget_->getStyles();
+        if(flexAndGridClasses != ""){ newStyles += flexAndGridClasses + " "; }
         if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
         if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
         if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
         if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
-        // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
-        // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
         styleChanged_.emit(newStyles);
     });
 
     backgroundWidget_->styleChanged().connect(this, [=](){
         std::string newStyles = notFoundClasses + " ";
         backgroundClasses = backgroundWidget_->getStyles();
+        if(flexAndGridClasses != ""){ newStyles += flexAndGridClasses + " "; }
         if(layoutClasses != ""){ newStyles += layoutClasses + " "; }
         if(sizingClasses != ""){ newStyles += sizingClasses + " "; }
         if(spacingClasses != ""){ newStyles += spacingClasses + " "; }
         if(backgroundClasses != ""){ newStyles += backgroundClasses + " "; }
-        // if(effectsClasses != ""){ newStyles += effectsClasses + " "; }
-        // if(transformsClasses != ""){ newStyles += transformsClasses + " "; }
         styleChanged_.emit(newStyles);
     });
 
@@ -95,7 +82,42 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     resetStyles();
     classes = " " + classes + " ";
     std::cout << "\n\n classes : <" << classes << ">\n\n";
-        
+
+    FlexAndGridData flexAndGridData;
+    flexAndGridData.order = findAndRemoveMatche(tailwindConfig_->flexbox.order_regex, classes);
+    // flex
+    flexAndGridData.basis = findAndRemoveMatche(tailwindConfig_->flexbox.basis_regex, classes);
+    flexAndGridData.direction = findAndRemoveMatche(tailwindConfig_->flexbox.direction_regex, classes);
+    flexAndGridData.wrap = findAndRemoveMatche(tailwindConfig_->flexbox.wrap_regex, classes);
+    flexAndGridData.grow_shrink = findAndRemoveMatche(tailwindConfig_->flexbox.grow_skrink_regex, classes);
+    flexAndGridData.grow = findAndRemoveMatche(tailwindConfig_->flexbox.grow_regex, classes);
+    flexAndGridData.shrink = findAndRemoveMatche(tailwindConfig_->flexbox.shrink_regex, classes);
+    flexAndGridData.justify_content = findAndRemoveMatche(tailwindConfig_->flexbox.justify_content_regex, classes);
+    flexAndGridData.justify_items = findAndRemoveMatche(tailwindConfig_->flexbox.justify_items_regex, classes);
+    flexAndGridData.justify_self = findAndRemoveMatche(tailwindConfig_->flexbox.justify_self_regex, classes);
+    flexAndGridData.align_content = findAndRemoveMatche(tailwindConfig_->flexbox.align_content_regex, classes);
+    flexAndGridData.align_items = findAndRemoveMatche(tailwindConfig_->flexbox.align_items_regex, classes);
+    flexAndGridData.align_self = findAndRemoveMatche(tailwindConfig_->flexbox.align_self_regex, classes);
+    flexAndGridData.place_content = findAndRemoveMatche(tailwindConfig_->flexbox.place_content_regex, classes);
+    flexAndGridData.place_items = findAndRemoveMatche(tailwindConfig_->flexbox.place_items_regex, classes);
+    flexAndGridData.place_self = findAndRemoveMatche(tailwindConfig_->flexbox.place_self_regex, classes);
+    // grid
+    flexAndGridData.grid_template_columns = findAndRemoveMatche(tailwindConfig_->grid.grid_template_columns_regex, classes);
+    flexAndGridData.grid_cols_start = findAndRemoveMatche(tailwindConfig_->grid.grid_cols_start_regex, classes);
+    flexAndGridData.grid_cols_span = findAndRemoveMatche(tailwindConfig_->grid.grid_cols_span_regex, classes);
+    flexAndGridData.grid_cols_end = findAndRemoveMatche(tailwindConfig_->grid.grid_cols_end_regex, classes);
+    flexAndGridData.grid_template_rows = findAndRemoveMatche(tailwindConfig_->grid.grid_template_rows_regex, classes);
+    flexAndGridData.grid_rows_start = findAndRemoveMatche(tailwindConfig_->grid.grid_rows_start_regex, classes);
+    flexAndGridData.grid_rows_span = findAndRemoveMatche(tailwindConfig_->grid.grid_rows_span_regex, classes);
+    flexAndGridData.grid_rows_end = findAndRemoveMatche(tailwindConfig_->grid.grid_rows_end_regex, classes);
+    flexAndGridData.grid_auto_flow = findAndRemoveMatche(tailwindConfig_->grid.grid_auto_flow_regex, classes);
+    flexAndGridData.grid_auto_columns = findAndRemoveMatche(tailwindConfig_->grid.grid_auto_columns_regex, classes);
+    flexAndGridData.grid_auto_rows = findAndRemoveMatche(tailwindConfig_->grid.grid_auto_rows_regex, classes);
+    flexAndGridData.gap = findAndRemoveMatches(tailwindConfig_->grid.gap_regex, classes);
+    
+
+
+
     LayoutData layout;
     layout.aspect_ratio = findAndRemoveMatche(tailwindConfig_->layout.aspect_ratio_regex, classes);
     layout.container = findAndRemoveMatche(tailwindConfig_->layout.container_regex, classes);
@@ -114,10 +136,12 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     layout.overflow = findAndRemoveMatches(tailwindConfig_->layout.overflow_regex, classes);
     layout.overscroll_behavior = findAndRemoveMatches(tailwindConfig_->layout.overscroll_behavior_regex, classes);
     layout.position = findAndRemoveMatche(tailwindConfig_->layout.position_regex, classes);
+    layout.position_inset = findAndRemoveMatches(tailwindConfig_->layout.position_inset_regex, classes);
     layout.position_sides = findAndRemoveMatches(tailwindConfig_->layout.position_sides_regex, classes);
     layout.visibility = findAndRemoveMatche(tailwindConfig_->layout.visibility_regex, classes);
     layout.z_index = findAndRemoveMatche(tailwindConfig_->layout.z_index_regex, classes);  
 
+    
 
     // TransformsData transforms;
     // transforms.scale = findAndRemoveMatches(tailwindConfig_->transforms.scale_regex, classes);
@@ -174,6 +198,7 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     spacingWidget_->setClasses(spacing);
     sizingWidget_->setClasses(sizing);
     backgroundWidget_->setClasses(bgData);
+    flexAndGridWidget_->setClasses(flexAndGridData);
     // effectsWidget_->setClasses(effects);
     // transformsWidget_->setClasses(transforms);
 
@@ -181,8 +206,12 @@ void ElementClassEdditor::setStyleClasses(std::string classes)
     spacingClasses = spacingWidget_->getStyles();
     sizingClasses = sizingWidget_->getStyles();
     backgroundClasses = backgroundWidget_->getStyles();
+    flexAndGridClasses = flexAndGridWidget_->getStyles();
     // effectsClasses = effectsWidget_->getStyles();
     // transformsClasses = transformsWidget_->getStyles();
+
+    flexAndGridWidget_->setDisplayLayout(layout.display);
+
 
     notFoundClasses = std::regex_replace(classes, std::regex("^\\s+"), "");
     std::cout << "\n\n notFoundClasses : " << notFoundClasses << "\n\n";

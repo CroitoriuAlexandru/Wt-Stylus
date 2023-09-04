@@ -139,6 +139,7 @@ void ElementSizingWidget::setClasses(SizingData sizing)
 {
 	resetStyles();
 	bool activeClasses;
+	
 	activeClasses = setWidth(sizing.width);
 	activeClasses = setHeight(sizing.height);
 	activeClasses = setMinWidth(sizing.minWidth);
@@ -175,14 +176,11 @@ void ElementSizingWidget::setCustomTestValues()
 bool ElementSizingWidget::setWidth(std::string className)
 {
 
-	width_class = className;
-	width_widget_->setValue(width_class);
+	width_widget_->setValue(className);
+	width_class = width_widget_->getValue();
 
 	if(className.compare("none") == 0) return false;
-	else {
-		expand();
-		return true;
-	}
+	else {expand();return true;}
 }
 
 bool ElementSizingWidget::setHeight(std::string className)
@@ -191,10 +189,7 @@ bool ElementSizingWidget::setHeight(std::string className)
 	height_widget_->setValue(height_class);
 
 	if(className.compare("none") == 0) return false;
-	else {
-		expand();
-		return true;
-	}
+	else {expand();return true;}
 }
 
 bool ElementSizingWidget::setMinWidth(std::string className)
@@ -203,10 +198,7 @@ bool ElementSizingWidget::setMinWidth(std::string className)
 	minWidth_widget_->setValue(minWidth_class);
 
 	if(className.compare("none") == 0) return false;
-	else {
-		expand();
-		return true;
-	}
+	else {expand();return true;}
 }
 
 bool ElementSizingWidget::setMinHeight(std::string className)
@@ -215,10 +207,7 @@ bool ElementSizingWidget::setMinHeight(std::string className)
 	minHeight_widget_->setValue(minHeight_class);
 
 	if(className.compare("none") == 0) return false;
-	else {
-		expand();
-		return true;
-	}
+	else {expand();return true;}
 }
 
 bool ElementSizingWidget::setMaxWidth(std::string className)
@@ -227,10 +216,7 @@ bool ElementSizingWidget::setMaxWidth(std::string className)
 	maxWidth_widget_->setValue(maxWidth_class);
 
 	if(className.compare("none") == 0) return false;
-	else {
-		expand();
-		return true;
-	}
+	else {expand();return true;}
 }
 
 bool ElementSizingWidget::setMaxHeight(std::string className)
@@ -239,9 +225,6 @@ bool ElementSizingWidget::setMaxHeight(std::string className)
 	maxHeight_widget_->setValue(maxHeight_class);
 
 	if(className.compare("none") == 0) return false;
-	else {
-		expand();
-		return true;
-	}
+	else {expand();return true;}
 }
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "ElementFlexAndGrid.h"
 #include "ElementSpacing.h"
 #include "ElementSizing.h"
 #include "ElementBackground.h"
@@ -23,6 +24,7 @@ public:
 
     std::string getStyles();
 
+    ElementFlexAndGridWidget *flexAndGridWidget_;
     ElementBackgroundWidget *backgroundWidget_;
     ElementSpacingWidget *spacingWidget_;
     ElementSizingWidget *sizingWidget_;
@@ -35,13 +37,11 @@ private:
     std::string findAndRemoveMatche(boost::regex regex, std::string& str);
 
     std::string notFoundClasses = "";
-
+    std::string flexAndGridClasses = "";
     std::string backgroundClasses = "";
     std::string spacingClasses = "";
     std::string sizingClasses = "";
     std::string layoutClasses = "";
-    // std::string effectsClasses = "";
-    // std::string transformsClasses = "";
     
     Wt::Signal<std::string> styleChanged_;
 

@@ -1,5 +1,6 @@
 #include "include/SelectionGroupClassChanger.h"
 #include <Wt/WApplication.h>
+#include <Wt/WText.h>
 
 void SelectionGroupClassChanger::setCustom(bool custom)
 {
@@ -96,19 +97,18 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 {
 	titleBar = addWidget(std::make_unique<Wt::WContainerWidget>());
 	content = addWidget(std::make_unique<Wt::WContainerWidget>());
-
-	setStyleClass("flex flex-col border border-solid pb-1 border-neutral-900");
+	setCanReceiveFocus(true);
+	setStyleClass("flex flex-col border-b border-solid pb-1 border-neutral-900");
 	titleBar->setStyleClass("flex items-center font-bold text-neutral-400 text-sm");
 	content->setStyleClass("flex flex-wrap items-center");
 
-	titleBar->addWidget(std::make_unique<Wt::WText>(title));
+
+	widget_title = titleBar->addWidget(std::make_unique<Wt::WText>(title));
 
     checkbox_important_ = titleBar->addWidget(std::make_unique<Wt::WCheckBox>("!"));
     lineEdit_custom_value_ = content->addWidget(std::make_unique<Wt::WLineEdit>());
     btn_reset_ = titleBar->addWidget(std::make_unique<Wt::WText>("↺"));
     checkBox_custom_value_ = titleBar->addWidget(std::make_unique<Wt::WCheckBox>("]"));
-	
-    titleBar->addWidget(std::make_unique<Wt::WText>(classRepeatName))->setStyleClass("me-2");
 	
 	btn_reset_->setThemeStyleEnabled(false);
 	lineEdit_custom_value_->hide();
@@ -117,16 +117,17 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 	checkBox_custom_value_->disable();
 
 	// set styles
-	btn_reset_->setStyleClass("mr-auto hover:bg-neutral-800 text-center p-0.5 cursor-pointer");
-	checkBox_custom_value_->setStyleClass("hover:bg-neutral-800 text-center p-0.5 [&>input]:hidden [&>span]:px-1 [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-95 rounded-md font-bold");
+	widget_title->setStyleClass("ml-1 mr-auto");
+	btn_reset_->setStyleClass("hover:bg-neutral-800 text-center text-white p-0.5 cursor-pointer");
+	checkBox_custom_value_->setStyleClass("hover:bg-neutral-800 text-center text-white p-0.5 [&>input]:hidden [&>span]:px-1 [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-95 rounded-md font-bold");
 	
-	checkbox_important_->setStyleClass("ml-auto hover:bg-neutral-800 text-center p-0.5 [&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-950 rounded-md font-bold");
+	checkbox_important_->setStyleClass(" ml-auto hover:bg-neutral-800 text-center text-white p-0.5 [&>input]:hidden [&>span]:px-1 [&>span]:text [&>span]:cursor-pointer [&>span]:m-0 [&>span]:py-0 [&>span]:hover:bg-neutral-950 rounded-md font-bold");
 	lineEdit_custom_value_->setStyleClass("px-1 w-full grow rounded-md h-full bg-neutral-800 text-center appearance-none hover:bg-neutral-900 min-w-[70px]");
     
 
 	std::string button_styles = 
 	R"(
-		flex w-fit h-fit cursor-pointer m-px p-px text-neutral-950 font-bold text-xs
+		flex w-fit h-fit cursor-pointer m-px p-px text-neutral-950 font-bold text-[10px]
 		[&>span]:bg-cover [&>input]:hidden [&>span]:m-px [&>span]:rounded-md [&>span]:px-1
 		[&>span]:bg-neutral-300 
 		[&>span]:hover:bg-neutral-800 [&>span]:hover:text-neutral-50  
@@ -134,12 +135,15 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 	)";
 
 	if(classRepeatName.compare("") != 0){
+		// widget_title->setText(classRepeatName);
 		for(int index = 0; index < propriety.styleClasses_.size(); ++index){
 			auto styleClass = propriety.styleClasses_[index];
 			auto btn = content->addWidget(std::make_unique<Wt::WRadioButton>(""));
+			btn->setToolTip(Wt::WString().tr("tooltip-styleClasses").arg(styleClass.className_).arg("seccond argument"), Wt::TextFormat::UnsafeXHTML);
+
 			btn->setStyleClass(button_styles);
 			if(styleClass.className_.compare("none") == 0){
-				btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2.5");
+				btn->addStyleClass("[&>span]:bg-[url(resources/icons/red-cross.svg)] [&>span]:!p-2");
 			}else {
 				btn->setText(styleClass.className_.substr(classRepeatName.length()));
 			}
@@ -150,6 +154,10 @@ SelectionGroupClassChanger::SelectionGroupClassChanger(Propriety propriety, std:
 			group_->addButton(btn, index);
 		}
 	} else {
+		if(propriety.styleClasses_.size() <= 5){
+			content = titleBar->insertBefore(std::make_unique<Wt::WContainerWidget>(), checkbox_important_);
+			content->setStyleClass("flex flex-wrap items-center");
+		} 
 		for(int index = 0; index < propriety.styleClasses_.size(); ++index){
 			auto styleClass = propriety.styleClasses_[index];
 			auto btn = content->addWidget(std::make_unique<Wt::WRadioButton>(""));
@@ -213,8 +221,7 @@ return selectedClass;
 
 void SelectionGroupClassChanger::setValue(std::string className)
 {
-	std::string reset = "res";
-	if(className.compare("") == 0 || className.compare("none") == 0 || className.substr(className.length() - reset.length()) == reset)
+	if(className.compare("") == 0 || className.compare("none") == 0)
 	{   
         auto index = getIndesOfStringInVector(defaultValue, propriety_.styleClasses_);
 		group_->setSelectedButtonIndex(index);

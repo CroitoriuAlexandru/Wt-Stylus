@@ -2,6 +2,7 @@
 #include <Wt/WContainerWidget.h>
 #include <Wt/WComboBox.h>
 #include "ComboBoxClassChanger.h"
+#include "SelectionGroupClassChanger.h"
 #include <Wt/WDialog.h>
 #include <Wt/WPanel.h>
 #include <Wt/WGroupBox.h>
@@ -58,13 +59,16 @@ public:
 	bool setRepeat(std::string className);
 	bool setSize(std::string className);
 private:
-	std::shared_ptr<Wt::WButtonGroup> gradient_group;
-	std::shared_ptr<Wt::WButtonGroup> attachment_group;
-	std::shared_ptr<Wt::WButtonGroup> clip_group;
-	std::shared_ptr<Wt::WButtonGroup> origin_group;
-	std::shared_ptr<Wt::WButtonGroup> position_group;
-	std::shared_ptr<Wt::WButtonGroup> repeat_group;
-	std::shared_ptr<Wt::WButtonGroup> size_group;
+
+	SelectionGroupClassChanger* gradient_widget_;
+	SelectionGroupClassChanger* attachment_widget_;
+	SelectionGroupClassChanger* clip_widget_;
+	SelectionGroupClassChanger* origin_widget_;
+	SelectionGroupClassChanger* position_widget_;
+	SelectionGroupClassChanger* repeat_widget_;
+	SelectionGroupClassChanger* size_widget_;
+
+
 	std::string gradient_class = "none";
 	std::string attachment_class = "none";
 	std::string clip_class = "none";

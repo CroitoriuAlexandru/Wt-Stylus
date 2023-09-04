@@ -65,7 +65,29 @@ Layout::Layout(std::vector<std::string> spacingScale)
 
     // Display
     // inline-block|inline-flex|inline-grid|inline-table|inline|table-caption|table-cell|table-column|table-column-group|table-footer-group|table-header-group|table-row-group|table-row|flow-root|list-item|block|flex|table|grid|contents|hidden
-    display_variants = {"inline-block", "inline-flex", "inline-grid", "inline-table", "inline", "table-caption", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row-group", "table-row", "flow-root", "list-item", "block", "flex", "table", "grid", "contents", "hidden"};
+    display_variants = {
+     "inline",
+     "block",
+     "flex",
+     "grid",
+     "table",
+     "list-item",
+     "inline-block",
+     "inline-flex",
+     "inline-grid",
+     "inline-table",
+     "table-caption",
+     "table-cell",
+     "table-column",
+     "table-column-group",
+     "table-footer-group",
+     "table-header-group",
+     "table-row-group",
+     "table-row",
+     "flow-root",
+     "contents",
+     "hidden",
+    };
     display = Propriety({StyleClass("none", "")}, "https://tailwindcss.com/docs/display");
     for(auto variant : display_variants) {
         if(variant.compare("none") == 0)
@@ -409,7 +431,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : position_inset.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("position-inset-res"));
+            data.push_back("layout | " + std::string("inset-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);
@@ -418,7 +440,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : position_inset_x.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("position-inset-x-res"));
+            data.push_back("layout | " + std::string("inset-x-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);
@@ -427,7 +449,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : position_inset_y.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("position-inset-y-res"));
+            data.push_back("layout | " + std::string("inset-y-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);
@@ -436,7 +458,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : position_top.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("position-top-res"));
+            data.push_back("layout | " + std::string("top-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);
@@ -445,7 +467,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : position_right.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("position-right-res"));
+            data.push_back("layout | " + std::string("right-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);
@@ -454,7 +476,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : position_bottom.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("position-bottom-res"));
+            data.push_back("layout | " + std::string("bottom-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);
@@ -463,7 +485,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : position_left.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("position-left-res"));
+            data.push_back("layout | " + std::string("left-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);
@@ -481,7 +503,7 @@ std::vector<std::string> Layout::search_data()
     for(auto styleClass : z_index.styleClasses_)
     {
         if(styleClass.className_ == "none"){
-            data.push_back("layout | " + std::string("z-index-res"));
+            data.push_back("layout | " + std::string("z-res"));
             continue;
         }
         data.push_back("layout | " + styleClass.className_);

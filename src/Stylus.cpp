@@ -377,56 +377,257 @@ void StylusEdditor::createSearchDialog()
 				
 			}else if (styleCathegory.compare("backgrounds") == 0){
 				if(styleClass.compare("reset") == 0){
-					std::cout << "\n reset backgrounds \n";
 					elementClassEdditor_->backgroundWidget_->resetStyles();
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_image_regex)){
-					std::cout << "\n set background image \n";
 					elementClassEdditor_->backgroundWidget_->setGradient(styleClass);
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_attachment_regex)){
-					std::cout << "\n set background attachment \n";
 					elementClassEdditor_->backgroundWidget_->setAttachment(styleClass);
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_clip_regex)){
-					std::cout << "\n set background clip \n";
 					elementClassEdditor_->backgroundWidget_->setClip(styleClass);
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_origin_regex)){
-					std::cout << "\n set background origin \n";
 					elementClassEdditor_->backgroundWidget_->setOrigin(styleClass);
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_position_regex)){
-					std::cout << "\n set background position \n";
 					elementClassEdditor_->backgroundWidget_->setPosition(styleClass);
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_repeat_regex)){
-					std::cout << "\n set background repeat \n";
 					elementClassEdditor_->backgroundWidget_->setRepeat(styleClass);
 				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->backgrounds.background_size_regex)){
-					std::cout << "\n set background size \n";
 					elementClassEdditor_->backgroundWidget_->setSize(styleClass);
 				}else if (styleClass.compare("bg-gradient-res") == 0){
-					std::cout << "\n set background gradient \n";
 					elementClassEdditor_->backgroundWidget_->setGradient("none");
 				}else if (styleClass.compare("bg-attachment-res") == 0){
-					std::cout << "\n set background attachment \n";
 					elementClassEdditor_->backgroundWidget_->setAttachment("none");
 				}else if (styleClass.compare("bg-clip-res") == 0){
-					std::cout << "\n set background clip \n";
 					elementClassEdditor_->backgroundWidget_->setClip("none");
 				}else if (styleClass.compare("bg-origin-res") == 0){
-					std::cout << "\n set background origin \n";
 					elementClassEdditor_->backgroundWidget_->setOrigin("none");
 				}else if (styleClass.compare("bg-position-res") == 0){
-					std::cout << "\n set background position \n";
 					elementClassEdditor_->backgroundWidget_->setPosition("none");
 				}else if (styleClass.compare("bg-repeat-res") == 0){
-					std::cout << "\n set background repeat \n";
 					elementClassEdditor_->backgroundWidget_->setRepeat("none");
 				}else if (styleClass.compare("bg-size-res") == 0){
-					std::cout << "\n set background size \n";
 					elementClassEdditor_->backgroundWidget_->setSize("none");
 				}else {
 					std::cout << "\n\n ---------- command from B A C K G R O U N D S not valid for some reson ----------\n\n";
 				}
 				elementClassEdditor_->backgroundWidget_->styleChanged().emit(elementClassEdditor_->backgroundWidget_->getStyles());
-			}
+			}else if (styleCathegory.compare("layout") == 0){
+				if(styleClass.compare("reset") == 0){
+					elementClassEdditor_->layoutWidget_->resetStyles();
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.aspect_ratio_regex)){
+					elementClassEdditor_->layoutWidget_->setAspectRatio(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.container_regex)){
+					elementClassEdditor_->layoutWidget_->setContainer(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.columns_regex)){
+					elementClassEdditor_->layoutWidget_->setColumns(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.break_after_regex)){
+					elementClassEdditor_->layoutWidget_->setBreakAfter(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.break_before_regex)){
+					elementClassEdditor_->layoutWidget_->setBreakBefore(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.break_inside_regex)){
+					elementClassEdditor_->layoutWidget_->setBreakInside(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.box_decoration_break_regex)){
+					elementClassEdditor_->layoutWidget_->setBoxDecorationBreak(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.box_sizing_regex)){
+					elementClassEdditor_->layoutWidget_->setBoxSizing(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.display_regex)){
+					elementClassEdditor_->layoutWidget_->setDisplay(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.floats_regex)){
+					elementClassEdditor_->layoutWidget_->setFloats(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.clear_regex)){
+					elementClassEdditor_->layoutWidget_->setClear(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.isolation_regex)){
+					elementClassEdditor_->layoutWidget_->setIsolation(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.object_fit_regex)){
+					elementClassEdditor_->layoutWidget_->setObjectFit(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.object_position_regex)){
+					elementClassEdditor_->layoutWidget_->setObjectPosition(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.overflow_regex)){
+					if(styleClass.find("-x-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setOverflowX(styleClass);
+					}else if(styleClass.find("-y-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setOverflowY(styleClass);
+					}else {
+						elementClassEdditor_->layoutWidget_->setOverflow(styleClass);
+					}
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.overscroll_behavior_regex)){
+					if(styleClass.find("-x-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setOverscrollBehaviorX(styleClass);
+					}else if(styleClass.find("-y-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setOverscrollBehaviorY(styleClass);
+					}else {
+						elementClassEdditor_->layoutWidget_->setOverscrollBehavior(styleClass);
+					}
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.position_regex)){
+					elementClassEdditor_->layoutWidget_->setPosition(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.position_inset_regex)){
+					if(styleClass.find("-x-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setPositionInsetX(styleClass);
+					}else if(styleClass.find("-y-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setPositionInsetY(styleClass);
+					}else {
+						std::cout << "\n\n set inset \n\n";
+						elementClassEdditor_->layoutWidget_->setPositionInset(styleClass);
+					}
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.position_sides_regex)){
+					if(styleClass.find("top-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setPositionTop(styleClass);
+					}else if(styleClass.find("right-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setPositionRight(styleClass);
+					}else if(styleClass.find("bottom-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setPositionBottom(styleClass);
+					}else if(styleClass.find("left-") != std::string::npos){
+						elementClassEdditor_->layoutWidget_->setPositionLeft(styleClass);
+					}
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.visibility_regex)){
+					elementClassEdditor_->layoutWidget_->setVisibility(styleClass);
+				}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->layout.z_index_regex)){
+					elementClassEdditor_->layoutWidget_->setZIndex(styleClass);
+				}else if (styleClass.compare("aspect-res") == 0){
+					elementClassEdditor_->layoutWidget_->setAspectRatio("none");
+				}else if (styleClass.compare("container-res") == 0){
+					elementClassEdditor_->layoutWidget_->setContainer("none");
+				}else if (styleClass.compare("columns-res") == 0){
+					elementClassEdditor_->layoutWidget_->setColumns("none");
+				}else if (styleClass.compare("break-after-res") == 0){
+					elementClassEdditor_->layoutWidget_->setBreakAfter("none");
+				}else if (styleClass.compare("break-before-res") == 0){
+					elementClassEdditor_->layoutWidget_->setBreakBefore("none");
+				}else if (styleClass.compare("break-inside-res") == 0){
+					elementClassEdditor_->layoutWidget_->setBreakInside("none");
+				}else if (styleClass.compare("box-decoration-break-res") == 0){
+					elementClassEdditor_->layoutWidget_->setBoxDecorationBreak("none");
+				}else if (styleClass.compare("box-sizing-res") == 0){
+					elementClassEdditor_->layoutWidget_->setBoxSizing("none");
+				}else if (styleClass.compare("display-res") == 0){
+					elementClassEdditor_->layoutWidget_->setDisplay("none");
+				}else if (styleClass.compare("floats-res") == 0){
+					elementClassEdditor_->layoutWidget_->setFloats("none");
+				}else if (styleClass.compare("clear-res") == 0){
+					elementClassEdditor_->layoutWidget_->setClear("none");
+				}else if (styleClass.compare("isolation-res") == 0){
+					elementClassEdditor_->layoutWidget_->setIsolation("none");
+				}else if (styleClass.compare("object-fit-res") == 0){
+					elementClassEdditor_->layoutWidget_->setObjectFit("none");
+				}else if (styleClass.compare("object-position-res") == 0){
+					elementClassEdditor_->layoutWidget_->setObjectPosition("none");
+				}else if (styleClass.compare("overflow-res") == 0){
+					elementClassEdditor_->layoutWidget_->setOverflow("none");
+				}else if (styleClass.compare("overflow-x-res") == 0){
+					elementClassEdditor_->layoutWidget_->setOverflowX("none");
+				}else if (styleClass.compare("overflow-y-res") == 0){
+					elementClassEdditor_->layoutWidget_->setOverflowY("none");
+				}else if (styleClass.compare("overscroll-behavior-res") == 0){
+					elementClassEdditor_->layoutWidget_->setOverscrollBehavior("none");
+				}else if (styleClass.compare("overscroll-behavior-x-res") == 0){
+					elementClassEdditor_->layoutWidget_->setOverscrollBehaviorX("none");
+				}else if (styleClass.compare("overscroll-behavior-y-res") == 0){
+					elementClassEdditor_->layoutWidget_->setOverscrollBehaviorY("none");
+				}else if (styleClass.compare("position-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPosition("none");
+				}else if (styleClass.compare("inset-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPositionInset("none");
+				}else if (styleClass.compare("inset-x-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPositionInsetX("none");
+				}else if (styleClass.compare("inset-y-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPositionInsetY("none");
+				}else if (styleClass.compare("top-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPositionTop("none");	
+				}else if (styleClass.compare("right-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPositionRight("none");
+				}else if (styleClass.compare("bottom-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPositionBottom("none");
+				}else if (styleClass.compare("left-res") == 0){
+					elementClassEdditor_->layoutWidget_->setPositionLeft("none");
+				}else if (styleClass.compare("visibility-res") == 0){
+					elementClassEdditor_->layoutWidget_->setVisibility("none");
+				}else if (styleClass.compare("z-index-res") == 0){
+					elementClassEdditor_->layoutWidget_->setZIndex("none");
+				}else {
+					std::cout << "\n\n ---------- command from L A Y O U T not valid for some reson ----------\n\n";
+				}
+
+				elementClassEdditor_->layoutWidget_->styleChanged().emit(elementClassEdditor_->layoutWidget_->getStyles());	
+			}else if(styleCathegory.compare("flex-&-grid") == 0){
+				std::cout << "\n\n order: <" << styleClass << ">\n\n";
+				if(styleClass.compare("order-res") == 0){
+					elementClassEdditor_->flexAndGridWidget_->setOrder("none");
+					}else if (boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.order_regex)){
+						elementClassEdditor_->flexAndGridWidget_->setOrder(styleClass);
+					}
+			}else if(styleCathegory.compare("grid") == 0){
+				if(styleClass.compare("reset") == 0){
+					elementClassEdditor_->flexAndGridWidget_->resetStyles();
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_template_columns_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridTemplateColumns(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_cols_start_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridColsStart(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_cols_span_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridColsSpan(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_cols_end_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridColsEnd(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_template_rows_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridTemplateRows(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_rows_start_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridRowsStart(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_rows_span_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridRowsSpan(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_rows_end_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridRowsEnd(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_auto_flow_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridAutoFlow(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_auto_columns_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridAutoColumns(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.grid_auto_rows_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGridAutoRows(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->grid.gap_regex)){
+					if(styleClass.find("-x-") != std::string::npos){
+						elementClassEdditor_->flexAndGridWidget_->setGapX(styleClass);
+					}else if(styleClass.find("-y-") != std::string::npos){
+						elementClassEdditor_->flexAndGridWidget_->setGapY(styleClass);
+					}else {
+						elementClassEdditor_->flexAndGridWidget_->setGap(styleClass);
+					}
+				}
+			elementClassEdditor_->flexAndGridWidget_->styleChanged().emit(elementClassEdditor_->flexAndGridWidget_->getStyles());
+
+			}else if(styleCathegory.compare("flex") == 0){
+				if(styleClass.compare("reset") == 0){
+					elementClassEdditor_->flexAndGridWidget_->resetStyles();
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.basis_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setBasis(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.direction_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setDirection(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.wrap_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setWrap(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.grow_skrink_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGrowShrink(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.grow_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setGrow(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.shrink_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setShrink(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.justify_content_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setJustifyContent(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.justify_items_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setJustifyItems(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.justify_self_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setJustifySelf(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.align_content_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setAlignContent(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.align_items_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setAlignItems(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.align_self_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setAlignSelf(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.place_content_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setPlaceContent(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.place_items_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setPlaceItems(styleClass);
+				}else if(boost::regex_match(styleClass, elementClassEdditor_->tailwindConfig_->flexbox.place_self_regex)){
+					elementClassEdditor_->flexAndGridWidget_->setPlaceSelf(styleClass);
+				}
+			elementClassEdditor_->flexAndGridWidget_->styleChanged().emit(elementClassEdditor_->flexAndGridWidget_->getStyles());
 			
+			}
+
 		}
 		lineEdit->setText("");
 		lineEdit->setFocus(true);
@@ -462,19 +663,17 @@ void StylusEdditor::setSearchOptions(Wt::WSuggestionPopup *sp, Wt::WDialog *dial
 		auto sizing_data = elementClassEdditor_->tailwindConfig_->sizing.search_data();
 		auto spacing_data = elementClassEdditor_->tailwindConfig_->spacing.search_data();
 		auto backgrounds_data = elementClassEdditor_->tailwindConfig_->backgrounds.search_data();
+		auto layout_data = elementClassEdditor_->tailwindConfig_->layout.search_data();
+		auto flex_data = elementClassEdditor_->tailwindConfig_->flexbox.search_data();
+		auto grid_data = elementClassEdditor_->tailwindConfig_->grid.search_data();
 
-		for(auto sizing : sizing_data){
-			sp->addSuggestion("! | " + sizing);
-		}
 
-		for(auto spacing : spacing_data){
-			sp->addSuggestion("! | " + spacing);
-		}
-
-		for(auto backgrounds : backgrounds_data){
-
-				sp->addSuggestion("! | " + backgrounds);
-		}
+		for(auto sizing : sizing_data){ sp->addSuggestion("! | " + sizing); }
+		for(auto spacing : spacing_data){ sp->addSuggestion("! | " + spacing); }
+		for(auto backgrounds : backgrounds_data){ sp->addSuggestion("! | " + backgrounds); }
+		for(auto layout : layout_data){ sp->addSuggestion("! | " + layout); }
+		for(auto flex : flex_data){ sp->addSuggestion("! | " + flex); }
+		for(auto grid : grid_data){ sp->addSuggestion("! | " + grid); }
 
 	}else if(searchOption == SearchOption::Focus){
 

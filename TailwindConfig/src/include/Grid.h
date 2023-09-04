@@ -30,7 +30,7 @@ namespace Tailwind {
         Propriety place_items;
         Propriety place_self;
 
-        boost::regex order_regex = boost::regex("(?<!\\S)(!)?order-(12|11|10|9|8|7|6|5|4|3|2|1|none|last|first)(?!\\w|-)");
+        boost::regex order_regex =              boost::regex("(?<!\\S)(!)?order-(12|11|10|9|8|7|6|5|4|3|2|1|none|last|first)(?!\\w|-)");
         boost::regex grid_template_columns_regex = boost::regex("(?<!\\S)(!)?grid-cols-(12|11|10|9|8|7|6|5|4|3|2|1|none)(?!\\w|-)");
         boost::regex grid_cols_start_regex =    boost::regex("(?<!\\S)(!)?col-start-(13|12|11|10|9|8|7|6|5|4|3|2|1|full|auto)(?!\\w|-)");
         boost::regex grid_cols_span_regex =     boost::regex("(?<!\\S)(!)?col-(auto|span-(12|11|10|9|8|7|6|5|4|3|2|1|full))(?!\\w|-)");
@@ -46,10 +46,6 @@ namespace Tailwind {
         boost::regex grid_auto_rows_regex =     boost::regex("(?<!\\S)(!)?auto-rows-(auto|min|max|fr)(?!\\w|-)");
 
         boost::regex gap_regex =                boost::regex("(?<!\\S)(!)?gap(-x|-y)?-(96|80|72|64|60|56|52|48|44|40|36|32|28|24|20|16|14|12|11|10|9|8|7|6|5|4|3.5|3|2.5|2|1.5|1|0.5|0|px)(?!\\w|-)");
-
-        boost::regex place_self_regex =         boost::regex("(?<!\\S)(!)?place-self-(auto|start|end|center|stretch)(?!\\w|-)");
-        boost::regex place_items_regex =        boost::regex("(?<!\\S)(!)?place-items-(start|end|center|baseline|stretch)(?!\\w|-)");
-        boost::regex place_content_regex =      boost::regex("(?<!\\S)(!)?place-content-(center|start|end|between|around|evenly|baseline|stretch)(?!\\w|-)");
 
         std::vector<std::string> search_data();
 

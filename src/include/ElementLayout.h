@@ -32,6 +32,7 @@ struct LayoutData
 	std::vector<std::string> overscroll_behavior;
 	
 	std::string position = "none";
+	std::vector<std::string> position_inset;
 	std::vector<std::string> position_sides;
 
 	std::string visibility = "none";
@@ -81,8 +82,10 @@ public:
 	bool setVisibility(std::string className);
 	bool setZIndex(std::string className);
 
-
+	// its punlic because of the flex and grid witch needs to change depending on the display value
+	ComboBoxClassChanger* display_widget_;
 private:
+
 	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
 	SelectionGroupClassChanger *aspect_ratio_widget_;
 	SelectionGroupClassChanger *container_widget_;
@@ -113,7 +116,6 @@ private:
 	ComboBoxClassChanger *position_left_widget_;
 	SelectionGroupClassChanger *visibility_widget_;
 	SelectionGroupClassChanger *z_index_widget_;
-	ComboBoxClassChanger* display_widget_;
 
 	std::string aspect_ratio_class = "none";
 	std::string container_class = "none";

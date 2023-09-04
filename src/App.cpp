@@ -10,6 +10,11 @@
 #include <Wt/WBootstrap2Theme.h>
 #include <Wt/WTimer.h>
 
+
+#include <Wt/WTable.h>
+
+
+
 App::App(const Wt::WEnvironment &env)
 	: Wt::WApplication(env)
 {
@@ -23,20 +28,18 @@ App::App(const Wt::WEnvironment &env)
 	setCssTheme("default");
 	useStyleSheet(defStyles);
 
-	// globalKeyWentDown().preventDefaultAction(true);
-	// globalKeyWentUp().preventDefaultAction(true);
+	globalKeyWentDown().preventDefaultAction(true);
+	globalKeyWentUp().preventDefaultAction(true);
 	
 	// add custom javascript files
 	// require("https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"); // testing for future integration with stylus
 	require("https://cdn.tailwindcss.com");
 	require("resources/Js/Utility.js"); // tailwind theme styles customize from here
 
-	// add mesage resource bundle from templates
 	auto stylus_edditor = root()->addWidget(std::make_unique<StylusEdditor>("resources/xmlTest/"));
 	stylus_edditor->setCanReceiveFocus(true);
 	stylus_edditor->setObjectName("stylus");
 	stylus_edditor->setTemplate("templates", "Application.xml", "app-root", "template");
-
 
 
 }
