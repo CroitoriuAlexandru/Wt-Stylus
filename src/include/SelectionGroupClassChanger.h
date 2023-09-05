@@ -7,11 +7,12 @@
 #include <Wt/WSpinBox.h>
 #include <Wt/WSignal.h>
 #include <Wt/WContainerWidget.h>
+#include <Wt/WAnchor.h>
+#include <Wt/WRadioButton.h>
+
 #include <vector>
 #include <string>
 #include <regex>
-
-#include <Wt/WRadioButton.h>
 
 #include <Wt/WString.h>
 #include <Wt/WLineEdit.h>
@@ -24,17 +25,13 @@ class SelectionGroupClassChanger : public Wt::WContainerWidget
 public:
 	SelectionGroupClassChanger(Propriety propriety, std::string title, std::string classRepeatName = "");
 
-	void setCustomValueString(std::string custom_start);
     std::string getValue();
 	void setValue(std::string className = "none");
 
-	void setCustom(bool custom);
 	void disable(bool disable);
 
 	std::shared_ptr<Wt::WButtonGroup> group_;
 	Wt::WCheckBox *checkbox_important_;
-	Wt::WLineEdit *lineEdit_custom_value_;
-	Wt::WCheckBox *checkBox_custom_value_;
 	Wt::WText *btn_reset_;
 
 	Wt::WContainerWidget *titleBar;
@@ -43,13 +40,11 @@ public:
 
 	Wt::Signal<std::string>& classChanged() { return classChanged_; }
     int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
-	void setTitle(std::string title){ widget_title->setText(title); };
+	Wt::WAnchor* title_;
 private:
-	Wt::WText* widget_title;
 	Propriety propriety_;
 	std::string defaultValue = "none";
 
-	std::string custom_start_ = "none";
 	Wt::Signal<std::string> classChanged_;
 };
 

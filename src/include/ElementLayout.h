@@ -87,26 +87,26 @@ public:
 private:
 
 	int getIndesOfStringInVector(std::string str, std::vector<StyleClass> vec);
-	SelectionGroupClassChanger *aspect_ratio_widget_;
+	ComboBoxClassChanger *aspect_ratio_widget_;
 	SelectionGroupClassChanger *container_widget_;
-	SelectionGroupClassChanger *columns_widget_;
-	SelectionGroupClassChanger *break_after_widget_;
-	SelectionGroupClassChanger *break_before_widget_;
-	SelectionGroupClassChanger *break_inside_widget_;
-	SelectionGroupClassChanger *box_decoration_break_widget_;
+	ComboBoxClassChanger *columns_widget_;
+	ComboBoxClassChanger *break_after_widget_;
+	ComboBoxClassChanger *break_before_widget_;
+	ComboBoxClassChanger *break_inside_widget_;
+	ComboBoxClassChanger *box_decoration_break_widget_;
 	SelectionGroupClassChanger *box_sizing_widget_;
 	SelectionGroupClassChanger *floats_widget_;
 	SelectionGroupClassChanger *clear_widget_;
 	SelectionGroupClassChanger *isolation_widget_;
-	SelectionGroupClassChanger *object_fit_widget_;
-	SelectionGroupClassChanger *object_position_widget_;
-	SelectionGroupClassChanger *overflow_widget_;
-	SelectionGroupClassChanger *overflow_x_widget_;
-	SelectionGroupClassChanger *overflow_y_widget_;
-	SelectionGroupClassChanger *overscroll_behavior_widget_;
-	SelectionGroupClassChanger *overscroll_behavior_x_widget_;
-	SelectionGroupClassChanger *overscroll_behavior_y_widget_;
-	SelectionGroupClassChanger *position_widget_;
+	ComboBoxClassChanger *object_fit_widget_;
+	ComboBoxClassChanger *object_position_widget_;
+	ComboBoxClassChanger *overflow_widget_;
+	ComboBoxClassChanger *overflow_x_widget_;
+	ComboBoxClassChanger *overflow_y_widget_;
+	ComboBoxClassChanger *overscroll_behavior_widget_;
+	ComboBoxClassChanger *overscroll_behavior_x_widget_;
+	ComboBoxClassChanger *overscroll_behavior_y_widget_;
+	ComboBoxClassChanger *position_widget_;
 	ComboBoxClassChanger *position_inset_widget_;
 	ComboBoxClassChanger *position_inset_x_widget_;
 	ComboBoxClassChanger *position_inset_y_widget_;
@@ -114,8 +114,8 @@ private:
 	ComboBoxClassChanger *position_right_widget_;
 	ComboBoxClassChanger *position_bottom_widget_;
 	ComboBoxClassChanger *position_left_widget_;
-	SelectionGroupClassChanger *visibility_widget_;
-	SelectionGroupClassChanger *z_index_widget_;
+	ComboBoxClassChanger *visibility_widget_;
+	ComboBoxClassChanger *z_index_widget_;
 
 	std::string aspect_ratio_class = "none";
 	std::string container_class = "none";

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class="">siblings before</div>
-        <div class=""><div class="">child before</div><div class="">child before</div><div class="">child before</div><div class="">child before</div><div class="">child after</div>
+        <div class="? break-before-avoid-page break-inside-auto sticky inset-28 flex">siblings before</div>
+        <div class=""><div class="">child before</div>
+            <div class="">child before</div>
+            <div class="">child before</div>
+            <div class="">child before</div>
+            <div class="">child after</div>
             <div class="">child after</div>
             <div class="">child after</div>
             <div class="">child after</div>
@@ -10,11 +14,12 @@
         </div>
         <div class="">siblings after</div>
         <div class="">siblings after</div>
-        <div class="?  p-10 m-10  ">siblings after</div>
+        <div class="p-10 m-10">siblings after</div>
         <div class="">siblings after</div>
         <div class="">siblings after</div>
         <div class="">siblings after</div>
-        <div class="">siblings after</div></message>
+        <div class="">siblings after</div>
+    </message>
     <message id="app-test">
         <div class="">siblings before</div>
         <div class="">siblings before</div>

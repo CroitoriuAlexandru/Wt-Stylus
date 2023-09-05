@@ -24,51 +24,26 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 		popupMenu->addItem("reset styles")->setStyleClass(menuItemsStyles);
 		popupMenu->addSeparator()->setStyleClass("border border-solid border-neutral-900");
 
-		auto aspect_ratio_info = popupMenu->addItem("Info Aspect ratio");
-		auto container_info = popupMenu->addItem("Info Container");
-		auto columns_info = popupMenu->addItem("Info Columns");
-		auto break_after_info = popupMenu->addItem("Info Break after");
-		auto break_before_info = popupMenu->addItem("Info Break before");
-		auto break_inside_info = popupMenu->addItem("Info Break inside");
-		auto box_decoration_break_info = popupMenu->addItem("Info Box decoration break");
-		auto box_sizing_info = popupMenu->addItem("Info Box sizing");
-		auto display_info = popupMenu->addItem("Info Display");
-		auto floats_info = popupMenu->addItem("Info Floats");
-		auto clear_info = popupMenu->addItem("Info Clear");
-		auto isolation_info = popupMenu->addItem("Info Isolation");
-		auto object_fit_info = popupMenu->addItem("Info Object fit");
-		auto object_position_info = popupMenu->addItem("Info Object position");
-		auto overflow_info = popupMenu->addItem("Info Overflow");
-		auto overflow_x_info = popupMenu->addItem("Info Overflow x");
-		auto overflow_y_info = popupMenu->addItem("Info Overflow y");
-		auto overscroll_behavior_info = popupMenu->addItem("Info Overscroll behavior");
-		auto position_info = popupMenu->addItem("Info Position");
-		auto position_top_left_bottom_right = popupMenu->addItem("Info Position T L B R");
-		auto visibility_info = popupMenu->addItem("Info Visibility");
-		auto z_index_info = popupMenu->addItem("Info Z index");
 
-		aspect_ratio_info->setStyleClass(menuItemsStyles);
-		container_info->setStyleClass(menuItemsStyles);
-		columns_info->setStyleClass(menuItemsStyles);
-		break_after_info->setStyleClass(menuItemsStyles);
-		break_before_info->setStyleClass(menuItemsStyles);
-		break_inside_info->setStyleClass(menuItemsStyles);
-		box_decoration_break_info->setStyleClass(menuItemsStyles);
-		box_sizing_info->setStyleClass(menuItemsStyles);
-		display_info->setStyleClass(menuItemsStyles);
-		floats_info->setStyleClass(menuItemsStyles);
-		clear_info->setStyleClass(menuItemsStyles);
-		isolation_info->setStyleClass(menuItemsStyles);
-		object_fit_info->setStyleClass(menuItemsStyles);
-		object_position_info->setStyleClass(menuItemsStyles);
-		overflow_info->setStyleClass(menuItemsStyles);
-		overflow_x_info->setStyleClass(menuItemsStyles);
-		overflow_y_info->setStyleClass(menuItemsStyles);
-		overscroll_behavior_info->setStyleClass(menuItemsStyles);
-		position_info->setStyleClass(menuItemsStyles);
-		position_top_left_bottom_right->setStyleClass(menuItemsStyles);
-		visibility_info->setStyleClass(menuItemsStyles);
-		z_index_info->setStyleClass(menuItemsStyles);
+		popupMenu->setStyleClass("bg-neutral-700 text-neutral-200 border border-solid border-neutral-900");
+
+		popupMenu->triggered().connect(this, [=](Wt::WMenuItem *item) {
+			if(item->text().toUTF8().compare("set test classes") == 0){
+				setCustomTestValues();
+				styleChanged_.emit(getStyles());
+			}else if(item->text().toUTF8().compare("reset styles") == 0){
+				resetStyles();
+				styleChanged_.emit(getStyles());
+			}
+		});
+
+		auto popupBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>());
+		popupBtn->setStyleClass("p-3 bg-cover bg-[url(resources/icons/hamburger.svg)] !ml-auto mr-2");
+		popupBtn->setMenu(std::move(popupMenu));
+		// prevent the click event from propagating to the parent because it is located in the title bar witch expands and collapse on click
+		popupBtn->clicked().preventPropagation();
+	}
+	
 
 		Wt::WLink aspect_ratio_link = Wt::WLink(tailwindConfig_->layout.aspect_ratio.docsLink_);
 		Wt::WLink container_link = Wt::WLink(tailwindConfig_->layout.container.docsLink_);
@@ -115,59 +90,47 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 		position_top_left_bottom_right_link.setTarget(Wt::LinkTarget::NewWindow);
 		visibility_link.setTarget(Wt::LinkTarget::NewWindow);
 		z_index_link.setTarget(Wt::LinkTarget::NewWindow);
-		
-		aspect_ratio_info->setLink(aspect_ratio_link);
-		container_info->setLink(container_link);
-		columns_info->setLink(columns_link);
-		break_after_info->setLink(break_after_link);
-		break_before_info->setLink(break_before_link);
-		break_inside_info->setLink(break_inside_link);
-		box_decoration_break_info->setLink(box_decoration_break_link);
-		box_sizing_info->setLink(box_sizing_link);
-		display_info->setLink(display_link);
-		floats_info->setLink(floats_link);
-		clear_info->setLink(clear_link);
-		isolation_info->setLink(isolation_link);
-		object_fit_info->setLink(object_fit_link);
-		object_position_info->setLink(object_position_link);
-		overflow_info->setLink(overflow_link);
-		overflow_x_info->setLink(overflow_x_link);
-		overflow_y_info->setLink(overflow_y_link);
-		overscroll_behavior_info->setLink(overscroll_behavior_link);
-		position_info->setLink(position_link);
-		position_top_left_bottom_right->setLink(position_top_left_bottom_right_link);
-		visibility_info->setLink(visibility_link);
-		z_index_info->setLink(z_index_link);
 
-		popupMenu->setStyleClass("bg-neutral-700 text-neutral-200 border border-solid border-neutral-900");
 
-		popupMenu->triggered().connect(this, [=](Wt::WMenuItem *item) {
-			if(item->text().toUTF8().compare("set test classes") == 0){
-				setCustomTestValues();
-				styleChanged_.emit(getStyles());
-			}else if(item->text().toUTF8().compare("reset styles") == 0){
-				resetStyles();
-				styleChanged_.emit(getStyles());
-			}
-		});
-
-		auto popupBtn = titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>());
-		popupBtn->setStyleClass("p-3 bg-cover bg-[url(resources/icons/hamburger.svg)] !ml-auto mr-2");
-		popupBtn->setMenu(std::move(popupMenu));
-		// prevent the click event from propagating to the parent because it is located in the title bar witch expands and collapse on click
-		popupBtn->clicked().preventPropagation();
-	}
-	
-	
 	auto display_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	auto position_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	auto columns_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	auto aspect_ratio_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	auto break_after_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	auto break_before_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+	auto break_inside_wrapper = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
+
+
+
+
+	display_wrapper->addWidget(std::make_unique<Wt::WAnchor>(display_link, "Display"))->setStyleClass("font-bold text-neutral-400");
+	position_wrapper->addWidget(std::make_unique<Wt::WAnchor>(position_link, "Position"))->setStyleClass("font-bold text-neutral-400");
+	columns_wrapper->addWidget(std::make_unique<Wt::WAnchor>(columns_link, "Columns"))->setStyleClass("font-bold text-neutral-400");
+	aspect_ratio_wrapper->addWidget(std::make_unique<Wt::WAnchor>(aspect_ratio_link, "Aspect ratio"))->setStyleClass("font-bold text-neutral-400");
+	break_after_wrapper->addWidget(std::make_unique<Wt::WAnchor>(break_after_link, "Break after"))->setStyleClass("font-bold text-neutral-400");
+	break_before_wrapper->addWidget(std::make_unique<Wt::WAnchor>(break_before_link, "Break before"))->setStyleClass("font-bold text-neutral-400");
+	break_inside_wrapper->addWidget(std::make_unique<Wt::WAnchor>(break_inside_link, "Break inside"))->setStyleClass("font-bold text-neutral-400");
+
+
 	display_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
-	display_wrapper->addWidget(std::make_unique<Wt::WText>("Display"))->setStyleClass("font-bold text-neutral-400");
+	position_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
+	columns_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
+	aspect_ratio_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
+	break_after_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
+	break_before_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
+	break_inside_wrapper->setStyleClass("flex space-x-2 whitespace-nowrap");
+
+
+
+
+
+
 	display_widget_ = display_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.display));
 	{
-		position_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.position, "Position", ""));
+		position_widget_ = position_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position));
 
 		auto positions_container = centralWidget->addWidget(std::make_unique<Wt::WContainerWidget>());
-		positions_container->addWidget(std::make_unique<Wt::WText>("Inset"))->setStyleClass("font-bold text-neutral-400");
+		positions_container->addWidget(std::make_unique<Wt::WText>("Inset | Top | Left | Bottom | Right"))->setStyleClass("font-bold text-neutral-400");
 		position_inset_widget_ = positions_container->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.position_inset));
 		auto inset_x_y_wrapper = positions_container->addWidget(std::make_unique<Wt::WContainerWidget>());
 		
@@ -202,31 +165,31 @@ ElementLayoutWidget::ElementLayoutWidget(std::shared_ptr<Config> tailwindConfig)
 
 	}
 
-	columns_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.columns, "Columns", "columns-"));
+
+	columns_widget_ = columns_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.columns));
 	container_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.container, "Container", ""));
-	aspect_ratio_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.aspect_ratio, "Aspect ratio", "aspect-"));
-	break_after_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_after, "Break after", "break-after-"));
-	break_before_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_before, "Break before", "break-before-"));
-	break_inside_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.break_inside, "Break inside", "break-inside-"));
-	box_decoration_break_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_decoration_break, "Box decoration break", "box-decoration-"));
+
+	aspect_ratio_widget_ = aspect_ratio_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.aspect_ratio));
+	break_after_widget_ = break_after_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.break_after));
+	break_before_widget_ = break_before_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.break_before));
+	break_inside_widget_ = break_inside_wrapper->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.break_inside));
+	box_decoration_break_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.box_decoration_break));
 	box_sizing_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.box_sizing, "Box sizing", "box-"));
 	floats_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.floats, "Floats", "float-"));
 	clear_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.clear, "Clear", "clear-"));
 	isolation_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.isolation, "Isolation", ""));
-	object_fit_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_fit, "Object fit", "object-"));
-	object_position_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.object_position, "Object position", "object-"));
-	overflow_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow, "Overflow", "overflow-"));
-	overflow_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_x, "Overflow x", "overflow-x-"));
-	overflow_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overflow_y, "Overflow y", "overflow-y-"));
-	overscroll_behavior_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior, "Overscroll behavior", "overscroll-"));
-	overscroll_behavior_x_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_x, "Overscroll behavior x", "overscroll-x-"));
-	overscroll_behavior_y_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.overscroll_behavior_y, "Overscroll behavior y", "overscroll-y-"));
+	object_fit_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.object_fit));
+	object_position_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.object_position));
+	overflow_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.overflow));
+	overflow_x_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.overflow_x));
+	overflow_y_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.overflow_y));
+	overscroll_behavior_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.overscroll_behavior));
+	overscroll_behavior_x_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.overscroll_behavior_x));
+	overscroll_behavior_y_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.overscroll_behavior_y));
 	
-	visibility_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.visibility, "Visibility", ""));
-	z_index_widget_ = centralWidget->addWidget(std::make_unique<SelectionGroupClassChanger>(tailwindConfig->layout.z_index, "Z index", "z-"));
+	visibility_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.visibility));
+	z_index_widget_ = centralWidget->addWidget(std::make_unique<ComboBoxClassChanger>(tailwindConfig->layout.z_index));
 
-	object_fit_widget_->setTitle("object- (fit)");
-	object_position_widget_->setTitle("object- (position)");
 	
 	// signals
 	display_widget_->classChanged().connect(this, [=](std::string className) { display_class = className;styleChanged_.emit(getStyles()); });
