@@ -116,16 +116,14 @@ std::unique_ptr<Wt::WPanel> StylusTemplatesWidget::createPanel(std::string title
 
 void StylusTemplatesWidget::setFilePanel(Wt::WPanel* panel, std::string folderName, XmlFileData fileData)
 {
-    auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(tr("svg.trash")));
-    delete_file_btn->setStyleClass("p-1 m-1 ms-auto");
-    delete_file_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+    auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(""));
+    delete_file_btn->setStyleClass("bg-[url(resources/icons/trash.svg)] !p-3 m-px bg-cover ms-auto");
     delete_file_btn->doubleClicked().connect([=](){
         deleteFile(folderName, fileData.fileName);
     });
 
-    auto add_message_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(tr("svg.plus")));
-    add_message_btn->setStyleClass("p-1 m-1");
-    add_message_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+    auto add_message_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>(""));
+    add_message_btn->setStyleClass("bg-[url(resources/icons/plus.svg)] !p-3 m-px bg-cover");
     add_message_btn->doubleClicked().connect([=](){
         addMessageTemplate(folderName, fileData.fileName);
     });
@@ -140,14 +138,14 @@ void StylusTemplatesWidget::setFilePanel(Wt::WPanel* panel, std::string folderNa
         auto file_item = messages_display->addWidget(std::make_unique<Wt::WTemplate>(tr("stylus.templates.folder.item")));
         file_item->bindWidget("title", std::make_unique<Wt::WText>(message));
         
-        auto del_message_btn = file_item->bindWidget("svg.trash", std::make_unique<Wt::WPushButton>(tr("svg.trash")));
-        del_message_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+        auto del_message_btn = file_item->bindWidget("svg.trash", std::make_unique<Wt::WPushButton>(""));
+        del_message_btn->setStyleClass("bg-[url(resources/icons/trash.svg)] !p-3 m-px bg-cover");
         del_message_btn->doubleClicked().connect([=](){
             deleteMessageTemplate(folderName, fileData.fileName, message);
         });
 
-        auto open_edditor_btn = file_item->bindWidget("svg.pencil", std::make_unique<Wt::WPushButton>(tr("svg.pencil")));
-        open_edditor_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+        auto open_edditor_btn = file_item->bindWidget("svg.pencil", std::make_unique<Wt::WPushButton>());
+        open_edditor_btn->setStyleClass("bg-[url(resources/icons/pencil.svg)] !p-3 m-px bg-cover");
         open_edditor_btn->doubleClicked().connect([=](){
             
             auto fileName = fileData.fileName;
@@ -169,16 +167,14 @@ void StylusTemplatesWidget::createMenu()
         auto panel = contents_folders->addWidget(std::move(createPanel(folderData.folderName)));
         panel->titleBarWidget()->setStyleClass("flex items-center bg-neutral-900 text-neutral-300 text-bold pl-2");
         auto delete_file_btn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>());
-        delete_file_btn->setStyleClass("bg-[url(resources/icons/trash.svg)] !p-2 m-1 ms-auto bg-cover");
-        delete_file_btn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
+        delete_file_btn->setStyleClass("bg-[url(resources/icons/trash.svg)] !p-3 m-px ms-auto bg-cover");
         delete_file_btn->doubleClicked().connect([=](){
             deleteFolder(folderData.folderName);
         });
 
         auto addFileBtn = panel->titleBarWidget()->addWidget(std::make_unique<Wt::WPushButton>());
-        addFileBtn->setStyleClass("bg-[url(resources/icons/add-file.svg)] !p-2 m-1.5 bg-cover");
+        addFileBtn->setStyleClass("bg-[url(resources/icons/add-file.svg)] !p-3 m-px bg-cover");
         addFileBtn->setToolTip("Add File");
-        addFileBtn->setTextFormat(Wt::TextFormat::UnsafeXHTML);
         addFileBtn->doubleClicked().connect([=](){
             createFile(folderData.folderName);
         });

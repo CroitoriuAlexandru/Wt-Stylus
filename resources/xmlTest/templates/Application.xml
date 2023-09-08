@@ -1,43 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
     <message id="app-root">
-        <div class=""><div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child after</div>
-            <div class="">child after</div>
-            <div class="">child after</div>
-        </div>
-        <div class=""><div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child after</div>
-            <div class="">child after</div>
-        </div>
-        <div class="">siblings before</div>
-        <div class=""><div class="">child after</div>
-        </div>
         <div class="">siblings after</div>
-        <div class="w-1/2   p-16 py-1.5"><div class="">child before</div>
+        <div class="">siblings before</div>
+        <div class="">siblings before</div>
+        <div class="">siblings after</div>
+        <div class="">siblings after</div>
+        <div class=""><div class="">child before</div>
             <div class="">child before</div>
+            <div class=""><div class=""><div class="">child after</div>
+                </div>
+            </div>
+            <div class="">child after</div>
+            <div class="">child after</div>
             <div class="">child after</div>
             <div class="">child after</div>
         </div>
     </message>
     <message id="app-test">
-        <div class="">siblings before</div>
-        <div class="">siblings before</div>
-        <div class="">siblings before</div>
-        <div class="? ">
-            <div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child before</div>
-            <div class="">child after</div>
-            <div class="">child after</div>
-        </div>
-        <div class="">siblings after</div>
-        <div class="">siblings after</div>
+        <div class="">child before</div>
     </message>
 </messages>

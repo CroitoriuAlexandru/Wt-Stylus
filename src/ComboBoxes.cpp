@@ -64,11 +64,11 @@ void StyleClassComboBox::setCustomValueString(std::string custom_start)
 			}
 		}else if (e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::Q){
 			auto app = Wt::WApplication::instance();
-			auto search_input = app->findWidget("search-input");
-			if(search_input != nullptr) search_input->setFocus(true);
-			else {
+			// auto search_input = app->findWidget("search-input");
+			// if(search_input != nullptr) search_input->setFocus(true);
+			// else {
 				app->findWidget("stylus")->setFocus(true);
-			}
+			// }
 		}
 	});
 
@@ -176,11 +176,11 @@ StyleClassComboBox::StyleClassComboBox(Propriety propriety)
 			}
 		}else if (e.modifiers() == Wt::KeyboardModifier::Control  && e.key() == Wt::Key::Q){
 			auto app = Wt::WApplication::instance();
-			auto search_input = app->findWidget("search-input");
-			if(search_input != nullptr) search_input->setFocus(true);
-			else {
+			// auto search_input = app->findWidget("search-input");
+			// if(search_input != nullptr) search_input->setFocus(true);
+			// else {
 				app->findWidget("stylus")->setFocus(true);
-			}
+			// }
 		}
 	});
 
@@ -363,7 +363,7 @@ int ColorSelecionWidget::getIndexOfStringInVector(std::string str, std::vector<s
 
 void ColorSelecionWidget::setValue(std::string className)
 {
-	std::cout << "\n\n className: " << className << "\n\n";
+	// std::cout << "\n\n className: " << className << "\n\n";
 	current_value = className;
 	if(className.compare("none") == 0) {
 		colors_group->button(5)->setChecked(true);
