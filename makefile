@@ -3,7 +3,7 @@ CC = g++
 CXXFLAGS = -std=c++14 -I. -DICE_CPP11_MAPPING
 
 # Makefile settings
-APPNAME = frontend
+APPNAME = app
 EXT = .cpp
 SRCDIR = ./src
 SRCDIR_TAIWIND_CONFIG = ./TailwindConfig/src
